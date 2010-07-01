@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+           
+    <import resource="customer.xml"/>
+    <import resource="supplier.xml"/>
+    
+    <bean id="gen_listener" class="org.eve.main.GeneralListener"/>
+    
+    <bean id="eve_app" class="org.eve.main.EveApp">
+        <property name="listener" ref="gen_listener"/>
+        <property name="views">
+            <list>
+                <ref bean="cust_view"/>
+                <ref bean="supp_view"/>
+            </list>
+        </property>
+    </bean>
+</beans>
