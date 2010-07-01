@@ -22,14 +22,14 @@ public class CustomerView extends AbstractView {
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
-//        addForm("ident", "Código", 12, false);
-//        addForm("name", "Razão social", 40);
-//        addForm("aname", "Nome fantasia", 40);
-//        addForm("cnpj", "CNPJ", 18);
-//        addForm("status", "Status", 1);
+        addForm("customer.ident", 12, false);
+        addForm("customer.name", 40);
+        addForm("customer.aname", 40);
+        addForm("customer.cnpj", 18);
+        addForm("customer.status", 1);
         
         base.setText("Base");
-//        base.setControl(defineForm(main));
+        base.setControl(defineForm(main));
 //        
 //        addTable("rname", "Nome");
 //        addTable("funct", "Função");
