@@ -11,10 +11,21 @@
             </list>
         </property>
     </bean>
-               
-    <bean id="supp_model" class="org.eve.sd.supplier.SupplierModel"/>
+    
+    <bean id="supp_model" class="org.eve.sd.supplier.SupplierModel">
+        <property name="sessionFactory" ref="session_factory"/>
+    </bean>
+    
+    <bean id="supp_control" class="org.eve.sd.supplier.SupplierController">
+        <property name="messageBar" ref="message_bar"/>
+        <property name="object">
+            <bean class="org.eve.sd.supplier.Supplier"/>
+        </property>
+        <property name="model" ref="supp_model"/>        
+    </bean>
+    
     <bean id="supp_view" class="org.eve.sd.supplier.SupplierView">
-        <property name="model" ref="supp_model"/>
+        <property name="controller" ref="supp_control"/>
         <property name="messages" ref="supp_msg"/>
     </bean>
 </beans>

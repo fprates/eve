@@ -30,6 +30,8 @@
             </value>
         </property>
     </bean>
+    
+    <bean id="message_bar" class="org.eve.view.MessageBar" scope="prototype"/>
            
     <import resource="customer.xml"/>
     <import resource="supplier.xml"/>

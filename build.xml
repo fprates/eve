@@ -24,6 +24,19 @@
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
             	<attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
+            		lib/com.springsource.javassist-3.3.0.ga.jar
+            		lib/com.springsource.javax.transaction-1.1.0.jar
+            		lib/com.springsource.org.apache.commons.collections-3.2.1.jar
+            		lib/com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar
+            		lib/com.springsource.org.apache.commons.pool-1.5.3.jar
+            		lib/com.springsource.org.dom4j-1.6.1.jar
+            		lib/org.springframework.orm-3.0.3.RELEASE.jar
+            		lib/org.springframework.transaction-3.0.3.RELEASE.jar
+            		lib/org.springframework.jdbc-3.0.3.RELEASE.jar
+                    lib/slf4j-api-1.6.0.jar
+            		lib/slf4j-simple-1.6.0.jar
+            		lib/hibernate3.jar
+            		lib/hsqldb.jar
             		lib/org.eclipse.swt.gtk.linux.x86_64_3.5.2.201004121546.jar
             		lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
             		lib/org.springframework.context-3.0.3.RELEASE.jar
@@ -40,6 +53,19 @@
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
                 <attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
+                    lib/com.springsource.javassist-3.3.0.ga.jar
+                    lib/com.springsource.javax.transaction-1.1.0.jar
+                    lib/com.springsource.org.apache.commons.collections-3.2.1.jar
+                    lib/com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar
+                    lib/com.springsource.org.apache.commons.pool-1.5.3.jar
+                    lib/com.springsource.org.dom4j-1.6.1.jar
+                    lib/org.springframework.orm-3.0.3.RELEASE.jar
+                    lib/org.springframework.transaction-3.0.3.RELEASE.jar
+                    lib/org.springframework.jdbc-3.0.3.RELEASE.jar
+                    lib/slf4j-api-1.6.0.jar
+                    lib/slf4j-simple-1.6.0.jar
+                    lib/hibernate3.jar
+                    lib/hsqldb.jar
                     lib/org.eclipse.swt.gtk.linux.x86_3.5.2.201004121542.jar
                     lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
                     lib/org.springframework.context-3.0.3.RELEASE.jar
@@ -56,6 +82,19 @@
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
                 <attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
+                    lib/com.springsource.javassist-3.3.0.ga.jar
+                    lib/com.springsource.javax.transaction-1.1.0.jar
+                    lib/com.springsource.org.apache.commons.collections-3.2.1.jar
+                    lib/com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar
+                    lib/com.springsource.org.apache.commons.pool-1.5.3.jar
+                    lib/com.springsource.org.dom4j-1.6.1.jar
+                    lib/org.springframework.orm-3.0.3.RELEASE.jar
+                    lib/org.springframework.transaction-3.0.3.RELEASE.jar
+                    lib/org.springframework.jdbc-3.0.3.RELEASE.jar
+                	lib/slf4j-api-1.6.0.jar
+                    lib/slf4j-simple-1.6.0.jar
+                    lib/hibernate3.jar
+                    lib/hsqldb.jar
                     lib/swt-win32.jar
                     lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
                     lib/org.springframework.context-3.0.3.RELEASE.jar

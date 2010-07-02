@@ -1,5 +1,6 @@
 package org.eve.view;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Drawable;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -16,26 +15,27 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eve.model.Model;
 import org.eve.view.ViewAction;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 public abstract class AbstractView implements View {
-    private Model model;
     private String name;
     private ResourceBundleMessageSource messages;
     private Locale locale;
     private Composite container;
+    private Controller controller;
     private List<ViewAction> actions;
     private List<String> buttonbarlist;
-    private Map<String, Button> buttons;
     private Map<String, FormComponent> form;
+    private Map<String, Map<String, FormComponent>> forms;
+    private Map<String, Button> buttons;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
         form = new LinkedHashMap<String, FormComponent>();
-        buttons = new LinkedHashMap<String, Button>();
+        forms = new HashMap<String, Map<String, FormComponent>>();
         buttonbarlist = new LinkedList<String>();
+        buttons = new LinkedHashMap<String, Button>();
     }
     
     /*
@@ -59,6 +59,15 @@ public abstract class AbstractView implements View {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.View#setController(org.eve.view.Controller)
+     */
+    @Override
+    public final void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.View#setLocale(java.util.Locale)
      */
     @Override
@@ -67,19 +76,11 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Ajusta nome da visão
      * @param name
      */
     protected final void setName(String name) {
         this.name = name;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.View#setModel(org.eve.Model)
-     */
-    public final void setModel(Model model) {
-        this.model = model;
     }
     
     /*
@@ -102,14 +103,6 @@ public abstract class AbstractView implements View {
     public final Composite getContainer() {
         return container;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.View#getModel()
-     */
-    public final Model getModel() {
-        return model;
-    }
 
     /* (non-Javadoc)
      * @see org.eve.view.View#getActions()
@@ -128,6 +121,15 @@ public abstract class AbstractView implements View {
         return name;
     }
     
+    /**
+     * Retorna componentes do formulário
+     * @param form
+     * @return
+     */
+    protected final Map<String, FormComponent> getForm(String form) {
+        return forms.get(form);
+    }
+    
     /*
      * 
      * Others
@@ -135,35 +137,7 @@ public abstract class AbstractView implements View {
      */
     
     /**
-     * 
-     * @param text
-     * @return
-     */
-    private final int getCharWidth(Drawable text) {
-        GC gc = new GC(text);
-        int charw = gc.getFontMetrics().getAverageCharWidth();
-        
-        gc.dispose();
-        
-        return charw;
-    }
-    
-    /**
-     * 
-     * @param text
-     * @return
-     */
-    private final int getCharHeight(Drawable text) {
-        GC gc = new GC(text);
-        int charh = gc.getFontMetrics().getHeight();
-        
-        gc.dispose();
-        
-        return charh;
-    }
-    
-    /**
-     * 
+     * Adiciona botão à barra de botões
      * @param id
      */
     protected final void addButton(String id) {
@@ -171,7 +145,7 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Adiciona campo ao formulário
      * @param id
      * @param length
      */
@@ -181,7 +155,7 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Adiciona campo ao formulário
      * @param id
      * @param length
      * @param enabled
@@ -192,11 +166,11 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Constrói formulário e inicializa o próximo
      * @param form
      * @param composite
      */
-    protected final Composite defineForm(Composite main) {
+    protected final Composite defineForm(String formname, Composite main) {
         Label label;
         Text text;
         int charw = 0;
@@ -218,13 +192,17 @@ public abstract class AbstractView implements View {
             text = new Text(fieldComposite, SWT.BORDER);
             
             if (charw == 0) {
-                charw = getCharWidth(text);
-                charh = getCharHeight(text);             
+                charw = ViewUtils.getCharWidth(text);
+                charh = ViewUtils.getCharHeight(text);             
             }
             
             text.setSize(text.computeSize(component.getLength() * charw, charh));
             component.setText(text);            
         }
+        
+        controller.putForm(formname, form);
+        forms.put(formname, form);
+        form = new LinkedHashMap<String, FormComponent>();
         
         return composite;
     }
@@ -249,14 +227,18 @@ public abstract class AbstractView implements View {
         for (String id : buttonbarlist) {
             button = new Button(buttonbar, SWT.PUSH);
             button.setText(messages.getMessage(id, null, locale));
+            button.addSelectionListener(controller);
+            
+            controller.putWidget(button, id);
+            buttons.put(id, button);
         }
         
         buttonbar.pack();
-        
+        controller.getMessageBar().init(container);
     }
     
     /**
-     * 
+     * Adiciona ação à visão
      * @param id
      */
     protected final void addAction(String id) {
@@ -265,7 +247,7 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Adiciona ação à visão
      * @param id
      * @param visible
      */

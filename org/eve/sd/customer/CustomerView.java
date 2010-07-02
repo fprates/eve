@@ -1,9 +1,12 @@
 package org.eve.sd.customer;
 
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eve.view.AbstractView;
+import org.eve.view.FormComponent;
 
 public class CustomerView extends AbstractView {
     public CustomerView() { }
@@ -29,7 +32,7 @@ public class CustomerView extends AbstractView {
         addForm("customer.status", 1);
         
         base.setText("Base");
-        base.setControl(defineForm(main));
+        base.setControl(defineForm("main", main));
 //        
 //        addTable("rname", "Nome");
 //        addTable("funct", "Função");
@@ -55,71 +58,53 @@ public class CustomerView extends AbstractView {
      */
     @Override
     public final void reload(String action) {
-//        Customer customer;
-//        FormComponent component;
-//        Map<String, FormComponent> form = getForm();
-//        
-//        /*
-//         * Display mode component's configuration
-//         */
-//        if (action.equals("customer.show")) {
+        FormComponent component;
+        Map<String, FormComponent>form = getForm("main");
+        
+        /*
+         * Display mode component's configuration
+         */
+        if (action.equals("customer.show")) {
 //            setTitle("Exibir cliente");
-//            setButtonVisible("save", false);
-//            
-//            for (String field : form.keySet()) {
-//                component = form.get(field);
-//                component.getText().setEnabled(false);
-//            }
-//            
-//            customer = (Customer)model.getObject();
-//            setIntForm("ident", customer.getId());
-//            setStringForm("name", customer.getName());
-//            setStringForm("aname", customer.getAlternateName());
-//            setIntForm("status", customer.getStatus());
-//            
-//            return;
-//        }
-//        
-//        /*
-//         * Edit mode component's configuration
-//         */
-//        if (action.equals("customer.edit")) {
+            setButtonVisible("customer.save", false);
+            
+            for (String field : form.keySet()) {
+                component = form.get(field);
+                component.getTextWidget().setEnabled(false);
+            }
+            
+            return;
+        }
+        
+        /*
+         * Edit mode component's configuration
+         */
+        if (action.equals("customer.edit")) {
 //            setTitle("Editar cliente");            
-//            setButtonVisible("save", true);
-//            
-//            for (String field : form.keySet()) {
-//                component = form.get(field);
-//                component.getText().setEnabled(component.isEnabled());
-//            }
-//            
-//            customer = (Customer)model.getObject();
-//            setIntForm("ident", customer.getId());
-//            setStringForm("name", customer.getName());
-//            setStringForm("aname", customer.getAlternateName());
-//            setIntForm("status", customer.getStatus());
-//                
-//            return;
-//        }
-//        
-//        /*
-//         * Creation mode component's configuration
-//         */
-//        if (action.equals("customer.create")) {            
+            setButtonVisible("customer.save", true);
+            
+            for (String field : form.keySet()) {
+                component = form.get(field);
+                component.getTextWidget().setEnabled(component.isEnabled());
+            }
+                
+            return;
+        }
+        
+        /*
+         * Creation mode component's configuration
+         */
+        if (action.equals("customer.create")) {            
 //            setTitle("Criar cliente");
-//            setButtonVisible("save", true);
-//            
-//            for (String field : form.keySet()) {
-//                component = form.get(field);
-//                component.getText().setEnabled(component.isEnabled());
-//            }
-//            
-//            setIntForm("ident", 0);
-//            setStringForm("name", "");
-//            setStringForm("aname", "");
-//            setIntForm("status", 0);
-//            
-//            return;
-//        }
+            setButtonVisible("customer.save", true);
+            
+            for (String field : form.keySet()) {
+                component = form.get(field);
+                component.getTextWidget().setEnabled(component.isEnabled());
+            }
+            
+            return;
+        }
     }
 
 }

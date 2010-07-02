@@ -54,7 +54,7 @@ public class FormComponent {
      * 
      * @return
      */
-    public final Text getText() {
+    public final Text getTextWidget() {
     	return text;
     }
     

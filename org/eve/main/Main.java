@@ -22,18 +22,23 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends ApplicationWindow {
-    private final static String VERSION = "1.9.1";
+    private final static String VERSION = "1.9.2";
     private Composite container;
     private Tree selector;
     private EveApp app;
 
     public Main() {
         super(null);
-        ApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/services.xml");
+        ApplicationContext context =
+            new ClassPathXmlApplicationContext("/META-INF/services.xml");
         
         app = context.getBean("eve_app", EveApp.class);
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.window.Window#createContents(org.eclipse.swt.widgets.Composite)
+     */
     @Override
     protected Control createContents(Composite parent) {
         Shell shell = getShell();
@@ -57,6 +62,11 @@ public class Main extends ApplicationWindow {
         return apparea;        
     }
     
+    /**
+     * Adiciona visões ao container principal
+     * @param lviews
+     * @param listener
+     */
     public void addViews(List<View> lviews, GeneralListener listener) {
         TreeItem item;
         TreeItem subitem;
@@ -88,11 +98,11 @@ public class Main extends ApplicationWindow {
                 subitem.setText(action.getText());
                 listener.putSelectorItem(subitem, action.getId());
             }
-        }
-        
+        }        
     }
     
     /**
+     * Ponto de entrada
      * @param args
      */
     public static void main(String[] args) {
