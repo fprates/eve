@@ -1,7 +1,7 @@
 package org.eve.view;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -9,8 +9,10 @@ import java.util.Map;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Drawable;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -25,11 +27,15 @@ public abstract class AbstractView implements View {
     private Locale locale;
     private Composite container;
     private List<ViewAction> actions;
+    private List<String> buttonbarlist;
+    private Map<String, Button> buttons;
     private Map<String, FormComponent> form;
     
     public AbstractView() {
-        actions = new ArrayList<ViewAction>();
+        actions = new LinkedList<ViewAction>();
         form = new LinkedHashMap<String, FormComponent>();
+        buttons = new LinkedHashMap<String, Button>();
+        buttonbarlist = new LinkedList<String>();
     }
     
     /*
@@ -37,6 +43,10 @@ public abstract class AbstractView implements View {
      * Setters
      *  
      */
+    
+    protected final void setButtonVisible(String id, boolean visible) {
+        buttons.get(id).setVisible(visible);
+    }
     
     /*
      * (non-Javadoc)
@@ -152,11 +162,30 @@ public abstract class AbstractView implements View {
         return charh;
     }
     
+    /**
+     * 
+     * @param id
+     */
+    protected final void addButton(String id) {
+        buttonbarlist.add(id);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param length
+     */
     protected final void addForm(String id, int length) {
         form.put(id, new FormComponent(
                 messages.getMessage(id, null, locale), length, true));
     }
     
+    /**
+     * 
+     * @param id
+     * @param length
+     * @param enabled
+     */
     protected final void addForm(String id, int length, boolean enabled) {
         form.put(id, new FormComponent(
                 messages.getMessage(id, null, locale), length, enabled));
@@ -200,9 +229,6 @@ public abstract class AbstractView implements View {
         return composite;
     }
     
-    /**
-     * 
-     */
     protected abstract void defineView();
     
     /*
@@ -211,8 +237,22 @@ public abstract class AbstractView implements View {
      */
     @Override
     public final void buildView() {
+        Button button;
+        Composite buttonbar;
+        
         name = messages.getMessage("name", null, locale);
         defineView();
+
+        buttonbar = new Composite(container, SWT.NONE);
+        buttonbar.setLayout(new FormLayout());
+        
+        for (String id : buttonbarlist) {
+            button = new Button(buttonbar, SWT.PUSH);
+            button.setText(messages.getMessage(id, null, locale));
+        }
+        
+        buttonbar.pack();
+        
     }
     
     /**

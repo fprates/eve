@@ -46,7 +46,7 @@ public class CustomerView extends AbstractView {
 //        tableCol2.pack();
         contacts.setText("Contatos");
         
-//        addButton("save", "Salvar");
+        addButton("customer.save");
     }
     
     /*
