@@ -1,7 +1,7 @@
 package org.eve.sd.customer;
 
-import org.eve.Model;
+import org.eve.model.AbstractModel;
 
-public class CustomerModel implements Model {
+public class CustomerModel extends AbstractModel {
 
 }

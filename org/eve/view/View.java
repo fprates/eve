@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eve.Model;
+import org.eve.model.Model;
 import org.eve.view.ViewAction;
 import org.springframework.context.support.ResourceBundleMessageSource;
 

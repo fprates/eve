@@ -4,6 +4,33 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
            
+    <bean id="data_source" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="url" value="jdbc:hsqldb:hsql://localhost/des01"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+    
+    <bean id="session_factory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="data_source"/>
+        <property name="mappingResources">
+            <list>
+                <value>META-INF/customer.hbm.xml</value>
+                <value>META-INF/numericrange.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                connection.provider_class=org.hibernate.connection.C3P0ConnectionProvider
+                c3p0.min_size=5
+                c3p0.max_size=10
+                c3p0.timeout=1800
+                c3p0.max_statements=50
+                hibernate.dialect=org.hibernate.dialect.HSQLDialect
+            </value>
+        </property>
+    </bean>
+           
     <import resource="customer.xml"/>
     <import resource="supplier.xml"/>
     

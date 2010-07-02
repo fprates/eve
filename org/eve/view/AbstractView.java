@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eve.Model;
+import org.eve.model.Model;
 import org.eve.view.ViewAction;
 import org.springframework.context.support.ResourceBundleMessageSource;
 

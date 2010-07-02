@@ -12,7 +12,10 @@
         </property>
     </bean>
                
-    <bean id="cust_model" class="org.eve.sd.customer.CustomerModel"/>
+    <bean id="cust_model" class="org.eve.sd.customer.CustomerModel">
+        <property name="sessionFactory" ref="session_factory"/>
+    </bean>
+    
     <bean id="cust_view" class="org.eve.sd.customer.CustomerView">
         <property name="model" ref="cust_model"/>
         <property name="messages" ref="cust_msg"/>

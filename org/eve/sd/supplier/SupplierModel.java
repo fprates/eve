@@ -1,7 +1,7 @@
 package org.eve.sd.supplier;
 
-import org.eve.Model;
+import org.eve.model.AbstractModel;
 
-public class SupplierModel implements Model {
+public class SupplierModel extends AbstractModel {
 
 }
