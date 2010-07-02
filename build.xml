@@ -9,8 +9,10 @@
     <target name="clean">
         <delete file="${basedir}/eve2-x86.jar"/>
         <delete file="${basedir}/eve2-x86_64.jar"/>
+        <delete file="${basedir}/eve2-win32.jar"/>
         <delete file="${basedir}/eve2-x86.zip"/>
         <delete file="${basedir}/eve2-x86_64.zip"/>
+        <delete file="${basedir}/eve2-win32.zip"/>
     </target>
     
     <!--
@@ -49,12 +51,32 @@
                     lib/org.eclipse.core.commands_3.5.0.201004121546.jar"/>
             </manifest>
         </jar>
+        <jar destfile="${basedir}/eve2-win32.jar">
+            <fileset dir="${targetdir}" excludes="build.xml"/>
+            <manifest>
+                <attribute name="Main-Class" value="org.eve.main.Main"/>
+                <attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
+                    lib/swt-win32.jar
+                    lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
+                    lib/org.springframework.context-3.0.3.RELEASE.jar
+                    lib/org.springframework.beans-3.0.3.RELEASE.jar
+                    lib/org.springframework.core-3.0.3.RELEASE.jar
+                    lib/com.springsource.org.apache.commons.logging-1.1.1.jar
+                    lib/org.springframework.asm-3.0.3.RELEASE.jar
+                    lib/org.springframework.expression-3.0.3.RELEASE.jar
+                    lib/org.eclipse.core.commands_3.5.0.201004121546.jar"/>
+            </manifest>
+        </jar>
     	<zip destfile="${basedir}/eve2-x86_64.zip">
     		<zipfileset dir="${basedir}" includes="eve2-x86_64.jar" prefix="eve2"/>
     		<zipfileset dir="${basedir}" includes="lib/*" prefix="eve2"/>
         </zip>
         <zip destfile="${basedir}/eve2-x86.zip">
             <zipfileset dir="${basedir}" includes="eve2-x86.jar" prefix="eve2"/>
+            <zipfileset dir="${basedir}" includes="lib/*" prefix="eve2"/>
+        </zip>
+        <zip destfile="${basedir}/eve2-win32.zip">
+            <zipfileset dir="${basedir}" includes="eve2-win32.jar" prefix="eve2"/>
             <zipfileset dir="${basedir}" includes="lib/*" prefix="eve2"/>
         </zip>
     </target>
