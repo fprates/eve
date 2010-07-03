@@ -12,15 +12,20 @@
         </property>
     </bean>
     
+    <bean id="customer" class="org.eve.sd.customer.Customer"/>
+    
     <bean id="cust_model" class="org.eve.sd.customer.CustomerModel">
         <property name="sessionFactory" ref="session_factory"/>
+        <property name="queries">
+            <map>
+                <entry key="sel_customer" value="from Customer where ident = ?"/>
+            </map>
+        </property>
     </bean>
     
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
         <property name="messageBar" ref="message_bar"/>
-        <property name="object">
-            <bean class="org.eve.sd.customer.Customer"/>
-        </property>
+        <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>        
     </bean>
     
@@ -32,9 +37,7 @@
     <!-- Seleção de clientes -->
     <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
         <property name="messageBar" ref="message_bar"/>
-        <property name="object">
-            <bean class="org.eve.sd.customer.Customer"/>
-        </property>
+        <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
     </bean>
     

@@ -1,6 +1,7 @@
 package org.eve.sd.customer;
 
 import org.eve.main.EVE;
+import org.eve.model.Model;
 import org.eve.view.AbstractController;
 
 public class CustomerSelectionController extends AbstractController {
@@ -10,28 +11,26 @@ public class CustomerSelectionController extends AbstractController {
      */
     @Override
     public void userInput(String input) {
-        Customer customer = (Customer)getObject();
-        CustomerModel model = (CustomerModel)getModel();
+        Customer customer;
+        int ident = getIntForm("main", "customer.ident");
+        Model model = getModel();
 //        String action = getAction();
         
-        customer.setId(getIntForm("main", "customer.ident"));
         
         if (input.equals("customer.sel")) {
-            try {
-                model.select(customer);
+            customer = (Customer)model.selectUnique("sel_customer", new Object[] {ident});
+            if (customer != null) {
 //                if (action.equals("customer.show.sel"))
 //                    call("customer.show");
 //                
 //                if (action.equals("customer.edit.sel"))
 //                    call("customer.edit");
-                
-            } catch (Exception e) {
+            } else {
                 setMessage(EVE.error, "Cliente não encontrado.");
-                e.printStackTrace();
             }
         }
         
-        setIntForm("main", "customer.ident", customer.getId());
+        setIntForm("main", "customer.ident", ident);
     }
 
 }
