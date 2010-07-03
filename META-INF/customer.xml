@@ -28,4 +28,18 @@
         <property name="controller" ref="cust_control"/>
         <property name="messages" ref="cust_msg"/>
     </bean>
+    
+    <!-- Seleção de clientes -->
+    <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
+        <property name="messageBar" ref="message_bar"/>
+        <property name="object">
+            <bean class="org.eve.sd.customer.Customer"/>
+        </property>
+        <property name="model" ref="cust_model"/>
+    </bean>
+    
+    <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView">
+        <property name="controller" ref="cust_sel_control"/>
+        <property name="messages" ref="cust_msg"/>
+    </bean>
 </beans>

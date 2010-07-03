@@ -8,6 +8,7 @@ public class CustomerController extends AbstractController {
     @Override
     public final void userInput(String input) {
         Customer customer = (Customer)getObject();
+        CustomerModel model = (CustomerModel)getModel();
         
         customer.setId(getIntForm("main", "customer.ident"));
         customer.setName(getStringForm("main", "customer.name"));
@@ -16,11 +17,12 @@ public class CustomerController extends AbstractController {
         
         if (input.equals("customer.save")) {
             try {
-                getModel().save(customer);
+                model.save(customer);
                 setMessage(EVE.status, "Cliente gravado com sucesso.");
                 setIntForm("main", "ident", customer.getId());
-            } catch (Exception e) {
+            } catch (Exception ev) {                
                 setMessage(EVE.error, "Erro na gravação do cliente.");
+                ev.printStackTrace();
             }
         }
         

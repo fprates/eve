@@ -102,7 +102,7 @@ public abstract class AbstractController implements Controller {
      * @return
      */
     protected final String getStringForm(String formname, String field) {
-        return forms.get(formname).get(field).getTextWidget().getText();        
+        return forms.get(formname).get(field).getTextWidget().getText();
     }
     
     /**
