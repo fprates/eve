@@ -2,21 +2,30 @@ package org.eve.sd.customer;
 
 import org.eve.model.AbstractModel;
 import org.hibernate.Session;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class CustomerModel extends AbstractModel {    
-    /**
-     * 
-     * @param customer
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.model.Model#save(java.lang.Object)
      */
-    public final void save(Customer customer) {        
+    @Override
+    @Transactional(propagation=Propagation.SUPPORTS)
+    public final void save(Object object) {
+        Customer customer = (Customer)object;
         Session session = getSessionFactory().getCurrentSession();
         
         session.beginTransaction();
         
-        if (customer.getId() == 0)
+        if (customer.getId() == 0) {
             customer.setId(getNextIdent(session, "CUSTMR"));
+            session.save(customer);
+        } else {
+            session.update(customer);
+        }
         
-        session.save(customer);
         session.getTransaction().commit();        
     }
 }

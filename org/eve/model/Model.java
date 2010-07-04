@@ -6,11 +6,24 @@ import java.util.Map;
 import org.hibernate.SessionFactory;
 
 public interface Model {
+    /*
+     * 
+     * Setters
+     * 
+     */
+    
     public abstract void setQueries(Map<String, String> queries);
     
+    public abstract void setSessionFactory(SessionFactory sessionFactory);
+    
+    /*
+     * 
+     * Others
+     * 
+     */
     public abstract Object selectUnique(String query, Object[] criteria);
     
     public abstract List<?> select(String query, Object[] criteria);
     
-    public abstract void setSessionFactory(SessionFactory sessionFactory);
+    public abstract void save(Object object);
 }

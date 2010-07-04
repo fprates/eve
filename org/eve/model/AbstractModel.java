@@ -14,6 +14,12 @@ public abstract class AbstractModel implements Model {
     private Map<String, String> queries;
 
     /*
+     * 
+     * Setters
+     * 
+     */
+    
+    /*
      * (non-Javadoc)
      * @see org.eve.model.Model#setQueries(java.util.Map)
      */
@@ -21,7 +27,55 @@ public abstract class AbstractModel implements Model {
     public final void setQueries(Map<String, String> queries) {
         this.queries = queries;
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.model.Model#setSessionFactory(org.hibernate.SessionFactory)
+     */
+    @Override
+    public final void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    
+    /*
+     * 
+     * Getters
+     * 
+     */
+    
+    /**
+     * Retorna o próximo identificador numérico
+     * @param session
+     * @param rngname
+     * @return
+     */
+    @Transactional(propagation=Propagation.SUPPORTS)
+    protected final int getNextIdent(Session session, String rngname) {
+        NumericRange range = (NumericRange)session.
+            createQuery("from NumericRange where range = ?").
+            setString(0, rngname).uniqueResult();
+        
+        range.setCurrent(range.getCurrent() + 1);
+        
+        session.update(range);
+        
+        return range.getCurrent();
+    }
+    
+    /**
+     * Retorna session factory
+     * @return
+     */
+    protected final SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }    
+    
+    /*
+     * 
+     * Others
+     * 
+     */
+    
     /*
      * (non-Javadoc)
      * @see org.eve.model.Model#selectUnique(java.lang.String, java.lang.Object[])
@@ -69,39 +123,11 @@ public abstract class AbstractModel implements Model {
         
         return results;
     }
-    
-    /**
-     * Retorna o próximo identificador numérico
-     * @param session
-     * @param rngname
-     * @return
-     */
-    protected final int getNextIdent(Session session, String rngname) {
-        NumericRange range = (NumericRange)session.
-            createQuery("from NumericRange where range = ?").
-            setString(0, rngname).uniqueResult();
-        
-        range.setCurrent(range.getCurrent() + 1);
-        
-        session.update(range);
-        
-        return range.getCurrent();
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    protected final SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-    
+
     /*
      * (non-Javadoc)
-     * @see org.eve.model.Model#setSessionFactory(org.hibernate.SessionFactory)
+     * @see org.eve.model.Model#save(java.lang.Object)
      */
     @Override
-    public final void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    public void save(Object object) {  }
 }
