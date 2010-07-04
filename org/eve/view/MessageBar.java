@@ -17,6 +17,11 @@ public class MessageBar {
     
     public MessageBar() { }
     
+    /*
+     * 
+     * Setters
+     * 
+     */
     /**
      * Define fonte de mensagens
      * @param messages
@@ -47,6 +52,12 @@ public class MessageBar {
                 ViewUtils.getCharHeight(msgtxt)));
     }
     
+    /*
+     * 
+     * Others
+     * 
+     */
+    
     /**
      * Inicializa barra de mensagens
      * @param container
@@ -56,5 +67,12 @@ public class MessageBar {
         msggrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         msgtxt = new Label(msggrp, SWT.NONE);
         msggrp.pack();        
+    }
+    
+    /**
+     * Limpa barra de mensagem
+     */
+    public final void clear() {
+        msgtxt.setText("");
     }
 }

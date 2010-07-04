@@ -183,6 +183,7 @@ public abstract class AbstractController implements Controller {
     public final void widgetSelected(SelectionEvent ev) {
         Button item = (Button)ev.getSource();
         
+        messageBar.clear();
         userInput(widgets.get(item));
     }
     

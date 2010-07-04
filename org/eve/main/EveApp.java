@@ -83,7 +83,9 @@ public class EveApp implements EveAPI {
         if (container != null)
             container.setVisible(false);
         
+        view.getController().getMessageBar().clear();
         view.reload(action);
+        
         container = view.getContainer();
         container.setVisible(true);
     }

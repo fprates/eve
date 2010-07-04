@@ -6,19 +6,15 @@ package org.eve.main;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-//import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
-//import org.eclipse.swt.widgets.Widget;
 
 /**
  * @author francisco.prates
  *
  */
-public class GeneralListener implements Listener, SelectionListener {
+public class GeneralListener implements Listener {
     private Map<TreeItem, String> selectorActions;
     private EveApp system;
     
@@ -41,16 +37,4 @@ public class GeneralListener implements Listener, SelectionListener {
         
         system.call(action);
     }
-
-    @Override
-    public void widgetDefaultSelected(SelectionEvent ev) { }
-
-    @Override
-    public void widgetSelected(SelectionEvent ev) {
-//        Button item = (Button)ev.getSource();
-//        View view = toolitemViews.get(item);
-//        
-//        view.userWidgetInput(item);
-    }
-
 }
