@@ -25,7 +25,7 @@ public class CustomerController extends AbstractController {
                 
                 form.setInt("customer.ident", customer.getId());
                 
-                setMessage(EVE.status, "customer.save.successful");
+                setMessage(EVE.status, "customer.save.success");
             } catch (Exception ev) {                
                 setMessage(EVE.error, "customer.save.error");
                 ev.printStackTrace();

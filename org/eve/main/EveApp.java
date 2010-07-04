@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eve.view.View;
 
 public class EveApp implements EveAPI {
+    private final static String VERSION = "1.9.3";
     private List<View> views;
     private Map<String, View> viewmap;
     private GeneralListener listener;
@@ -56,6 +57,14 @@ public class EveApp implements EveAPI {
      */
     public final Map<String, View> getViewMap() {
         return viewmap;
+    }
+    
+    /**
+     * Retorna versão do sistema
+     * @return
+     */
+    public final String getVersion() {
+        return VERSION;
     }
     
     /*

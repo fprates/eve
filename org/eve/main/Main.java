@@ -22,7 +22,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends ApplicationWindow {
-    private final static String VERSION = "1.9.2";
     private Composite container;
     private Tree selector;
     private EveApp app;
@@ -55,7 +54,7 @@ public class Main extends ApplicationWindow {
         selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));        
         addViews(app.getViews(), listener);
         
-        shell.setText("Eve "+VERSION);
+        shell.setText("Eve "+app.getVersion());
         shell.pack();
         shell.setMaximized(true);
         
