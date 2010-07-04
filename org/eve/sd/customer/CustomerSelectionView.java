@@ -3,6 +3,10 @@
  */
 package org.eve.sd.customer;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eve.view.AbstractView;
 import org.eve.view.Form;
 
@@ -23,17 +27,27 @@ public class CustomerSelectionView extends AbstractView {
      */
     @Override
     public void defineView() {
+        Group selpor;
         Form form = getController().getForm("main");
+        Form selporform = getController().getForm("selpor");
+        Composite container = getContainer();
         
         addAction("customer.show.sel");
         addAction("customer.edit.sel");
         
-        form.put("customer.ident", 12);
+        form.put("customer.ident", 12);        
+        form.define(container);
         
-        form.define(getContainer());
+        selpor = new Group(container, SWT.SHADOW_IN);
+        selpor.setLayout(new RowLayout(SWT.VERTICAL));
+        selpor.setText(getMessage("customer.select.by"));
+        
+        selporform.put("customer.name", 40);
+        selporform.put("customer.aname", 40);
+        selporform.define(selpor);
+        selpor.pack();
         
         addButton("customer.sel");
-
     }
 
     /* (non-Javadoc)

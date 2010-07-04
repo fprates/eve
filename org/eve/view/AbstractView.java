@@ -130,6 +130,10 @@ public abstract class AbstractView implements View {
         return locale;
     }
     
+    protected final String getMessage(String id) {
+        return messages.getMessage(id, null, locale);
+    }
+    
     /*
      * 
      * Others

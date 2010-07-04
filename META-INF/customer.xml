@@ -33,6 +33,10 @@
         <property name="messages" ref="cust_msg"/>
     </bean>
     
+    <bean id="cust_selpor_form" class="org.eve.view.Form">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
     <bean id="cust_msg_bar" class="org.eve.view.MessageBar" scope="prototype">
         <property name="messages" ref="cust_msg"/>
     </bean>
@@ -61,6 +65,7 @@
         <property name="forms">
             <map>
                 <entry key="main" value-ref="cust_sel_form"/>
+                <entry key="selpor" value-ref="cust_selpor_form"/>                
             </map>
         </property>
     </bean>
