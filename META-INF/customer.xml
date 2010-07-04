@@ -33,8 +33,12 @@
         <property name="messages" ref="cust_msg"/>
     </bean>
     
+    <bean id="cust_msg_bar" class="org.eve.view.MessageBar" scope="prototype">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
-        <property name="messageBar" ref="message_bar"/>
+        <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
         <property name="forms">
@@ -51,7 +55,7 @@
     
     <!-- Seleção de clientes -->
     <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
-        <property name="messageBar" ref="message_bar"/>
+        <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
         <property name="forms">

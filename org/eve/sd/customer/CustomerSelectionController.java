@@ -37,7 +37,7 @@ public class CustomerSelectionController extends AbstractController {
                 if (action.equals("customer.edit.sel"))
                     call("customer.edit");
             } else {
-                setMessage(EVE.error, "Cliente não encontrado.");
+                setMessage(EVE.error, "customer.not.found");
             }
         }
         

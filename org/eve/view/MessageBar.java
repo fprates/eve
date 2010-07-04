@@ -1,24 +1,36 @@
 package org.eve.view;
 
+import java.util.Locale;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eve.main.EVE;
+import org.springframework.context.MessageSource;
 
 public class MessageBar {
     private Group msggrp;
     private Label msgtxt;
+    private MessageSource messages;
     
     public MessageBar() { }
+    
+    /**
+     * Define fonte de mensagens
+     * @param messages
+     */
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
+    }
     
     /**
      * Ajusta mensagem da barra
      * @param status
      * @param message
      */
-    public final void setMessage(int status, String message) {        
+    public final void setMessage(int status, String message, Locale locale) {        
         switch (status) {
         case EVE.error:
             msggrp.setText("Erro");
@@ -29,7 +41,7 @@ public class MessageBar {
             break;
         }
         
-        msgtxt.setText(message);
+        msgtxt.setText(messages.getMessage(message, null, locale));
         msgtxt.setSize(msgtxt.computeSize(
                 message.length() * ViewUtils.getCharWidth(msgtxt),
                 ViewUtils.getCharHeight(msgtxt)));

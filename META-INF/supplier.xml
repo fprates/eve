@@ -18,8 +18,12 @@
         <property name="sessionFactory" ref="session_factory"/>
     </bean>
     
+    <bean id="supp_msg_bar" class="org.eve.view.MessageBar" scope="prototype">
+        <property name="messages" ref="supp_msg"/>
+    </bean>
+    
     <bean id="supp_control" class="org.eve.sd.supplier.SupplierController">
-        <property name="messageBar" ref="message_bar"/>
+        <property name="messageBar" ref="supp_msg_bar"/>
         <property name="object">
             <bean class="org.eve.sd.supplier.Supplier"/>
         </property>

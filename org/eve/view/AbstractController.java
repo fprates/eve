@@ -1,6 +1,7 @@
 package org.eve.view;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionEvent;
@@ -17,6 +18,7 @@ public abstract class AbstractController implements Controller {
     private EveAPI system;
     private Map<Widget, String> widgets;
     private Map<String, Form> forms;
+    private Locale locale;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
@@ -88,7 +90,16 @@ public abstract class AbstractController implements Controller {
      * @param message
      */
     protected final void setMessage(int status, String message) {
-        messageBar.setMessage(status, message);
+        messageBar.setMessage(status, message, locale);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setLocale(java.util.Locale)
+     */
+    @Override
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
     }
     
     /*

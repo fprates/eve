@@ -13,9 +13,9 @@ public class CustomerController extends AbstractController {
         if (input.equals("customer.save")) {
             try {
                 model.save(customer);
-                setMessage(EVE.status, "Cliente gravado com sucesso.");
+                setMessage(EVE.status, "customer.save.successful");
             } catch (Exception ev) {                
-                setMessage(EVE.error, "Erro na gravação do cliente.");
+                setMessage(EVE.error, "customer.save.error");
                 ev.printStackTrace();
             }
         }

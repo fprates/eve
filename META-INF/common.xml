@@ -42,6 +42,4 @@
       <property name="sessionFactory" ref="session_factory"/>
     </bean>
     
-    <bean id="message_bar" class="org.eve.view.MessageBar" scope="prototype"/>
-    
 </beans>

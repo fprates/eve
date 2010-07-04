@@ -1,5 +1,6 @@
 package org.eve.view;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionListener;
@@ -14,6 +15,7 @@ public interface Controller extends SelectionListener {
      * Setters
      * 
      */
+    
     public abstract void setObject(Object object);
     
     public abstract void setModel(Model model);
@@ -25,6 +27,8 @@ public interface Controller extends SelectionListener {
     public abstract void setSystem(EveAPI system);
     
     public abstract void setForms(Map<String, Form> forms);
+    
+    public abstract void setLocale(Locale locale);
     
     /*
      * 

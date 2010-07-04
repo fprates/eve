@@ -64,6 +64,7 @@ public abstract class AbstractView implements View {
     @Override
     public final void setLocale(Locale locale) {
         this.locale = locale;
+        controller.setLocale(locale);
     }
     
     /*

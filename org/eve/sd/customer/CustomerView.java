@@ -20,12 +20,12 @@ public class CustomerView extends AbstractView {
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
         Form form = getController().getForm("main");
-        form.setLocale(getLocale());
         
         addAction("customer.create");
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
+        form.setLocale(getLocale());        
         form.put("customer.ident", 12, false);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
