@@ -113,6 +113,7 @@ public class CustomerView extends AbstractView {
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
             
+            getController().getForm("main").clear();
             return;
         }
     }

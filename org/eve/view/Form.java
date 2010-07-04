@@ -164,4 +164,12 @@ public class Form {
         fields.put(id, new FormComponent(messages.getMessage(id, null, locale), length, true));        
     }
     
+    /**
+     * Limpa formulário
+     */
+    public final void clear() {
+        for (FormComponent component : fields.values())
+            component.getTextWidget().setText("");
+    }
+    
 }
