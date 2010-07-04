@@ -6,12 +6,15 @@ import java.util.Map;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Widget;
+import org.eve.main.EveAPI;
 import org.eve.model.Model;
 
 public abstract class AbstractController implements Controller {
     private Object object;
+    private String action;
     private Model model;
     private MessageBar messageBar;
+    private EveAPI system;
     private Map<String, Map<String, FormComponent>> forms;
     private Map<Widget, String> widgets;
     
@@ -60,6 +63,24 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setMessageBar(MessageBar messageBar) {
         this.messageBar = messageBar;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setAction(java.lang.String)
+     */
+    @Override
+    public final void setAction(String action) {
+        this.action = action;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setSystem(org.eve.main.EveSystem)
+     */
+    @Override
+    public final void setSystem(EveAPI system) {
+        this.system = system;
     }
     
     /**
@@ -132,6 +153,14 @@ public abstract class AbstractController implements Controller {
         return model;
     }
     
+    /**
+     * Retorna ação que chamou a visão
+     * @return
+     */
+    protected final String getAction() {
+        return action;
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Controller#getMessageBar()
@@ -146,6 +175,10 @@ public abstract class AbstractController implements Controller {
      * Others
      * 
      */
+    
+    protected void call(String action) {
+        system.call(action);
+    }
     
     public abstract void userInput(String input);
 

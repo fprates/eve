@@ -85,6 +85,8 @@ public class Main extends ApplicationWindow {
             view.setLocale(Locale.getDefault());
             view.buildView();
             
+            view.getController().setSystem(app);
+            
             item = new TreeItem(selector, SWT.NONE);
             item.setText(view.getName());
             
@@ -109,7 +111,7 @@ public class Main extends ApplicationWindow {
         Main core = new Main();
         
         core.setBlockOnOpen(true);
-        core.open();        
+        core.open();
         Display.getCurrent().dispose();
     }
 

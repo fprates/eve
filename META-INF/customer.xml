@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     
+    <import resource="common.xml"/>
+    
     <bean id="cust_msg" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>

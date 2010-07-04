@@ -29,6 +29,8 @@ public interface View {
 
     public abstract String getName();
     
+    public abstract Controller getController();
+    
     /*
      * Others
      */

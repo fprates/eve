@@ -121,6 +121,15 @@ public abstract class AbstractView implements View {
         return name;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#getController()
+     */
+    @Override
+    public final Controller getController() {
+        return controller;
+    }
+    
     /**
      * Retorna componentes do formulário
      * @param form

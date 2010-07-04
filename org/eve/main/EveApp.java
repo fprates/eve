@@ -7,7 +7,7 @@ import java.util.Map;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.view.View;
 
-public class EveApp {
+public class EveApp implements EveAPI {
     private List<View> views;
     private Map<String, View> viewmap;
     private GeneralListener listener;
@@ -37,14 +37,23 @@ public class EveApp {
      * Getters
      * 
      */
+    
     public final List<View> getViews() {
         return views;
     }
     
+    /**
+     * Retorna o listener da árvore de opções
+     * @return
+     */
     public final GeneralListener getListener() {
         return listener;
     }
     
+    /**
+     * Retorna o mapa de visões
+     * @return
+     */
     public final Map<String, View> getViewMap() {
         return viewmap;
     }
@@ -55,10 +64,7 @@ public class EveApp {
      * 
      */
     
-
-    /**
-     * 
-     */
+    @Override
     public final void call(String action) {
         View view = viewmap.get(action);
         

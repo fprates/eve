@@ -13,6 +13,11 @@ public class MessageBar {
     
     public MessageBar() { }
     
+    /**
+     * Ajusta mensagem da barra
+     * @param status
+     * @param message
+     */
     public final void setMessage(int status, String message) {        
         switch (status) {
         case EVE.error:
@@ -30,6 +35,10 @@ public class MessageBar {
                 ViewUtils.getCharHeight(msgtxt)));
     }
     
+    /**
+     * Inicializa barra de mensagens
+     * @param container
+     */
     public final void init(Composite container) {
         msggrp = new Group(container, SWT.SHADOW_ETCHED_IN);
         msggrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));

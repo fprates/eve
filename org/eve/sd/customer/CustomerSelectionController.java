@@ -14,17 +14,17 @@ public class CustomerSelectionController extends AbstractController {
         Customer customer;
         int ident = getIntForm("main", "customer.ident");
         Model model = getModel();
-//        String action = getAction();
+        String action = getAction();
         
         
         if (input.equals("customer.sel")) {
             customer = (Customer)model.selectUnique("sel_customer", new Object[] {ident});
             if (customer != null) {
-//                if (action.equals("customer.show.sel"))
-//                    call("customer.show");
-//                
-//                if (action.equals("customer.edit.sel"))
-//                    call("customer.edit");
+                if (action.equals("customer.show.sel"))
+                    call("customer.show");
+                
+                if (action.equals("customer.edit.sel"))
+                    call("customer.edit");
             } else {
                 setMessage(EVE.error, "Cliente não encontrado.");
             }
