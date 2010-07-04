@@ -25,10 +25,23 @@
         </property>
     </bean>
     
+    <bean id="cust_form" class="org.eve.view.Form">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
+    <bean id="cust_sel_form" class="org.eve.view.Form">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
         <property name="messageBar" ref="message_bar"/>
         <property name="object" ref="customer"/>
-        <property name="model" ref="cust_model"/>        
+        <property name="model" ref="cust_model"/>
+        <property name="forms">
+            <map>
+                <entry key="main" value-ref="cust_form"/>
+            </map>
+        </property>
     </bean>
     
     <bean id="cust_view" class="org.eve.sd.customer.CustomerView">
@@ -41,6 +54,11 @@
         <property name="messageBar" ref="message_bar"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
+        <property name="forms">
+            <map>
+                <entry key="main" value-ref="cust_sel_form"/>
+            </map>
+        </property>
     </bean>
     
     <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView">

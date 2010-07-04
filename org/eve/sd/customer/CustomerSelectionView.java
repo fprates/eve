@@ -4,6 +4,7 @@
 package org.eve.sd.customer;
 
 import org.eve.view.AbstractView;
+import org.eve.view.Form;
 
 /**
  * @author francisco.prates
@@ -22,12 +23,14 @@ public class CustomerSelectionView extends AbstractView {
      */
     @Override
     public void defineView() {
+        Form form = getController().getForm("main");
+        
         addAction("customer.show.sel");
         addAction("customer.edit.sel");
         
-        addForm("customer.ident", 12);
+        form.put("customer.ident", 12);
         
-        defineForm("main", getContainer());
+        form.define(getContainer());
         
         addButton("customer.sel");
 

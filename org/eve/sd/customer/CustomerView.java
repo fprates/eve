@@ -1,11 +1,10 @@
 package org.eve.sd.customer;
 
-import java.util.Map;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eve.view.AbstractView;
+import org.eve.view.Form;
 import org.eve.view.FormComponent;
 
 public class CustomerView extends AbstractView {
@@ -20,19 +19,21 @@ public class CustomerView extends AbstractView {
         TabFolder main = new TabFolder(getContainer(), SWT.BORDER);
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
+        Form form = getController().getForm("main");
+        form.setLocale(getLocale());
         
         addAction("customer.create");
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
-        addForm("customer.ident", 12, false);
-        addForm("customer.name", 40);
-        addForm("customer.aname", 40);
-        addForm("customer.cnpj", 18);
-        addForm("customer.status", 1);
+        form.put("customer.ident", 12, false);
+        form.put("customer.name", 40);
+        form.put("customer.aname", 40);
+        form.put("customer.cnpj", 18);
+        form.put("customer.status", 1);
         
         base.setText("Base");
-        base.setControl(defineForm("main", main));
+        base.setControl(form.define(main));
 //        
 //        addTable("rname", "Nome");
 //        addTable("funct", "Função");
@@ -52,14 +53,25 @@ public class CustomerView extends AbstractView {
         addButton("customer.save");
     }
     
+    private final void setControlLoad(Customer customer) {
+        Form form = getController().getForm("main");
+        
+        form.setString("customer.aname", customer.getAlternateName());
+        form.setString("customer.cnpj", customer.getCodCadNac());
+//        customer_.setCreation(customer.getCreation());
+        form.setInt("customer.ident", customer.getId());
+        form.setString("customer.name", customer.getName());
+        form.setInt("customer.status", customer.getStatus());
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.View#reload(java.lang.String)
      */
     @Override
     public final void reload(String action) {
-        FormComponent component;
-        Map<String, FormComponent>form = getForm("main");
+        Customer customer = (Customer)getController().getObject();
+        Form form = getController().getForm("main");
         
         /*
          * Display mode component's configuration
@@ -68,10 +80,10 @@ public class CustomerView extends AbstractView {
 //            setTitle("Exibir cliente");
             setButtonVisible("customer.save", false);
             
-            for (String field : form.keySet()) {
-                component = form.get(field);
+            for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(false);
-            }
+            
+            setControlLoad(customer);
             
             return;
         }
@@ -82,11 +94,11 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.edit")) {
 //            setTitle("Editar cliente");            
             setButtonVisible("customer.save", true);
-            
-            for (String field : form.keySet()) {
-                component = form.get(field);
+
+            for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
-            }
+            
+            setControlLoad(customer);
                 
             return;
         }
@@ -97,11 +109,9 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.create")) {            
 //            setTitle("Criar cliente");
             setButtonVisible("customer.save", true);
-            
-            for (String field : form.keySet()) {
-                component = form.get(field);
+
+            for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
-            }
             
             return;
         }

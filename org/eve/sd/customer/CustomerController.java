@@ -10,16 +10,10 @@ public class CustomerController extends AbstractController {
         Customer customer = (Customer)getObject();
         CustomerModel model = (CustomerModel)getModel();
         
-        customer.setId(getIntForm("main", "customer.ident"));
-        customer.setName(getStringForm("main", "customer.name"));
-        customer.setAlternateName(getStringForm("main", "customer.aname"));
-        customer.setStatus(getIntForm("main", "customer.status"));
-        
         if (input.equals("customer.save")) {
             try {
                 model.save(customer);
                 setMessage(EVE.status, "Cliente gravado com sucesso.");
-                setIntForm("main", "ident", customer.getId());
             } catch (Exception ev) {                
                 setMessage(EVE.error, "Erro na gravação do cliente.");
                 ev.printStackTrace();

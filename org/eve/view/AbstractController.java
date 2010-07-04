@@ -15,12 +15,11 @@ public abstract class AbstractController implements Controller {
     private Model model;
     private MessageBar messageBar;
     private EveAPI system;
-    private Map<String, Map<String, FormComponent>> forms;
     private Map<Widget, String> widgets;
+    private Map<String, Form> forms;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
-        forms = new HashMap<String, Map<String, FormComponent>>();
     }
     
     /*
@@ -36,15 +35,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setObject(Object object) {
         this.object = object;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#putForm(java.lang.String, java.util.Map)
-     */
-    @Override
-    public final void putForm(String formname, Map<String, FormComponent> form) {
-        forms.put(formname, form);
     }
     
     /*
@@ -83,24 +73,15 @@ public abstract class AbstractController implements Controller {
         this.system = system;
     }
     
-    /**
-     * Ajusta valor do campo caractere do formulário
-     * @param field
-     * @param value
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setForms(java.util.Map)
      */
-    protected final void setStringForm(String formname, String field, String value) {
-        forms.get(formname).get(field).getTextWidget().setText(value);        
+    @Override
+    public final void setForms(Map<String, Form> forms) {
+        this.forms = forms;
     }
     
-    /**
-     * Ajusta valor do campo inteiro do formulário
-     * @param field
-     * @param value
-     */
-    protected final void setIntForm(String formname, String field, int value) {
-        setStringForm(formname, field, Integer.toString(value));
-    }
-
     /**
      * Ajusta texto da barra de mensagens
      * @param status
@@ -115,35 +96,6 @@ public abstract class AbstractController implements Controller {
      * Getters
      * 
      */
-    
-    
-    /**
-     * Retorna valor do campo caractere do formulário
-     * @param field
-     * @return
-     */
-    protected final String getStringForm(String formname, String field) {
-        return forms.get(formname).get(field).getTextWidget().getText();
-    }
-    
-    /**
-     * Retorna valor do campo inteiro do formulário
-     * @param field
-     * @return
-     */
-    protected final int getIntForm(String formname, String field) {
-        String test = getStringForm(formname, field);
-        
-        return test.equals("")? 0:Integer.parseInt(test);
-    }
-    
-    /**
-     * Retorna objeto
-     * @return
-     */
-    protected final Object getObject() {
-        return object;
-    }
     
     /**
      * Retorna modelo
@@ -163,6 +115,24 @@ public abstract class AbstractController implements Controller {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Controller#getObject()
+     */
+    @Override
+    public final Object getObject() {
+        return object;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getForm(java.lang.String)
+     */
+    @Override
+    public final Form getForm(String formname) {
+        return forms.get(formname);
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Controller#getMessageBar()
      */
     @Override
@@ -175,10 +145,6 @@ public abstract class AbstractController implements Controller {
      * Others
      * 
      */
-    
-    protected void call(String action) {
-        system.call(action);
-    }
     
     public abstract void userInput(String input);
 
@@ -207,5 +173,13 @@ public abstract class AbstractController implements Controller {
         Button item = (Button)ev.getSource();
         
         userInput(widgets.get(item));
+    }
+    
+    /**
+     * Chamada à visão
+     * @param action
+     */
+    protected void call(String action) {
+        system.call(action);
     }
 }

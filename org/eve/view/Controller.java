@@ -24,22 +24,25 @@ public interface Controller extends SelectionListener {
     
     public abstract void setSystem(EveAPI system);
     
+    public abstract void setForms(Map<String, Form> forms);
+    
     /*
      * 
      * Getters
      * 
      */
     
+    public abstract Object getObject();
+    
     public abstract MessageBar getMessageBar();
+    
+    public abstract Form getForm(String formname);
     
     /*
      * 
      * Others
      * 
      */
-    
-    public abstract void putForm(
-            String formname, Map<String, FormComponent> form);
     
     public abstract void putWidget(Widget widget, String id);
 }

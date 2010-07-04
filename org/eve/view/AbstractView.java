@@ -1,6 +1,5 @@
 package org.eve.view;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,12 +8,8 @@ import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eve.view.ViewAction;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
@@ -26,14 +21,10 @@ public abstract class AbstractView implements View {
     private Controller controller;
     private List<ViewAction> actions;
     private List<String> buttonbarlist;
-    private Map<String, FormComponent> form;
-    private Map<String, Map<String, FormComponent>> forms;
     private Map<String, Button> buttons;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
-        form = new LinkedHashMap<String, FormComponent>();
-        forms = new HashMap<String, Map<String, FormComponent>>();
         buttonbarlist = new LinkedList<String>();
         buttons = new LinkedHashMap<String, Button>();
     }
@@ -75,14 +66,6 @@ public abstract class AbstractView implements View {
         this.locale = locale;
     }
     
-    /**
-     * Ajusta nome da visão
-     * @param name
-     */
-    protected final void setName(String name) {
-        this.name = name;
-    }
-    
     /*
      * (non-Javadoc)
      * @see org.eve.view.View#setMessages(
@@ -91,6 +74,14 @@ public abstract class AbstractView implements View {
     @Override
     public final void setMessages(ResourceBundleMessageSource messages) {
         this.messages = messages;
+    }
+    
+    /**
+     * Ajusta nome da visão
+     * @param name
+     */
+    protected final void setName(String name) {
+        this.name = name;
     }
     
     /*
@@ -131,12 +122,11 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * Retorna componentes do formulário
-     * @param form
+     * Retorna a localização atual
      * @return
      */
-    protected final Map<String, FormComponent> getForm(String form) {
-        return forms.get(form);
+    protected final Locale getLocale() {
+        return locale;
     }
     
     /*
@@ -151,69 +141,6 @@ public abstract class AbstractView implements View {
      */
     protected final void addButton(String id) {
         buttonbarlist.add(id);
-    }
-    
-    /**
-     * Adiciona campo ao formulário
-     * @param id
-     * @param length
-     */
-    protected final void addForm(String id, int length) {
-        form.put(id, new FormComponent(
-                messages.getMessage(id, null, locale), length, true));
-    }
-    
-    /**
-     * Adiciona campo ao formulário
-     * @param id
-     * @param length
-     * @param enabled
-     */
-    protected final void addForm(String id, int length, boolean enabled) {
-        form.put(id, new FormComponent(
-                messages.getMessage(id, null, locale), length, enabled));
-    }
-    
-    /**
-     * Constrói formulário e inicializa o próximo
-     * @param form
-     * @param composite
-     */
-    protected final Composite defineForm(String formname, Composite main) {
-        Label label;
-        Text text;
-        int charw = 0;
-        int charh = 0;
-        Composite fieldComposite;
-        FormComponent component;
-        Composite composite = new Composite(main, SWT.NONE);
-        
-        composite.setLayout(new GridLayout(2, false));
-        
-        for(String field : form.keySet()) {
-            component = form.get(field);
-            
-            label = new Label(composite, SWT.NONE);
-            label.setText(component.getName());
-            label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-
-            fieldComposite = new Composite(composite, SWT.NONE);
-            text = new Text(fieldComposite, SWT.BORDER);
-            
-            if (charw == 0) {
-                charw = ViewUtils.getCharWidth(text);
-                charh = ViewUtils.getCharHeight(text);             
-            }
-            
-            text.setSize(text.computeSize(component.getLength() * charw, charh));
-            component.setText(text);            
-        }
-        
-        controller.putForm(formname, form);
-        forms.put(formname, form);
-        form = new LinkedHashMap<String, FormComponent>();
-        
-        return composite;
     }
     
     protected abstract void defineView();
