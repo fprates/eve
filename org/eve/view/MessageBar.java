@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -14,6 +15,7 @@ public class MessageBar {
     private Group msggrp;
     private Label msgtxt;
     private MessageSource messages;
+    private Composite container;
     
     public MessageBar() { }
     
@@ -35,7 +37,9 @@ public class MessageBar {
      * @param status
      * @param message
      */
-    public final void setMessage(int status, String message, Locale locale) {        
+    public final void setMessage(int status, String id, Locale locale) {
+        String message;
+        
         switch (status) {
         case EVE.error:
             msggrp.setText("Erro");
@@ -46,10 +50,10 @@ public class MessageBar {
             break;
         }
         
-        msgtxt.setText(messages.getMessage(message, null, locale));
-        msgtxt.setSize(msgtxt.computeSize(
-                message.length() * ViewUtils.getCharWidth(msgtxt),
-                ViewUtils.getCharHeight(msgtxt)));
+        message = messages.getMessage(id, null, locale);
+        msgtxt.setText(message);
+        msggrp.pack();
+        container.pack();        
     }
     
     /*
@@ -63,16 +67,18 @@ public class MessageBar {
      * @param container
      */
     public final void init(Composite container) {
-        msggrp = new Group(container, SWT.SHADOW_ETCHED_IN);
+        this.container = container;
+        msggrp = new Group(container, SWT.SHADOW_IN);
+        msggrp.setLayout(new RowLayout(SWT.VERTICAL));
         msggrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         msgtxt = new Label(msggrp, SWT.NONE);
-        msggrp.pack();        
     }
     
     /**
      * Limpa barra de mensagem
      */
     public final void clear() {
+        msggrp.setText("");
         msgtxt.setText("");
     }
 }
