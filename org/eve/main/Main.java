@@ -1,5 +1,6 @@
 package org.eve.main;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -70,7 +71,9 @@ public class Main extends ApplicationWindow {
         TreeItem item;
         TreeItem subitem;
         Composite container;
+        String viewname;
         Map<String, View> viewmap = app.getViewMap();
+        Map<String, TreeItem> tree = new HashMap<String, TreeItem>();
         
         /*
          * assemblies main tree.
@@ -82,12 +85,17 @@ public class Main extends ApplicationWindow {
             
             view.setContainer(container);
             view.setLocale(Locale.getDefault());
-            view.buildView();
-            
+            view.buildView();            
             view.getController().setSystem(app);
-            
-            item = new TreeItem(selector, SWT.NONE);
-            item.setText(view.getName());
+
+            viewname = view.getName();
+            if (tree.containsKey(viewname)) {
+                item = tree.get(viewname);
+            } else {
+                item = new TreeItem(selector, SWT.NONE);
+                item.setText(viewname);
+                tree.put(viewname, item);
+            }
             
             for (ViewAction action : view.getActions()) {
                 viewmap.put(action.getId(), view);
