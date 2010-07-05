@@ -17,6 +17,7 @@
                 <ref bean="cust_view"/>
                 <ref bean="supp_view"/>
                 <ref bean="cust_sel_view"/>
+                <ref bean="cust_choose_view"/>
             </list>
         </property>
     </bean>

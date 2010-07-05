@@ -46,8 +46,6 @@ public interface Controller extends SelectionListener {
     
     public abstract TableAssist getTable(String tablename);
     
-    public abstract Object getAttribute();
-    
     /*
      * 
      * Others

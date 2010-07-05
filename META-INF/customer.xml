@@ -68,7 +68,9 @@
     </bean>
     
     <!-- Seleção de clientes -->
-    <bean id="cust_selpor_table" class="org.eve.view.TableAssist"/>
+    <bean id="cust_selpor_table" class="org.eve.view.TableAssist">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
     
     <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
         <property name="messageBar" ref="cust_msg_bar"/>

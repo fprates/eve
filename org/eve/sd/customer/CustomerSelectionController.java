@@ -6,6 +6,7 @@ import org.eve.main.EVE;
 import org.eve.model.Model;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
+import org.eve.view.TableAssist;
 
 public class CustomerSelectionController extends AbstractController {
 
@@ -17,6 +18,7 @@ public class CustomerSelectionController extends AbstractController {
         Customer customer_;
         List<?> customers;
         Form selporform;
+        TableAssist table;
         Customer customer = (Customer)getObject();
         Form form = getForm("main");
         int ident = form.getInt("customer.ident");
@@ -42,7 +44,16 @@ public class CustomerSelectionController extends AbstractController {
                         selporform.getStringLike("customer.aname")});
                 
                 if (customers != null && customers.size() > 0) {
-                    setAttribute(customers);
+                    table = getTable("customers");
+                    ident = 0;
+                    for(Object object : customers) {
+                        table.insert();
+                        customer_ = (Customer)object;
+                        table.setIntValue("customer.ident", ident, customer_.getId());
+                        table.setStringValue("customer.name", ident, customer_.getName());
+                        table.setStringValue("customer.aname", ident, customer_.getAlternateName());
+                        ident++;
+                    }
                     
                     if (action.equals("customer.show.sel"))
                         call("customer.show.choose");

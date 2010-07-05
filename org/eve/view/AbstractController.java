@@ -12,7 +12,6 @@ import org.eve.model.Model;
 
 public abstract class AbstractController implements Controller {
     private Object object;
-    private Object attribute;
     private String action;
     private Model model;
     private MessageBar messageBar;
@@ -113,14 +112,6 @@ public abstract class AbstractController implements Controller {
         messageBar.setMessage(status, message, locale);
     }
     
-    /**
-     * Ajusta atributo
-     * @param attribute
-     */
-    protected final void setAttribute(Object attribute) {
-        this.attribute = attribute;
-    }
-    
     /*
      * 
      * Getters
@@ -177,11 +168,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final MessageBar getMessageBar() {
         return messageBar;
-    }
-    
-    @Override
-    public final Object getAttribute() {
-        return attribute;
     }
     
     /*

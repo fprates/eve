@@ -43,14 +43,7 @@ public class CustomerView extends AbstractView {
         ctable.put("contact.teln1");
         ctable.put("contact.teln2");
         
-        contacts.setControl(ctable.define(main, getController()));
-        ctable.insert();
-        ctable.setValue("contact.rname", 0, "teste1");
-        ctable.setValue("contact.funct", 0, "Assessorista");
-        ctable.insert();
-        ctable.setValue("contact.rname", 1, "teste2");
-        ctable.setValue("contact.funct", 1, "Faxineiro");
-        
+        contacts.setControl(ctable.define(main, getController()));        
         contacts.setText("Contatos");
         
         addButton("customer.save");

@@ -1,7 +1,5 @@
 package org.eve.sd.customer;
 
-//import java.util.List;
-
 import org.eve.view.AbstractView;
 import org.eve.view.TableAssist;
 
@@ -10,6 +8,9 @@ public class CustomerChooseView extends AbstractView {
     @Override
     protected void defineView() {
         TableAssist ctable = getController().getTable("customers");
+
+        addAction("customer.show.choose", false);
+        addAction("customer.edit.choose", false);
         
         ctable.setLocale(getLocale());
         ctable.put("customer.ident");
@@ -27,9 +28,7 @@ public class CustomerChooseView extends AbstractView {
      */
     @Override
     public void reload(String action) {
-//        List<Customer> customers = (List<Customer>)getController().getAttribute();
-        getController().setAction(action);
-        
+        getController().setAction(action);        
     }
 
 }

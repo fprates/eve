@@ -48,7 +48,7 @@ public class TableAssist {
         values.add(new TableItem(comptable, SWT.NONE));
     }
     
-    public final void setValue(String id, int row, String value) {
+    public final void setStringValue(String id, int row, String value) {
         int i = 0;
         
         for (String id_ : table.keySet()) {
@@ -58,6 +58,10 @@ public class TableAssist {
             }
             i++;
         }
+    }
+    
+    public final void setIntValue(String id, int row, int value) {
+        setStringValue(id, row, Integer.toString(value));
     }
     
     public final void put(String id) {
