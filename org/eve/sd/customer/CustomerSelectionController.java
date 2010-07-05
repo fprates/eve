@@ -1,5 +1,7 @@
 package org.eve.sd.customer;
 
+import java.util.List;
+
 import org.eve.main.EVE;
 import org.eve.model.Model;
 import org.eve.view.AbstractController;
@@ -13,31 +15,63 @@ public class CustomerSelectionController extends AbstractController {
     @Override
     public void userInput(String input) {
         Customer customer_;
+        List<?> customers;
+        Form selporform;
         Customer customer = (Customer)getObject();
         Form form = getForm("main");
         int ident = form.getInt("customer.ident");
         Model model = getModel();
         String action = getAction();
         
+        if (input.equals("customer.choose")) {            
+            if (action.equals("customer.show.choose"))
+                call("customer.show");
+            
+            if (action.equals("customer.edit.choose"))
+                call("customer.edit");
+            
+            return;
+        }
         
         if (input.equals("customer.sel")) {
-            customer_ = (Customer)model.selectUnique("sel_customer", new Object[] {ident});
-            
-            if (customer_ != null) {
-                customer.setAlternateName(customer_.getAlternateName());
-                customer.setCodCadNac(customer_.getCodCadNac());
-                customer.setCreation(customer_.getCreation());
-                customer.setId(customer_.getId());
-                customer.setName(customer_.getName());
-                customer.setStatus(customer_.getStatus());
+            if (ident == 0) {
+                selporform = getForm("selpor");
                 
-                if (action.equals("customer.show.sel"))
-                    call("customer.show");
+                customers = model.select("selby_customers", new Object[] {
+                        selporform.getStringLike("customer.name"),
+                        selporform.getStringLike("customer.aname")});
                 
-                if (action.equals("customer.edit.sel"))
-                    call("customer.edit");
+                if (customers != null && customers.size() > 0) {
+                    setAttribute(customers);
+                    
+                    if (action.equals("customer.show.sel"))
+                        call("customer.show.choose");
+                    
+                    if (action.equals("customer.edit.sel"))
+                        call("customer.edit.choose");
+                } else {
+                    setMessage(EVE.error, "customer.not.found");
+                }
             } else {
-                setMessage(EVE.error, "customer.not.found");
+                customer_ = (Customer)model.selectUnique("sel_customer",
+                        new Object[] {ident});
+            
+                if (customer_ != null) {
+                    customer.setAlternateName(customer_.getAlternateName());
+                    customer.setCodCadNac(customer_.getCodCadNac());
+                    customer.setCreation(customer_.getCreation());
+                    customer.setId(customer_.getId());
+                    customer.setName(customer_.getName());
+                    customer.setStatus(customer_.getStatus());
+                    
+                    if (action.equals("customer.show.sel"))
+                        call("customer.show");
+                    
+                    if (action.equals("customer.edit.sel"))
+                        call("customer.edit");
+                } else {
+                    setMessage(EVE.error, "customer.not.found");
+                }
             }
         }
         

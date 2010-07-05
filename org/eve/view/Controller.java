@@ -42,6 +42,8 @@ public interface Controller extends SelectionListener {
     
     public abstract Form getForm(String formname);
     
+    public abstract Object getAttribute();
+    
     /*
      * 
      * Others

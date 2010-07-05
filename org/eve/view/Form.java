@@ -83,6 +83,18 @@ public class Form {
     }
     
     /**
+     * Retorna valor do campo caractere do formulário,
+     * em formato "like" para seleção
+     * @param field
+     * @return
+     */
+    public final String getStringLike(String field) {
+        String value = getString(field).replace("*", "%");
+        
+        return (value.equals(""))?"%":value;
+    }
+    
+    /**
      * Retorna valor do campo inteiro do formulário
      * @param field
      * @return
@@ -128,7 +140,8 @@ public class Form {
             
             label = new Label(composite, SWT.NONE);
             label.setText(component.getName());
-            label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+            label.setLayoutData(
+                    new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
             fieldComposite = new Composite(composite, SWT.NONE);
             text = new Text(fieldComposite, SWT.BORDER);
@@ -138,7 +151,8 @@ public class Form {
                 charh = ViewUtils.getCharHeight(text);             
             }
             
-            text.setSize(text.computeSize(component.getLength() * charw, charh));
+            text.setSize(text.computeSize(
+                    component.getLength() * charw, charh));
             component.setText(text);            
         }
         
@@ -152,7 +166,8 @@ public class Form {
      * @param visible
      */
     public final void put(String id, int length, boolean visible) {
-        fields.put(id, new FormComponent(messages.getMessage(id, null, locale), length, visible));        
+        fields.put(id, new FormComponent(
+                messages.getMessage(id, null, locale), length, visible));        
     }
 
     /**
@@ -161,7 +176,8 @@ public class Form {
      * @param length
      */
     public final void put(String id, int length) {
-        fields.put(id, new FormComponent(messages.getMessage(id, null, locale), length, true));        
+        fields.put(id, new FormComponent(
+                messages.getMessage(id, null, locale), length, true));        
     }
     
     /**

@@ -12,6 +12,7 @@ import org.eve.model.Model;
 
 public abstract class AbstractController implements Controller {
     private Object object;
+    private Object attribute;
     private String action;
     private Model model;
     private MessageBar messageBar;
@@ -84,6 +85,15 @@ public abstract class AbstractController implements Controller {
         this.forms = forms;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setLocale(java.util.Locale)
+     */
+    @Override
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
     /**
      * Ajusta texto da barra de mensagens
      * @param status
@@ -93,13 +103,12 @@ public abstract class AbstractController implements Controller {
         messageBar.setMessage(status, message, locale);
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#setLocale(java.util.Locale)
+    /**
+     * Ajusta atributo
+     * @param attribute
      */
-    @Override
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
+    protected final void setAttribute(Object attribute) {
+        this.attribute = attribute;
     }
     
     /*
@@ -149,6 +158,11 @@ public abstract class AbstractController implements Controller {
     @Override
     public final MessageBar getMessageBar() {
         return messageBar;
+    }
+    
+    @Override
+    public final Object getAttribute() {
+        return attribute;
     }
     
     /*

@@ -21,6 +21,7 @@
         <property name="queries">
             <map>
                 <entry key="sel_customer" value="from Customer where ident = ?"/>
+                <entry key="selby_customers" value="from Customer where name like ? and alternateName like ?"/>
             </map>
         </property>
     </bean>
@@ -65,12 +66,18 @@
         <property name="forms">
             <map>
                 <entry key="main" value-ref="cust_sel_form"/>
-                <entry key="selpor" value-ref="cust_selpor_form"/>                
+                <entry key="selpor" value-ref="cust_selpor_form"/>
             </map>
         </property>
     </bean>
     
     <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView">
+        <property name="controller" ref="cust_sel_control"/>
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
+    <!-- Escolha de múltiplos clientes -->
+    <bean id="cust_choose_view" class="org.eve.sd.customer.CustomerChooseView">
         <property name="controller" ref="cust_sel_control"/>
         <property name="messages" ref="cust_msg"/>
     </bean>
