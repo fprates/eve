@@ -28,6 +28,8 @@ public interface Controller extends SelectionListener {
     
     public abstract void setForms(Map<String, Form> forms);
     
+    public abstract void setTables(Map<String, TableAssist> tables);
+    
     public abstract void setLocale(Locale locale);
     
     /*
@@ -41,6 +43,8 @@ public interface Controller extends SelectionListener {
     public abstract MessageBar getMessageBar();
     
     public abstract Form getForm(String formname);
+    
+    public abstract TableAssist getTable(String tablename);
     
     public abstract Object getAttribute();
     

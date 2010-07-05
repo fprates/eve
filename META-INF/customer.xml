@@ -42,6 +42,10 @@
         <property name="messages" ref="cust_msg"/>
     </bean>
     
+    <bean id="cust_contacts_table" class="org.eve.view.TableAssist">
+        <property name="messages" ref="cust_msg"/>
+    </bean>
+    
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
         <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
@@ -49,6 +53,11 @@
         <property name="forms">
             <map>
                 <entry key="main" value-ref="cust_form"/>
+            </map>
+        </property>
+        <property name="tables">
+            <map>
+                <entry key="contacts" value-ref="cust_contacts_table"/>
             </map>
         </property>
     </bean>
@@ -59,6 +68,8 @@
     </bean>
     
     <!-- Seleção de clientes -->
+    <bean id="cust_selpor_table" class="org.eve.view.TableAssist"/>
+    
     <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
         <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
@@ -67,6 +78,11 @@
             <map>
                 <entry key="main" value-ref="cust_sel_form"/>
                 <entry key="selpor" value-ref="cust_selpor_form"/>
+            </map>
+        </property>
+        <property name="tables">
+            <map>
+                <entry key="customers" value-ref="cust_selpor_table"/>
             </map>
         </property>
     </bean>

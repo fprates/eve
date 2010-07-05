@@ -19,6 +19,7 @@ public abstract class AbstractController implements Controller {
     private EveAPI system;
     private Map<Widget, String> widgets;
     private Map<String, Form> forms;
+    private Map<String, TableAssist> tables;
     private Locale locale;
     
     public AbstractController() {
@@ -87,6 +88,15 @@ public abstract class AbstractController implements Controller {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Controller#setTables(java.util.Map)
+     */
+    @Override
+    public final void setTables(Map<String, TableAssist> tables) {
+        this.tables = tables;
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Controller#setLocale(java.util.Locale)
      */
     @Override
@@ -149,6 +159,15 @@ public abstract class AbstractController implements Controller {
     @Override
     public final Form getForm(String formname) {
         return forms.get(formname);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getTable(java.lang.String)
+     */
+    @Override
+    public final TableAssist getTable(String tablename) {
+        return tables.get(tablename);        
     }
     
     /*

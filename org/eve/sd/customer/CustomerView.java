@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eve.view.AbstractView;
 import org.eve.view.Form;
 import org.eve.view.FormComponent;
+import org.eve.view.TableAssist;
 
 public class CustomerView extends AbstractView {
     public CustomerView() { }
@@ -20,6 +21,7 @@ public class CustomerView extends AbstractView {
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
         Form form = getController().getForm("main");
+        TableAssist ctable = getController().getTable("contacts");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -34,20 +36,21 @@ public class CustomerView extends AbstractView {
         
         base.setText("Base");
         base.setControl(form.define(main));
-//        
-//        addTable("rname", "Nome");
-//        addTable("funct", "Função");
-//        addTable("teln1", "Telefone");
-//        addTable("teln2", "Celular");
-//        
-//        contacts.setControl(defineTable("contacts", main));
-//        
-//        tableItem = new TableItem(contactsTable, SWT.NONE);
-//        tableItem.setText(0, "teste1");
-//        tableItem.setText(1, "teste2");
-
-//        tableCol1.pack();
-//        tableCol2.pack();
+        
+        ctable.setLocale(getLocale());
+        ctable.put("contact.rname");
+        ctable.put("contact.funct");
+        ctable.put("contact.teln1");
+        ctable.put("contact.teln2");
+        
+        contacts.setControl(ctable.define(main, getController()));
+        ctable.insert();
+        ctable.setValue("contact.rname", 0, "teste1");
+        ctable.setValue("contact.funct", 0, "Assessorista");
+        ctable.insert();
+        ctable.setValue("contact.rname", 1, "teste2");
+        ctable.setValue("contact.funct", 1, "Faxineiro");
+        
         contacts.setText("Contatos");
         
         addButton("customer.save");
