@@ -1,9 +1,11 @@
 package org.eve.view;
 
-import java.util.LinkedHashMap;import java.util.Locale;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -13,7 +15,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.springframework.context.MessageSource;
 
-public class TableAssist {
+public class TableAssist implements SelectionListener {
     private Map<String, TableComponent> table;
     private MessageSource messages;
     private Locale locale;
@@ -22,6 +24,7 @@ public class TableAssist {
     private Composite area;
     private boolean editable;
     private int lines;
+    private TableItem[] selectedItens;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -65,6 +68,34 @@ public class TableAssist {
     
     /*
      * 
+     * Getters
+     * 
+     */
+    
+    public final String getSelectedItem(int row, String id) {
+        int i = 0;
+        
+        for (String id_ : table.keySet()) {
+            if (id_.equals(id))
+                return selectedItens[row].getText(i);
+            i++;
+        }
+        
+        return null;            
+    }
+    
+    public final int getSelectedIntItem(int row, String id) {
+        String value = getSelectedItem(row, id);
+        
+        return (value == null)?0:Integer.parseInt(value);
+    }
+    
+    public final int getSelectedItensSize() {
+        return (selectedItens == null)?0:selectedItens.length;
+    }
+    
+    /*
+     * 
      * Others
      * 
      */
@@ -97,6 +128,7 @@ public class TableAssist {
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);
         comptable.setItemCount(lines);
+        comptable.addSelectionListener(this);
         
 //        TableEditor editor = new TableEditor(comptable);
         
@@ -120,5 +152,16 @@ public class TableAssist {
         }
         
         return area;        
+    }
+
+    @Override
+    public void widgetDefaultSelected(SelectionEvent arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void widgetSelected(SelectionEvent ev) {
+        selectedItens = comptable.getSelection();
     }
 }

@@ -53,7 +53,7 @@ public class MessageBar {
         message = messages.getMessage(id, null, locale);
         msgtxt.setText(message);
         msggrp.pack();
-        container.pack();        
+        container.pack();
     }
     
     /*

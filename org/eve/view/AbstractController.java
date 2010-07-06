@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
@@ -192,18 +191,17 @@ public abstract class AbstractController implements Controller {
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public final void widgetDefaultSelected(SelectionEvent ev) { }
+    public final void widgetDefaultSelected(SelectionEvent ev) {
+    }
 
     /*
      * (non-Javadoc)
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public final void widgetSelected(SelectionEvent ev) {
-        Button item = (Button)ev.getSource();
-        
+    public final void widgetSelected(SelectionEvent ev) {        
         messageBar.clear();
-        userInput(widgets.get(item));
+        userInput(widgets.get(ev.getSource()));
     }
     
     /**

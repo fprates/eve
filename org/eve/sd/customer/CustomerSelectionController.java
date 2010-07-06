@@ -25,7 +25,21 @@ public class CustomerSelectionController extends AbstractController {
         Model model = getModel();
         String action = getAction();
         
-        if (input.equals("customer.choose")) {            
+        if (input.equals("customer.choose")) {
+            table = getTable("customers");
+            
+            if (table.getSelectedItensSize() == 0) {
+                setMessage(EVE.error, "select.one");
+                return;
+            }
+            
+            customer.setAlternateName(table.getSelectedItem(0, "customer.aname"));
+            customer.setCodCadNac(table.getSelectedItem(0, "customer.cnpj"));
+//            customer.setCreation(customer_.getCreation());
+            customer.setId(table.getSelectedIntItem(0, "customer.ident"));
+            customer.setName(table.getSelectedItem(0, "customer.name"));
+            customer.setStatus(table.getSelectedIntItem(0, "customer.status"));
+            
             if (action.equals("customer.show.choose"))
                 call("customer.show");
             

@@ -20,7 +20,7 @@ public class CustomerChooseView extends AbstractView {
         ctable.setEditable(false);        
         ctable.define(getContainer(), getController());
         
-        addButton("customer.sel");
+        addButton("customer.choose");
     }
 
     /*
