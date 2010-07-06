@@ -45,7 +45,9 @@ public class CustomerSelectionController extends AbstractController {
                 
                 if (customers != null && customers.size() > 0) {
                     table = getTable("customers");
+                    table.setLines(1);
                     ident = 0;
+                    
                     for(Object object : customers) {
                         table.insert();
                         customer_ = (Customer)object;

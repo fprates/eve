@@ -85,7 +85,7 @@ public class Main extends ApplicationWindow {
             
             view.setContainer(container);
             view.setLocale(Locale.getDefault());
-            view.buildView();            
+            view.buildView();
             view.getController().setSystem(app);
 
             viewname = view.getName();

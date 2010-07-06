@@ -16,7 +16,8 @@ public class CustomerChooseView extends AbstractView {
         ctable.put("customer.ident");
         ctable.put("customer.name");
         ctable.put("customer.aname");
-
+        
+        ctable.setEditable(false);        
         ctable.define(getContainer(), getController());
         
         addButton("customer.sel");

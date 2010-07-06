@@ -1,15 +1,10 @@
 package org.eve.view;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.LinkedHashMap;import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -19,15 +14,19 @@ import org.eclipse.swt.widgets.TableItem;
 import org.springframework.context.MessageSource;
 
 public class TableAssist {
-    private List<TableItem> values;
     private Map<String, TableComponent> table;
     private MessageSource messages;
     private Locale locale;
-    Table comptable;
+    private Table comptable;
+    private Composite btarea;
+    private Composite area;
+    private boolean editable;
+    private int lines;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
-        values = new LinkedList<TableItem>();
+        editable = true;
+        lines = 5;
     }
     
     /*
@@ -44,8 +43,8 @@ public class TableAssist {
         this.messages = messages;
     }
     
-    public final void insert() {
-        values.add(new TableItem(comptable, SWT.NONE));
+    public final void setEditable(boolean editable) {
+        this.editable = editable;
     }
     
     public final void setStringValue(String id, int row, String value) {
@@ -53,7 +52,7 @@ public class TableAssist {
         
         for (String id_ : table.keySet()) {
             if (id_.equals(id)) {
-                values.get(row).setText(i, value);
+                comptable.getItem(row).setText(i, value);
                 break;
             }
             i++;
@@ -64,36 +63,53 @@ public class TableAssist {
         setStringValue(id, row, Integer.toString(value));
     }
     
+    /*
+     * 
+     * Others
+     * 
+     */
+    
+    public final void insert() {
+        new TableItem(comptable, SWT.NONE);
+    }
+    
     public final void put(String id) {
         table.put(id, new TableComponent(messages.getMessage(id, null, locale)));        
+    }
+    
+    public final void setLines(int lines) {
+        comptable.setItemCount(lines);
     }
     
     public final Composite define(Composite container, SelectionListener listener) {
         TableColumn tablecol;
         TableComponent component;
-        Composite area = new Composite(container, SWT.NONE);
-        Composite btarea = new Composite(area, SWT.NONE);
-        Button btins = new Button(btarea, SWT.NONE);
-        Button btdel = new Button(btarea, SWT.NONE);
+        Button btins;
+        Button btdel;
+
+        area = new Composite(container, SWT.NONE);
+        area.setLayout(new RowLayout(SWT.VERTICAL));
+
+        btarea = new Composite(area, SWT.NONE);
+        btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
+        btarea.setVisible(editable);
         
         comptable = new Table(area, SWT.NONE);
+        comptable.setHeaderVisible(true);
+        comptable.setItemCount(lines);
+        
 //        TableEditor editor = new TableEditor(comptable);
         
-        area.setLayout(new GridLayout(1, false));
-        
-        btarea.setLayout(new RowLayout());
-        btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        btins = new Button(btarea, SWT.NONE);
+        btdel = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
         btins.addSelectionListener(listener);
 //        widgetresponse.put(btins, name+".new");
         btdel.setText("Remover");
         btdel.addSelectionListener(listener);
 //        widgetresponse.put(btdel, name+".del");
-        btarea.pack();
         
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        comptable.setLinesVisible(true);
-        comptable.setHeaderVisible(true);
+        btarea.pack();
         
         for (String id : table.keySet()) {
             component = table.get(id);
