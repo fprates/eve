@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.Form;
 
 /**
@@ -28,9 +29,10 @@ public class CustomerSelectionView extends AbstractView {
     @Override
     public void defineView() {
         Group selpor;
-        Form form = getController().getForm("main");
-        Form selporform = getController().getForm("selpor");
-        Composite container = getContainer();
+        Controller controller = getController();
+        Form form = controller.getForm("main");
+        Form selporform = controller.getForm("selpor");
+        Composite container = controller.getContainer();
         
         addAction("customer.show.sel");
         addAction("customer.edit.sel");

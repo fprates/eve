@@ -1,13 +1,15 @@
 package org.eve.sd.customer;
 
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.TableAssist;
 
 public class CustomerChooseView extends AbstractView {
 
     @Override
     protected void defineView() {
-        TableAssist ctable = getController().getTable("customers");
+        Controller controller = getController();
+        TableAssist ctable = controller.getTable("customers");
 
         addAction("customer.show.choose", false);
         addAction("customer.edit.choose", false);
@@ -17,8 +19,8 @@ public class CustomerChooseView extends AbstractView {
         ctable.put("customer.name");
         ctable.put("customer.aname");
         
-        ctable.setEditable(false);        
-        ctable.define(getContainer(), getController());
+        ctable.setEditable(false);
+        ctable.define(controller.getContainer(), getController());
         
         addButton("customer.choose");
     }

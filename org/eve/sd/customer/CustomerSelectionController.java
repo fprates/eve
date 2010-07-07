@@ -19,9 +19,9 @@ public class CustomerSelectionController extends AbstractController {
         List<?> customers;
         Form selporform;
         TableAssist table;
+        Form form;
+        int ident;
         Customer customer = (Customer)getObject();
-        Form form = getForm("main");
-        int ident = form.getInt("customer.ident");
         Model model = getModel();
         String action = getAction();
         
@@ -48,6 +48,9 @@ public class CustomerSelectionController extends AbstractController {
             
             return;
         }
+        
+        form = getForm("main");
+        ident = form.getInt("customer.ident");
         
         if (input.equals("customer.sel")) {
             if (ident == 0) {
@@ -78,8 +81,9 @@ public class CustomerSelectionController extends AbstractController {
                         call("customer.edit.choose");
                 } else {
                     setMessage(EVE.error, "customer.not.found");
+                    return;
                 }
-            } else {
+            } else {                
                 customer_ = (Customer)model.selectUnique("sel_customer",
                         new Object[] {ident});
             
@@ -98,6 +102,7 @@ public class CustomerSelectionController extends AbstractController {
                         call("customer.edit");
                 } else {
                     setMessage(EVE.error, "customer.not.found");
+                    return;
                 }
             }
         }

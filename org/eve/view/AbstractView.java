@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.main.EveAPI;
 import org.eve.view.ViewAction;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
@@ -17,11 +18,10 @@ public abstract class AbstractView implements View {
     private String name;
     private ResourceBundleMessageSource messages;
     private Locale locale;
-    private Composite container;
-    private Controller controller;
     private List<ViewAction> actions;
     private List<String> buttonbarlist;
     private Map<String, Button> buttons;
+    private EveAPI system;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
@@ -41,30 +41,12 @@ public abstract class AbstractView implements View {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.View#setContainer(org.eclipse.swt.widgets.Composite)
-     */
-    @Override
-    public final void setContainer(Composite container) {
-        this.container = container;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.View#setController(org.eve.view.Controller)
-     */
-    @Override
-    public final void setController(Controller controller) {
-        this.controller = controller;
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.View#setLocale(java.util.Locale)
      */
     @Override
     public final void setLocale(Locale locale) {
         this.locale = locale;
-        controller.setLocale(locale);
+        system.getController(this).setLocale(locale);
     }
     
     /*
@@ -75,6 +57,15 @@ public abstract class AbstractView implements View {
     @Override
     public final void setMessages(ResourceBundleMessageSource messages) {
         this.messages = messages;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#setSystem(org.eve.main.EveAPI)
+     */
+    @Override
+    public final void setSystem(EveAPI system) {
+        this.system = system;
     }
     
     /**
@@ -90,11 +81,6 @@ public abstract class AbstractView implements View {
      * Getters
      * 
      */
-    
-    @Override
-    public final Composite getContainer() {
-        return container;
-    }
 
     /* (non-Javadoc)
      * @see org.eve.view.View#getActions()
@@ -113,15 +99,6 @@ public abstract class AbstractView implements View {
         return name;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.View#getController()
-     */
-    @Override
-    public final Controller getController() {
-        return controller;
-    }
-    
     /**
      * Retorna a localização atual
      * @return
@@ -132,6 +109,10 @@ public abstract class AbstractView implements View {
     
     protected final String getMessage(String id) {
         return messages.getMessage(id, null, locale);
+    }
+    
+    protected final Controller getController() {
+        return system.getController(this);
     }
     
     /*
@@ -158,6 +139,8 @@ public abstract class AbstractView implements View {
     public final void buildView() {
         Button button;
         Composite buttonbar;
+        Controller controller = system.getController(this);
+        Composite container = controller.getContainer();
         
         name = messages.getMessage("name", null, locale);
         defineView();

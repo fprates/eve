@@ -5,17 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eve.view.Controller;
 import org.eve.view.View;
 
 public class EveApp implements EveAPI {
     private final static String VERSION = "1.9.3";
-    private List<View> views;
+    private List<Controller> controllers;
+    private Map<View, Controller> controlmap;
     private Map<String, View> viewmap;
     private GeneralListener listener;
     private Composite container;
     
     public EveApp() {
         viewmap = new HashMap<String, View>();
+        controlmap = new HashMap<View, Controller>();
     }
     
     /*
@@ -29,8 +32,18 @@ public class EveApp implements EveAPI {
         this.listener.setSystem(this);
     }
     
-    public final void setViews(List<View> views) {
-        this.views = views;
+    public final void setControllers(List<Controller> controllers) {
+        Map<String, View> views;
+        
+        this.controllers = controllers;
+        
+        controlmap.clear();
+        for(Controller controller : controllers) {
+            views = controller.getViews();
+            for(String viewname: views.keySet())
+                controlmap.put(views.get(viewname), controller);
+        }
+        
     }
     
     /*
@@ -39,8 +52,8 @@ public class EveApp implements EveAPI {
      * 
      */
     
-    public final List<View> getViews() {
-        return views;
+    public final List<Controller> getControllers() {
+        return controllers;
     }
     
     /**
@@ -75,6 +88,7 @@ public class EveApp implements EveAPI {
     
     @Override
     public final void call(String action) {
+        Controller controller;
         View view = viewmap.get(action);
         
         if (view == null)
@@ -83,10 +97,16 @@ public class EveApp implements EveAPI {
         if (container != null)
             container.setVisible(false);
         
-        view.getController().getMessageBar().clear();
+        controller = controlmap.get(view);
+        controller.getMessageBar().clear();
         view.reload(action);
         
-        container = view.getContainer();
+        container = controller.getContainer();
         container.setVisible(true);
+    }
+    
+    @Override
+    public final Controller getController(View view) {
+        return controlmap.get(view);
     }
 }

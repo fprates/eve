@@ -1,9 +1,11 @@
 package org.eve.sd.customer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.Form;
 import org.eve.view.FormComponent;
 import org.eve.view.TableAssist;
@@ -17,11 +19,13 @@ public class CustomerView extends AbstractView {
      */
     @Override
     public void defineView() {
-        TabFolder main = new TabFolder(getContainer(), SWT.BORDER);
+        Controller controller = getController();
+        Composite container = controller.getContainer();
+        TabFolder main = new TabFolder(container, SWT.BORDER);
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
-        Form form = getController().getForm("main");
-        TableAssist ctable = getController().getTable("contacts");
+        Form form = controller.getForm("main");
+        TableAssist ctable = controller.getTable("contacts");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -43,7 +47,7 @@ public class CustomerView extends AbstractView {
         ctable.put("contact.teln1");
         ctable.put("contact.teln2");
         
-        contacts.setControl(ctable.define(main, getController()));        
+        contacts.setControl(ctable.define(main, controller));        
         contacts.setText("Contatos");
         
         addButton("customer.save");

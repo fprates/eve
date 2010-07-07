@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
@@ -18,7 +19,9 @@ public abstract class AbstractController implements Controller {
     private Map<Widget, String> widgets;
     private Map<String, Form> forms;
     private Map<String, TableAssist> tables;
+    private Map<String, View> views;
     private Locale locale;
+    private Composite container;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
@@ -71,8 +74,11 @@ public abstract class AbstractController implements Controller {
      * @see org.eve.view.Controller#setSystem(org.eve.main.EveSystem)
      */
     @Override
-    public final void setSystem(EveAPI system) {
+    public final void setSystem(EveAPI system) {        
         this.system = system;
+        
+        for (String viewname : views.keySet())
+            views.get(viewname).setSystem(system);
     }
     
     /*
@@ -100,6 +106,24 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setContainer(org.eclipse.swt.widgets.Composite)
+     */
+    @Override
+    public final void setContainer(Composite container) {
+        this.container = container;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setViews(java.util.Map)
+     */
+    @Override
+    public final void setViews(Map<String, View> views) {
+        this.views = views;
     }
     
     /**
@@ -167,6 +191,24 @@ public abstract class AbstractController implements Controller {
     @Override
     public final MessageBar getMessageBar() {
         return messageBar;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getViews()
+     */
+    @Override
+    public final Map<String, View> getViews() {
+        return views;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getContainer()
+     */
+    @Override
+    public final Composite getContainer() {
+        return container;
     }
     
     /*

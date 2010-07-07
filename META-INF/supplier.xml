@@ -22,16 +22,20 @@
         <property name="messages" ref="supp_msg"/>
     </bean>
     
+    <bean id="supp_view" class="org.eve.sd.supplier.SupplierView">
+        <property name="messages" ref="supp_msg"/>
+    </bean>
+    
     <bean id="supp_control" class="org.eve.sd.supplier.SupplierController">
         <property name="messageBar" ref="supp_msg_bar"/>
         <property name="object">
             <bean class="org.eve.sd.supplier.Supplier"/>
         </property>
-        <property name="model" ref="supp_model"/>        
-    </bean>
-    
-    <bean id="supp_view" class="org.eve.sd.supplier.SupplierView">
-        <property name="controller" ref="supp_control"/>
-        <property name="messages" ref="supp_msg"/>
+        <property name="model" ref="supp_model"/>
+        <property name="views">
+            <map>
+                <entry key="supp_view" value-ref="supp_view"/>
+            </map>
+        </property>
     </bean>
 </beans>

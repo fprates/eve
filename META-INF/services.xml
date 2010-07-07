@@ -12,12 +12,11 @@
     
     <bean id="eve_app" class="org.eve.main.EveApp">
         <property name="listener" ref="gen_listener"/>
-        <property name="views">
+        <property name="controllers">
             <list>
-                <ref bean="cust_view"/>
-                <ref bean="supp_view"/>
-                <ref bean="cust_sel_view"/>
-                <ref bean="cust_choose_view"/>
+                <ref bean="cust_control"/>
+                <ref bean="cust_sel_control"/>
+                <ref bean="supp_control"/>
             </list>
         </property>
     </bean>

@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eve.view.Controller;
 import org.eve.view.ViewAction;
 import org.eve.view.View;
 import org.springframework.context.ApplicationContext;
@@ -53,7 +54,7 @@ public class Main extends ApplicationWindow {
 
         selector.addListener(SWT.Selection, listener);
         selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));        
-        addViews(app.getViews(), listener);
+        addControllers(app.getControllers(), listener);
         
         shell.setText("Eve "+app.getVersion());
         shell.pack();
@@ -67,45 +68,50 @@ public class Main extends ApplicationWindow {
      * @param lviews
      * @param listener
      */
-    public void addViews(List<View> lviews, GeneralListener listener) {
+    public void addControllers(List<Controller> lcontrollers, GeneralListener listener) {
         TreeItem item;
         TreeItem subitem;
         Composite container;
-        String viewname;
+        View view;
+        Map<String, View> views;
         Map<String, View> viewmap = app.getViewMap();
         Map<String, TreeItem> tree = new HashMap<String, TreeItem>();
         
         /*
          * assemblies main tree.
          */
-        for (View view : lviews) {            
+        for (Controller controller : lcontrollers) {            
             container = new Composite(this.container, SWT.NONE);
             container.setLayout(new GridLayout(1, false));
             container.setVisible(false);
             
-            view.setContainer(container);
-            view.setLocale(Locale.getDefault());
-            view.buildView();
-            view.getController().setSystem(app);
+            controller.setContainer(container);
+            controller.setLocale(Locale.getDefault());
+            controller.setSystem(app);
 
-            viewname = view.getName();
-            if (tree.containsKey(viewname)) {
-                item = tree.get(viewname);
-            } else {
-                item = new TreeItem(selector, SWT.NONE);
-                item.setText(viewname);
-                tree.put(viewname, item);
-            }
-            
-            for (ViewAction action : view.getActions()) {
-                viewmap.put(action.getId(), view);
+            views = controller.getViews();
+            for (String viewname : views.keySet()) {
+                view = views.get(viewname);
+                view.buildView();
                 
-                if (!action.isVisible())
-                    continue;
+                if (tree.containsKey(view.getName())) {
+                    item = tree.get(view.getName());
+                } else {
+                    item = new TreeItem(selector, SWT.NONE);
+                    item.setText(view.getName());
+                    tree.put(view.getName(), item);
+                }
                 
-                subitem = new TreeItem(item, SWT.NONE);
-                subitem.setText(action.getText());
-                listener.putSelectorItem(subitem, action.getId());
+                for (ViewAction action : view.getActions()) {
+                    viewmap.put(action.getId(), view);
+                    
+                    if (!action.isVisible())
+                        continue;
+                    
+                    subitem = new TreeItem(item, SWT.NONE);
+                    subitem.setText(action.getText());
+                    listener.putSelectorItem(subitem, action.getId());
+                }
             }
         }        
     }
