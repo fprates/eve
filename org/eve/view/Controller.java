@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
@@ -21,8 +22,6 @@ public interface Controller extends SelectionListener {
     
     public abstract void setModel(Model model);
     
-    public abstract void setMessageBar(MessageBar messageWidget);
-    
     public abstract void setAction(String action);
     
     public abstract void setSystem(EveAPI system);
@@ -36,6 +35,8 @@ public interface Controller extends SelectionListener {
     public abstract void setViews(Map<String, View> views);
     
     public abstract void setMessages(MessageSource messages);
+    
+    public abstract void setView(View view);
     
     /*
      * 
@@ -62,4 +63,6 @@ public interface Controller extends SelectionListener {
      */
     
     public abstract void putWidget(Widget widget, String id);
+
+    public abstract void initMsgBar(Composite container);
 }

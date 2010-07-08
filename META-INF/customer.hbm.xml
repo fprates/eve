@@ -3,12 +3,16 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping>    
     <class name="org.eve.sd.customer.Customer" table="CUSTMR001">
         <id name="id" column="IDENT"/>
         <property name="name" column="RNAME"/>
         <property name="alternateName" column="ANAME"/>
         <property name="creation" column="DTCRI"/>
         <property name="status" column="STATU"/>
+        <set name="contacts">
+            <key column="IDENT"/>
+            <one-to-many class="CustomerContact"/>
+        </set> 
     </class>
 </hibernate-mapping>

@@ -16,7 +16,9 @@ public class MessageBar {
     private MessageSource messages;
     private Composite container;
     
-    public MessageBar() { }
+    public MessageBar(Composite container) {
+        this.container = container;
+    }
     
     /*
      * 
@@ -65,8 +67,7 @@ public class MessageBar {
      * Inicializa barra de mensagens
      * @param container
      */
-    public final void init(Composite container) {
-        this.container = container;
+    public final void init() {
         msggrp = new Group(container, SWT.SHADOW_IN);
         msggrp.setLayout(new RowLayout(SWT.VERTICAL));
         msgtxt = new Label(msggrp, SWT.NONE);

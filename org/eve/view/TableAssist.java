@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.springframework.context.MessageSource;
 
 public class TableAssist implements SelectionListener {
+    private static final int LINES = 5;
     private Map<String, TableComponent> table;
     private MessageSource messages;
     private Locale locale;
@@ -23,13 +24,15 @@ public class TableAssist implements SelectionListener {
     private Composite btarea;
     private Composite area;
     private boolean editable;
-    private int lines;
     private TableItem[] selectedItens;
+    private int lines;
+    private int currentline;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
         editable = true;
-        lines = 1;
+        currentline = 0;
+        lines = LINES;
     }
     
     /*
@@ -42,14 +45,28 @@ public class TableAssist implements SelectionListener {
         this.locale = locale;
     }
     
+    /**
+     * Define mensagens para tabela
+     * @param messages
+     */
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
     }
     
+    /**
+     * Define tabela como editável
+     * @param editable
+     */
     public final void setEditable(boolean editable) {
         this.editable = editable;
     }
     
+    /**
+     * Define string em tabela
+     * @param id
+     * @param row
+     * @param value
+     */
     public final void setStringValue(String id, int row, String value) {
         int i = 0;
         
@@ -62,8 +79,22 @@ public class TableAssist implements SelectionListener {
         }
     }
     
+    /**
+     * Define valor inteiro em tabela
+     * @param id
+     * @param row
+     * @param value
+     */
     public final void setIntValue(String id, int row, int value) {
         setStringValue(id, row, Integer.toString(value));
+    }
+    
+    /**
+     * Define quantidade de linhas visíveis
+     * @param lines
+     */
+    public final void setLines(int lines) {
+        this.lines = lines;
     }
     
     /*
@@ -84,12 +115,25 @@ public class TableAssist implements SelectionListener {
         return null;            
     }
     
+    /**
+     * 
+     * @param row
+     * @param id
+     * @return
+     */
     public final int getSelectedIntItem(int row, String id) {
         String value = getSelectedItem(row, id);
         
-        return (value == null)?0:Integer.parseInt(value);
+        if ((value == null) || (value.equals("")))
+            return 0;
+        
+        return Integer.parseInt(value);
     }
     
+    /**
+     * 
+     * @return
+     */
     public final int getSelectedItensSize() {
         return (selectedItens == null)?0:selectedItens.length;
     }
@@ -100,23 +144,36 @@ public class TableAssist implements SelectionListener {
      * 
      */
     
-    public final void insert() {
-        new TableItem(comptable, SWT.NONE);
+    public final void clearSelectedItens() {
+        selectedItens = null; 
     }
     
-    public final void put(String id) {
+    public final void insert() {
+        currentline++;
+        if (currentline <= lines)
+            new TableItem(comptable, SWT.NONE);
+    }
+    
+    /**
+     * 
+     * @param id
+     */
+    public final void put(String id) {        
         table.put(id, new TableComponent(messages.getMessage(id, null, locale)));        
     }
     
-    public final void setLines(int lines) {
-        comptable.setItemCount(lines);
-    }
-    
+    /**
+     * 
+     * @param container
+     * @param listener
+     * @return
+     */
     public final Composite define(Composite container, SelectionListener listener) {
         TableColumn tablecol;
         TableComponent component;
         Button btins;
         Button btdel;
+        int k;
 
         area = new Composite(container, SWT.NONE);
         area.setLayout(new RowLayout(SWT.VERTICAL));
@@ -127,9 +184,10 @@ public class TableAssist implements SelectionListener {
         
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);
-        comptable.setItemCount(lines);
         comptable.addSelectionListener(this);
         
+        for (k=1; k <= lines; k++)
+            insert();
 //        TableEditor editor = new TableEditor(comptable);
         
         btins = new Button(btarea, SWT.NONE);
@@ -154,12 +212,20 @@ public class TableAssist implements SelectionListener {
         return area;        
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
+     */
     @Override
     public void widgetDefaultSelected(SelectionEvent arg0) {
         // TODO Auto-generated method stub
         
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+     */
     @Override
     public void widgetSelected(SelectionEvent ev) {
         selectedItens = comptable.getSelection();

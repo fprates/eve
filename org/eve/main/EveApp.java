@@ -109,6 +109,7 @@ public class EveApp implements EveAPI {
             return;
         
         controller = controlmap.get(view);
+        controller.setView(view);
         controller.getMessageBar().clear();
         view.reload(action);
         

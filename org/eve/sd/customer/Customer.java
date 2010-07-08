@@ -5,6 +5,7 @@ package org.eve.sd.customer;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author francisco.prates
@@ -18,6 +19,7 @@ public class Customer implements Serializable {
 	private Date creation;
 	private String codCadNac;
     private int status;
+    private Set<CustomerContact> contacts;
 	
 	public Customer() { }
 	
@@ -66,6 +68,14 @@ public class Customer implements Serializable {
         return codCadNac;
     }
     
+    /**
+     * 
+     * @return
+     */
+    public Set<CustomerContact> getContacts() {
+        return contacts;
+    }
+    
     /*
      * Setters
      */
@@ -109,6 +119,14 @@ public class Customer implements Serializable {
      */
     public void setCodCadNac(String codCadNac) {
         this.codCadNac = codCadNac;
+    }
+    
+    /**
+     * 
+     * @param contacts
+     */
+    public void setContacts(Set<CustomerContact> contacts) {
+        this.contacts = contacts;
     }
 	
 }

@@ -33,12 +33,19 @@ public class CustomerSelectionController extends AbstractController {
                 return;
             }
             
+            ident = table.getSelectedIntItem(0, "customer.ident");
+            
+            if (ident == 0)
+                return;
+
+            customer.setId(ident);
             customer.setAlternateName(table.getSelectedItem(0, "customer.aname"));
             customer.setCodCadNac(table.getSelectedItem(0, "customer.cnpj"));
 //            customer.setCreation(customer_.getCreation());
-            customer.setId(table.getSelectedIntItem(0, "customer.ident"));
             customer.setName(table.getSelectedItem(0, "customer.name"));
             customer.setStatus(table.getSelectedIntItem(0, "customer.status"));
+            
+            table.clearSelectedItens();
             
             if (action.equals("customer.show.choose"))
                 call("customer.show");
@@ -62,15 +69,17 @@ public class CustomerSelectionController extends AbstractController {
                 
                 if (customers != null && customers.size() > 0) {
                     table = getTable("customers");
-                    table.setLines(1);
                     ident = 0;
                     
                     for(Object object : customers) {
                         table.insert();
                         customer_ = (Customer)object;
-                        table.setIntValue("customer.ident", ident, customer_.getId());
-                        table.setStringValue("customer.name", ident, customer_.getName());
-                        table.setStringValue("customer.aname", ident, customer_.getAlternateName());
+                        table.setIntValue("customer.ident", ident,
+                                customer_.getId());
+                        table.setStringValue("customer.name", ident,
+                                customer_.getName());
+                        table.setStringValue("customer.aname", ident,
+                                customer_.getAlternateName());
                         ident++;
                     }
                     

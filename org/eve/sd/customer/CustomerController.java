@@ -21,11 +21,11 @@ public class CustomerController extends AbstractController {
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
                 
-                model.save(customer);
-                
-                form.setInt("customer.ident", customer.getId());
-                
+                model.save(customer);                
+                form.setInt("customer.ident", customer.getId());                
                 setMessage(EVE.status, "customer.save.success");
+                
+                return;
             } catch (Exception ev) {                
                 setMessage(EVE.error, "customer.save.error");
                 ev.printStackTrace();

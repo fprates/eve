@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.eve.sd.customer.CustomerContact" table="CUSTMR002">
+        <id name="item" column="NRSEQ"/>
+        <many-to-one name="customer" column="IDENT"/>
+    </class>
+</hibernate-mapping>

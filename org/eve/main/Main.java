@@ -58,7 +58,7 @@ public class Main extends ApplicationWindow {
         shell.pack();
         shell.setMaximized(true);
         
-        return apparea;        
+        return apparea;
     }
     
     /**
@@ -91,6 +91,9 @@ public class Main extends ApplicationWindow {
                 view.setSystem(app);
                 view.setMessages(controller.getMessages());
                 view.buildView(container);
+                
+                controller.setView(view);
+                controller.initMsgBar(container);
                 
                 if (tree.containsKey(view.getName())) {
                     item = tree.get(view.getName());

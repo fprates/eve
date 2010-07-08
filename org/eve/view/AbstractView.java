@@ -167,8 +167,6 @@ public abstract class AbstractView implements View {
         }
         
         buttonbar.pack();
-        controller.getMessageBar().init(container);
-        controller.getMessageBar().setMessages(messages);
     }
     
     /**

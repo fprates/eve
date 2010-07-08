@@ -34,18 +34,21 @@
             		lib/org.springframework.transaction-3.0.3.RELEASE.jar
             		lib/org.springframework.jdbc-3.0.3.RELEASE.jar
                     lib/slf4j-api-1.6.0.jar
-            		lib/slf4j-simple-1.6.0.jar
-            		lib/hibernate3.jar
-            		lib/hsqldb.jar
-            		lib/org.eclipse.swt.gtk.linux.x86_64_3.5.2.201004121546.jar
-            		lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
-            		lib/org.springframework.context-3.0.3.RELEASE.jar
-            		lib/org.springframework.beans-3.0.3.RELEASE.jar
-            		lib/org.springframework.core-3.0.3.RELEASE.jar
-            		lib/com.springsource.org.apache.commons.logging-1.1.1.jar
-            		lib/org.springframework.asm-3.0.3.RELEASE.jar
-            		lib/org.springframework.expression-3.0.3.RELEASE.jar
-            		lib/org.eclipse.core.commands_3.5.0.201004121546.jar"/>
+            	    lib/slf4j-simple-1.6.0.jar
+            	    lib/hibernate3.jar
+            	    lib/hsqldb.jar
+            	    lib/org.eclipse.swt.gtk.linux.x86_64_3.5.2.201004121546.jar
+            	    lib/org.eclipse.equinox.common_3.5.1.201004121546.jar
+            	    lib/org.springframework.context-3.0.3.RELEASE.jar
+            	    lib/org.springframework.beans-3.0.3.RELEASE.jar
+            	    lib/org.springframework.core-3.0.3.RELEASE.jar
+            	    lib/com.springsource.org.apache.commons.logging-1.1.1.jar
+            	    lib/org.springframework.asm-3.0.3.RELEASE.jar
+            	    lib/org.springframework.expression-3.0.3.RELEASE.jar
+            	    lib/org.eclipse.core.commands_3.5.0.201004121546.jar
+            	    lib/com.springsource.org.aopalliance-1.0.0.jar
+            	    lib/org.springframework.aop-3.0.3.RELEASE.jar
+            	    lib/com.springsource.antlr-2.7.7.jar"/>
             </manifest>
         </jar>
         <jar destfile="${basedir}/eve2-x86.jar">
@@ -74,7 +77,10 @@
                     lib/com.springsource.org.apache.commons.logging-1.1.1.jar
                     lib/org.springframework.asm-3.0.3.RELEASE.jar
                     lib/org.springframework.expression-3.0.3.RELEASE.jar
-                    lib/org.eclipse.core.commands_3.5.0.201004121546.jar"/>
+                    lib/org.eclipse.core.commands_3.5.0.201004121546.jar
+                    lib/com.springsource.org.aopalliance-1.0.0.jar
+                    lib/org.springframework.aop-3.0.3.RELEASE.jar
+                    lib/com.springsource.antlr-2.7.7.jar"/>
             </manifest>
         </jar>
         <jar destfile="${basedir}/eve2-win32.jar">
@@ -91,7 +97,7 @@
                     lib/org.springframework.orm-3.0.3.RELEASE.jar
                     lib/org.springframework.transaction-3.0.3.RELEASE.jar
                     lib/org.springframework.jdbc-3.0.3.RELEASE.jar
-                	lib/slf4j-api-1.6.0.jar
+                    lib/slf4j-api-1.6.0.jar
                     lib/slf4j-simple-1.6.0.jar
                     lib/hibernate3.jar
                     lib/hsqldb.jar
@@ -103,7 +109,10 @@
                     lib/com.springsource.org.apache.commons.logging-1.1.1.jar
                     lib/org.springframework.asm-3.0.3.RELEASE.jar
                     lib/org.springframework.expression-3.0.3.RELEASE.jar
-                    lib/org.eclipse.core.commands_3.5.0.201004121546.jar"/>
+                    lib/org.eclipse.core.commands_3.5.0.201004121546.jar
+                    lib/com.springsource.org.aopalliance-1.0.0.jar
+                    lib/org.springframework.aop-3.0.3.RELEASE.jar
+                    lib/com.springsource.antlr-2.7.7.jar"/>
             </manifest>
         </jar>
     	<zip destfile="${basedir}/eve2-x86_64.zip">
