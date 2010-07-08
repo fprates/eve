@@ -22,6 +22,7 @@ public abstract class AbstractView implements View {
     private List<String> buttonbarlist;
     private Map<String, Button> buttons;
     private EveAPI system;
+    private Composite container;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
@@ -99,6 +100,15 @@ public abstract class AbstractView implements View {
         return name;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#getContainer()
+     */
+    @Override
+    public final Composite getContainer() {
+        return container;
+    }
+    
     /**
      * Retorna a localização atual
      * @return
@@ -129,21 +139,21 @@ public abstract class AbstractView implements View {
         buttonbarlist.add(id);
     }
     
-    protected abstract void defineView();
+    protected abstract void defineView(Composite container);
     
     /*
      * (non-Javadoc)
      * @see org.eve.view.View#buildView()
      */
     @Override
-    public final void buildView() {
+    public final void buildView(Composite container) {
         Button button;
         Composite buttonbar;
         Controller controller = system.getController(this);
-        Composite container = controller.getContainer();
         
+        this.container = container;
         name = messages.getMessage("name", null, locale);
-        defineView();
+        defineView(container);
 
         buttonbar = new Composite(container, SWT.NONE);
         buttonbar.setLayout(new FormLayout());
@@ -159,6 +169,7 @@ public abstract class AbstractView implements View {
         
         buttonbar.pack();
         controller.getMessageBar().init(container);
+        controller.getMessageBar().setMessages(messages);
     }
     
     /**

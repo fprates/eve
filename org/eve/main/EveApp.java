@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.view.Controller;
 import org.eve.view.View;
@@ -46,6 +47,10 @@ public class EveApp implements EveAPI {
         
     }
     
+    public final void setContainer(Composite container) {
+        this.container = container;
+    }
+    
     /*
      * 
      * Getters
@@ -80,6 +85,14 @@ public class EveApp implements EveAPI {
         return VERSION;
     }
     
+    /**
+     * Retorna container de aplicações
+     * @return
+     */
+    public final Composite getContainer() {
+        return container;
+    }
+    
     /*
      * 
      * Services
@@ -88,23 +101,28 @@ public class EveApp implements EveAPI {
     
     @Override
     public final void call(String action) {
+        StackLayout layout;
         Controller controller;
         View view = viewmap.get(action);
         
         if (view == null)
             return;
         
-        if (container != null)
-            container.setVisible(false);
-        
         controller = controlmap.get(view);
         controller.getMessageBar().clear();
         view.reload(action);
         
-        container = controller.getContainer();
-        container.setVisible(true);
+        System.err.println(view.getContainer().toString());
+        layout = (StackLayout)container.getLayout();
+        layout.topControl = view.getContainer();
+        container.layout();
+        container.pack();
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.main.EveAPI#getController(org.eve.view.View)
+     */
     @Override
     public final Controller getController(View view) {
         return controlmap.get(view);

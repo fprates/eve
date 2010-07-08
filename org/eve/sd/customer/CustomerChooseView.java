@@ -1,5 +1,6 @@
 package org.eve.sd.customer;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.TableAssist;
@@ -7,7 +8,7 @@ import org.eve.view.TableAssist;
 public class CustomerChooseView extends AbstractView {
 
     @Override
-    protected void defineView() {
+    protected void defineView(Composite container) {
         Controller controller = getController();
         TableAssist ctable = controller.getTable("customers");
 
@@ -20,7 +21,7 @@ public class CustomerChooseView extends AbstractView {
         ctable.put("customer.aname");
         
         ctable.setEditable(false);
-        ctable.define(controller.getContainer(), getController());
+        ctable.define(container, getController());
         
         addButton("customer.choose");
     }

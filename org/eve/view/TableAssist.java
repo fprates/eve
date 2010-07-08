@@ -29,7 +29,7 @@ public class TableAssist implements SelectionListener {
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
         editable = true;
-        lines = 5;
+        lines = 1;
     }
     
     /*

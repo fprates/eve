@@ -3,7 +3,6 @@ package org.eve.view;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -70,7 +69,6 @@ public class MessageBar {
         this.container = container;
         msggrp = new Group(container, SWT.SHADOW_IN);
         msggrp.setLayout(new RowLayout(SWT.VERTICAL));
-        msggrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         msgtxt = new Label(msggrp, SWT.NONE);
     }
     

@@ -8,9 +8,8 @@ import java.util.Map;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -24,7 +23,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends ApplicationWindow {
-    private Composite container;
     private Tree selector;
     private EveApp app;
 
@@ -42,18 +40,18 @@ public class Main extends ApplicationWindow {
      */
     @Override
     protected Control createContents(Composite parent) {
+        Composite container;
         Shell shell = getShell();
         GeneralListener listener = app.getListener();
         SashForm apparea = new SashForm(parent, SWT.HORIZONTAL);
         
         selector = new Tree(apparea, SWT.BORDER);
-        container = new Composite(apparea, SWT.BORDER);
-        
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        container.setLayout(new FormLayout());
-
         selector.addListener(SWT.Selection, listener);
-        selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));        
+        
+        container = new Composite(apparea, SWT.BORDER);
+        container.setLayout(new StackLayout());
+        app.setContainer(container);
+        
         addControllers(app.getControllers(), listener);
         
         shell.setText("Eve "+app.getVersion());
@@ -80,19 +78,17 @@ public class Main extends ApplicationWindow {
         /*
          * assemblies main tree.
          */
-        for (Controller controller : lcontrollers) {            
-            container = new Composite(this.container, SWT.NONE);
-            container.setLayout(new GridLayout(1, false));
-            container.setVisible(false);
-            
-            controller.setContainer(container);
+        for (Controller controller : lcontrollers) {
             controller.setLocale(Locale.getDefault());
             controller.setSystem(app);
 
             views = controller.getViews();
             for (String viewname : views.keySet()) {
+                container = new Composite(app.getContainer(), SWT.NONE);
+                container.setLayout(new RowLayout(SWT.VERTICAL));
+                
                 view = views.get(viewname);
-                view.buildView();
+                view.buildView(container);
                 
                 if (tree.containsKey(view.getName())) {
                     item = tree.get(view.getName());

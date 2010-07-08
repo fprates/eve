@@ -1,5 +1,6 @@
 package org.eve.sd.supplier;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eve.view.AbstractView;
 
 public class SupplierView extends AbstractView {
@@ -11,7 +12,7 @@ public class SupplierView extends AbstractView {
      * @see org.eve.view.AbstractView#defineView()
      */
     @Override
-    public void defineView() {
+    public void defineView(Composite container) {
         addAction("supplier.create");
         addAction("supplier.edit", false);
         addAction("supplier.show", false);        

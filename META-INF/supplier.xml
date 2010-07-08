@@ -18,9 +18,7 @@
         <property name="sessionFactory" ref="session_factory"/>
     </bean>
     
-    <bean id="supp_msg_bar" class="org.eve.view.MessageBar" scope="prototype">
-        <property name="messages" ref="supp_msg"/>
-    </bean>
+    <bean id="supp_msg_bar" class="org.eve.view.MessageBar" scope="prototype"/>
     
     <bean id="supp_view" class="org.eve.sd.supplier.SupplierView">
         <property name="messages" ref="supp_msg"/>

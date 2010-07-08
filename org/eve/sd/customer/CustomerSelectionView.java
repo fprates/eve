@@ -27,12 +27,11 @@ public class CustomerSelectionView extends AbstractView {
      * @see org.eve.ui.View#defineForm()
      */
     @Override
-    public void defineView() {
+    public void defineView(Composite container) {
         Group selpor;
         Controller controller = getController();
         Form form = controller.getForm("main");
         Form selporform = controller.getForm("selpor");
-        Composite container = controller.getContainer();
         
         addAction("customer.show.sel");
         addAction("customer.edit.sel");

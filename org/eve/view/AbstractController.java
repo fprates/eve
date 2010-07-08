@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
@@ -21,7 +20,6 @@ public abstract class AbstractController implements Controller {
     private Map<String, TableAssist> tables;
     private Map<String, View> views;
     private Locale locale;
-    private Composite container;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
@@ -110,15 +108,6 @@ public abstract class AbstractController implements Controller {
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Controller#setContainer(org.eclipse.swt.widgets.Composite)
-     */
-    @Override
-    public final void setContainer(Composite container) {
-        this.container = container;
-    }
-
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.Controller#setViews(java.util.Map)
      */
     @Override
@@ -200,15 +189,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final Map<String, View> getViews() {
         return views;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#getContainer()
-     */
-    @Override
-    public final Composite getContainer() {
-        return container;
     }
     
     /*

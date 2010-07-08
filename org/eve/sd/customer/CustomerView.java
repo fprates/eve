@@ -18,9 +18,8 @@ public class CustomerView extends AbstractView {
      * @see org.eve.view.AbstractView#defineView()
      */
     @Override
-    public void defineView() {
+    public void defineView(Composite container) {
         Controller controller = getController();
-        Composite container = controller.getContainer();
         TabFolder main = new TabFolder(container, SWT.BORDER);
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
