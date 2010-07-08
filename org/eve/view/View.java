@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EveAPI;
 import org.eve.view.ViewAction;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.MessageSource;
 
 public interface View {
     
@@ -14,7 +14,7 @@ public interface View {
      * Setters
      */
     
-    public abstract void setMessages(ResourceBundleMessageSource messages);
+    public abstract void setMessages(MessageSource messages);
     
     public abstract void setLocale(Locale locale);
     

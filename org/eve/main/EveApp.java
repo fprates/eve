@@ -112,7 +112,6 @@ public class EveApp implements EveAPI {
         controller.getMessageBar().clear();
         view.reload(action);
         
-        System.err.println(view.getContainer().toString());
         layout = (StackLayout)container.getLayout();
         layout.topControl = view.getContainer();
         container.layout();

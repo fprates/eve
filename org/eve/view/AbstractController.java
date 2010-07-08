@@ -8,6 +8,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
+import org.springframework.context.MessageSource;
 
 public abstract class AbstractController implements Controller {
     private Object object;
@@ -20,6 +21,7 @@ public abstract class AbstractController implements Controller {
     private Map<String, TableAssist> tables;
     private Map<String, View> views;
     private Locale locale;
+    private MessageSource messages;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
@@ -74,9 +76,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setSystem(EveAPI system) {        
         this.system = system;
-        
-        for (String viewname : views.keySet())
-            views.get(viewname).setSystem(system);
     }
     
     /*
@@ -113,6 +112,15 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setViews(Map<String, View> views) {
         this.views = views;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setMessages(org.springframework.context.MessageSource)
+     */
+    @Override
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
     }
     
     /**
@@ -161,7 +169,10 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final Form getForm(String formname) {
-        return forms.get(formname);
+        Form form = forms.get(formname);
+        form.setMessages(messages);
+        
+        return form;
     }
     
     /*
@@ -170,7 +181,10 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final TableAssist getTable(String tablename) {
-        return tables.get(tablename);        
+        TableAssist table = tables.get(tablename);
+        table.setMessages(messages);
+        
+        return table;
     }
     
     /*
@@ -189,6 +203,15 @@ public abstract class AbstractController implements Controller {
     @Override
     public final Map<String, View> getViews() {
         return views;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getMessages()
+     */
+    @Override
+    public final MessageSource getMessages() {
+        return messages;
     }
     
     /*

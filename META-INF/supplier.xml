@@ -20,11 +20,10 @@
     
     <bean id="supp_msg_bar" class="org.eve.view.MessageBar" scope="prototype"/>
     
-    <bean id="supp_view" class="org.eve.sd.supplier.SupplierView">
-        <property name="messages" ref="supp_msg"/>
-    </bean>
+    <bean id="supp_view" class="org.eve.sd.supplier.SupplierView"/>
     
     <bean id="supp_control" class="org.eve.sd.supplier.SupplierController">
+        <property name="messages" ref="supp_msg"/>
         <property name="messageBar" ref="supp_msg_bar"/>
         <property name="object">
             <bean class="org.eve.sd.supplier.Supplier"/>

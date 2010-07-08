@@ -88,6 +88,8 @@ public class Main extends ApplicationWindow {
                 container.setLayout(new RowLayout(SWT.VERTICAL));
                 
                 view = views.get(viewname);
+                view.setSystem(app);
+                view.setMessages(controller.getMessages());
                 view.buildView(container);
                 
                 if (tree.containsKey(view.getName())) {

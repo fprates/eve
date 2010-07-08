@@ -12,11 +12,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EveAPI;
 import org.eve.view.ViewAction;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.MessageSource;
 
 public abstract class AbstractView implements View {
     private String name;
-    private ResourceBundleMessageSource messages;
+    private MessageSource messages;
     private Locale locale;
     private List<ViewAction> actions;
     private List<String> buttonbarlist;
@@ -52,11 +52,10 @@ public abstract class AbstractView implements View {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.View#setMessages(
-     *    org.springframework.context.support.ResourceBundleMessageSource)
+     * @see org.eve.view.View#setMessages(org.springframework.context.MessageSource)
      */
     @Override
-    public final void setMessages(ResourceBundleMessageSource messages) {
+    public final void setMessages(MessageSource messages) {
         this.messages = messages;
     }
     

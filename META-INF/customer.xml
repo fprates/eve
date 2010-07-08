@@ -26,29 +26,20 @@
         </property>
     </bean>
     
-    <bean id="cust_form" class="org.eve.view.Form">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_form" class="org.eve.view.Form"/>
     
-    <bean id="cust_sel_form" class="org.eve.view.Form">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_sel_form" class="org.eve.view.Form"/>
     
-    <bean id="cust_selpor_form" class="org.eve.view.Form">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_selpor_form" class="org.eve.view.Form"/>
     
     <bean id="cust_msg_bar" class="org.eve.view.MessageBar" scope="prototype"/>
     
-    <bean id="cust_contacts_table" class="org.eve.view.TableAssist">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_contacts_table" class="org.eve.view.TableAssist"/>
     
-    <bean id="cust_view" class="org.eve.sd.customer.CustomerView">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_view" class="org.eve.sd.customer.CustomerView"/>
     
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
+        <property name="messages" ref="cust_msg"/>
         <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
@@ -70,20 +61,15 @@
     </bean>
     
     <!-- Seleção de clientes -->
-    <bean id="cust_selpor_table" class="org.eve.view.TableAssist">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_selpor_table" class="org.eve.view.TableAssist"/>
     
-    <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView"/>
     
     <!-- Escolha de múltiplos clientes -->
-    <bean id="cust_choose_view" class="org.eve.sd.customer.CustomerChooseView">
-        <property name="messages" ref="cust_msg"/>
-    </bean>
+    <bean id="cust_choose_view" class="org.eve.sd.customer.CustomerChooseView"/>
     
     <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
+        <property name="messages" ref="cust_msg"/>
         <property name="messageBar" ref="cust_msg_bar"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
