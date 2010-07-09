@@ -89,6 +89,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.show")) {
 //            setTitle("Exibir cliente");
             setButtonVisible("customer.save", false);
+            contacts.clear();
             contacts.setEditable(false);
             
             for (FormComponent component : form.getComponents())
@@ -105,6 +106,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.edit")) {
 //            setTitle("Editar cliente");            
             setButtonVisible("customer.save", true);
+            contacts.clear();
             contacts.setEditable(true);
 
             for (FormComponent component : form.getComponents())
@@ -121,6 +123,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.create")) {            
 //            setTitle("Criar cliente");
             setButtonVisible("customer.save", true);
+            contacts.clear();
             contacts.setEditable(true);
 
             for (FormComponent component : form.getComponents())

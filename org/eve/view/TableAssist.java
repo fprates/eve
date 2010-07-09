@@ -117,16 +117,19 @@ public class TableAssist implements SelectionListener {
      */
     
     public final String getStringValue(String id, int row) {
+        String value;
         int i = 0;
         TableItem item = comptable.getItem(row);
         
         for (String id_ : table.keySet()) {
-            if (id_.equals(id))
-                return item.getText(i);
+            if (id_.equals(id)) {
+                value = item.getText(i);
+                return (value == null)?"" : value;
+            }
             i++;
         }
         
-        return null;
+        return "";
     }
     
     public final int getItensSize() {
@@ -142,7 +145,7 @@ public class TableAssist implements SelectionListener {
     public final int getIntValue(String id, int row) {
         String value = getStringValue(id, row);
         
-        if ((value == null) || (value.equals("")))
+        if (value.equals(""))
             return 0;
         
         return Integer.parseInt(value);        
@@ -155,15 +158,18 @@ public class TableAssist implements SelectionListener {
      * @return conteúdo string
      */
     public final String getSelectedStringValue(String id, int row) {
+        String value;
         int i = 0;
         
         for (String id_ : table.keySet()) {
-            if (id_.equals(id))
-                return selectedItens[row].getText(i);
+            if (id_.equals(id)) {
+                value = selectedItens[row].getText(i);
+                return (value == null)?"" : value;
+            }
             i++;
         }
         
-        return null;            
+        return "";            
     }
     
     /**
@@ -175,7 +181,7 @@ public class TableAssist implements SelectionListener {
     public final int getSelectedIntValue(String id, int row) {
         String value = getSelectedStringValue(id, row);
         
-        if ((value == null) || (value.equals("")))
+        if (value.equals(""))
             return 0;
         
         return Integer.parseInt(value);
@@ -194,6 +200,11 @@ public class TableAssist implements SelectionListener {
      * Others
      * 
      */
+    
+    public final void clear() {
+        comptable.clearAll();
+        selectedItens = null;
+    }
     
     public final void clearSelectedItens() {
         selectedItens = null; 

@@ -23,7 +23,9 @@
     </class>
     
     <class name="org.eve.sd.customer.CustomerContact" table="CUSTMR002">
-        <id name="item" column="NRSEQ"/>
+        <id name="item" column="NRSEQ">
+            <generator class="native"/>
+        </id>
         <many-to-one name="customer" column="IDENT" not-null="true"/>
         <property name="name" column="RNAME"/>
         <property name="function" column="FUNCT"/>
@@ -32,7 +34,9 @@
     </class>
     
     <class name="org.eve.sd.customer.CustomerAddress" table="CUSTMR003">
-        <id name="item" column="NRSEQ"/>
+        <id name="item" column="NRSEQ">
+            <generator class="native"/>
+        </id>
         <many-to-one name="customer" column="IDENT" not-null="true"/>
     </class>
 </hibernate-mapping>

@@ -56,8 +56,12 @@ public class CustomerSelectionView extends AbstractView {
      */
     @Override
     public void reload(String action) {
-        getController().setAction(action);
-        getController().getForm("main").clear();
+        Controller controller = getController();
+        
+        controller.setAction(action);
+        controller.getForm("main").clear();
+        controller.getTable("customers").clear();
+        
 //        setTitle("Selecionar cliente");
     }
 

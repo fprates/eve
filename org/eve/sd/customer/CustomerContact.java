@@ -2,7 +2,7 @@ package org.eve.sd.customer;
 
 import java.io.Serializable;
 
-public class CustomerContact implements Serializable {
+public class CustomerContact implements Serializable, Comparable<CustomerContact> {
     private static final long serialVersionUID = -6501815384505430816L;
     private Customer customer;
     private int item;
@@ -94,6 +94,23 @@ public class CustomerContact implements Serializable {
      */
     public void setTelephone2(int telf2) {
         this.telf2 = telf2;
+    }
+
+    @Override
+    public int compareTo(CustomerContact contact) {
+        int result;
+        
+        if (contact != this) {
+            result = customer.getId() - contact.getCustomer().getId(); 
+            if (result != 0)
+                return result;
+            
+            result = item - contact.getItem();
+            
+            return result;
+        }
+        
+        return 0;
     }    
     
 }
