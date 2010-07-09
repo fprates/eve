@@ -8,7 +8,9 @@
         <id name="id" column="IDENT"/>
         <property name="name" column="RNAME"/>
         <property name="alternateName" column="ANAME"/>
-        <property name="creation" column="DTCRI"/>
+        <property name="regDate" column="DTREG"/>
+        <property name="regTime" column="HRREG"/>
+        <property name="regUser" column="USREG"/>
         <property name="status" column="STATU"/>
         <set name="contacts" inverse="true">
             <key column="IDENT"/>

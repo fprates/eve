@@ -67,27 +67,33 @@ public class CustomerSelectionController extends AbstractController {
                         selporform.getStringLike("customer.name"),
                         selporform.getStringLike("customer.aname")});
                 
-                if (customers != null && customers.size() > 0) {
-                    table = getTable("customers");
-                    ident = 0;
-                    
-                    for(Object object : customers) {
-                        table.insert();
-                        customer_ = (Customer)object;
-                        table.setIntValue("customer.ident", ident,
-                                customer_.getId());
-                        table.setStringValue("customer.name", ident,
-                                customer_.getName());
-                        table.setStringValue("customer.aname", ident,
-                                customer_.getAlternateName());
-                        ident++;
+                if (customers != null) {
+                    if (customers.size() > 0) {                        
+                        table = getTable("customers");
+                        ident = 0;
+                        
+                        for(Object object : customers) {
+                            table.insert();
+                            customer_ = (Customer)object;
+                            table.setIntValue("customer.ident", ident,
+                                    customer_.getId());
+                            table.setStringValue("customer.name", ident,
+                                    customer_.getName());
+                            table.setStringValue("customer.aname", ident,
+                                    customer_.getAlternateName());
+                            ident++;
+                        }
+                        
+                        if (action.equals("customer.show.sel"))
+                            call("customer.show.choose");
+                        
+                        if (action.equals("customer.edit.sel"))
+                            call("customer.edit.choose");
+                        
+                    } else {
+                        setMessage(EVE.error, "customer.select.empty");
+                        return;
                     }
-                    
-                    if (action.equals("customer.show.sel"))
-                        call("customer.show.choose");
-                    
-                    if (action.equals("customer.edit.sel"))
-                        call("customer.edit.choose");
                 } else {
                     setMessage(EVE.error, "customer.not.found");
                     return;
@@ -99,7 +105,9 @@ public class CustomerSelectionController extends AbstractController {
                 if (customer_ != null) {
                     customer.setAlternateName(customer_.getAlternateName());
                     customer.setCodCadNac(customer_.getCodCadNac());
-                    customer.setCreation(customer_.getCreation());
+                    customer.setRegDate(customer_.getRegDate());
+                    customer.setRegTime(customer.getRegTime());
+                    customer.setRegUser(customer.getRegUser());
                     customer.setId(customer_.getId());
                     customer.setName(customer_.getName());
                     customer.setStatus(customer_.getStatus());

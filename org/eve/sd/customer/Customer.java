@@ -4,6 +4,7 @@
 package org.eve.sd.customer;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,7 +17,9 @@ public class Customer implements Serializable {
 	private int id;
 	private String name;
 	private String alternateName;
-	private Date creation;
+	private Date regDate;
+	private Time regTime;
+	private String regUser;
 	private String codCadNac;
     private int status;
     private Set<CustomerContact> contacts;
@@ -51,8 +54,24 @@ public class Customer implements Serializable {
 	/**
 	 * @return the creation
 	 */
-	public Date getCreation() {
-		return creation;
+	public Date getRegDate() {
+		return regDate;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Time getRegTime() {
+	    return regTime;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getRegUser() {
+	    return regUser;
 	}
 	
 	/**
@@ -112,8 +131,16 @@ public class Customer implements Serializable {
 	/**
 	 * @param creation the creation to set
 	 */
-	public void setCreation(Date creation) {
-		this.creation = creation;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	
+	public void setRegTime(Time regTime) {
+	    this.regTime = regTime;
+	}
+	
+	public void setRegUser(String regUser) {
+	    this.regUser = regUser;
 	}
 	
 	/**
