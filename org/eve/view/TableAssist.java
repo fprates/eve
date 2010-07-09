@@ -116,7 +116,45 @@ public class TableAssist implements SelectionListener {
      * 
      */
     
-    public final String getSelectedItem(int row, String id) {
+    public final String getStringValue(String id, int row) {
+        int i = 0;
+        TableItem item = comptable.getItem(row);
+        
+        for (String id_ : table.keySet()) {
+            if (id_.equals(id))
+                return item.getText(i);
+            i++;
+        }
+        
+        return null;
+    }
+    
+    public final int getItensSize() {
+        return comptable.getItems().length;
+    }
+    
+    /**
+     * Retorna inteiro da tabela
+     * @param id coluna
+     * @param row linha
+     * @return conteúdo inteiro
+     */
+    public final int getIntValue(String id, int row) {
+        String value = getStringValue(id, row);
+        
+        if ((value == null) || (value.equals("")))
+            return 0;
+        
+        return Integer.parseInt(value);        
+    }
+    
+    /**
+     * Retorna string da linha selecionada na tabela
+     * @param id coluna
+     * @param row linha
+     * @return conteúdo string
+     */
+    public final String getSelectedStringValue(String id, int row) {
         int i = 0;
         
         for (String id_ : table.keySet()) {
@@ -129,13 +167,13 @@ public class TableAssist implements SelectionListener {
     }
     
     /**
-     * 
-     * @param row
-     * @param id
-     * @return
+     * Retorna inteiro da linha selecionada na tabela
+     * @param id coluna
+     * @param row linha
+     * @return conteúdo inteiro
      */
-    public final int getSelectedIntItem(int row, String id) {
-        String value = getSelectedItem(row, id);
+    public final int getSelectedIntValue(String id, int row) {
+        String value = getSelectedStringValue(id, row);
         
         if ((value == null) || (value.equals("")))
             return 0;

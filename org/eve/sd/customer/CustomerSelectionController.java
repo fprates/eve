@@ -33,17 +33,17 @@ public class CustomerSelectionController extends AbstractController {
                 return;
             }
             
-            ident = table.getSelectedIntItem(0, "customer.ident");
+            ident = table.getSelectedIntValue("customer.ident", 0);
             
             if (ident == 0)
                 return;
 
             customer.setId(ident);
-            customer.setAlternateName(table.getSelectedItem(0, "customer.aname"));
-            customer.setCodCadNac(table.getSelectedItem(0, "customer.cnpj"));
+            customer.setAlternateName(table.getSelectedStringValue("customer.aname", 0));
+            customer.setCodCadNac(table.getSelectedStringValue("customer.cnpj", 0));
 //            customer.setCreation(customer_.getCreation());
-            customer.setName(table.getSelectedItem(0, "customer.name"));
-            customer.setStatus(table.getSelectedIntItem(0, "customer.status"));
+            customer.setName(table.getSelectedStringValue("customer.name", 0));
+            customer.setStatus(table.getSelectedIntValue("customer.status", 0));
             
             table.clearSelectedItens();
             
