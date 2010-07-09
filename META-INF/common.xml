@@ -20,7 +20,6 @@
         <property name="mappingResources">
             <list>
                 <value>META-INF/customer.hbm.xml</value>
-                <value>META-INF/customer-contacts.hbm.xml</value>
                 <value>META-INF/numericrange.hbm.xml</value>
             </list>
         </property>

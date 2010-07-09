@@ -8,6 +8,9 @@ create user evedb password initial;
 drop table custmr003 if exists;
 drop table custmr002 if exists;
 drop table custmr001 if exists;
+drop table sdcomm001 if exists;
+drop table sdcomm002 if exists;
+drop table sdcomm003 if exists;
 drop table numrng if exists;
 \p tables dropped.
 
@@ -34,6 +37,10 @@ create table custmr001 (
 create table custmr002 (
    ident numeric(10),
    nrseq numeric(2),
+   rname char(40),
+   funct char(20),
+   teln1 numeric(12),
+   teln2 numeric(12),
    primary key(ident, nrseq)
 );
 
@@ -43,11 +50,36 @@ create table custmr003 (
    nrseq numeric(2),
    primary key(ident, nrseq)
 );
+
+/* unidades países */
+create table sdcomm001 (
+    cntry char(3) primary key
+);
+
+/* unidades federativas */
+create table sdcomm002 (
+    cntry char(3),
+    coduf char(2),
+    ufkey char(5),
+    primary key(cntry, coduf)
+);
+
+/* municípios */
+create table sdcomm003 (
+    ufkey char(5),
+    munic numeric(7),
+    rname char(20),
+    primary key(ufkey, munic)
+);
+
 \p tables generated.
 
 grant select, insert, update, delete on custmr001 to evedb;
 grant select, insert, update, delete on custmr002 to evedb;
 grant select, insert, update, delete on custmr002 to evedb;
+grant select, insert, update, delete on sdcomm001 to evedb;
+grant select, insert, update, delete on sdcomm002 to evedb;
+grant select, insert, update, delete on sdcomm003 to evedb;
 grant select, insert, update, delete on numrng to evedb;
 \p permissions granted.
 

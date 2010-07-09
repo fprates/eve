@@ -10,9 +10,27 @@
         <property name="alternateName" column="ANAME"/>
         <property name="creation" column="DTCRI"/>
         <property name="status" column="STATU"/>
-        <set name="contacts">
+        <set name="contacts" inverse="true">
             <key column="IDENT"/>
-            <one-to-many class="CustomerContact"/>
-        </set> 
+            <one-to-many class="org.eve.sd.customer.CustomerContact"/>
+        </set>
+        <set name="addresses" inverse="true">
+            <key column="IDENT"/>
+            <one-to-many class="org.eve.sd.customer.CustomerAddress"/>
+        </set>
+    </class>
+    
+    <class name="org.eve.sd.customer.CustomerContact" table="CUSTMR002">
+        <id name="item" column="NRSEQ"/>
+        <many-to-one name="customer" column="IDENT" not-null="true"/>
+        <property name="name" column="RNAME"/>
+        <property name="function" column="FUNCT"/>
+        <property name="telephone1" column="TELN1"/>
+        <property name="telephone2" column="TELN2"/>
+    </class>
+    
+    <class name="org.eve.sd.customer.CustomerAddress" table="CUSTMR003">
+        <id name="item" column="NRSEQ"/>
+        <many-to-one name="customer" column="IDENT" not-null="true"/>
     </class>
 </hibernate-mapping>

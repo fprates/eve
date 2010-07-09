@@ -5,14 +5,20 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.springframework.context.MessageSource;
 
 public class TableAssist implements SelectionListener {
@@ -27,6 +33,7 @@ public class TableAssist implements SelectionListener {
     private TableItem[] selectedItens;
     private int lines;
     private int currentline;
+    private TableEditor editor;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -174,6 +181,7 @@ public class TableAssist implements SelectionListener {
         Button btins;
         Button btdel;
         int k;
+        TableListener tablelistener;
 
         area = new Composite(container, SWT.NONE);
         area.setLayout(new RowLayout(SWT.VERTICAL));
@@ -186,9 +194,16 @@ public class TableAssist implements SelectionListener {
         comptable.setHeaderVisible(true);
         comptable.addSelectionListener(this);
         
+        editor = new TableEditor(comptable);
+        editor.horizontalAlignment = SWT.LEFT;
+        editor.grabHorizontal = true;
+        
+        tablelistener = new TableListener(comptable);
+        tablelistener.setTableAssist(this);
+        comptable.addListener(SWT.MouseDown, tablelistener);
+        
         for (k=1; k <= lines; k++)
             insert();
-//        TableEditor editor = new TableEditor(comptable);
         
         btins = new Button(btarea, SWT.NONE);
         btdel = new Button(btarea, SWT.NONE);
@@ -211,6 +226,25 @@ public class TableAssist implements SelectionListener {
         
         return area;        
     }
+    
+    public void cellEdit(TableItem item, int col) {
+        Text cell;
+        CellListener celllistener;
+        
+        cell = new Text(comptable, SWT.NONE);
+        celllistener = new CellListener(cell);
+        celllistener.setCol(col);
+        celllistener.setItem(item);
+        celllistener.setTable(this);
+        
+        cell.addListener (SWT.FocusOut, celllistener);
+        cell.addListener (SWT.Traverse, celllistener);
+        editor.setEditor (cell, item, col);
+        cell.setText (item.getText(col));
+        cell.selectAll();
+        cell.setFocus();
+        
+    }
 
     /*
      * (non-Javadoc)
@@ -221,13 +255,126 @@ public class TableAssist implements SelectionListener {
         // TODO Auto-generated method stub
         
     }
-
+    
     /*
      * (non-Javadoc)
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public void widgetSelected(SelectionEvent ev) {
+    public void widgetSelected(SelectionEvent ev) {        
         selectedItens = comptable.getSelection();
     }
 }
+
+class CellListener implements Listener {
+    private TableAssist table;
+    private TableItem item;
+    private Text text;
+    private int col;
+    
+    public CellListener(Text text) {
+        this.text = text;
+    }
+    
+    public final void setItem(TableItem item) {
+        this.item = item;
+    }
+    
+    public final void setCol(int col) {
+        this.col = col;
+    }
+    
+    public final void setTable(TableAssist table) {
+        this.table = table;
+    }
+    
+    @Override
+    public void handleEvent(Event ev) {
+        switch (ev.type) {
+            case SWT.FocusOut:
+                item.setText(col, text.getText());
+                text.dispose();
+                break;
+                
+            case SWT.Traverse:
+                switch (ev.detail) {
+                    case SWT.TRAVERSE_RETURN:
+                        item.setText(col, text.getText());
+                        text.dispose();
+                        ev.doit = false;
+                        break;
+                        
+                    case SWT.TRAVERSE_ESCAPE:
+                        text.dispose();
+                        ev.doit = false;
+                        break;
+                        
+                    case SWT.TRAVERSE_TAB_PREVIOUS:
+                        item.setText(col, text.getText());
+                        text.dispose();
+                        ev.doit = false;
+                        
+                        text.dispose();
+                        table.cellEdit(item, --col);
+                        break;                        
+                        
+                    case SWT.TRAVERSE_TAB_NEXT:
+                        item.setText(col, text.getText());
+                        text.dispose();
+                        ev.doit = false;
+                        
+                        text.dispose();
+                        table.cellEdit(item, ++col);
+                        break;
+                }
+                break;
+        }
+    }    
+}
+
+class TableListener implements Listener {
+    private Table table;
+    private TableAssist tableassist;
+    
+    public TableListener(Table table) {
+        this.table = table;
+    }
+    
+    public final void setTableAssist(TableAssist tableassist) {
+        this.tableassist = tableassist;
+    }
+    
+    @Override
+    public void handleEvent (Event event) {
+        boolean visible;
+        Rectangle rect;
+        TableItem item;
+        Rectangle clientArea = table.getClientArea();
+        Point pt = new Point(event.x, event.y);        
+        int index = table.getTopIndex();
+        
+        while (index < table.getItemCount()) {
+            visible = false;
+            item = table.getItem(index);
+            
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                rect = item.getBounds(col);
+                
+                if (rect.contains(pt)) {
+                    tableassist.cellEdit(item, col);                    
+                    return;
+                }
+                
+                if (!visible && rect.intersects(clientArea))
+                    visible = true;
+            }
+            
+            if (!visible)
+                return;
+            
+            index++;
+        }
+    }
+}
+
+

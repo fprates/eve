@@ -23,8 +23,10 @@ public class CustomerView extends AbstractView {
         TabFolder main = new TabFolder(container, SWT.BORDER);
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
+//        TabItem addresses = new TabItem(main, SWT.NONE);
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
+//        TableAssist atable = controller.getTable("addresses");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -37,7 +39,7 @@ public class CustomerView extends AbstractView {
         form.put("customer.cnpj", 18);
         form.put("customer.status", 1);
         
-        base.setText("Base");
+        base.setText(getMessage("customer.base"));
         base.setControl(form.define(main));
         
         ctable.setLocale(getLocale());
@@ -47,7 +49,14 @@ public class CustomerView extends AbstractView {
         ctable.put("contact.teln2");
         
         contacts.setControl(ctable.define(main, controller));        
-        contacts.setText("Contatos");
+        contacts.setText(getMessage("customer.contacts"));
+        
+//        atable.setLocale(getLocale());
+//        atable.put("address.logra");
+//        atable.put("address.cdend");
+//        
+//        addresses.setControl(atable.define(main, controller));
+//        addresses.setText(getMessage("customer.addresses"));
         
         addButton("customer.save");
     }

@@ -20,6 +20,7 @@ public class Customer implements Serializable {
 	private String codCadNac;
     private int status;
     private Set<CustomerContact> contacts;
+    private Set<CustomerAddress> addresses;
 	
 	public Customer() { }
 	
@@ -76,6 +77,14 @@ public class Customer implements Serializable {
         return contacts;
     }
     
+    /**
+     * 
+     * @return
+     */
+    public Set<CustomerAddress> getAddresses() {
+        return addresses;
+    }
+    
     /*
      * Setters
      */
@@ -127,6 +136,14 @@ public class Customer implements Serializable {
      */
     public void setContacts(Set<CustomerContact> contacts) {
         this.contacts = contacts;
+    }
+    
+    /**
+     * 
+     * @param addresses
+     */
+    public void setAddresses(Set<CustomerAddress> addresses) {
+        this.addresses = addresses;
     }
 	
 }
