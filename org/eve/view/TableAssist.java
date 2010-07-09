@@ -34,6 +34,7 @@ public class TableAssist implements SelectionListener {
     private int lines;
     private int currentline;
     private TableEditor editor;
+    private TableListener tablelistener;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -66,6 +67,11 @@ public class TableAssist implements SelectionListener {
      */
     public final void setEditable(boolean editable) {
         this.editable = editable;
+        if (tablelistener != null)
+            tablelistener.setEditable(editable);
+        
+        if (btarea != null)
+            btarea.setVisible(editable);
     }
     
     /**
@@ -181,7 +187,6 @@ public class TableAssist implements SelectionListener {
         Button btins;
         Button btdel;
         int k;
-        TableListener tablelistener;
 
         area = new Composite(container, SWT.NONE);
         area.setLayout(new RowLayout(SWT.VERTICAL));
@@ -200,6 +205,7 @@ public class TableAssist implements SelectionListener {
         
         tablelistener = new TableListener(comptable);
         tablelistener.setTableAssist(this);
+        tablelistener.setEditable(editable);
         comptable.addListener(SWT.MouseDown, tablelistener);
         
         for (k=1; k <= lines; k++)
@@ -289,7 +295,7 @@ class CellListener implements Listener {
     }
     
     @Override
-    public void handleEvent(Event ev) {
+    public void handleEvent(Event ev) {        
         switch (ev.type) {
             case SWT.FocusOut:
                 item.setText(col, text.getText());
@@ -327,6 +333,7 @@ class CellListener implements Listener {
                         table.cellEdit(item, ++col);
                         break;
                 }
+                
                 break;
         }
     }    
@@ -335,6 +342,7 @@ class CellListener implements Listener {
 class TableListener implements Listener {
     private Table table;
     private TableAssist tableassist;
+    private boolean editable;
     
     public TableListener(Table table) {
         this.table = table;
@@ -344,14 +352,25 @@ class TableListener implements Listener {
         this.tableassist = tableassist;
     }
     
+    public final void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
     @Override
     public void handleEvent (Event event) {
         boolean visible;
         Rectangle rect;
-        TableItem item;
-        Rectangle clientArea = table.getClientArea();
-        Point pt = new Point(event.x, event.y);        
-        int index = table.getTopIndex();
+        TableItem item;        
+        Rectangle clientArea;
+        Point pt;        
+        int index;
+        
+        if (!editable)
+            return;
+        
+        clientArea = table.getClientArea();
+        pt = new Point(event.x, event.y);        
+        index = table.getTopIndex();
         
         while (index < table.getItemCount()) {
             visible = false;

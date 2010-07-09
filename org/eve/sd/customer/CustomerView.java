@@ -78,8 +78,10 @@ public class CustomerView extends AbstractView {
      */
     @Override
     public final void reload(String action) {
-        Customer customer = (Customer)getController().getObject();
-        Form form = getController().getForm("main");
+        Controller controller = getController();
+        Customer customer = (Customer)controller.getObject();
+        Form form = controller.getForm("main");
+        TableAssist contacts = controller.getTable("contacts");
         
         /*
          * Display mode component's configuration
@@ -87,6 +89,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.show")) {
 //            setTitle("Exibir cliente");
             setButtonVisible("customer.save", false);
+            contacts.setEditable(false);
             
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(false);
@@ -102,6 +105,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.edit")) {
 //            setTitle("Editar cliente");            
             setButtonVisible("customer.save", true);
+            contacts.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
@@ -117,6 +121,7 @@ public class CustomerView extends AbstractView {
         if (action.equals("customer.create")) {            
 //            setTitle("Criar cliente");
             setButtonVisible("customer.save", true);
+            contacts.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
