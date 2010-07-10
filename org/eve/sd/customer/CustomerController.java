@@ -26,20 +26,8 @@ public class CustomerController extends AbstractController {
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
                 
+                customer.getContacts().clear();
                 for (k = 0; k < contacts.getItensSize(); k++) {
-//                    contact = null;
-//                    for (CustomerContact contact_: customer.getContacts()) {
-//                        contact.setCustomer(customer);
-//                        contact.setFunction(contacts.getStringValue("contact.function", row))
-//                        (contacts.getStringValue("customer.aname", 0));
-//                        contact.setCodCadNac(contacts.getStringValue("customer.cnpj", 0));
-////                        customer.setRegDate(customer_.getCreation());
-//                        contact.setName(contacts.getSelectedItem(0, "customer.name"));
-//                        contact.setStatus(contacts.getSelectedIntItem(0, "customer.status"));
-//                    }
-//                    
-//                    if (contact != null)
-//                        continue;
                     name = contacts.getStringValue("contact.rname", k);
                     
                     if (name.equals(""))

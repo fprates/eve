@@ -62,7 +62,10 @@ public class CustomerView extends AbstractView {
     }
     
     private final void setControlLoad(Customer customer) {
-        Form form = getController().getForm("main");
+        int i = 0;
+        Controller controller = getController();
+        Form form = controller.getForm("main");
+        TableAssist table = controller.getTable("contacts");
         
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadNac());
@@ -70,6 +73,13 @@ public class CustomerView extends AbstractView {
         form.setInt("customer.ident", customer.getId());
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());
+        
+        table.clear();
+        for (CustomerContact contact : customer.getContacts()) {
+            table.setStringValue("contact.rname", i, contact.getName());
+            table.setStringValue("contact.funct", i, contact.getFunction());
+            i++;
+        }
     }
     
     /*

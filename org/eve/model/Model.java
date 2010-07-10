@@ -1,5 +1,6 @@
 package org.eve.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,9 @@ public interface Model {
      * Others
      * 
      */
+    
+    public abstract void load(Class<?> class_, Serializable object_, Object object);
+    
     public abstract Object selectUnique(String query, Object[] criteria);
     
     public abstract List<?> select(String query, Object[] criteria);

@@ -9,7 +9,7 @@ import org.eve.view.Form;
 import org.eve.view.TableAssist;
 
 public class CustomerSelectionController extends AbstractController {
-
+    
     /* (non-Javadoc)
      * @see org.eve.ui.View#userInput(java.lang.String)
      */
@@ -37,15 +37,8 @@ public class CustomerSelectionController extends AbstractController {
             
             if (ident == 0)
                 return;
-
-            customer.setId(ident);
-            customer.setAlternateName(table.getSelectedStringValue("customer.aname", 0));
-            customer.setCodCadNac(table.getSelectedStringValue("customer.cnpj", 0));
-//            customer.setCreation(customer_.getCreation());
-            customer.setName(table.getSelectedStringValue("customer.name", 0));
-            customer.setStatus(table.getSelectedIntValue("customer.status", 0));
             
-            table.clearSelectedItens();
+            model.load(Customer.class, ident, customer);
             
             if (action.equals("customer.show.choose"))
                 call("customer.show");
@@ -98,20 +91,9 @@ public class CustomerSelectionController extends AbstractController {
                     setMessage(EVE.error, "customer.not.found");
                     return;
                 }
-            } else {                
-                customer_ = (Customer)model.selectUnique("sel_customer",
-                        new Object[] {ident});
-            
-                if (customer_ != null) {
-                    customer.setAlternateName(customer_.getAlternateName());
-                    customer.setCodCadNac(customer_.getCodCadNac());
-                    customer.setRegDate(customer_.getRegDate());
-                    customer.setRegTime(customer.getRegTime());
-                    customer.setRegUser(customer.getRegUser());
-                    customer.setId(customer_.getId());
-                    customer.setName(customer_.getName());
-                    customer.setStatus(customer_.getStatus());
-                    
+            } else {            
+                model.load(Customer.class, ident, customer);
+                if (customer != null) {                    
                     if (action.equals("customer.show.sel"))
                         call("customer.show");
                     

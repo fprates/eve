@@ -10,7 +10,7 @@ import org.eve.view.Controller;
 import org.eve.view.View;
 
 public class EveApp implements EveAPI {
-    private final static String VERSION = "1.9.3";
+    private final static String VERSION = "1.9.4";
     private List<Controller> controllers;
     private Map<View, Controller> controlmap;
     private Map<String, View> viewmap;
