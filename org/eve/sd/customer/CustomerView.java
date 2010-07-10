@@ -23,10 +23,10 @@ public class CustomerView extends AbstractView {
         TabFolder main = new TabFolder(container, SWT.BORDER);
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
-//        TabItem addresses = new TabItem(main, SWT.NONE);
+        TabItem addresses = new TabItem(main, SWT.NONE);
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
-//        TableAssist atable = controller.getTable("addresses");
+        TableAssist atable = controller.getTable("addresses");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -51,12 +51,13 @@ public class CustomerView extends AbstractView {
         contacts.setControl(ctable.define(main, controller));        
         contacts.setText(getMessage("customer.contacts"));
         
-//        atable.setLocale(getLocale());
-//        atable.put("address.logra");
-//        atable.put("address.cdend");
-//        
-//        addresses.setControl(atable.define(main, controller));
-//        addresses.setText(getMessage("customer.addresses"));
+        atable.setLocale(getLocale());
+        atable.put("address.logra");
+        atable.put("address.numer");
+        atable.put("address.cdend");
+        
+        addresses.setControl(atable.define(main, controller));
+        addresses.setText(getMessage("customer.addresses"));
         
         addButton("customer.save");
     }
@@ -65,7 +66,8 @@ public class CustomerView extends AbstractView {
         int i = 0;
         Controller controller = getController();
         Form form = controller.getForm("main");
-        TableAssist table = controller.getTable("contacts");
+        TableAssist ctable = controller.getTable("contacts");
+        TableAssist atable = controller.getTable("addresses");
         
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadNac());
@@ -74,11 +76,16 @@ public class CustomerView extends AbstractView {
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());
         
-        table.clear();
+        ctable.clear();
         for (CustomerContact contact : customer.getContacts()) {
-            table.setStringValue("contact.rname", i, contact.getName());
-            table.setStringValue("contact.funct", i, contact.getFunction());
-            i++;
+            ctable.setStringValue("contact.rname", i, contact.getName());
+            ctable.setStringValue("contact.funct", i++, contact.getFunction());
+        }
+        
+        i = 0;
+        for (CustomerAddress address : customer.getAddresses()) {
+            atable.setStringValue("address.logra", i, address.getAddress());
+            atable.setIntValue("address.number", i++, address.getNumber());
         }
     }
     
@@ -92,6 +99,7 @@ public class CustomerView extends AbstractView {
         Customer customer = (Customer)controller.getObject();
         Form form = controller.getForm("main");
         TableAssist contacts = controller.getTable("contacts");
+        TableAssist addresses = controller.getTable("addresses");
         
         /*
          * Display mode component's configuration
@@ -101,6 +109,8 @@ public class CustomerView extends AbstractView {
             setButtonVisible("customer.save", false);
             contacts.clear();
             contacts.setEditable(false);
+            addresses.clear();
+            addresses.setEditable(false);
             
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(false);
@@ -118,6 +128,8 @@ public class CustomerView extends AbstractView {
             setButtonVisible("customer.save", true);
             contacts.clear();
             contacts.setEditable(true);
+            addresses.clear();
+            addresses.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
@@ -135,6 +147,8 @@ public class CustomerView extends AbstractView {
             setButtonVisible("customer.save", true);
             contacts.clear();
             contacts.setEditable(true);
+            addresses.clear();
+            addresses.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());

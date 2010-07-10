@@ -46,7 +46,9 @@ create table custmr002 (
 /* mestre de clientes - endereços */
 create table custmr003 (
    nrseq numeric(12) primary key,
-   ident numeric(10) foreign key references custmr001(ident)
+   ident numeric(10) foreign key references custmr001(ident),
+   logra char(80),
+   numer numeric(6)
 );
 
 /* unidades países */

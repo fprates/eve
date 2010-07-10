@@ -34,5 +34,7 @@
     <class name="org.eve.sd.customer.CustomerAddress" table="CUSTMR003">
         <id name="item" column="NRSEQ"/>
         <many-to-one name="customer" column="IDENT" not-null="true"/>
+        <property name="address" column="LOGRA"/>
+        <property name="number" column="NUMER"/>
     </class>
 </hibernate-mapping>

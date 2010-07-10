@@ -18,8 +18,12 @@ public class CustomerModel extends AbstractModel {
         customer.setId(customer_.getId());
         customer.setName(customer_.getName());
         customer.setStatus(customer_.getStatus());
+        
         customer.getContacts().clear();
         customer.getContacts().addAll(customer_.getContacts());
+        
+        customer.getAddresses().clear();
+        customer.getAddresses().addAll(customer_.getAddresses());
     }
 
     @Override
@@ -57,12 +61,22 @@ public class CustomerModel extends AbstractModel {
                 contact.setItem(++k + (customer.getId() * 100));
                 session.save(contact);
             }
+            
+            for (CustomerAddress address : customer.getAddresses()) {
+                address.setItem(++k + (customer.getId() * 100));
+                session.save(address);
+            }
         } else {
             session.update(customer);
             
             for (CustomerContact contact : customer.getContacts()) {
                 contact.setItem(++k + (customer.getId() * 100));
                 session.saveOrUpdate(contact);
+            }
+            
+            for (CustomerAddress address : customer.getAddresses()) {
+                address.setItem(++k + (customer.getId() * 100));
+                session.saveOrUpdate(address);
             }
         }
         

@@ -34,6 +34,8 @@
     
     <bean id="cust_contacts_table" class="org.eve.view.TableAssist"/>
     
+    <bean id="cust_addresses_table" class="org.eve.view.TableAssist"/>
+    
     <bean id="cust_view" class="org.eve.sd.customer.CustomerView"/>
     
     <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
@@ -48,6 +50,7 @@
         <property name="tables">
             <map>
                 <entry key="contacts" value-ref="cust_contacts_table"/>
+                <entry key="addresses" value-ref="cust_addresses_table"/>
             </map>
         </property>
         <property name="views">

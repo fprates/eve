@@ -13,19 +13,27 @@ public class CustomerController extends AbstractController {
         int k;
         String name;
         CustomerContact contact;
+        CustomerAddress address;
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
         TableAssist contacts = getTable("contacts");
+        TableAssist addresses = getTable("addresses");
         
         if (input.equals("customer.save")) {
             try {
+                /*
+                 * dados base
+                 */
                 customer.setAlternateName(form.getString("customer.aname"));
                 customer.setCodCadNac(form.getString("customer.cnpj"));
                 customer.setId(form.getInt("customer.ident"));
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
                 
+                /*
+                 * inclui contatos
+                 */
                 customer.getContacts().clear();
                 for (k = 0; k < contacts.getItensSize(); k++) {
                     name = contacts.getStringValue("contact.rname", k);
@@ -41,6 +49,26 @@ public class CustomerController extends AbstractController {
                     contact.setFunction(contacts.getStringValue("contact.funct", k));
                     
                     customer.getContacts().add(contact);
+                }
+                
+                /*
+                 * inclui endereços
+                 */
+                customer.getAddresses().clear();
+                for (k = 0; k < contacts.getItensSize(); k++) {
+                    name = addresses.getStringValue("address.logra", k);
+                    
+                    if (name.equals(""))
+                        continue;
+                    
+                    address = new CustomerAddress();
+                    
+                    address.setCustomer(customer);
+                    address.setItem(k);
+                    address.setAddress(name);
+                    address.setNumber(addresses.getIntValue("address.number", k));
+                    
+                    customer.getAddresses().add(address);
                 }
                 
                 model.save(customer);
