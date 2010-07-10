@@ -30,6 +30,8 @@ public class TableAssist implements SelectionListener {
     private Composite btarea;
     private Composite area;
     private boolean editable;
+    private boolean insert;
+    private boolean remove;
     private TableItem[] selectedItens;
     private int lines;
     private int currentline;
@@ -39,6 +41,8 @@ public class TableAssist implements SelectionListener {
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
         editable = true;
+        insert = true;
+        remove = true;
         currentline = 0;
         lines = LINES;
     }
@@ -108,6 +112,14 @@ public class TableAssist implements SelectionListener {
      */
     public final void setLines(int lines) {
         this.lines = lines;
+    }
+    
+    public final void setInsert(boolean insert) {
+        this.insert = insert;
+    }
+    
+    public final void setRemove(boolean remove) {
+        this.remove = remove;
     }
     
     /*
@@ -261,12 +273,15 @@ public class TableAssist implements SelectionListener {
             insert();
         
         btins = new Button(btarea, SWT.NONE);
-        btdel = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
         btins.addSelectionListener(listener);
-//        widgetresponse.put(btins, name+".new");
+        btins.setVisible(insert);
+//      widgetresponse.put(btins, name+".new");
+        
+        btdel = new Button(btarea, SWT.NONE);
         btdel.setText("Remover");
         btdel.addSelectionListener(listener);
+        btdel.setVisible(remove);
 //        widgetresponse.put(btdel, name+".del");
         
         btarea.pack();

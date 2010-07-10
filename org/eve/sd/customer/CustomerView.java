@@ -24,9 +24,11 @@ public class CustomerView extends AbstractView {
         TabItem base = new TabItem(main, SWT.NONE);
         TabItem contacts = new TabItem(main, SWT.NONE);
         TabItem addresses = new TabItem(main, SWT.NONE);
+        TabItem schedule = new TabItem(main, SWT.NONE);
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
+        TableAssist stable = controller.getTable("schedule");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -58,6 +60,22 @@ public class CustomerView extends AbstractView {
         
         addresses.setControl(atable.define(main, controller));
         addresses.setText(getMessage("customer.addresses"));
+        
+        stable.setLocale(getLocale());
+        stable.setLines(4);
+        stable.setInsert(false);
+        stable.setRemove(false);
+        stable.put("schedule.typ");
+        stable.put("schedule.mon");
+        stable.put("schedule.tue");
+        stable.put("schedule.wed");
+        stable.put("schedule.thu");
+        stable.put("schedule.fri");
+        stable.put("schedule.sat");
+        stable.put("schedule.sun");
+        
+        schedule.setControl(stable.define(main, controller));
+        schedule.setText(getMessage("customer.schedule"));
         
         addButton("customer.save");
     }
