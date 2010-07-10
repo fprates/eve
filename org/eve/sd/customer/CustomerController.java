@@ -1,7 +1,5 @@
 package org.eve.sd.customer;
 
-import java.util.TreeSet;
-
 import org.eve.main.EVE;
 import org.eve.model.Model;
 import org.eve.view.AbstractController;
@@ -53,9 +51,6 @@ public class CustomerController extends AbstractController {
                     contact.setItem(k+1);
                     contact.setName(name);
                     contact.setFunction(contacts.getStringValue("contact.funct", k));
-                    
-                    if (customer.getContacts() == null)
-                        customer.setContacts(new TreeSet<CustomerContact>());
                     
                     customer.getContacts().add(contact);
                     

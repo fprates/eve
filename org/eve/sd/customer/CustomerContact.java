@@ -97,6 +97,26 @@ public class CustomerContact implements Serializable, Comparable<CustomerContact
     }
 
     @Override
+    public boolean equals(Object object) {
+        CustomerContact contact;
+        
+        if (this == object)
+            return true;
+        
+        if (!(object instanceof CustomerContact))
+            return false;
+        
+        contact = (CustomerContact)object;
+        if (!customer.equals(contact.getCustomer()))
+            return false;
+        
+        if (item != contact.getItem())
+            return false;
+        
+        return true;
+    }
+    
+    @Override
     public int compareTo(CustomerContact contact) {
         int result;
         
@@ -111,6 +131,14 @@ public class CustomerContact implements Serializable, Comparable<CustomerContact
         }
         
         return 0;
-    }    
+    }
+    
+    public int hashCode() {
+        int result = customer.hashCode();
+        
+        result = (10 * result) + Integer.toString(item).hashCode();
+        
+        return result;
+    }
     
 }

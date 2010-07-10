@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author francisco.prates
@@ -25,7 +26,9 @@ public class Customer implements Serializable {
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
 	
-	public Customer() { }
+	public Customer() {
+	    contacts = new TreeSet<CustomerContact>();
+	}
 	
 	/*
 	 * Getters
@@ -172,5 +175,26 @@ public class Customer implements Serializable {
     public void setAddresses(Set<CustomerAddress> addresses) {
         this.addresses = addresses;
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        Customer customer;
+        
+        if (this == object)
+            return true;
+        
+        if (!(object instanceof Customer))
+            return false;
+        
+        customer = (Customer)object;
+        if (id != customer.getId())
+            return false;
+        
+        return true;
+    }
 	
+    @Override
+    public int hashCode() {
+        return Integer.toString(id).hashCode();
+    }
 }

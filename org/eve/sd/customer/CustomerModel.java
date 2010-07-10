@@ -22,13 +22,12 @@ public class CustomerModel extends AbstractModel {
         if (customer.getId() == 0) {
             customer.setId(getNextIdent(session, "CUSTMR"));
             session.save(customer);
-            for (CustomerContact contact : customer.getContacts())
-                session.save(contact);
         } else {
             session.update(customer);
-            for (CustomerContact contact : customer.getContacts())
-                session.saveOrUpdate(contact);
         }
+        
+        for (CustomerContact contact : customer.getContacts())
+            session.save(contact);
         
         session.getTransaction().commit();
     }
