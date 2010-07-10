@@ -133,6 +133,7 @@ public class CustomerContact implements Serializable, Comparable<CustomerContact
         return 0;
     }
     
+    @Override
     public int hashCode() {
         int result = customer.hashCode();
         

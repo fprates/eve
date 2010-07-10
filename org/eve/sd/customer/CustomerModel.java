@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerModel extends AbstractModel {
 
     private final void copyCustomer(Customer customer_, Customer customer) {
-        String aname = customer_.getAlternateName();
-        customer.setAlternateName(aname);
+        customer.setAlternateName(customer_.getAlternateName());
         customer.setCodCadNac(customer_.getCodCadNac());
         customer.setRegDate(customer_.getRegDate());
         customer.setRegTime(customer.getRegTime());
@@ -20,7 +19,7 @@ public class CustomerModel extends AbstractModel {
         customer.setName(customer_.getName());
         customer.setStatus(customer_.getStatus());
         customer.getContacts().clear();
-        customer.getContacts().addAll(customer_.getContacts());        
+        customer.getContacts().addAll(customer_.getContacts());
     }
 
     @Override
@@ -36,6 +35,7 @@ public class CustomerModel extends AbstractModel {
         
         session.getTransaction().commit();
     }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.model.Model#save(java.lang.Object)
@@ -43,6 +43,7 @@ public class CustomerModel extends AbstractModel {
     @Override
     @Transactional(propagation=Propagation.SUPPORTS)
     public final void save(Object object) {
+        int k = 0;
         Customer customer = (Customer)object;
         Session session = getSessionFactory().getCurrentSession();
         
@@ -51,12 +52,19 @@ public class CustomerModel extends AbstractModel {
         if (customer.getId() == 0) {
             customer.setId(getNextIdent(session, "CUSTMR"));
             session.save(customer);
+            
+            for (CustomerContact contact : customer.getContacts()) {
+                contact.setItem(++k + (customer.getId() * 100));
+                session.save(contact);
+            }
         } else {
             session.update(customer);
+            
+            for (CustomerContact contact : customer.getContacts()) {
+                contact.setItem(++k + (customer.getId() * 100));
+                session.saveOrUpdate(contact);
+            }
         }
-        
-        for (CustomerContact contact : customer.getContacts())
-            session.save(contact);
         
         session.getTransaction().commit();
     }

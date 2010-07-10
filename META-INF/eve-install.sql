@@ -35,20 +35,18 @@ create table custmr001 (
 
 /* mestre de clientes - contatos */
 create table custmr002 (
-   ident numeric(10),
-   nrseq numeric(2),
+   nrseq numeric(12) primary key,
+   ident numeric(10) foreign key references custmr001(ident),
    rname char(40),
    funct char(20),
    teln1 numeric(12),
-   teln2 numeric(12),
-   primary key(ident, nrseq)
+   teln2 numeric(12)
 );
 
 /* mestre de clientes - endereços */
 create table custmr003 (
-   ident numeric(10),
-   nrseq numeric(2),
-   primary key(ident, nrseq)
+   nrseq numeric(12) primary key,
+   ident numeric(10) foreign key references custmr001(ident)
 );
 
 /* unidades países */

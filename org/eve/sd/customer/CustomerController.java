@@ -36,15 +36,14 @@ public class CustomerController extends AbstractController {
                     contact = new CustomerContact();
                     
                     contact.setCustomer(customer);
-                    contact.setItem(k+1);
+                    contact.setItem(k);
                     contact.setName(name);
                     contact.setFunction(contacts.getStringValue("contact.funct", k));
                     
                     customer.getContacts().add(contact);
-                    
                 }
                 
-                model.save(customer);                
+                model.save(customer);
                 form.setInt("customer.ident", customer.getId());                
                 setMessage(EVE.status, "customer.save.success");
                 
