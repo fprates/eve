@@ -1,12 +1,13 @@
 /**
  * 
  */
-package org.eve.sd.customer;
+package org.eve.sd.customer.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eve.sd.customer.Customer;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;

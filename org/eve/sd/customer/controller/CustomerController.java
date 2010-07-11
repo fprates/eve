@@ -1,7 +1,10 @@
-package org.eve.sd.customer;
+package org.eve.sd.customer.controller;
 
 import org.eve.main.EVE;
 import org.eve.model.Model;
+import org.eve.sd.customer.Customer;
+import org.eve.sd.customer.CustomerAddress;
+import org.eve.sd.customer.CustomerContact;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;

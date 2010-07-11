@@ -1,9 +1,12 @@
-package org.eve.sd.customer;
+package org.eve.sd.customer.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eve.sd.customer.Customer;
+import org.eve.sd.customer.CustomerAddress;
+import org.eve.sd.customer.CustomerContact;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;

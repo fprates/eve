@@ -1,4 +1,4 @@
-package org.eve.sd.customer;
+package org.eve.sd.customer.view;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eve.view.AbstractView;

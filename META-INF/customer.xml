@@ -16,7 +16,7 @@
     
     <bean id="customer" class="org.eve.sd.customer.Customer"/>
     
-    <bean id="cust_model" class="org.eve.sd.customer.CustomerModel">
+    <bean id="cust_model" class="org.eve.sd.customer.model.CustomerModel">
         <property name="sessionFactory" ref="session_factory"/>
         <property name="queries">
             <map>
@@ -38,9 +38,9 @@
     
     <bean id="cust_schedule_table" class="org.eve.view.TableAssist"/>
     
-    <bean id="cust_view" class="org.eve.sd.customer.CustomerView"/>
+    <bean id="cust_view" class="org.eve.sd.customer.view.CustomerView"/>
     
-    <bean id="cust_control" class="org.eve.sd.customer.CustomerController">
+    <bean id="cust_control" class="org.eve.sd.customer.controller.CustomerController">
         <property name="messages" ref="cust_msg"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
@@ -66,12 +66,12 @@
     <!-- Seleção de clientes -->
     <bean id="cust_selpor_table" class="org.eve.view.TableAssist"/>
     
-    <bean id="cust_sel_view" class="org.eve.sd.customer.CustomerSelectionView"/>
+    <bean id="cust_sel_view" class="org.eve.sd.customer.view.CustomerSelectionView"/>
     
     <!-- Escolha de múltiplos clientes -->
-    <bean id="cust_choose_view" class="org.eve.sd.customer.CustomerChooseView"/>
+    <bean id="cust_choose_view" class="org.eve.sd.customer.view.CustomerChooseView"/>
     
-    <bean id="cust_sel_control" class="org.eve.sd.customer.CustomerSelectionController">
+    <bean id="cust_sel_control" class="org.eve.sd.customer.controller.CustomerSelectionController">
         <property name="messages" ref="cust_msg"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>

@@ -1,8 +1,11 @@
-package org.eve.sd.customer;
+package org.eve.sd.customer.model;
 
 import java.io.Serializable;
 
 import org.eve.model.AbstractModel;
+import org.eve.sd.customer.Customer;
+import org.eve.sd.customer.CustomerAddress;
+import org.eve.sd.customer.CustomerContact;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
