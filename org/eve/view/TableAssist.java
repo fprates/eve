@@ -1,5 +1,6 @@
 package org.eve.view;
 
+import java.sql.Time;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -107,6 +108,19 @@ public class TableAssist implements SelectionListener {
     }
     
     /**
+     * 
+     * @param id
+     * @param row
+     * @param value
+     */
+    public final void setTimeValue(String id, int row, Time value) {
+        if (value == null)
+            value = Time.valueOf("00:00:00");
+            
+        setStringValue(id, row, value.toString());
+    }
+    
+    /**
      * Define quantidade de linhas visíveis
      * @param lines
      */
@@ -161,6 +175,21 @@ public class TableAssist implements SelectionListener {
             return 0;
         
         return Integer.parseInt(value);        
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param row
+     * @return
+     */
+    public final Time getTimeValue(String id, int row) {
+        String value = getStringValue(id, row);
+        
+        if (value.equals(""))
+            return null;
+        
+        return Time.valueOf(value);
     }
     
     /**

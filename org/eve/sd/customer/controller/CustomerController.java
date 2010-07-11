@@ -88,6 +88,13 @@ public class CustomerController extends AbstractController {
                     
                     schedule.setCustomer(customer);
                     schedule.setItem(k);
+                    schedule.setMonday(schedules.getTimeValue("schedule.mon", k));
+                    schedule.setTuesday(schedules.getTimeValue("schedule.tue", k));
+                    schedule.setWednesday(schedules.getTimeValue("schedule.wed", k));
+                    schedule.setThursday(schedules.getTimeValue("schedule.thu", k));
+                    schedule.setFriday(schedules.getTimeValue("schedule.fri", k));
+                    schedule.setSaturday(schedules.getTimeValue("schedule.sat", k));
+                    schedule.setSunday(schedules.getTimeValue("schedule.sun", k));
                     
                     customer.getSchedule().add(schedule);
                 }

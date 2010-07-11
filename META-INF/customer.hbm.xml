@@ -20,6 +20,10 @@
             <key column="IDENT"/>
             <one-to-many class="org.eve.sd.customer.CustomerAddress"/>
         </set>
+        <set name="schedule" inverse="true">
+            <key column="IDENT"/>
+            <one-to-many class="org.eve.sd.customer.CustomerSchedule"/>
+        </set>
     </class>
     
     <class name="org.eve.sd.customer.CustomerContact" table="CUSTMR002">

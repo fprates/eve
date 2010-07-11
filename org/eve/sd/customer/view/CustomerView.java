@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
+import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;
@@ -89,6 +90,7 @@ public class CustomerView extends AbstractView {
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
+        TableAssist stable = controller.getTable("schedule");
         
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadNac());
@@ -108,6 +110,18 @@ public class CustomerView extends AbstractView {
             atable.setStringValue("address.logra", i, address.getAddress());
             atable.setIntValue("address.number", i++, address.getNumber());
         }
+        
+        i = 0;
+        for (CustomerSchedule schedule : customer.getSchedule()) {
+            stable.setIntValue("schedule.typ", i, schedule.getType());
+            stable.setTimeValue("schedule.mon", i, schedule.getMonday());
+            stable.setTimeValue("schedule.tue", i, schedule.getTuesday());
+            stable.setTimeValue("schedule.wed", i, schedule.getWednesday());
+            stable.setTimeValue("schedule.thu", i, schedule.getThursday());
+            stable.setTimeValue("schedule.fri", i, schedule.getFriday());
+            stable.setTimeValue("schedule.sat", i, schedule.getSaturday());
+            stable.setTimeValue("schedule.sun", i++, schedule.getSunday());
+        }
     }
     
     /*
@@ -121,6 +135,7 @@ public class CustomerView extends AbstractView {
         Form form = controller.getForm("main");
         TableAssist contacts = controller.getTable("contacts");
         TableAssist addresses = controller.getTable("addresses");
+        TableAssist schedule = controller.getTable("schedule");
         
         /*
          * Display mode component's configuration
@@ -132,6 +147,8 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(false);
             addresses.clear();
             addresses.setEditable(false);
+            schedule.clear();
+            schedule.setEditable(false);
             
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(false);
@@ -151,6 +168,8 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(true);
             addresses.clear();
             addresses.setEditable(true);
+            schedule.clear();
+            schedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
@@ -170,6 +189,8 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(true);
             addresses.clear();
             addresses.setEditable(true);
+            schedule.clear();
+            schedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());

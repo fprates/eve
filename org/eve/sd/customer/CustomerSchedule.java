@@ -26,56 +26,56 @@ public class CustomerSchedule extends AbstractCustomerItem {
     /**
      * @return the type
      */
-    public final int getType() {
+    public int getType() {
         return type;
     }
 
     /**
      * @return the monday
      */
-    public final Time getMonday() {
+    public Time getMonday() {
         return monday;
     }
 
     /**
      * @return the tuesday
      */
-    public final Time getTuesday() {
+    public Time getTuesday() {
         return tuesday;
     }
 
     /**
      * @return the wednesday
      */
-    public final Time getWednesday() {
+    public Time getWednesday() {
         return wednesday;
     }
 
     /**
      * @return the thursday
      */
-    public final Time getThursday() {
+    public Time getThursday() {
         return thursday;
     }
 
     /**
      * @return the friday
      */
-    public final Time getFriday() {
+    public Time getFriday() {
         return friday;
     }
 
     /**
      * @return the saturday
      */
-    public final Time getSaturday() {
+    public Time getSaturday() {
         return saturday;
     }
 
     /**
      * @return the sunday
      */
-    public final Time getSunday() {
+    public Time getSunday() {
         return sunday;
     }
 
@@ -88,56 +88,56 @@ public class CustomerSchedule extends AbstractCustomerItem {
     /**
      * @param type the type to set
      */
-    public final void setType(int type) {
+    public void setType(int type) {
         this.type = type;
     }
 
     /**
      * @param monday the monday to set
      */
-    public final void setMonday(Time monday) {
+    public void setMonday(Time monday) {
         this.monday = monday;
     }
 
     /**
      * @param tuesday the tuesday to set
      */
-    public final void setTuesday(Time tuesday) {
+    public void setTuesday(Time tuesday) {
         this.tuesday = tuesday;
     }
 
     /**
      * @param wednesday the wednesday to set
      */
-    public final void setWednesday(Time wednesday) {
+    public void setWednesday(Time wednesday) {
         this.wednesday = wednesday;
     }
 
     /**
      * @param thursday the thursday to set
      */
-    public final void setThursday(Time thursday) {
+    public void setThursday(Time thursday) {
         this.thursday = thursday;
     }
 
     /**
      * @param friday the friday to set
      */
-    public final void setFriday(Time friday) {
+    public void setFriday(Time friday) {
         this.friday = friday;
     }
 
     /**
      * @param saturday the saturday to set
      */
-    public final void setSaturday(Time saturday) {
+    public void setSaturday(Time saturday) {
         this.saturday = saturday;
     }
 
     /**
      * @param sunday the sunday to set
      */
-    public final void setSunday(Time sunday) {
+    public void setSunday(Time sunday) {
         this.sunday = sunday;
     }
     

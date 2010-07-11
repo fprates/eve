@@ -6,8 +6,8 @@ package org.eve.sd.customer;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author francisco.prates
@@ -28,9 +28,9 @@ public class Customer implements Serializable {
     private Set<CustomerSchedule> schedule;
 	
 	public Customer() {
-	    contacts = new HashSet<CustomerContact>();
-	    addresses = new HashSet<CustomerAddress>();
-	    schedule = new HashSet<CustomerSchedule>();
+	    contacts = new TreeSet<CustomerContact>();
+	    addresses = new TreeSet<CustomerAddress>();
+	    schedule = new TreeSet<CustomerSchedule>();
 	}
 	
 	/*

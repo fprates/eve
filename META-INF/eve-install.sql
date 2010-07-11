@@ -27,7 +27,7 @@ create table custmr001 (
    rname char(40),
    aname char(40),
    dtreg date,
-   hrreg timestamp,
+   hrreg time,
    usreg char(8),
    tpcdn numeric(1),
    nrcdn char(20),
@@ -57,13 +57,13 @@ create table custmr004 (
    nrseq numeric(12) primary key,
    ident numeric(10) foreign key references custmr001(ident),
    tpapo numeric(1),
-   hrmon timestamp,
-   hrtue timestamp,
-   hrwed timestamp,
-   hrthu timestamp,
-   hrfri timestamp,
-   hrsat timestamp,
-   hrsun timestamp
+   hrmon time,
+   hrtue time,
+   hrwed time,
+   hrthu time,
+   hrfri time,
+   hrsat time,
+   hrsun time
 );
 /* unidades países */
 create table sdcomm001 (
