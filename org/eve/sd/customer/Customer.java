@@ -25,10 +25,12 @@ public class Customer implements Serializable {
     private int status;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
+    private Set<CustomerSchedule> schedule;
 	
 	public Customer() {
 	    contacts = new HashSet<CustomerContact>();
 	    addresses = new HashSet<CustomerAddress>();
+	    schedule = new HashSet<CustomerSchedule>();
 	}
 	
 	/*
@@ -108,6 +110,14 @@ public class Customer implements Serializable {
         return addresses;
     }
     
+    /**
+     * 
+     * @return
+     */
+    public Set<CustomerSchedule> getSchedule() {
+        return schedule;
+    }
+    
     /*
      * Setters
      */
@@ -175,6 +185,14 @@ public class Customer implements Serializable {
      */
     public void setAddresses(Set<CustomerAddress> addresses) {
         this.addresses = addresses;
+    }
+    
+    /**
+     * 
+     * @param schedule
+     */
+    public void setSchedule(Set<CustomerSchedule> schedule) {
+        this.schedule = schedule;
     }
     
     @Override

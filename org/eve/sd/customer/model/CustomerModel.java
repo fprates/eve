@@ -6,6 +6,7 @@ import org.eve.model.AbstractModel;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
+import org.eve.sd.customer.CustomerSchedule;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,9 @@ public class CustomerModel extends AbstractModel {
         
         customer.getAddresses().clear();
         customer.getAddresses().addAll(customer_.getAddresses());
+        
+        customer.getSchedule().clear();
+        customer.getSchedule().addAll(customer_.getSchedule());
     }
 
     @Override
@@ -65,9 +69,16 @@ public class CustomerModel extends AbstractModel {
                 session.save(contact);
             }
             
+            k = 0;
             for (CustomerAddress address : customer.getAddresses()) {
                 address.setItem(++k + (customer.getId() * 100));
                 session.save(address);
+            }
+            
+            k = 0;
+            for (CustomerSchedule schedule : customer.getSchedule()) {
+                schedule.setItem(++k + (customer.getId() * 100));
+                session.save(schedule);
             }
         } else {
             session.update(customer);
@@ -77,9 +88,16 @@ public class CustomerModel extends AbstractModel {
                 session.saveOrUpdate(contact);
             }
             
+            k = 0;
             for (CustomerAddress address : customer.getAddresses()) {
                 address.setItem(++k + (customer.getId() * 100));
                 session.saveOrUpdate(address);
+            }
+            
+            k = 0;
+            for (CustomerSchedule schedule : customer.getSchedule()) {
+                schedule.setItem(++k + (customer.getId() * 100));
+                session.saveOrUpdate(schedule);
             }
         }
         

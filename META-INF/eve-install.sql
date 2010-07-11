@@ -5,6 +5,7 @@ drop user evedb;
 create user evedb password initial;
 \p user generated.
 
+drop table custmr004 if exists;
 drop table custmr003 if exists;
 drop table custmr002 if exists;
 drop table custmr001 if exists;
@@ -51,6 +52,19 @@ create table custmr003 (
    numer numeric(6)
 );
 
+/* mestre de clientes - horários */
+create table custmr004 (
+   nrseq numeric(12) primary key,
+   ident numeric(10) foreign key references custmr001(ident),
+   tpapo numeric(1),
+   hrmon timestamp,
+   hrtue timestamp,
+   hrwed timestamp,
+   hrthu timestamp,
+   hrfri timestamp,
+   hrsat timestamp,
+   hrsun timestamp
+);
 /* unidades países */
 create table sdcomm001 (
     cntry char(3) primary key
@@ -76,7 +90,8 @@ create table sdcomm003 (
 
 grant select, insert, update, delete on custmr001 to evedb;
 grant select, insert, update, delete on custmr002 to evedb;
-grant select, insert, update, delete on custmr002 to evedb;
+grant select, insert, update, delete on custmr003 to evedb;
+grant select, insert, update, delete on custmr004 to evedb;
 grant select, insert, update, delete on sdcomm001 to evedb;
 grant select, insert, update, delete on sdcomm002 to evedb;
 grant select, insert, update, delete on sdcomm003 to evedb;

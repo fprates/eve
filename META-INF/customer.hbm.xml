@@ -37,4 +37,17 @@
         <property name="address" column="LOGRA"/>
         <property name="number" column="NUMER"/>
     </class>
+    
+    <class name="org.eve.sd.customer.CustomerSchedule" table="CUSTMR004">
+        <id name="item" column="NRSEQ"/>
+        <many-to-one name="customer" column="IDENT" not-null="true"/>
+        <property name="type" column="TPAPO"/>
+        <property name="monday" column="HRMON"/>
+        <property name="tuesday" column="HRTUE"/>
+        <property name="wednesday" column="HRWED"/>
+        <property name="thursday" column="HRTHU"/>
+        <property name="friday" column="HRFRI"/>
+        <property name="saturday" column="HRSAT"/>
+        <property name="sunday" column="HRSUN"/>        
+    </class>
 </hibernate-mapping>

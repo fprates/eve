@@ -5,6 +5,7 @@ import org.eve.model.Model;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
+import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
@@ -17,11 +18,13 @@ public class CustomerController extends AbstractController {
         String name;
         CustomerContact contact;
         CustomerAddress address;
+        CustomerSchedule schedule;
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
         TableAssist contacts = getTable("contacts");
         TableAssist addresses = getTable("addresses");
+        TableAssist schedules = getTable("schedule");
         
         if (input.equals("customer.save")) {
             try {
@@ -72,6 +75,21 @@ public class CustomerController extends AbstractController {
                     address.setNumber(addresses.getIntValue("address.number", k));
                     
                     customer.getAddresses().add(address);
+                }
+                
+                /*
+                 * inclui horários
+                 */
+                customer.getSchedule().clear();
+                for (k = 0; k < schedules.getItensSize(); k++) {
+                    name = schedules.getStringValue("address.logra", k);
+                    
+                    schedule = new CustomerSchedule();
+                    
+                    schedule.setCustomer(customer);
+                    schedule.setItem(k);
+                    
+                    customer.getSchedule().add(schedule);
                 }
                 
                 model.save(customer);
