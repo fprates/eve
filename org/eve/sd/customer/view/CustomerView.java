@@ -69,7 +69,7 @@ public class CustomerView extends AbstractView {
         stable.setLines(4);
         stable.setInsert(false);
         stable.setRemove(false);
-        stable.put("schedule.typ");
+        stable.putCombo("schedule.typ", new String[] {"Entrega", "Visita"});
         stable.put("schedule.mon");
         stable.put("schedule.tue");
         stable.put("schedule.wed");

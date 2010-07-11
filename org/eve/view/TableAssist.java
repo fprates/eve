@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -20,6 +21,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eve.main.EVE;
 import org.springframework.context.MessageSource;
 
 public class TableAssist implements SelectionListener {
@@ -242,23 +244,66 @@ public class TableAssist implements SelectionListener {
      * 
      */
     
+    /**
+     * Limpa conteúdo da tabela e itens selecionados
+     */
     public final void clear() {
         comptable.clearAll();
         selectedItens = null;
     }
     
+    /**
+     * Limpa itens selecionados
+     */
     public final void clearSelectedItens() {
         selectedItens = null; 
     }
     
-    public final void insert() {
-        currentline++;
-        if (currentline <= lines)
-            new TableItem(comptable, SWT.NONE);
+    /**
+     * Adiciona item em tabela
+     */
+    private final void addTableItem() {
+        String[] options;
+        CCombo combo;
+        TableComponent component;
+        TableEditor editor;
+        int k = 0;
+        TableItem item = new TableItem(comptable, SWT.NONE);
+        
+        for (String id : table.keySet()) {
+            component = table.get(id);
+                
+            switch(component.getType()) {
+            case EVE.combo:
+                combo = new CCombo(comptable, SWT.NONE);
+                options = component.getOptions();
+                
+                if (options.length > 0)
+                    combo.setText(options[0]);
+                
+                for (String option : options)
+                    combo.add(option);
+                
+                editor = new TableEditor(comptable);
+                editor.grabHorizontal = true;
+                editor.setEditor(combo, item, k);
+                break;
+            }
+            k++;
+        }
     }
     
     /**
-     * 
+     * Adiciona item em tabela
+     */
+    public final void insert() {
+        currentline++;
+        if (currentline > lines)
+            addTableItem();
+    }
+    
+    /**
+     * Insere coluna de campo texto
      * @param id
      */
     public final void put(String id) {        
@@ -266,7 +311,20 @@ public class TableAssist implements SelectionListener {
     }
     
     /**
-     * 
+     * Insere coluna de combo box
+     * @param id
+     * @param options
+     */
+    public final void putCombo(String id, String[] options) {
+        TableComponent component = new TableComponent(messages.getMessage(id, null, locale));
+        component.setType(EVE.combo);
+        component.setOptions(options);
+        
+        table.put(id, component);
+    }
+    
+    /**
+     * Constrói tabela
      * @param container
      * @param listener
      * @return
@@ -298,9 +356,6 @@ public class TableAssist implements SelectionListener {
         tablelistener.setEditable(editable);
         comptable.addListener(SWT.MouseDown, tablelistener);
         
-        for (k=1; k <= lines; k++)
-            insert();
-        
         btins = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
         btins.addSelectionListener(listener);
@@ -323,9 +378,17 @@ public class TableAssist implements SelectionListener {
             component.setWidget(tablecol);
         }
         
+        for (k=1; k <= lines; k++)
+            addTableItem();
+        
         return area;        
     }
     
+    /**
+     * Edita célula
+     * @param item
+     * @param col
+     */
     public void cellEdit(TableItem item, int col) {
         Text cell;
         CellListener celllistener;
