@@ -33,6 +33,10 @@ public class EveApp implements EveAPI {
         this.listener.setSystem(this);
     }
     
+    /**
+     * 
+     * @param controllers
+     */
     public final void setControllers(List<Controller> controllers) {
         Map<String, View> views;
         
@@ -47,6 +51,10 @@ public class EveApp implements EveAPI {
         
     }
     
+    /**
+     * 
+     * @param container
+     */
     public final void setContainer(Composite container) {
         this.container = container;
     }

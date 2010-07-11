@@ -6,6 +6,7 @@ package org.eve.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EVE;
@@ -19,12 +20,12 @@ public class TableComponent {
     private TableColumn column;
     private int type;
     private String[] options;
-    private List<Widget> widgets;
+    private List<Control> controls;
     
     public TableComponent(String name) {
         this.name = name;
         type = EVE.text;
-        widgets = new ArrayList<Widget>();
+        controls = new ArrayList<Control>();
     }
 
     /*
@@ -54,6 +55,15 @@ public class TableComponent {
      */
     public final void setOptions(String[] options) {
         this.options = options;
+    }
+    
+    /**
+     * 
+     * @param editable
+     */
+    public final void setEnabled(boolean enabled) {
+        for (Control control : controls)
+            control.setEnabled(enabled);
     }
     
     /*
@@ -98,8 +108,8 @@ public class TableComponent {
      * @param row
      * @return
      */
-    public final Widget getWidget(int row) {
-        return widgets.get(row);
+    public final Widget getControl(int row) {
+        return controls.get(row);
     }
     
     /*
@@ -111,7 +121,7 @@ public class TableComponent {
     /**
      * 
      */
-    public final void addWidget(Widget widget) {
-        widgets.add(widget);
+    public final void addControl(Control control) {
+        controls.add(control);
     }
 }

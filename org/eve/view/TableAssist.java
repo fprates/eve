@@ -72,13 +72,17 @@ public class TableAssist implements SelectionListener {
      * Define tabela como editável
      * @param editable
      */
-    public final void setEditable(boolean editable) {
+    public final void setEditable(boolean editable) {        
         this.editable = editable;
+        
         if (tablelistener != null)
             tablelistener.setEditable(editable);
         
         if (btarea != null)
             btarea.setVisible(editable);
+        
+        for (String id : table.keySet())
+            table.get(id).setEnabled(editable);
     }
     
     /**
@@ -115,7 +119,7 @@ public class TableAssist implements SelectionListener {
             break;
             
         case EVE.combo:
-            combo = (CCombo)component.getWidget(row);
+            combo = (CCombo)component.getControl(row);
             combo.setText(combo.getItem(value));
         }
     }
@@ -195,7 +199,7 @@ public class TableAssist implements SelectionListener {
             
             return Integer.parseInt(value);
         case EVE.combo:
-            combo = (CCombo)table.get(id).getWidget(row);
+            combo = (CCombo)table.get(id).getControl(row);
             value_ = combo.getSelectionIndex();
             
             return (value_ == -1)? 0 : value_;
@@ -301,7 +305,8 @@ public class TableAssist implements SelectionListener {
             switch(component.getType()) {
             case EVE.combo:
                 combo = new CCombo(comptable, SWT.NONE);
-                component.addWidget(combo);
+                combo.setEditable(editable);
+                component.addControl(combo);
                 options = component.getOptions();
                 
                 if (options.length > 0)
