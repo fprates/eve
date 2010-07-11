@@ -108,7 +108,7 @@ public class CustomerView extends AbstractView {
         i = 0;
         for (CustomerAddress address : customer.getAddresses()) {
             atable.setStringValue("address.logra", i, address.getAddress());
-            atable.setIntValue("address.number", i++, address.getNumber());
+            atable.setIntValue("address.numer", i++, address.getNumber());
         }
         
         i = 0;

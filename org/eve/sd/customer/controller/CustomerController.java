@@ -72,7 +72,7 @@ public class CustomerController extends AbstractController {
                     address.setCustomer(customer);
                     address.setItem(k);
                     address.setAddress(name);
-                    address.setNumber(addresses.getIntValue("address.number", k));
+                    address.setNumber(addresses.getIntValue("address.numer", k));
                     
                     customer.getAddresses().add(address);
                 }
@@ -81,13 +81,12 @@ public class CustomerController extends AbstractController {
                  * inclui horários
                  */
                 customer.getSchedule().clear();
-                for (k = 0; k < schedules.getItensSize(); k++) {
-                    name = schedules.getStringValue("address.logra", k);
-                    
+                for (k = 0; k < schedules.getItensSize(); k++) {                    
                     schedule = new CustomerSchedule();
                     
                     schedule.setCustomer(customer);
                     schedule.setItem(k);
+                    schedule.setType(schedules.getIntValue("schedule.typ", k));                    
                     schedule.setMonday(schedules.getTimeValue("schedule.mon", k));
                     schedule.setTuesday(schedules.getTimeValue("schedule.tue", k));
                     schedule.setWednesday(schedules.getTimeValue("schedule.wed", k));

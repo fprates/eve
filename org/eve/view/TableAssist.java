@@ -106,7 +106,18 @@ public class TableAssist implements SelectionListener {
      * @param value
      */
     public final void setIntValue(String id, int row, int value) {
-        setStringValue(id, row, Integer.toString(value));
+        CCombo combo;
+        TableComponent component = table.get(id);
+        
+        switch (component.getType()) {
+        case EVE.text:
+            setStringValue(id, row, Integer.toString(value));
+            break;
+            
+        case EVE.combo:
+            combo = (CCombo)component.getWidget(row);
+            combo.setText(combo.getItem(value));
+        }
     }
     
     /**
@@ -171,12 +182,26 @@ public class TableAssist implements SelectionListener {
      * @return conteúdo inteiro
      */
     public final int getIntValue(String id, int row) {
-        String value = getStringValue(id, row);
+        CCombo combo;
+        String value;
+        int value_;
         
-        if (value.equals(""))
-            return 0;
+        switch (table.get(id).getType()) {
+        case EVE.text:
+            value = getStringValue(id, row);
+            
+            if (value.equals(""))
+                return 0;
+            
+            return Integer.parseInt(value);
+        case EVE.combo:
+            combo = (CCombo)table.get(id).getWidget(row);
+            value_ = combo.getSelectionIndex();
+            
+            return (value_ == -1)? 0 : value_;
+        }
         
-        return Integer.parseInt(value);        
+        return 0;
     }
     
     /**
@@ -276,6 +301,7 @@ public class TableAssist implements SelectionListener {
             switch(component.getType()) {
             case EVE.combo:
                 combo = new CCombo(comptable, SWT.NONE);
+                component.addWidget(combo);
                 options = component.getOptions();
                 
                 if (options.length > 0)

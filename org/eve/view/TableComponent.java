@@ -3,7 +3,11 @@
  */
 package org.eve.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EVE;
 
 /**
@@ -15,10 +19,12 @@ public class TableComponent {
     private TableColumn column;
     private int type;
     private String[] options;
+    private List<Widget> widgets;
     
     public TableComponent(String name) {
         this.name = name;
         type = EVE.text;
+        widgets = new ArrayList<Widget>();
     }
 
     /*
@@ -85,5 +91,27 @@ public class TableComponent {
      */
     public final String[] getOptions() {
         return options;
+    }
+    
+    /**
+     * 
+     * @param row
+     * @return
+     */
+    public final Widget getWidget(int row) {
+        return widgets.get(row);
+    }
+    
+    /*
+     * 
+     * Others
+     * 
+     */
+    
+    /**
+     * 
+     */
+    public final void addWidget(Widget widget) {
+        widgets.add(widget);
     }
 }
