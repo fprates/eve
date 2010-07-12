@@ -2,12 +2,18 @@ package org.eve.main;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eve.view.Controller;
 import org.eve.view.View;
+import org.eve.view.ViewAction;
 
 public class EveApp implements EveAPI {
     private final static String VERSION = "1.9.6";
@@ -16,6 +22,7 @@ public class EveApp implements EveAPI {
     private Map<String, View> viewmap;
     private GeneralListener listener;
     private Composite container;
+    private Tree selector;
     
     public EveApp() {
         viewmap = new HashMap<String, View>();
@@ -59,6 +66,14 @@ public class EveApp implements EveAPI {
         this.container = container;
     }
     
+    /**
+     * 
+     * @param selector
+     */
+    public final void setSelector(Tree selector) {
+        this.selector = selector;
+    }
+    
     /*
      * 
      * Getters
@@ -78,27 +93,11 @@ public class EveApp implements EveAPI {
     }
     
     /**
-     * Retorna o mapa de visões
-     * @return
-     */
-    public final Map<String, View> getViewMap() {
-        return viewmap;
-    }
-    
-    /**
      * Retorna versão do sistema
      * @return
      */
     public final String getVersion() {
         return VERSION;
-    }
-    
-    /**
-     * Retorna container de aplicações
-     * @return
-     */
-    public final Composite getContainer() {
-        return container;
     }
     
     /*
@@ -134,5 +133,60 @@ public class EveApp implements EveAPI {
     @Override
     public final Controller getController(View view) {
         return controlmap.get(view);
+    }
+    
+    /**
+     * Adiciona visões ao container principal
+     * @param lviews
+     * @param listener
+     */
+    public void addControllers(List<Controller> lcontrollers, GeneralListener listener) {
+        TreeItem item;
+        TreeItem subitem;
+        Composite container;
+        View view;
+        Map<String, View> views;
+        Map<String, TreeItem> tree = new HashMap<String, TreeItem>();
+        
+        /*
+         * assemblies main tree.
+         */
+        for (Controller controller : lcontrollers) {
+            controller.setLocale(Locale.getDefault());
+            controller.setSystem(this);
+
+            views = controller.getViews();
+            for (String viewname : views.keySet()) {
+                container = new Composite(this.container, SWT.NONE);
+                container.setLayout(new RowLayout(SWT.VERTICAL));
+                
+                view = views.get(viewname);
+                view.setSystem(this);
+                view.setMessages(controller.getMessages());
+                view.buildView(container);
+                
+                controller.setView(view);
+                controller.initMsgBar(container);
+                
+                if (tree.containsKey(view.getName())) {
+                    item = tree.get(view.getName());
+                } else {
+                    item = new TreeItem(selector, SWT.NONE);
+                    item.setText(view.getName());
+                    tree.put(view.getName(), item);
+                }
+                
+                for (ViewAction action : view.getActions()) {
+                    viewmap.put(action.getId(), view);
+                    
+                    if (!action.isVisible())
+                        continue;
+                    
+                    subitem = new TreeItem(item, SWT.NONE);
+                    subitem.setText(action.getText());
+                    listener.putSelectorItem(subitem, action.getId());
+                }
+            }
+        }        
     }
 }
