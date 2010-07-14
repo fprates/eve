@@ -1,9 +1,11 @@
 package org.eve.sd.customer.view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
@@ -19,16 +21,16 @@ public class CustomerView extends AbstractView {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractView#defineView()
+     * @see org.eve.view.AbstractView#defineView(org.eclipse.swt.widgets.Composite)
      */
     @Override
     public void defineView(Composite container) {
+        ExpandItem citembar;
+        ExpandItem aitembar;
+        ExpandItem sitembar;
+        Composite localcontainer;
+        ExpandBar bar;
         Controller controller = getController();
-        TabFolder main = new TabFolder(container, SWT.BORDER);
-        TabItem base = new TabItem(main, SWT.NONE);
-        TabItem contacts = new TabItem(main, SWT.NONE);
-        TabItem addresses = new TabItem(main, SWT.NONE);
-        TabItem schedule = new TabItem(main, SWT.NONE);
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
@@ -38,15 +40,18 @@ public class CustomerView extends AbstractView {
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
+        container.setLayout(new GridLayout(1, false));
+        
         form.setLocale(getLocale());        
         form.put("customer.ident", 12, false);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
         form.put("customer.cnpj", 18);
         form.put("customer.status", 1);
+        form.define(container);
         
-        base.setText(getMessage("customer.base"));
-        base.setControl(form.define(main));
+        bar = new ExpandBar(container, SWT.V_SCROLL);
+        bar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         ctable.setLocale(getLocale());
         ctable.put("contact.rname");
@@ -54,17 +59,25 @@ public class CustomerView extends AbstractView {
         ctable.put("contact.teln1");
         ctable.put("contact.teln2");
         
-        contacts.setControl(ctable.define(main, controller));        
-        contacts.setText(getMessage("customer.contacts"));
+        localcontainer = ctable.define(bar, controller);
+        citembar = new ExpandItem(bar, SWT.NONE, 0);
+        citembar.setText(getMessage("customer.contacts"));
+        citembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        citembar.setControl(localcontainer);
+        citembar.setExpanded(true);
         
         atable.setLocale(getLocale());
         atable.put("address.logra");
         atable.put("address.numer");
         atable.put("address.cdend");
         
-        addresses.setControl(atable.define(main, controller));
-        addresses.setText(getMessage("customer.addresses"));
-        
+        localcontainer = atable.define(bar, controller);
+        aitembar = new ExpandItem(bar, SWT.NONE, 1);
+        aitembar.setText(getMessage("customer.addresses"));
+        aitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        aitembar.setControl(localcontainer);
+        aitembar.setExpanded(true);
+
         stable.setLocale(getLocale());
         stable.setLines(4);
         stable.setInsert(false);
@@ -78,8 +91,14 @@ public class CustomerView extends AbstractView {
         stable.put("schedule.sat");
         stable.put("schedule.sun");
         
-        schedule.setControl(stable.define(main, controller));
-        schedule.setText(getMessage("customer.schedule"));
+        localcontainer = stable.define(bar, controller);
+        sitembar = new ExpandItem(bar, SWT.NONE, 2);
+        sitembar.setText(getMessage("customer.schedule"));
+        sitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        sitembar.setControl(stable.define(bar, controller));
+        sitembar.setExpanded(true);
+        
+        bar.pack();
         
         addButton("customer.save");
     }

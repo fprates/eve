@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -158,7 +157,6 @@ public class EveApp implements EveAPI {
             views = controller.getViews();
             for (String viewname : views.keySet()) {
                 container = new Composite(this.container, SWT.NONE);
-                container.setLayout(new RowLayout(SWT.VERTICAL));
                 
                 view = views.get(viewname);
                 view.setSystem(this);

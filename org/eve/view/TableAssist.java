@@ -277,7 +277,9 @@ public class TableAssist implements SelectionListener {
      * Limpa conteúdo da tabela e itens selecionados
      */
     public final void clear() {
-        comptable.clearAll();
+        if (comptable != null)
+            comptable.clearAll();
+        
         selectedItens = null;
     }
     
@@ -412,7 +414,7 @@ public class TableAssist implements SelectionListener {
         for (k=1; k <= lines; k++)
             addTableItem();
         
-        return area;        
+        return area;
     }
     
     /**

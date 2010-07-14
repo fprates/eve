@@ -9,7 +9,7 @@ public class SupplierView extends AbstractView {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractView#defineView()
+     * @see org.eve.view.AbstractView#defineView(org.eclipse.swt.widgets.Composite)
      */
     @Override
     public void defineView(Composite container) {
