@@ -65,6 +65,7 @@ public class CustomerView extends AbstractView {
         citembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         citembar.setControl(localcontainer);
         citembar.setExpanded(true);
+        localcontainer.pack();
         
         atable.setLocale(getLocale());
         atable.put("address.logra");
@@ -77,6 +78,7 @@ public class CustomerView extends AbstractView {
         aitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         aitembar.setControl(localcontainer);
         aitembar.setExpanded(true);
+        localcontainer.pack();
 
         stable.setLocale(getLocale());
         stable.setLines(4);
@@ -88,8 +90,6 @@ public class CustomerView extends AbstractView {
         stable.put("schedule.wed");
         stable.put("schedule.thu");
         stable.put("schedule.fri");
-        stable.put("schedule.sat");
-        stable.put("schedule.sun");
         
         localcontainer = stable.define(bar, controller);
         sitembar = new ExpandItem(bar, SWT.NONE, 2);
@@ -97,6 +97,7 @@ public class CustomerView extends AbstractView {
         sitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         sitembar.setControl(stable.define(bar, controller));
         sitembar.setExpanded(true);
+        localcontainer.pack();
         
         bar.pack();
         
@@ -113,7 +114,6 @@ public class CustomerView extends AbstractView {
         
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadNac());
-//        customer_.setCreation(customer.getCreation());
         form.setInt("customer.ident", customer.getId());
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());

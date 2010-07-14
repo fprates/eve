@@ -3,8 +3,6 @@ package org.eve.main;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -30,8 +28,6 @@ public class Main extends ApplicationWindow {
      */
     @Override
     protected Control createContents(Composite parent) {
-        ScrolledComposite scontainer;
-        Composite container;
         Shell shell = getShell();
         GeneralListener listener = app.getListener();
         SashForm apparea = new SashForm(parent, SWT.HORIZONTAL);
@@ -39,14 +35,8 @@ public class Main extends ApplicationWindow {
         
         selector.addListener(SWT.Selection, listener);
         
-        scontainer = new ScrolledComposite(apparea,
-                SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-        container = new Composite(scontainer, SWT.BORDER);
-        scontainer.setContent(container);
-        container.setLayout(new StackLayout());
-        
         app.setSelector(selector);
-        app.setContainer(container);        
+        app.buildUserArea(apparea);
         app.addControllers(app.getControllers(), listener);
         
         shell.setText("Eve "+app.getVersion());

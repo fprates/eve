@@ -12,6 +12,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -370,15 +372,17 @@ public class TableAssist implements SelectionListener {
         int k;
 
         area = new Composite(container, SWT.NONE);
-        area.setLayout(new RowLayout(SWT.VERTICAL));
+        area.setLayout(new GridLayout(1, false));
 
         btarea = new Composite(area, SWT.NONE);
         btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
         btarea.setVisible(editable);
+        btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);
         comptable.addSelectionListener(this);
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         editor = new TableEditor(comptable);
         editor.horizontalAlignment = SWT.LEFT;
@@ -413,6 +417,8 @@ public class TableAssist implements SelectionListener {
         
         for (k=1; k <= lines; k++)
             addTableItem();
+        
+        area.pack();
         
         return area;
     }

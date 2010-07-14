@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
@@ -20,6 +21,7 @@ public class EveApp implements EveAPI {
     private Map<View, Controller> controlmap;
     private Map<String, View> viewmap;
     private GeneralListener listener;
+    private ScrolledComposite scontainer;
     private Composite container;
     private Tree selector;
     
@@ -55,14 +57,6 @@ public class EveApp implements EveAPI {
                 controlmap.put(views.get(viewname), controller);
         }
         
-    }
-    
-    /**
-     * 
-     * @param container
-     */
-    public final void setContainer(Composite container) {
-        this.container = container;
     }
     
     /**
@@ -123,6 +117,7 @@ public class EveApp implements EveAPI {
         layout.topControl = view.getContainer();
         container.layout();
         container.pack();
+//        scontainer.pack();
     }
     
     /*
@@ -132,6 +127,20 @@ public class EveApp implements EveAPI {
     @Override
     public final Controller getController(View view) {
         return controlmap.get(view);
+    }
+    
+    /**
+     * 
+     * @param container
+     */
+    public final void buildUserArea(Composite userarea) {        
+        scontainer = new ScrolledComposite(userarea,
+                SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        
+        container = new Composite(scontainer, SWT.BORDER);
+        
+        scontainer.setContent(container);
+        container.setLayout(new StackLayout());
     }
     
     /**
