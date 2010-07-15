@@ -117,7 +117,7 @@ public abstract class AbstractView implements View {
     }
     
     protected final String getMessage(String id) {
-        return messages.getMessage(id, null, locale);
+        return messages.getMessage(id, null, id, locale);
     }
     
     protected final Controller getController() {

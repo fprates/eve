@@ -51,7 +51,7 @@ public class MessageBar {
             break;
         }
         
-        message = messages.getMessage(id, null, locale);
+        message = messages.getMessage(id, null, id, locale);
         msgtxt.setText(message);
         msggrp.pack();
         container.pack();

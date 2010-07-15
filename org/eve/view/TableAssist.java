@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -42,6 +43,7 @@ public class TableAssist implements SelectionListener {
     private int currentline;
     private TableEditor editor;
     private TableListener tablelistener;
+    private String name;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -153,6 +155,10 @@ public class TableAssist implements SelectionListener {
     
     public final void setRemove(boolean remove) {
         this.remove = remove;
+    }
+    
+    public final void setName(String name) {
+        this.name = name;
     }
     
     /*
@@ -342,7 +348,8 @@ public class TableAssist implements SelectionListener {
      * @param id
      */
     public final void put(String id) {        
-        table.put(id, new TableComponent(messages.getMessage(id, null, locale)));        
+        table.put(id, new TableComponent(
+                messages.getMessage(id, null, id, locale)));        
     }
     
     /**
@@ -351,7 +358,9 @@ public class TableAssist implements SelectionListener {
      * @param options
      */
     public final void putCombo(String id, String[] options) {
-        TableComponent component = new TableComponent(messages.getMessage(id, null, locale));
+        TableComponent component = new TableComponent(
+                messages.getMessage(id, null, id, locale));
+        
         component.setType(EVE.combo);
         component.setOptions(options);
         
@@ -378,6 +387,10 @@ public class TableAssist implements SelectionListener {
         btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
         btarea.setVisible(editable);
         btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        if (name != null)
+            new Label(area, SWT.NONE).setText(
+                    messages.getMessage(name, null, name, locale));
         
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);

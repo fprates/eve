@@ -12,19 +12,38 @@ import org.eve.view.TableAssist;
 
 public class CustomerController extends AbstractController {
     
+    private final void loadSchedule(TableAssist tschedule, Customer customer, int i) {
+        int k;
+        CustomerSchedule schedule;
+        
+        customer.getSchedule().clear();
+        for (k = i; k <= i+1; k++) {                    
+            schedule = new CustomerSchedule();
+            
+            schedule.setCustomer(customer);
+            schedule.setItem(k);
+            schedule.setType((i == 0)?0 : 1);                    
+            schedule.setMonday(tschedule.getTimeValue("schedule.mon", k));
+            schedule.setTuesday(tschedule.getTimeValue("schedule.tue", k));
+            schedule.setWednesday(tschedule.getTimeValue("schedule.wed", k));
+            schedule.setThursday(tschedule.getTimeValue("schedule.thu", k));
+            schedule.setFriday(tschedule.getTimeValue("schedule.fri", k));
+            
+            customer.getSchedule().add(schedule);
+        }
+    }
+    
     @Override
     public final void userInput(String input) {
         int k;
         String name;
         CustomerContact contact;
         CustomerAddress address;
-        CustomerSchedule schedule;
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
         TableAssist contacts = getTable("contacts");
         TableAssist addresses = getTable("addresses");
-        TableAssist schedules = getTable("schedule");
         
         if (input.equals("customer.save")) {
             try {
@@ -80,23 +99,9 @@ public class CustomerController extends AbstractController {
                 /*
                  * inclui horários
                  */
-                customer.getSchedule().clear();
-                for (k = 0; k < schedules.getItensSize(); k++) {                    
-                    schedule = new CustomerSchedule();
-                    
-                    schedule.setCustomer(customer);
-                    schedule.setItem(k);
-                    schedule.setType(schedules.getIntValue("schedule.typ", k));                    
-                    schedule.setMonday(schedules.getTimeValue("schedule.mon", k));
-                    schedule.setTuesday(schedules.getTimeValue("schedule.tue", k));
-                    schedule.setWednesday(schedules.getTimeValue("schedule.wed", k));
-                    schedule.setThursday(schedules.getTimeValue("schedule.thu", k));
-                    schedule.setFriday(schedules.getTimeValue("schedule.fri", k));
-                    schedule.setSaturday(schedules.getTimeValue("schedule.sat", k));
-                    schedule.setSunday(schedules.getTimeValue("schedule.sun", k));
-                    
-                    customer.getSchedule().add(schedule);
-                }
+                
+                loadSchedule(getTable("vschedule"), customer, 0);
+                loadSchedule(getTable("dschedule"), customer, 2);
                 
                 model.save(customer);
                 form.setInt("customer.ident", customer.getId());                

@@ -3,6 +3,7 @@ package org.eve.sd.customer.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
@@ -30,11 +31,13 @@ public class CustomerView extends AbstractView {
         ExpandItem sitembar;
         Composite localcontainer;
         ExpandBar bar;
+        Composite schedule;
         Controller controller = getController();
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
-        TableAssist stable = controller.getTable("schedule");
+        TableAssist vstable = controller.getTable("vschedule");
+        TableAssist dstable = controller.getTable("dschedule");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -80,28 +83,66 @@ public class CustomerView extends AbstractView {
         aitembar.setExpanded(true);
         localcontainer.pack();
 
-        stable.setLocale(getLocale());
-        stable.setLines(4);
-        stable.setInsert(false);
-        stable.setRemove(false);
-        stable.putCombo("schedule.typ", new String[] {"Entrega", "Visita"});
-        stable.put("schedule.mon");
-        stable.put("schedule.tue");
-        stable.put("schedule.wed");
-        stable.put("schedule.thu");
-        stable.put("schedule.fri");
+        /*
+         * Schedule
+         */        
+        schedule = new Composite(bar, SWT.NONE);
+        schedule.setLayout(new RowLayout(SWT.VERTICAL));
         
-        localcontainer = stable.define(bar, controller);
+        vstable.setLocale(getLocale());
+        vstable.setLines(2);
+        vstable.setInsert(false);
+        vstable.setRemove(false);
+        vstable.put("schedule.per");
+        vstable.put("schedule.mon");
+        vstable.put("schedule.tue");
+        vstable.put("schedule.wed");
+        vstable.put("schedule.thu");
+        vstable.put("schedule.fri");        
+        
+        vstable.setName("schedule.visit");
+        vstable.define(schedule, controller);
+        
+        
+        dstable.setLocale(getLocale());
+        dstable.setLines(2);
+        dstable.setInsert(false);
+        dstable.setRemove(false);
+        dstable.put("schedule.per");
+        dstable.put("schedule.mon");
+        dstable.put("schedule.tue");
+        dstable.put("schedule.wed");
+        dstable.put("schedule.thu");
+        dstable.put("schedule.fri");        
+        
+        dstable.setName("schedule.delivery");
+        dstable.define(schedule, controller);
+        
         sitembar = new ExpandItem(bar, SWT.NONE, 2);
         sitembar.setText(getMessage("customer.schedule"));
-        sitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-        sitembar.setControl(stable.define(bar, controller));
+        sitembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        sitembar.setControl(schedule);
         sitembar.setExpanded(true);
-        localcontainer.pack();
         
         bar.pack();
         
         addButton("customer.save");
+    }
+    
+    private final void fillPeriodColumn(TableAssist tschedule) {
+        int i = 0;
+        
+        for (i = 0; i < 2; i++) {
+            switch (i) {
+            case 0:
+                tschedule.setStringValue("schedule.per", i, getMessage("schedule.am"));
+                
+            case 1:
+                if (i == 1)
+                    tschedule.setStringValue("schedule.per", i, getMessage("schedule.pm"));
+                break;
+            }
+        }        
     }
     
     private final void setControlLoad(Customer customer) {
@@ -110,7 +151,8 @@ public class CustomerView extends AbstractView {
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
-        TableAssist stable = controller.getTable("schedule");
+        TableAssist vstable = controller.getTable("vschedule");
+        TableAssist dstable = controller.getTable("dschedule");
         
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadNac());
@@ -130,16 +172,31 @@ public class CustomerView extends AbstractView {
             atable.setIntValue("address.numer", i++, address.getNumber());
         }
         
+        fillPeriodColumn(vstable);
+        fillPeriodColumn(dstable);
+        
         i = 0;
         for (CustomerSchedule schedule : customer.getSchedule()) {
-            stable.setIntValue("schedule.typ", i, schedule.getType());
-            stable.setTimeValue("schedule.mon", i, schedule.getMonday());
-            stable.setTimeValue("schedule.tue", i, schedule.getTuesday());
-            stable.setTimeValue("schedule.wed", i, schedule.getWednesday());
-            stable.setTimeValue("schedule.thu", i, schedule.getThursday());
-            stable.setTimeValue("schedule.fri", i, schedule.getFriday());
-            stable.setTimeValue("schedule.sat", i, schedule.getSaturday());
-            stable.setTimeValue("schedule.sun", i++, schedule.getSunday());
+            switch (i) {
+            case 0:
+            case 1:                
+                vstable.setTimeValue("schedule.mon", i, schedule.getMonday());
+                vstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
+                vstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
+                vstable.setTimeValue("schedule.thu", i, schedule.getThursday());
+                vstable.setTimeValue("schedule.fri", i, schedule.getFriday());
+                break;
+                
+            case 2:
+            case 3:                
+                dstable.setTimeValue("schedule.mon", i, schedule.getMonday());
+                dstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
+                dstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
+                dstable.setTimeValue("schedule.thu", i, schedule.getThursday());
+                dstable.setTimeValue("schedule.fri", i, schedule.getFriday());
+                break;
+            }
+            i++;
         }
     }
     
@@ -154,7 +211,8 @@ public class CustomerView extends AbstractView {
         Form form = controller.getForm("main");
         TableAssist contacts = controller.getTable("contacts");
         TableAssist addresses = controller.getTable("addresses");
-        TableAssist schedule = controller.getTable("schedule");
+        TableAssist vschedule = controller.getTable("vschedule");
+        TableAssist dschedule = controller.getTable("dschedule");
         
         /*
          * Display mode component's configuration
@@ -166,8 +224,10 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(false);
             addresses.clear();
             addresses.setEditable(false);
-            schedule.clear();
-            schedule.setEditable(false);
+            vschedule.clear();
+            vschedule.setEditable(false);
+            dschedule.clear();
+            dschedule.setEditable(false);
             
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(false);
@@ -187,8 +247,10 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(true);
             addresses.clear();
             addresses.setEditable(true);
-            schedule.clear();
-            schedule.setEditable(true);
+            vschedule.clear();
+            vschedule.setEditable(true);
+            dschedule.clear();
+            dschedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
@@ -208,11 +270,16 @@ public class CustomerView extends AbstractView {
             contacts.setEditable(true);
             addresses.clear();
             addresses.setEditable(true);
-            schedule.clear();
-            schedule.setEditable(true);
+            vschedule.clear();
+            vschedule.setEditable(true);
+            dschedule.clear();
+            dschedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
                 component.getTextWidget().setEnabled(component.isEnabled());
+
+            fillPeriodColumn(controller.getTable("vschedule"));
+            fillPeriodColumn(controller.getTable("dschedule"));
             
             getController().getForm("main").clear();
             return;
