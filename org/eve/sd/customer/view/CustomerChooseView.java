@@ -1,5 +1,7 @@
 package org.eve.sd.customer.view;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
@@ -12,6 +14,8 @@ public class CustomerChooseView extends AbstractView {
         Controller controller = getController();
         TableAssist ctable = controller.getTable("customers");
 
+        container.setLayout(new RowLayout(SWT.VERTICAL));
+        
         addAction("customer.show.choose", false);
         addAction("customer.edit.choose", false);
         

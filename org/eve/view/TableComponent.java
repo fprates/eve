@@ -21,11 +21,13 @@ public class TableComponent {
     private int type;
     private String[] options;
     private List<Control> controls;
+    private boolean enabled;
     
     public TableComponent(String name) {
         this.name = name;
         type = EVE.text;
         controls = new ArrayList<Control>();
+        enabled = true;
     }
 
     /*
@@ -62,6 +64,8 @@ public class TableComponent {
      * @param editable
      */
     public final void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        
         for (Control control : controls)
             control.setEnabled(enabled);
     }
@@ -110,6 +114,14 @@ public class TableComponent {
      */
     public final Widget getControl(int row) {
         return controls.get(row);
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final boolean isEnabled() {
+        return enabled;
     }
     
     /*

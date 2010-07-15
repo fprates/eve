@@ -31,7 +31,12 @@ create table custmr001 (
    usreg char(8),
    tpcdn numeric(1),
    nrcdn char(20),
-   statu char(1)
+   statu char(1),
+   tpinc numeric(1),
+   VLIPR decimal(12,3), 
+   VLIBL decimal(6,3),
+   VLISU decimal(6,3),
+   VLIPT decimal(6,3)
 );
 
 /* mestre de clientes - contatos */
@@ -48,6 +53,7 @@ create table custmr002 (
 create table custmr003 (
    nrseq numeric(12) primary key,
    ident numeric(10) foreign key references custmr001(ident),
+   funct numeric(1),
    logra char(80),
    numer numeric(6)
 );

@@ -16,13 +16,12 @@ public class CustomerController extends AbstractController {
         int k;
         CustomerSchedule schedule;
         
-        customer.getSchedule().clear();
-        for (k = i; k <= i+1; k++) {                    
+        for (k = 0; k < 2 ; k++) {                    
             schedule = new CustomerSchedule();
             
             schedule.setCustomer(customer);
-            schedule.setItem(k);
-            schedule.setType((i == 0)?0 : 1);                    
+            schedule.setItem((k + (i * 2)) + 1);
+            schedule.setType(i);                    
             schedule.setMonday(tschedule.getTimeValue("schedule.mon", k));
             schedule.setTuesday(tschedule.getTimeValue("schedule.tue", k));
             schedule.setWednesday(tschedule.getTimeValue("schedule.wed", k));
@@ -55,6 +54,11 @@ public class CustomerController extends AbstractController {
                 customer.setId(form.getInt("customer.ident"));
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
+                customer.setIncentive(form.getInt("customer.tpinc"));
+                customer.setProductIncentiveValue(form.getFloat("customer.vlipr"));
+                customer.setBillingIncentiveValue(form.getFloat("customer.vlibl"));
+                customer.setSupplierIncentiveValue(form.getFloat("customer.dvcsp"));
+                customer.setPartnerIncentiveValue(form.getFloat("customer.dvcpt"));
                 
                 /*
                  * inclui contatos
@@ -90,6 +94,7 @@ public class CustomerController extends AbstractController {
                     
                     address.setCustomer(customer);
                     address.setItem(k);
+                    address.setType(addresses.getIntValue("address.type", k));
                     address.setAddress(name);
                     address.setNumber(addresses.getIntValue("address.numer", k));
                     
@@ -99,9 +104,9 @@ public class CustomerController extends AbstractController {
                 /*
                  * inclui horários
                  */
-                
+                customer.getSchedule().clear();
                 loadSchedule(getTable("vschedule"), customer, 0);
-                loadSchedule(getTable("dschedule"), customer, 2);
+                loadSchedule(getTable("dschedule"), customer, 1);
                 
                 model.save(customer);
                 form.setInt("customer.ident", customer.getId());                

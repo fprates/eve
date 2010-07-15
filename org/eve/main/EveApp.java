@@ -117,7 +117,7 @@ public class EveApp implements EveAPI {
         layout.topControl = view.getContainer();
         container.layout();
         container.pack();
-//        scontainer.pack();
+        scontainer.setOrigin(0, 0);
     }
     
     /*

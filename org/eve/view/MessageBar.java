@@ -3,8 +3,10 @@ package org.eve.view;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eve.main.EVE;
@@ -40,19 +42,25 @@ public class MessageBar {
      */
     public final void setMessage(int status, String id, Locale locale) {
         String message;
+        Color color;
         
         switch (status) {
         case EVE.error:
             msggrp.setText("Erro");
+            color = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
             break;
             
         case EVE.status:
             msggrp.setText("");
+            color = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
             break;
+        default:
+            color = Display.getCurrent().getSystemColor(SWT.COLOR_INFO_FOREGROUND);
         }
         
         message = messages.getMessage(id, null, id, locale);
         msgtxt.setText(message);
+        msgtxt.setForeground(color);
         msggrp.pack();
         container.pack();
     }

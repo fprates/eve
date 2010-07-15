@@ -2,6 +2,7 @@ package org.eve.sd.customer;
 
 public class CustomerAddress extends AbstractCustomerItem {
     private static final long serialVersionUID = -6527551878586866451L;
+    private int type;
     private String address;
     private int number;
     
@@ -14,6 +15,10 @@ public class CustomerAddress extends AbstractCustomerItem {
      * Getters
      * 
      */
+    
+    public int getType() {
+        return type;
+    }
     
     public String getAddress() {
         return address;
@@ -28,6 +33,10 @@ public class CustomerAddress extends AbstractCustomerItem {
      * Setters
      * 
      */
+    
+    public void setType(int type) {
+        this.type = type;
+    }
     
     public void setAddress(String address) {
         this.address = address;

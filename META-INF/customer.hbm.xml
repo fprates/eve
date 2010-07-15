@@ -12,6 +12,12 @@
         <property name="regTime" column="HRREG"/>
         <property name="regUser" column="USREG"/>
         <property name="status" column="STATU"/>
+        <property name="incentive" column="TPINC"/>
+        <property name="productIncentiveValue" column="VLIPR"/>
+        <property name="billingIncentiveValue" column="VLIBL"/>
+        <property name="supplierIncentiveValue" column="VLISU"/>
+        <property name="partnerIncentiveValue" column="VLIPT"/>
+        
         <set name="contacts" inverse="true">
             <key column="IDENT"/>
             <one-to-many class="org.eve.sd.customer.CustomerContact"/>
@@ -38,6 +44,7 @@
     <class name="org.eve.sd.customer.CustomerAddress" table="CUSTMR003">
         <id name="item" column="NRSEQ"/>
         <many-to-one name="customer" column="IDENT" not-null="true"/>
+        <property name="type" column="FUNCT"/>
         <property name="address" column="LOGRA"/>
         <property name="number" column="NUMER"/>
     </class>

@@ -3,7 +3,10 @@
  */
 package org.eve.view;
 
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eve.main.EVE;
 
 /**
  * @author francisco.prates
@@ -13,7 +16,9 @@ public class FormComponent {
     private String name;
     private int length;
     private boolean enabled;
-    private Text text;
+    private Control control;
+    private int type;
+    private String[] options;
     
     /**
      * 
@@ -25,7 +30,15 @@ public class FormComponent {
         this.name = name;
         this.length = length;
         this.enabled = enabled;
+        type = EVE.text;
+        
     }
+    
+    /*
+     * 
+     * Getters
+     * 
+     */
     
     /**
      * 
@@ -54,16 +67,111 @@ public class FormComponent {
      * 
      * @return
      */
-    public final Text getTextWidget() {
-    	return text;
+    public final Control getControl() {
+    	return control;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final String[] getOptions() {
+        return options;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final String getText() {
+        switch (type) {
+        case EVE.text:
+            return ((Text)control).getText();
+            
+        case EVE.combo:
+            return ((CCombo)control).getText();
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final int getType() {
+        return type;
+    }
+    
+    /**
+     * 
+     * @param index
+     * @return
+     */
+    public final String getOption(int index) {
+        return options[index];
+    }
+    
+    /*
+     * 
+     * Setters
+     * 
+     */    
+    
+    /**
+     * 
+     * @param text
+     */
+    public final void setControl(Control control) {
+    	this.control = control;
+    }
+    
+    /**
+     * 
+     * @param type
+     */
+    public final void setType(int type) {
+        this.type = type;
+    }
+    
+    /**
+     * 
+     * @param options
+     */
+    public final void setOptions(String[] options) {
+        this.options = options;
     }
     
     /**
      * 
      * @param text
      */
-    public final void setText(Text text) {
-    	this.text = text;
+    public final void setText(String text) {
+        switch (type) {
+        case EVE.text:
+            ((Text)control).setText(text);
+            break;
+            
+        case EVE.combo:
+            ((CCombo)control).setText(text);
+            break;
+            
+        }
     }
-
+    
+    /**
+     * 
+     * @param enabled
+     */
+    public final void setEnabled(boolean enabled) {
+        switch (type) {
+        case EVE.text:
+            ((Text)control).setEnabled(enabled);
+            break;
+            
+        case EVE.combo:
+            ((CCombo)control).setEnabled(enabled);
+            break;
+        }
+    }
 }

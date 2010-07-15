@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eve.main.EVE;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
@@ -45,18 +46,44 @@ public class CustomerView extends AbstractView {
         
         container.setLayout(new GridLayout(1, false));
         
+        /*
+         * Dados básicos
+         */
         form.setLocale(getLocale());        
         form.put("customer.ident", 12, false);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
         form.put("customer.cnpj", 18);
-        form.put("customer.status", 1);
+        
+        form.putCombo("customer.status", new String[] {
+                getMessage("customer.active"),
+                getMessage("customer.inactive")}, 7);
+        
+        form.putCombo("customer.tpinc", new String[] {
+                getMessage("incentive.free"),
+                getMessage("incentive.product"),
+                getMessage("incentive.bill")}, 7);
+        
+        form.put("customer.homep", 128);
+        form.put("customer.email", 128);
+        form.putCombo("customer.cdifv", new String[] {
+                "A", "B", "C"}, 1);
+        
+        form.put("customer.vlipr", 12);
+        form.put("customer.vlibl", 3);
+        form.put("customer.dvcsp", 3);
+        form.put("customer.dvcpt", 3);
+        
         form.define(container);
         
         bar = new ExpandBar(container, SWT.V_SCROLL);
         bar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
+        /*
+         * Contatos
+         */
         ctable.setLocale(getLocale());
+        ctable.setLines(4);
         ctable.put("contact.rname");
         ctable.put("contact.funct");
         ctable.put("contact.teln1");
@@ -70,7 +97,15 @@ public class CustomerView extends AbstractView {
         citembar.setExpanded(true);
         localcontainer.pack();
         
+        /*
+         * Endereços
+         */
         atable.setLocale(getLocale());
+        atable.setLines(3);
+        atable.putCombo("address.type", new String[] {
+                getMessage("address.billing"),
+                getMessage("address.delivery"),
+                getMessage("address.charging")});                
         atable.put("address.logra");
         atable.put("address.numer");
         atable.put("address.cdend");
@@ -84,7 +119,7 @@ public class CustomerView extends AbstractView {
         localcontainer.pack();
 
         /*
-         * Schedule
+         * Horários
          */        
         schedule = new Composite(bar, SWT.NONE);
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
@@ -98,7 +133,8 @@ public class CustomerView extends AbstractView {
         vstable.put("schedule.tue");
         vstable.put("schedule.wed");
         vstable.put("schedule.thu");
-        vstable.put("schedule.fri");        
+        vstable.put("schedule.fri");
+        vstable.setColumnProperties("schedule.per", EVE.readonly);
         
         vstable.setName("schedule.visit");
         vstable.define(schedule, controller);
@@ -113,7 +149,8 @@ public class CustomerView extends AbstractView {
         dstable.put("schedule.tue");
         dstable.put("schedule.wed");
         dstable.put("schedule.thu");
-        dstable.put("schedule.fri");        
+        dstable.put("schedule.fri");
+        dstable.setColumnProperties("schedule.per", EVE.readonly);
         
         dstable.setName("schedule.delivery");
         dstable.define(schedule, controller);
@@ -136,10 +173,10 @@ public class CustomerView extends AbstractView {
             switch (i) {
             case 0:
                 tschedule.setStringValue("schedule.per", i, getMessage("schedule.am"));
+                break;
                 
             case 1:
-                if (i == 1)
-                    tschedule.setStringValue("schedule.per", i, getMessage("schedule.pm"));
+                tschedule.setStringValue("schedule.per", i, getMessage("schedule.pm"));
                 break;
             }
         }        
@@ -159,6 +196,11 @@ public class CustomerView extends AbstractView {
         form.setInt("customer.ident", customer.getId());
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());
+        form.setFloat("customer.vlipr", customer.getProductIncentiveValue());
+        form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
+        form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
+        form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());
+        
         
         ctable.clear();
         for (CustomerContact contact : customer.getContacts()) {
@@ -189,11 +231,11 @@ public class CustomerView extends AbstractView {
                 
             case 2:
             case 3:                
-                dstable.setTimeValue("schedule.mon", i, schedule.getMonday());
-                dstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
-                dstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
-                dstable.setTimeValue("schedule.thu", i, schedule.getThursday());
-                dstable.setTimeValue("schedule.fri", i, schedule.getFriday());
+                dstable.setTimeValue("schedule.mon", i-2, schedule.getMonday());
+                dstable.setTimeValue("schedule.tue", i-2, schedule.getTuesday());
+                dstable.setTimeValue("schedule.wed", i-2, schedule.getWednesday());
+                dstable.setTimeValue("schedule.thu", i-2, schedule.getThursday());
+                dstable.setTimeValue("schedule.fri", i-2, schedule.getFriday());
                 break;
             }
             i++;
@@ -230,7 +272,7 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(false);
             
             for (FormComponent component : form.getComponents())
-                component.getTextWidget().setEnabled(false);
+                component.setEnabled(false);
             
             setControlLoad(customer);
             
@@ -253,7 +295,7 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
-                component.getTextWidget().setEnabled(component.isEnabled());
+                component.setEnabled(component.isEnabled());
             
             setControlLoad(customer);
                 
@@ -276,7 +318,7 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
 
             for (FormComponent component : form.getComponents())
-                component.getTextWidget().setEnabled(component.isEnabled());
+                component.setEnabled(component.isEnabled());
 
             fillPeriodColumn(controller.getTable("vschedule"));
             fillPeriodColumn(controller.getTable("dschedule"));

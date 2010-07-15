@@ -6,11 +6,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eve.main.EVE;
 import org.springframework.context.MessageSource;
 
 public class Form {
@@ -33,7 +35,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Define mensagens do sistema
      * @param messages
      */
     public final void setMessages(MessageSource messages) {
@@ -46,7 +48,7 @@ public class Form {
      * @param value
      */
     public final void setString(String field, String value) {
-        fields.get(field).getTextWidget().setText((value == null)?"":value);
+        fields.get(field).setText((value == null)?"":value);
     }
     
     /**
@@ -55,7 +57,26 @@ public class Form {
      * @param value
      */
     public final void setInt(String field, int value) {
-        setString(field, Integer.toString(value));
+        FormComponent component = fields.get(field);
+        
+        switch (component.getType()) {
+        case EVE.text:
+            setString(field, Integer.toString(value));
+            break;
+            
+        case EVE.combo:
+            component.setText(component.getOption(value));
+            break;
+        }
+    }
+    
+    /**
+     * 
+     * @param field
+     * @param value
+     */
+    public final void setFloat(String field, float value) {
+        setString(field, Float.toString(value));
     }
     
     /*
@@ -79,7 +100,7 @@ public class Form {
      * @return
      */
     public final String getString(String field) {
-        return fields.get(field).getTextWidget().getText();
+        return fields.get(field).getText();
     }
     
     /**
@@ -100,9 +121,33 @@ public class Form {
      * @return
      */
     public final int getInt(String field) {
-        String test = getString(field);
+        String test;
+        FormComponent component = fields.get(field);
         
-        return test.equals("")? 0:Integer.parseInt(test);
+        switch (component.getType()) {
+        case EVE.text:
+            test = getString(field);
+            
+            return test.equals("")? 0:Integer.parseInt(test);
+        
+        case EVE.combo:
+            return ((CCombo)component.getControl()).getSelectionIndex();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * 
+     * @param field
+     * @return
+     */
+    public final float getFloat(String field) {
+        String test;
+        
+        test = getString(field);
+        
+        return test.equals("")? 0:Float.parseFloat(test);
     }
     
     /**
@@ -127,10 +172,12 @@ public class Form {
     public final Composite define(Composite container) {
         Label label;
         Text text;
-        int charw = 0;
-        int charh = 0;
+        CCombo combo;
+        int charw;
+        int charh;
         Composite fieldComposite;
         FormComponent component;
+        String[] options;
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
@@ -144,16 +191,41 @@ public class Form {
                     new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
             fieldComposite = new Composite(composite, SWT.NONE);
-            text = new Text(fieldComposite, SWT.BORDER);
             
-            if (charw == 0) {
+            switch (component.getType()) {
+            case EVE.text:
+                text = new Text(fieldComposite, SWT.BORDER);
+                
                 charw = ViewUtils.getCharWidth(text);
-                charh = ViewUtils.getCharHeight(text);             
-            }
+                charh = ViewUtils.getCharHeight(text);
+                
+                text.setSize(text.computeSize(
+                        component.getLength() * charw, charh));
+                
+                component.setControl(text);
+                
+                break;
             
-            text.setSize(text.computeSize(
-                    component.getLength() * charw, charh));
-            component.setText(text);            
+            case EVE.combo:
+                combo = new CCombo(fieldComposite, SWT.BORDER);
+                combo.setItems(component.getOptions());
+                
+                options = component.getOptions();
+                if (options.length > 0) {
+                    combo.setText(options[0]);
+                    combo.setItems(options);
+                }
+                
+                charw = ViewUtils.getCharWidth(combo);
+                charh = ViewUtils.getCharHeight(combo) + 2;
+                
+                combo.setSize(combo.computeSize(
+                        (component.getLength() * charw) + 35, charh));
+                
+                component.setControl(combo);
+                
+                break;
+            }
         }
         
         return composite;
@@ -177,7 +249,23 @@ public class Form {
      */
     public final void put(String id, int length) {
         fields.put(id, new FormComponent(
-                messages.getMessage(id, null, locale), length, true));        
+                messages.getMessage(id, null, id, locale), length, true));        
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param options
+     * @param length
+     */
+    public final void putCombo(String id, String[] options, int length) {
+        FormComponent component = new FormComponent(
+                messages.getMessage(id, null, id, locale), length, true);
+        
+        component.setType(EVE.combo);
+        component.setOptions(options);
+        
+        fields.put(id, component);
     }
     
     /**
@@ -185,7 +273,7 @@ public class Form {
      */
     public final void clear() {
         for (FormComponent component : fields.values())
-            component.getTextWidget().setText("");
+            component.setText("");
     }
     
 }

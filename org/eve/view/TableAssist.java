@@ -161,6 +161,13 @@ public class TableAssist implements SelectionListener {
         this.name = name;
     }
     
+    public final void setColumnProperties(String id, int property) {
+        TableComponent component = table.get(id);
+        
+        if ((EVE.readonly & property) == EVE.readonly)
+            component.setEnabled(false);
+    }
+    
     /*
      * 
      * Getters
@@ -193,7 +200,7 @@ public class TableAssist implements SelectionListener {
      * @param row linha
      * @return conteúdo inteiro
      */
-    public final int getIntValue(String id, int row) {
+    public final int getIntValue(String id, int row) throws NumberFormatException {
         CCombo combo;
         String value;
         int value_;
@@ -315,15 +322,14 @@ public class TableAssist implements SelectionListener {
             switch(component.getType()) {
             case EVE.combo:
                 combo = new CCombo(comptable, SWT.NONE);
-                combo.setEditable(editable);
+                combo.setEditable(component.isEnabled());
                 component.addControl(combo);
                 options = component.getOptions();
                 
-                if (options.length > 0)
+                if (options.length > 0) {
                     combo.setText(options[0]);
-                
-                for (String option : options)
-                    combo.add(option);
+                    combo.setItems(options);
+                }
                 
                 editor = new TableEditor(comptable);
                 editor.grabHorizontal = true;
@@ -386,7 +392,7 @@ public class TableAssist implements SelectionListener {
         btarea = new Composite(area, SWT.NONE);
         btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
         btarea.setVisible(editable);
-        btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         if (name != null)
             new Label(area, SWT.NONE).setText(
@@ -395,7 +401,7 @@ public class TableAssist implements SelectionListener {
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);
         comptable.addSelectionListener(this);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         editor = new TableEditor(comptable);
         editor.horizontalAlignment = SWT.LEFT;

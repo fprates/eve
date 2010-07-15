@@ -23,6 +23,11 @@ public class Customer implements Serializable {
 	private String regUser;
 	private String codCadNac;
     private int status;
+    private int incentive;
+    private float prdctinc;
+    private float billinc;
+    private float splrinc;
+    private float prtninc;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
@@ -98,6 +103,14 @@ public class Customer implements Serializable {
      * 
      * @return
      */
+    public int getIncentive() {
+        return incentive;
+    }
+    
+    /**
+     * 
+     * @return
+     */
     public Set<CustomerContact> getContacts() {
         return contacts;
     }
@@ -116,6 +129,22 @@ public class Customer implements Serializable {
      */
     public Set<CustomerSchedule> getSchedule() {
         return schedule;
+    }
+    
+    public float getProductIncentiveValue() {
+        return prdctinc;
+    }
+    
+    public float getBillingIncentiveValue() {
+        return billinc;
+    }
+    
+    public float getSupplierIncentiveValue() {
+        return splrinc;
+    }
+    
+    public float getPartnerIncentiveValue() {
+        return prtninc;
     }
     
     /*
@@ -173,6 +202,14 @@ public class Customer implements Serializable {
     
     /**
      * 
+     * @param incentive
+     */
+    public void setIncentive(int incentive) {
+        this.incentive = incentive;
+    }
+    
+    /**
+     * 
      * @param contacts
      */
     public void setContacts(Set<CustomerContact> contacts) {
@@ -193,6 +230,22 @@ public class Customer implements Serializable {
      */
     public void setSchedule(Set<CustomerSchedule> schedule) {
         this.schedule = schedule;
+    }
+    
+    public void setProductIncentiveValue(float prdctinc) {
+        this.prdctinc = prdctinc;
+    }
+    
+    public void setBillingIncentiveValue(float billinc) {
+        this.billinc = billinc;
+    }
+    
+    public void setSupplierIncentiveValue(float splrinc) {
+        this.splrinc = splrinc;
+    }
+    
+    public void setPartnerIncentiveValue(float prtninc) {
+        this.prtninc = prtninc;
     }
     
     @Override

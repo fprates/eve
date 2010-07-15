@@ -17,11 +17,16 @@ public class CustomerModel extends AbstractModel {
         customer.setAlternateName(customer_.getAlternateName());
         customer.setCodCadNac(customer_.getCodCadNac());
         customer.setRegDate(customer_.getRegDate());
-        customer.setRegTime(customer.getRegTime());
-        customer.setRegUser(customer.getRegUser());
+        customer.setRegTime(customer_.getRegTime());
+        customer.setRegUser(customer_.getRegUser());
         customer.setId(customer_.getId());
         customer.setName(customer_.getName());
         customer.setStatus(customer_.getStatus());
+        customer.setIncentive(customer_.getIncentive());
+        customer.setProductIncentiveValue(customer_.getProductIncentiveValue());
+        customer.setBillingIncentiveValue(customer_.getBillingIncentiveValue());
+        customer.setSupplierIncentiveValue(customer_.getSupplierIncentiveValue());
+        customer.setPartnerIncentiveValue(customer_.getPartnerIncentiveValue());
         
         customer.getContacts().clear();
         customer.getContacts().addAll(customer_.getContacts());

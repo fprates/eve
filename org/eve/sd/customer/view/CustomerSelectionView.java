@@ -34,6 +34,8 @@ public class CustomerSelectionView extends AbstractView {
         Form form = controller.getForm("main");
         Form selporform = controller.getForm("selpor");
         
+        container.setLayout(new RowLayout(SWT.VERTICAL));
+        
         addAction("customer.show.sel");
         addAction("customer.edit.sel");
         
