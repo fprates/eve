@@ -50,10 +50,13 @@ public class CustomerController extends AbstractController {
                  * dados base
                  */
                 customer.setAlternateName(form.getString("customer.aname"));
-                customer.setCodCadNac(form.getString("customer.cnpj"));
+                customer.setCodCadFiscal(form.getString("customer.cnpj"));
                 customer.setId(form.getInt("customer.ident"));
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
+                customer.setHomePage(form.getString("customer.homep"));
+                customer.setEmail(form.getString("customer.email"));
+                customer.setIVF(form.getInt("customer.cdivf"));
                 customer.setIncentive(form.getInt("customer.tpinc"));
                 customer.setProductIncentiveValue(form.getFloat("customer.vlipr"));
                 customer.setBillingIncentiveValue(form.getFloat("customer.vlibl"));

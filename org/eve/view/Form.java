@@ -65,6 +65,7 @@ public class Form {
             break;
             
         case EVE.combo:
+            System.out.println(field+Integer.toString(value));
             component.setText(component.getOption(value));
             break;
         }
@@ -122,16 +123,17 @@ public class Form {
      */
     public final int getInt(String field) {
         String test;
+        int test_;
         FormComponent component = fields.get(field);
         
         switch (component.getType()) {
         case EVE.text:
-            test = getString(field);
-            
+            test = getString(field);            
             return test.equals("")? 0:Integer.parseInt(test);
         
         case EVE.combo:
-            return ((CCombo)component.getControl()).getSelectionIndex();
+            test_ = ((CCombo)component.getControl()).getSelectionIndex();
+            return (test_ < 0)? 0:test_;
         }
         
         return 0;

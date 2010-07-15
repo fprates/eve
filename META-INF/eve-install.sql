@@ -29,14 +29,18 @@ create table custmr001 (
    dtreg date,
    hrreg time,
    usreg char(8),
+   cdfsc char(18),
    tpcdn numeric(1),
    nrcdn char(20),
-   statu char(1),
+   statu numeric(1),
+   cdivf numeric(1),
    tpinc numeric(1),
+   homep char(128),
+   email char(128),
    VLIPR decimal(12,3), 
    VLIBL decimal(6,3),
-   VLISU decimal(6,3),
-   VLIPT decimal(6,3)
+   dvcsp decimal(6,3),
+   dvcpt decimal(6,3)
 );
 
 /* mestre de clientes - contatos */

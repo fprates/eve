@@ -15,13 +15,16 @@ public class CustomerModel extends AbstractModel {
 
     private final void copyCustomer(Customer customer_, Customer customer) {
         customer.setAlternateName(customer_.getAlternateName());
-        customer.setCodCadNac(customer_.getCodCadNac());
+        customer.setCodCadFiscal(customer_.getCodCadFiscal());
         customer.setRegDate(customer_.getRegDate());
         customer.setRegTime(customer_.getRegTime());
         customer.setRegUser(customer_.getRegUser());
         customer.setId(customer_.getId());
         customer.setName(customer_.getName());
+        customer.setHomePage(customer_.getHomePage());
+        customer.setEmail(customer_.getEmail());
         customer.setStatus(customer_.getStatus());
+        customer.setIVF(customer_.getIVF());
         customer.setIncentive(customer_.getIncentive());
         customer.setProductIncentiveValue(customer_.getProductIncentiveValue());
         customer.setBillingIncentiveValue(customer_.getBillingIncentiveValue());

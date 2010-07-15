@@ -12,11 +12,15 @@
         <property name="regTime" column="HRREG"/>
         <property name="regUser" column="USREG"/>
         <property name="status" column="STATU"/>
+        <property name="codCadFiscal" column="CDFSC"/>
+        <property name="IVF" column="CDIVF"/>
+        <property name="homePage" column="HOMEP"/>
+        <property name="email" column="EMAIL"/>
         <property name="incentive" column="TPINC"/>
         <property name="productIncentiveValue" column="VLIPR"/>
         <property name="billingIncentiveValue" column="VLIBL"/>
-        <property name="supplierIncentiveValue" column="VLISU"/>
-        <property name="partnerIncentiveValue" column="VLIPT"/>
+        <property name="supplierIncentiveValue" column="DVCSP"/>
+        <property name="partnerIncentiveValue" column="DVCPT"/>
         
         <set name="contacts" inverse="true">
             <key column="IDENT"/>

@@ -21,9 +21,12 @@ public class Customer implements Serializable {
 	private Date regDate;
 	private Time regTime;
 	private String regUser;
-	private String codCadNac;
+	private String codCadFiscal;
     private int status;
+    private String homepage;
+    private String email;
     private int incentive;
+    private int ivf;
     private float prdctinc;
     private float billinc;
     private float splrinc;
@@ -93,10 +96,10 @@ public class Customer implements Serializable {
 	}
 	
     /**
-     * @return the codCadNac
+     * @return the codCadFiscal
      */
-    public String getCodCadNac() {
-        return codCadNac;
+    public String getCodCadFiscal() {
+        return codCadFiscal;
     }
     
     /**
@@ -105,6 +108,30 @@ public class Customer implements Serializable {
      */
     public int getIncentive() {
         return incentive;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public String getHomePage() {
+        return homepage;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public String getEmail() {
+        return email;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getIVF() {
+        return ivf;
     }
     
     /**
@@ -194,10 +221,10 @@ public class Customer implements Serializable {
 	}
 
     /**
-     * @param codCadNac the codCadNac to set
+     * @param codCadNac the codCadFiscal to set
      */
-    public void setCodCadNac(String codCadNac) {
-        this.codCadNac = codCadNac;
+    public void setCodCadFiscal(String codCadFiscal) {
+        this.codCadFiscal = codCadFiscal;
     }
     
     /**
@@ -206,6 +233,30 @@ public class Customer implements Serializable {
      */
     public void setIncentive(int incentive) {
         this.incentive = incentive;
+    }
+    
+    /**
+     * 
+     * @param homepage
+     */
+    public void setHomePage(String homepage) {
+        this.homepage = homepage;
+    }
+    
+    /**
+     * 
+     * @param email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    /**
+     * 
+     * @param ivf
+     */
+    public void setIVF(int ivf) {
+        this.ivf = ivf;
     }
     
     /**

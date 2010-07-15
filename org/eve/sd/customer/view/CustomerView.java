@@ -66,13 +66,13 @@ public class CustomerView extends AbstractView {
         
         form.put("customer.homep", 128);
         form.put("customer.email", 128);
-        form.putCombo("customer.cdifv", new String[] {
+        form.putCombo("customer.cdivf", new String[] {
                 "A", "B", "C"}, 1);
         
-        form.put("customer.vlipr", 12);
-        form.put("customer.vlibl", 3);
-        form.put("customer.dvcsp", 3);
-        form.put("customer.dvcpt", 3);
+        form.put("customer.vlipr", 13);
+        form.put("customer.vlibl", 7);
+        form.put("customer.dvcsp", 7);
+        form.put("customer.dvcpt", 7);
         
         form.define(container);
         
@@ -192,10 +192,14 @@ public class CustomerView extends AbstractView {
         TableAssist dstable = controller.getTable("dschedule");
         
         form.setString("customer.aname", customer.getAlternateName());
-        form.setString("customer.cnpj", customer.getCodCadNac());
+        form.setString("customer.cnpj", customer.getCodCadFiscal());
         form.setInt("customer.ident", customer.getId());
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());
+        form.setString("customer.homep", customer.getHomePage());
+        form.setString("customer.email", customer.getEmail());
+        form.setInt("customer.tpinc", customer.getIncentive());
+        form.setInt("customer.cdivf", customer.getIVF());
         form.setFloat("customer.vlipr", customer.getProductIncentiveValue());
         form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
         form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
@@ -319,9 +323,8 @@ public class CustomerView extends AbstractView {
 
             for (FormComponent component : form.getComponents())
                 component.setEnabled(component.isEnabled());
-
-            fillPeriodColumn(controller.getTable("vschedule"));
-            fillPeriodColumn(controller.getTable("dschedule"));
+            
+            setControlLoad(customer);
             
             getController().getForm("main").clear();
             return;
