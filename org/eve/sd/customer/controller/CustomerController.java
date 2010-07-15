@@ -84,7 +84,7 @@ public class CustomerController extends AbstractController {
                  * inclui endereços
                  */
                 customer.getAddresses().clear();
-                for (k = 0; k < contacts.getItensSize(); k++) {
+                for (k = 0; k < addresses.getItensSize(); k++) {
                     name = addresses.getStringValue("address.logra", k);
                     
                     if (name.equals(""))
