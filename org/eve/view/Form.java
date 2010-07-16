@@ -65,7 +65,6 @@ public class Form {
             break;
             
         case EVE.combo:
-            System.out.println(field+Integer.toString(value));
             component.setText(component.getOption(value));
             break;
         }
