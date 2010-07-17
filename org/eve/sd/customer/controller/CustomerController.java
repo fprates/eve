@@ -2,6 +2,8 @@ package org.eve.sd.customer.controller;
 
 import org.eve.main.EVE;
 import org.eve.model.Model;
+import org.eve.sd.common.Country;
+import org.eve.sd.common.State;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
@@ -11,6 +13,11 @@ import org.eve.view.Form;
 import org.eve.view.TableAssist;
 
 public class CustomerController extends AbstractController {
+    private Country country;
+    
+    public CustomerController() {
+        country = new Country();
+    }
     
     private final void loadSchedule(TableAssist tschedule, Customer customer, int i) {
         int k;
@@ -29,6 +36,32 @@ public class CustomerController extends AbstractController {
             schedule.setFriday(tschedule.getTimeValue("schedule.fri", k));
             
             customer.getSchedule().add(schedule);
+        }
+    }
+    
+    public final Object[] getResults(String id) {
+        int size;
+        Object[] objects;
+        Model model = getModel();
+        
+        if (id.equals("address.coduf")) {
+            model.load(Country.class, "BRA", country);
+            
+            if (country == null)
+                return null;
+            
+            size = country.getStates().size();
+            if (size == 0)
+                return null;
+            
+            objects = new Object[size];
+            size = 0;
+            for (State state : country.getStates())
+                objects[size++] = state.getIdent();
+            
+            return objects;
+        } else {
+            return new Object[] {"teste"};
         }
     }
     

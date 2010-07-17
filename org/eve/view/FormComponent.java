@@ -3,7 +3,7 @@
  */
 package org.eve.view;
 
-import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
@@ -89,7 +89,7 @@ public class FormComponent {
             return ((Text)control).getText();
             
         case EVE.combo:
-            return ((CCombo)control).getText();
+            return ((Combo)control).getText();
         }
         
         return null;
@@ -153,7 +153,7 @@ public class FormComponent {
             break;
             
         case EVE.combo:
-            ((CCombo)control).setText(text);
+            ((Combo)control).setText(text);
             break;
             
         }
@@ -170,7 +170,7 @@ public class FormComponent {
             break;
             
         case EVE.combo:
-            ((CCombo)control).setEnabled(enabled);
+            ((Combo)control).setEnabled(enabled);
             break;
         }
     }

@@ -51,6 +51,12 @@
         <property name="type" column="FUNCT"/>
         <property name="address" column="LOGRA"/>
         <property name="number" column="NUMER"/>
+        <property name="complemento" column="compl"/>
+        <property name="localidade" column="local"/>
+        <property name="CEP" column="cdend"/>
+        <property name="pais" column="cntry"/>
+        <property name="estado" column="coduf"/>
+        <property name="municipio" column="munic"/>
     </class>
     
     <class name="org.eve.sd.customer.CustomerSchedule" table="CUSTMR004">
@@ -64,5 +70,19 @@
         <property name="friday" column="HRFRI"/>
         <property name="saturday" column="HRSAT"/>
         <property name="sunday" column="HRSUN"/>        
+    </class>
+    
+    <class name="org.eve.sd.common.Country" table="SDCOMM001">
+        <id name="ident" column="CNTRY"/>
+        <set name="states" inverse="true">
+            <key column="CNTRY"/>
+            <one-to-many class="org.eve.sd.common.State"/>
+        </set>
+    </class>
+    
+    <class name="org.eve.sd.common.State" table="SDCOMM002">
+        <id name="ident" column="CODUF"/>
+        <many-to-one name="country" column="CNTRY" not-null="true"/>
+        <property name="name" column="RNAME"/>
     </class>
 </hibernate-mapping>

@@ -6,9 +6,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -131,7 +131,7 @@ public class Form {
             return test.equals("")? 0:Integer.parseInt(test);
         
         case EVE.combo:
-            test_ = ((CCombo)component.getControl()).getSelectionIndex();
+            test_ = ((Combo)component.getControl()).getSelectionIndex();
             return (test_ < 0)? 0:test_;
         }
         
@@ -173,7 +173,7 @@ public class Form {
     public final Composite define(Composite container) {
         Label label;
         Text text;
-        CCombo combo;
+        Combo combo;
         int charw;
         int charh;
         Composite fieldComposite;
@@ -208,7 +208,7 @@ public class Form {
                 break;
             
             case EVE.combo:
-                combo = new CCombo(fieldComposite, SWT.BORDER);
+                combo = new Combo(fieldComposite, SWT.BORDER);
                 combo.setItems(component.getOptions());
                 
                 options = component.getOptions();
@@ -218,7 +218,7 @@ public class Form {
                 }
                 
                 charw = ViewUtils.getCharWidth(combo);
-                charh = ViewUtils.getCharHeight(combo) + 2;
+                charh = ViewUtils.getCharHeight(combo);
                 
                 combo.setSize(combo.computeSize(
                         (component.getLength() * charw) + 35, charh));

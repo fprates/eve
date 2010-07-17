@@ -44,6 +44,7 @@ public class TableAssist implements SelectionListener {
     private TableEditor editor;
     private TableListener tablelistener;
     private String name;
+    private Controller controller;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -308,7 +309,7 @@ public class TableAssist implements SelectionListener {
     /**
      * Adiciona item em tabela
      */
-    private final void addTableItem() {
+    private final void addTableItem(Controller controller) {
         String[] options;
         CCombo combo;
         TableComponent component;
@@ -326,10 +327,13 @@ public class TableAssist implements SelectionListener {
                 component.addControl(combo);
                 options = component.getOptions();
                 
-                if (options.length > 0) {
+                if (options != null && options.length > 0) {
                     combo.setText(options[0]);
                     combo.setItems(options);
                 }
+                
+                if (options == null)
+                    combo.addListener(SWT.MouseDown, component.listener(id, controller));
                 
                 editor = new TableEditor(comptable);
                 editor.grabHorizontal = true;
@@ -346,7 +350,7 @@ public class TableAssist implements SelectionListener {
     public final void insert() {
         currentline++;
         if (currentline > lines)
-            addTableItem();
+            addTableItem(controller);
     }
     
     /**
@@ -379,7 +383,7 @@ public class TableAssist implements SelectionListener {
      * @param listener
      * @return
      */
-    public final Composite define(Composite container, SelectionListener listener) {
+    public final Composite define(Composite container, Controller controller) {
         TableColumn tablecol;
         TableComponent component;
         Button btins;
@@ -414,13 +418,13 @@ public class TableAssist implements SelectionListener {
         
         btins = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
-        btins.addSelectionListener(listener);
+        btins.addSelectionListener(controller);
         btins.setVisible(insert);
 //      widgetresponse.put(btins, name+".new");
         
         btdel = new Button(btarea, SWT.NONE);
         btdel.setText("Remover");
-        btdel.addSelectionListener(listener);
+        btdel.addSelectionListener(controller);
         btdel.setVisible(remove);
 //        widgetresponse.put(btdel, name+".del");
         
@@ -431,11 +435,12 @@ public class TableAssist implements SelectionListener {
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
             tablecol.pack();
-            component.setWidget(tablecol);
         }
         
         for (k=1; k <= lines; k++)
-            addTableItem();
+            addTableItem(controller);
+        
+        this.controller = controller;
         
         area.pack();
         
@@ -471,10 +476,7 @@ public class TableAssist implements SelectionListener {
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public void widgetDefaultSelected(SelectionEvent arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void widgetDefaultSelected(SelectionEvent arg0) { }
     
     /*
      * (non-Javadoc)

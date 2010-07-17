@@ -108,7 +108,10 @@ public class CustomerView extends AbstractView {
                 getMessage("address.charging")});                
         atable.put("address.logra");
         atable.put("address.numer");
+        atable.put("address.compl");
         atable.put("address.cdend");
+        atable.putCombo("address.coduf", null);
+        atable.putCombo("address.munic", null);
         
         localcontainer = atable.define(bar, controller);
         aitembar = new ExpandItem(bar, SWT.NONE, 1);
@@ -330,5 +333,4 @@ public class CustomerView extends AbstractView {
             return;
         }
     }
-
 }

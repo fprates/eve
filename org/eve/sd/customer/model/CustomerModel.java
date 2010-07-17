@@ -3,6 +3,7 @@ package org.eve.sd.customer.model;
 import java.io.Serializable;
 
 import org.eve.model.AbstractModel;
+import org.eve.sd.common.Country;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
@@ -41,16 +42,37 @@ public class CustomerModel extends AbstractModel {
         customer.getSchedule().addAll(customer_.getSchedule());
     }
 
+    private final void copyCountry(Country country_, Country country) {
+        country.setIdent(country_.getIdent());
+        
+        country.getStates().clear();
+        country.getStates().addAll(country_.getStates());
+    }
+
     @Override
     @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
     public final void load(Class<?> class_, Serializable object_, Object object) {
-        Customer result_;
+        Customer customer_;        
+        Customer customer;
+        Country country_;
+        Country country;
         Session session = getSessionFactory().getCurrentSession();
-        Customer result = (Customer)object;
-        
+
         session.beginTransaction();
-        result_ = (Customer)session.get(class_, object_);
-        copyCustomer(result_, result);
+        
+        if (class_.equals(Customer.class)) {
+            customer = (Customer)object;
+            
+            customer_ = (Customer)session.get(class_, object_);
+            copyCustomer(customer_, customer);
+        }
+        
+        if (class_.equals(Country.class)) {
+            country = (Country)object;
+            
+            country_ = (Country)session.get(class_, object_);
+            copyCountry(country_, country);
+        }
         
         session.getTransaction().commit();
     }

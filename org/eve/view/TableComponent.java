@@ -6,8 +6,10 @@ package org.eve.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EVE;
 
@@ -17,7 +19,6 @@ import org.eve.main.EVE;
  */
 public class TableComponent {
     private String name;
-    private TableColumn column;
     private int type;
     private String[] options;
     private List<Control> controls;
@@ -35,13 +36,6 @@ public class TableComponent {
      * Setters
      * 
      */
-    /**
-     * 
-     * @param column
-     */
-    public final void setWidget(TableColumn column) {
-        this.column = column;
-    }
 
     /**
      * 
@@ -87,14 +81,6 @@ public class TableComponent {
      * 
      * @return
      */
-    public final TableColumn getWidget() {
-        return column;
-    }
-    
-    /**
-     * 
-     * @return
-     */
     public final int getType() {
         return type;
     }
@@ -124,6 +110,16 @@ public class TableComponent {
         return enabled;
     }
     
+    /**
+     * 
+     * @param id
+     * @param controller
+     * @return
+     */
+    public final Listener listener(String id, Controller controller) {
+        return new ComponentListener(id, controller);
+    }
+    
     /*
      * 
      * Others
@@ -136,4 +132,35 @@ public class TableComponent {
     public final void addControl(Control control) {
         controls.add(control);
     }
+}
+
+class ComponentListener implements Listener {
+    private String id;
+    private Controller controller;
+    
+    public ComponentListener(String id, Controller controller) {
+        this.id = id;
+        this.controller = controller;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
+     */
+    @Override
+    public void handleEvent(Event ev) {
+        Object[] results;
+        CCombo combo = (CCombo)ev.widget;
+        
+        if (combo.getListVisible())
+            return;
+        
+        combo.clearSelection();
+        combo.removeAll();
+        results = controller.getResults(id);
+        
+        for (Object object : results)
+            combo.add((String)object);
+    }
+    
 }
