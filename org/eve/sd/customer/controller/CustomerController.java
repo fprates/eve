@@ -1,7 +1,12 @@
 package org.eve.sd.customer.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eve.main.EVE;
 import org.eve.model.Model;
+import org.eve.sd.common.City;
 import org.eve.sd.common.Country;
 import org.eve.sd.common.State;
 import org.eve.sd.customer.Customer;
@@ -14,9 +19,11 @@ import org.eve.view.TableAssist;
 
 public class CustomerController extends AbstractController {
     private Country country;
+    private Map<String, List<?>> cities;
     
     public CustomerController() {
         country = new Country();
+        cities = new HashMap<String, List<?>>();
     }
     
     private final void loadSchedule(TableAssist tschedule, Customer customer, int i) {
@@ -39,9 +46,12 @@ public class CustomerController extends AbstractController {
         }
     }
     
-    public final Object[] getResults(String id) {
+    public final Object[] getResults(String id, Object object) {
         int size;
+        String ufkey;
         Object[] objects;
+        List<?> results;
+        City city;
         Model model = getModel();
         
         if (id.equals("address.coduf")) {
@@ -60,9 +70,40 @@ public class CustomerController extends AbstractController {
                 objects[size++] = state.getIdent();
             
             return objects;
-        } else {
-            return new Object[] {"teste"};
         }
+        
+        if (id.equals("address.munic")) {
+            if (object == null)
+                return null;
+            
+            ufkey = "BRA".concat((String)object);
+            results = cities.get(ufkey);
+            
+            if (results == null) {
+                results = model.select("sel_cities", new Object[] {ufkey});
+                if (results != null)
+                    cities.put(ufkey, results);
+            }
+                
+            if (results == null)
+                return null;
+            
+            size = results.size();
+            if (size == 0)
+                return null;
+            
+            objects = new Object[size];
+            size = 0;
+            for (Object object_ : results) {
+                city = (City)object_;
+                objects[size++] = new StringBuffer(city.getIdent())
+                    .append(" ").append(city.getName()).toString();
+            }
+            
+            return objects;
+        }
+        
+        return null;
     }
     
     @Override

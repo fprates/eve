@@ -105,13 +105,15 @@ public class CustomerView extends AbstractView {
         atable.putCombo("address.type", new String[] {
                 getMessage("address.billing"),
                 getMessage("address.delivery"),
-                getMessage("address.charging")});                
+                getMessage("address.charging")});
+        
         atable.put("address.logra");
         atable.put("address.numer");
         atable.put("address.compl");
         atable.put("address.cdend");
         atable.putCombo("address.coduf", null);
         atable.putCombo("address.munic", null);
+        atable.setReference("address.munic", "address.coduf");
         
         localcontainer = atable.define(bar, controller);
         aitembar = new ExpandItem(bar, SWT.NONE, 1);

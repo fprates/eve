@@ -1,6 +1,7 @@
 package org.eve.view;
 
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -30,6 +31,7 @@ import org.springframework.context.MessageSource;
 public class TableAssist implements SelectionListener {
     private static final int LINES = 5;
     private Map<String, TableComponent> table;
+    private Map<String, String> references;
     private MessageSource messages;
     private Locale locale;
     private Table comptable;
@@ -48,6 +50,7 @@ public class TableAssist implements SelectionListener {
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
+        references = new HashMap<String, String>();
         editable = true;
         insert = true;
         remove = true;
@@ -169,6 +172,10 @@ public class TableAssist implements SelectionListener {
             component.setEnabled(false);
     }
     
+    public final void setReference(String id, String idref) {
+        references.put(id, idref);
+    }
+    
     /*
      * 
      * Getters
@@ -214,14 +221,16 @@ public class TableAssist implements SelectionListener {
                 return 0;
             
             return Integer.parseInt(value);
+            
         case EVE.combo:
             combo = (CCombo)table.get(id).getControl(row);
             value_ = combo.getSelectionIndex();
             
             return (value_ == -1)? 0 : value_;
+            
+        default:            
+            return 0;
         }
-        
-        return 0;
     }
     
     /**
@@ -327,13 +336,20 @@ public class TableAssist implements SelectionListener {
                 component.addControl(combo);
                 options = component.getOptions();
                 
+                /*
+                 * definições para carga dinâmica de valores
+                 */
                 if (options != null && options.length > 0) {
                     combo.setText(options[0]);
                     combo.setItems(options);
                 }
                 
-                if (options == null)
-                    combo.addListener(SWT.MouseDown, component.listener(id, controller));
+                if (options == null) {
+                    combo.addListener(SWT.MouseDown, component.listener(
+                            id, controller, comptable.getItemCount() - 1));
+                    component.setTableReference(table);
+                    component.setListenerReference(references.get(id));
+                }                
                 
                 editor = new TableEditor(comptable);
                 editor.grabHorizontal = true;

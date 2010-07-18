@@ -8,9 +8,7 @@ public class State implements Serializable, Comparable<State> {
     private String ident;
     private String name;
     
-    public State() {
-        
-    }
+    public State() { }
 
     
     

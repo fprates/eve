@@ -219,10 +219,10 @@ public abstract class AbstractController implements Controller {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Controller#getResults(java.lang.String)
+     * @see org.eve.view.Controller#getResults(java.lang.String, java.lang.Object)
      */
     @Override
-    public Object[] getResults(String id) {
+    public Object[] getResults(String id, Object object) {
         return null;
     }
     

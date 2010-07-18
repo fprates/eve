@@ -56,7 +56,7 @@ public interface Controller extends SelectionListener {
     
     public abstract MessageSource getMessages();
     
-    public abstract Object[] getResults(String id);
+    public abstract Object[] getResults(String id, Object object);
     
     /*
      * 

@@ -36,10 +36,9 @@ create table sdcomm002 (
 
 /* municípios */
 create table sdcomm003 (
+    munic numeric(7) primary key,
     ufkey char(5),
-    munic numeric(7),
-    rname char(40),
-    primary key(ufkey, munic)
+    rname char(40)
 );
 
 /* mestre de clientes - dados básicos */

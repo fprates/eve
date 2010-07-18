@@ -85,4 +85,10 @@
         <many-to-one name="country" column="CNTRY" not-null="true"/>
         <property name="name" column="RNAME"/>
     </class>
+    
+    <class name="org.eve.sd.common.City" table="SDCOMM003">
+        <id name="ident" column="MUNIC"/>
+        <property name="ufkey" column="UFKEY"/>
+        <property name="name" column="RNAME"/>
+    </class>
 </hibernate-mapping>

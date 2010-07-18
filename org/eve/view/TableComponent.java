@@ -5,6 +5,7 @@ package org.eve.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Control;
@@ -23,6 +24,7 @@ public class TableComponent {
     private String[] options;
     private List<Control> controls;
     private boolean enabled;
+    private ComponentListener complistener;
     
     public TableComponent(String name) {
         this.name = name;
@@ -114,10 +116,29 @@ public class TableComponent {
      * 
      * @param id
      * @param controller
+     * @param table
      * @return
      */
-    public final Listener listener(String id, Controller controller) {
-        return new ComponentListener(id, controller);
+    public final Listener listener(String id, Controller controller, int index) {
+        complistener = new ComponentListener(id, controller, index);
+        
+        return complistener;
+    }
+    
+    /**
+     * 
+     * @param table
+     */
+    public final void setTableReference(Map<String, TableComponent> table) {
+        complistener.setTableReference(table);
+    }
+    
+    /**
+     * 
+     * @param id
+     */
+    public final void setListenerReference(String id) {
+        complistener.setReference(id);
     }
     
     /*
@@ -135,12 +156,32 @@ public class TableComponent {
 }
 
 class ComponentListener implements Listener {
+    private int index;
     private String id;
     private Controller controller;
+    private String reference;
+    private Map<String, TableComponent> table;
     
-    public ComponentListener(String id, Controller controller) {
+    public ComponentListener(String id, Controller controller, int index) {
         this.id = id;
         this.controller = controller;
+        this.index = index;
+    }
+    
+    /**
+     * 
+     * @param table
+     */
+    public final void setTableReference(Map<String, TableComponent> table) {
+        this.table = table;
+    }
+    
+    /**
+     * 
+     * @param reference
+     */
+    public final void setReference(String reference) {
+        this.reference = reference;
     }
     
     /*
@@ -148,8 +189,10 @@ class ComponentListener implements Listener {
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
     @Override
-    public void handleEvent(Event ev) {
+    public final void handleEvent(Event ev) {
+        Object object;
         Object[] results;
+        TableComponent component;
         CCombo combo = (CCombo)ev.widget;
         
         if (combo.getListVisible())
@@ -157,10 +200,29 @@ class ComponentListener implements Listener {
         
         combo.clearSelection();
         combo.removeAll();
-        results = controller.getResults(id);
         
-        for (Object object : results)
-            combo.add((String)object);
+        if (reference != null) {
+            component = table.get(reference);
+            switch (component.getType()) {
+            case EVE.combo:
+                object = ((CCombo)component.getControl(index)).getText();
+                break;
+                
+            default:
+                object = null;
+                break;
+            } 
+        } else {
+            object = null;
+        }
+        
+        results = controller.getResults(id, object);
+        
+        if (results == null)
+            return;
+        
+        for (Object object_ : results)
+            combo.add((String)object_);
     }
     
 }

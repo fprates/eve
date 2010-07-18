@@ -20,6 +20,7 @@
         <property name="sessionFactory" ref="session_factory"/>
         <property name="queries">
             <map>
+                <entry key="sel_cities" value="from City where ufkey = ?"/>
                 <entry key="sel_customer" value="from Customer where ident = ?"/>
                 <entry key="selby_customers" value="from Customer where name like ? and alternateName like ?"/>
             </map>
