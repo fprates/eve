@@ -11,6 +11,7 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -368,6 +369,7 @@ public class TableAssist implements SelectionListener {
             
             celllistener = new CellListener(editor);
             celllistener.setCol(k);
+            celllistener.setTableAssist(this);
 
             switch(component.getType()) {
             case EVE.text:
@@ -552,8 +554,7 @@ public class TableAssist implements SelectionListener {
         if (control instanceof Text)
             ((Text)control).selectAll();
         
-        control.setFocus();
-        
+        control.setFocus();        
     }
 
     /*
@@ -624,11 +625,16 @@ class CellListener implements Listener {
                 ev.doit = false;
                 break;
                 
-            case SWT.TRAVERSE_TAB_PREVIOUS:                
+            case SWT.TRAVERSE_TAB_PREVIOUS:
+                item.setText(col, getText());
+                ev.doit = false;
+                tableassist.sel(col - 1, row);
+                break;
+                
             case SWT.TRAVERSE_TAB_NEXT:
                 item.setText(col, getText());
                 ev.doit = false;
-                tableassist.sel(col, row);
+                tableassist.sel(col + 1, row);
                 break;
             }
             
@@ -659,14 +665,16 @@ class TableListener implements Listener {
         boolean visible;
         Rectangle rect;
         TableItem item;
-        Rectangle clientArea;
+        Rectangle clientarea;
         int index;
         int col;
+        Point pt;
         
         if (!editable)
             return;
         
-        clientArea = table.getClientArea();
+        clientarea = table.getClientArea();
+        pt = new Point(event.x, event.y);
         index = table.getTopIndex();
         
         while (index < table.getItemCount()) {
@@ -676,9 +684,12 @@ class TableListener implements Listener {
             for (col = 0; col < table.getColumnCount(); col++) {
                 rect = item.getBounds(col);
                 
-                tableassist.sel(col, index);
+                if (rect.contains(pt)) {
+                    tableassist.sel(col, index);
+                    return;
+                }
                 
-                if (!visible && rect.intersects(clientArea))
+                if (!visible && rect.intersects(clientarea))
                     visible = true;
             }
             
