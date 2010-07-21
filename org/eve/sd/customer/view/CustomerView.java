@@ -87,10 +87,10 @@ public class CustomerView extends AbstractView {
         ctable.setLocale(getLocale());
         ctable.setLines(4);
         ctable.putMark("contact.mark", EVE.multi);
-        ctable.put("contact.rname");
-        ctable.put("contact.funct");
-        ctable.put("contact.teln1");
-        ctable.put("contact.teln2");
+        ctable.put("contact.rname", 40);
+        ctable.put("contact.funct", 20);
+        ctable.put("contact.teln1", 12);
+        ctable.put("contact.teln2", 12);
         
         localcontainer = ctable.define(bar, controller);
         citembar = new ExpandItem(bar, SWT.NONE, 0);
