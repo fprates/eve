@@ -23,7 +23,7 @@ import org.eve.view.View;
 import org.eve.view.ViewAction;
 
 public class EveApp implements EveAPI {
-    private final static String VERSION = "1.9.6";
+    private final static String VERSION = "1.9.7";
     private GeneralListener listener;
     private ScrolledComposite scontainer;
     private Composite container;
