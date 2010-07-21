@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
 import org.eve.model.Model;
@@ -18,16 +17,13 @@ public abstract class AbstractController implements Controller {
     private EveAPI system;
     private Locale locale;
     private MessageSource messages;
-    private View currentview;
     private Map<Widget, String> widgets;
     private Map<String, Form> forms;
     private Map<String, TableAssist> tables;
     private Map<String, View> views;
-    private Map<View, MessageBar> msgbars;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
-        msgbars = new HashMap<View, MessageBar>();
     }
     
     /*
@@ -117,22 +113,8 @@ public abstract class AbstractController implements Controller {
         this.messages = messages;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#setView(org.eve.view.View)
-     */
-    @Override
-    public final void setView(View view) {
-        currentview = view;
-    }
-    
-    /**
-     * Ajusta texto da barra de mensagens
-     * @param status
-     * @param message
-     */
-    protected final void setMessage(int status, String message) {
-        msgbars.get(currentview).setMessage(status, message, locale);
+    protected final void setMessage(int status, String id) {
+        system.setMessage(status, messages.getMessage(id, null, id, locale));
     }
     
     /*
@@ -188,15 +170,6 @@ public abstract class AbstractController implements Controller {
         table.setMessages(messages);
         
         return table;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#getMessageBar()
-     */
-    @Override
-    public final MessageBar getMessageBar() {
-        return msgbars.get(currentview);
     }
 
     /*
@@ -257,17 +230,8 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final void widgetSelected(SelectionEvent ev) {        
-        msgbars.get(currentview).clear();
+        system.clearMessage();
         userInput(widgets.get(ev.getSource()));
-    }
-    
-    @Override
-    public final void initMsgBar(Composite container) {
-        MessageBar messagebar = new MessageBar(container);
-        messagebar.setMessages(messages);
-        messagebar.init();
-        
-        msgbars.put(currentview, messagebar);        
     }
     
     /**

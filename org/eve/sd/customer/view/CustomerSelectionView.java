@@ -65,7 +65,7 @@ public class CustomerSelectionView extends AbstractView {
         controller.getForm("main").clear();
         controller.getTable("customers").clear();
         
-//        setTitle("Selecionar cliente");
+        setTitlebar("customer.sel.title");
     }
 
 }

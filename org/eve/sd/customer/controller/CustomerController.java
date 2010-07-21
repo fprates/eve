@@ -30,7 +30,7 @@ public class CustomerController extends AbstractController {
         int k;
         CustomerSchedule schedule;
         
-        for (k = 0; k < 2 ; k++) {                    
+        for (k = 0; k < 2 ; k++) {
             schedule = new CustomerSchedule();
             
             schedule.setCustomer(customer);
@@ -186,7 +186,10 @@ public class CustomerController extends AbstractController {
                 loadSchedule(getTable("dschedule"), customer, 1);
                 
                 model.save(customer);
-                form.setInt("customer.ident", customer.getId());                
+                form.setInt("customer.ident", customer.getId());
+                form.setDate("customer.dtreg", customer.getRegDate());
+                form.setTime("customer.tmreg", customer.getRegTime());
+                
                 setMessage(EVE.status, "customer.save.success");
                 
                 return;

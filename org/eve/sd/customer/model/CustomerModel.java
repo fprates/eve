@@ -1,6 +1,8 @@
 package org.eve.sd.customer.model;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Calendar;
 
 import org.eve.model.AbstractModel;
 import org.eve.sd.common.Country;
@@ -84,6 +86,7 @@ public class CustomerModel extends AbstractModel {
     @Override
     @Transactional(propagation=Propagation.SUPPORTS)
     public final void save(Object object) {
+        Calendar calendar;
         int k = 0;
         Customer customer = (Customer)object;
         Session session = getSessionFactory().getCurrentSession();
@@ -93,6 +96,9 @@ public class CustomerModel extends AbstractModel {
         if (customer.getId() == 0) {
             customer.setId(getNextIdent(session, "CUSTMR"));
             session.save(customer);
+            calendar = Calendar.getInstance();
+            customer.setRegDate(calendar.getTime());
+            customer.setRegTime(new Time(calendar.getTimeInMillis()));
             
             for (CustomerContact contact : customer.getContacts()) {
                 contact.setItem(++k + (customer.getId() * 100));

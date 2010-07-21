@@ -9,8 +9,6 @@ import java.util.Map;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -27,7 +25,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.springframework.context.MessageSource;
 
-public class TableAssist implements SelectionListener {
+public class TableAssist {
     private static final int LINES = 5;
     private Map<String, TableComponent> table;
     private Map<String, String> references;
@@ -39,7 +37,6 @@ public class TableAssist implements SelectionListener {
     private boolean editable;
     private boolean insert;
     private boolean remove;
-    private TableItem[] selectedItens;
     private int lines;
     private int currentline;
     private String name;
@@ -61,6 +58,10 @@ public class TableAssist implements SelectionListener {
      * 
      */
     
+    /**
+     * 
+     * @param locale
+     */
     public final void setLocale(Locale locale) {
         this.locale = locale;
     }
@@ -134,12 +135,39 @@ public class TableAssist implements SelectionListener {
     
     /**
      * 
+     * @param row
+     * @param value
+     */
+    public final void setMarkValue(int row, boolean value) {
+        TableComponent component;
+        
+        for (String id : table.keySet()) {
+            component = table.get(id);
+            switch (component.getType()) {
+            case EVE.single:
+            case EVE.multi:
+                ((Button)component.getControl(row)).setSelection(value);
+                return;
+            }
+        }
+    }
+    
+    /**
+     * 
      * @param id
      * @param row
      * @param value
      */
     public final void setTimeValue(String id, int row, Time time) {
-        setStringValue(id, row, (time == null)?"":time.toString());
+        String value;
+        
+        if (time == null) {
+            setStringValue(id, row, "");
+            return;
+        }
+        
+        value = time.toString();
+        setStringValue(id, row, (value.equals("00:00:00"))?"":value);
     }
     
     /**
@@ -201,6 +229,12 @@ public class TableAssist implements SelectionListener {
      * 
      */
 
+    /**
+     * 
+     * @param id
+     * @param row
+     * @return
+     */
     public final String getStringValue(String id, int row) {
         TableComponent component;
         String value = null;
@@ -265,55 +299,49 @@ public class TableAssist implements SelectionListener {
      */
     public final Time getTimeValue(String id, int row) {
         String value = getStringValue(id, row);
-        
+        int len;
+            
         if (value.equals(""))
             return Time.valueOf("00:00:00");
+        
+        value = value.replace(":", "");
+        len = value.length(); 
+        if ((len % 2) != 0)
+            return null;
+        
+        if ((len != 4) && (len != 6))
+            return null;
+        
+        if (len == 4)
+            value = value.concat("00");
+        
+        value = new StringBuffer(value.substring(0, 2))
+            .append(":").append(value.substring(2, 4))
+            .append(":").append(value.substring(4, 6)).toString();
+        
+        setStringValue(id, row, value);
         
         return Time.valueOf(value);
     }
     
     /**
-     * Retorna string da linha selecionada na tabela
-     * @param id coluna
-     * @param row linha
-     * @return conteúdo string
-     */
-    public final String getSelectedStringValue(String id, int row) {
-        String value;
-        int i = 0;
-        
-        for (String id_ : table.keySet()) {
-            if (id_.equals(id)) {
-                value = selectedItens[row].getText(i);
-                return (value == null)?"" : value;
-            }
-            i++;
-        }
-        
-        return "";            
-    }
-    
-    /**
-     * Retorna inteiro da linha selecionada na tabela
-     * @param id coluna
-     * @param row linha
-     * @return conteúdo inteiro
-     */
-    public final int getSelectedIntValue(String id, int row) {
-        String value = getSelectedStringValue(id, row);
-        
-        if (value.equals(""))
-            return 0;
-        
-        return Integer.parseInt(value);
-    }
-    
-    /**
      * 
+     * @param row
      * @return
      */
-    public final int getSelectedItensSize() {
-        return (selectedItens == null)?0:selectedItens.length;
+    public final boolean getMarkValue(int row) {
+        TableComponent component;
+        
+        for (String id : table.keySet()) {
+            component = table.get(id);
+            switch (component.getType()) {
+            case EVE.single:
+            case EVE.multi:
+                return ((Button)component.getControl(row)).getSelection();
+            }
+        }
+        
+        return false;
     }
     
     /*
@@ -323,20 +351,25 @@ public class TableAssist implements SelectionListener {
      */
     
     /**
-     * Limpa conteúdo da tabela e itens selecionados
+     * Limpa conteúdo da tabela
      */
     public final void clear() {
-        if (comptable != null)
-            comptable.clearAll();
+        TableComponent component;
         
-        selectedItens = null;
-    }
-    
-    /**
-     * Limpa itens selecionados
-     */
-    public final void clearSelectedItens() {
-        selectedItens = null; 
+        if (comptable != null) {
+            comptable.clearAll();
+            for (String id : table.keySet()) {
+                component = table.get(id);
+                
+                switch (component.getType()) {
+                case EVE.single:
+                case EVE.multi:
+                    for (int k = 0; k < comptable.getItemCount(); k++)
+                        ((Button)component.getControl(k)).setSelection(false);
+                }
+                break;
+            }
+        }
     }
     
     /**
@@ -377,6 +410,7 @@ public class TableAssist implements SelectionListener {
                 editor.setEditor(button, item, k);
                 
                 component.getColumn().setWidth(button.getSize().x);
+                
                 break;
                 
             case EVE.multi:
@@ -388,7 +422,8 @@ public class TableAssist implements SelectionListener {
                 editor.horizontalAlignment = SWT.LEFT;
                 editor.setEditor(button, item, k);
                 
-                component.getColumn().setWidth(button.getSize().x);                
+                component.getColumn().setWidth(button.getSize().x);
+
                 break;
                 
             case EVE.text:
@@ -470,7 +505,10 @@ public class TableAssist implements SelectionListener {
         table.put(id, component);
     }
     
-    
+    /**
+     * 
+     * @param id
+     */
     public final void put(String id) {
         TableComponent component = new TableComponent(
                 messages.getMessage(id, null, id, locale));
@@ -497,6 +535,11 @@ public class TableAssist implements SelectionListener {
         table.put(id, component);
     }
     
+    /**
+     * 
+     * @param id
+     * @param type
+     */
     public final void putMark(String id, int type) {
         TableComponent component = new TableComponent(
                 messages.getMessage(id, null, id, locale));
@@ -534,7 +577,6 @@ public class TableAssist implements SelectionListener {
         
         comptable = new Table(area, SWT.NONE);
         comptable.setHeaderVisible(true);
-        comptable.addSelectionListener(this);
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         btins = new Button(btarea, SWT.NONE);
@@ -569,6 +611,11 @@ public class TableAssist implements SelectionListener {
         return area;
     }
     
+    /**
+     * 
+     * @param col
+     * @param row
+     */
     public final void sel(int col, int row) {
         Object[] objects = table.values().toArray();
         Control control = ((TableComponent)objects[col]).getEditor(row)
@@ -578,22 +625,6 @@ public class TableAssist implements SelectionListener {
             ((Text)control).selectAll();
         
         control.setFocus();        
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-     */
-    @Override
-    public void widgetDefaultSelected(SelectionEvent arg0) { }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-     */
-    @Override
-    public void widgetSelected(SelectionEvent ev) {        
-        selectedItens = comptable.getSelection();
     }
 }
 

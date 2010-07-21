@@ -28,16 +28,19 @@ public class CustomerSelectionController extends AbstractController {
         
         if (input.equals("customer.choose")) {
             table = getTable("customers");
+            ident = 0;
             
-            if (table.getSelectedItensSize() == 0) {
+            for (int k = 0; k < table.getItensSize(); k++) {
+                if (table.getMarkValue(k)) {
+                    ident = table.getIntValue("customer.ident", k);
+                    break;
+                }                    
+            }
+            
+            if (ident == 0) {
                 setMessage(EVE.error, "select.one");
                 return;
             }
-            
-            ident = table.getSelectedIntValue("customer.ident", 0);
-            
-            if (ident == 0)
-                return;
             
             model.load(Customer.class, ident, customer);
             
@@ -62,7 +65,7 @@ public class CustomerSelectionController extends AbstractController {
                         selporform.getStringLike("customer.aname")});
                 
                 if (customers != null) {
-                    if (customers.size() > 0) {                        
+                    if (customers.size() > 0) {
                         table = getTable("customers");
                         ident = 0;
                         
@@ -94,7 +97,7 @@ public class CustomerSelectionController extends AbstractController {
                 }
             } else {            
                 model.load(Customer.class, ident, customer);
-                if (customer != null) {                    
+                if (customer != null) {
                     if (action.equals("customer.show.sel"))
                         call("customer.show");
                     

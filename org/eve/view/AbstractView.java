@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EveAPI;
@@ -18,15 +16,13 @@ public abstract class AbstractView implements View {
     private String name;
     private MessageSource messages;
     private Locale locale;
-    private List<ViewAction> actions;
-    private List<String> buttonbarlist;
-    private Map<String, Button> buttons;
     private EveAPI system;
     private Composite container;
+    private List<ViewAction> actions;
+    private Map<String, Button> buttons;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
-        buttonbarlist = new LinkedList<String>();
         buttons = new LinkedHashMap<String, Button>();
     }
     
@@ -36,8 +32,21 @@ public abstract class AbstractView implements View {
      *  
      */
     
+    /**
+     * 
+     * @param id
+     * @param visible
+     */    
     protected final void setButtonVisible(String id, boolean visible) {
         buttons.get(id).setVisible(visible);
+    }
+    
+    /**
+     * 
+     * @param id
+     */
+    protected final void setTitlebar(String id) {
+        system.setTitleBar(messages.getMessage(id, null, id, locale));
     }
     
     /*
@@ -82,7 +91,8 @@ public abstract class AbstractView implements View {
      * 
      */
 
-    /* (non-Javadoc)
+    /*
+     *  (non-Javadoc)
      * @see org.eve.view.View#getActions()
      */
     @Override
@@ -116,10 +126,19 @@ public abstract class AbstractView implements View {
         return locale;
     }
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
     protected final String getMessage(String id) {
         return messages.getMessage(id, null, id, locale);
     }
     
+    /**
+     * 
+     * @return
+     */
     protected final Controller getController() {
         return system.getController(this);
     }
@@ -135,9 +154,13 @@ public abstract class AbstractView implements View {
      * @param id
      */
     protected final void addButton(String id) {
-        buttonbarlist.add(id);
+        system.addButton(id);
     }
     
+    /**
+     * 
+     * @param container
+     */
     protected abstract void defineView(Composite container);
     
     /*
@@ -146,27 +169,19 @@ public abstract class AbstractView implements View {
      */
     @Override
     public final void buildView(Composite container) {
-        Button button;
-        Composite buttonbar;
-        Controller controller = system.getController(this);
-        
         this.container = container;
         name = messages.getMessage("name", null, locale);
         defineView(container);
-
-        buttonbar = new Composite(container, SWT.NONE);
-        buttonbar.setLayout(new FormLayout());
-        
-        for (String id : buttonbarlist) {
-            button = new Button(buttonbar, SWT.PUSH);
-            button.setText(messages.getMessage(id, null, locale));
-            button.addSelectionListener(controller);
-            
-            controller.putWidget(button, id);
-            buttons.put(id, button);
-        }
-        
-        buttonbar.pack();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#addButtonbar(java.lang.String, org.eclipse.swt.widgets.Button)
+     */
+    @Override
+    public final void addButtonbar(String id, Button button) {
+        button.setText(messages.getMessage(id, null, id, locale));
+        buttons.put(id, button);
     }
     
     /**
@@ -175,7 +190,7 @@ public abstract class AbstractView implements View {
      */
     protected final void addAction(String id) {
         actions.add(new ViewAction(this, id,
-                messages.getMessage(id, null, locale), true));        
+                messages.getMessage(id, null, id, locale), true));
     }
     
     /**

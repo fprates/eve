@@ -49,8 +49,10 @@ public class CustomerView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.setLocale(getLocale());        
+        form.setLocale(getLocale());
         form.put("customer.ident", 12, false);
+        form.put("customer.dtreg", 10, false);
+        form.put("customer.tmreg", 8, false);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
         form.put("customer.cnpj", 18);
@@ -114,7 +116,7 @@ public class CustomerView extends AbstractView {
         atable.put("address.compl", 8);
         atable.put("address.cdend", 8);
         atable.putCombo("address.coduf", 2, null);
-        atable.putCombo("address.munic", 30, null);
+        atable.putCombo("address.munic", 40, null);
         atable.setReference("address.munic", "address.coduf");
         
         localcontainer = atable.define(bar, controller);
@@ -169,10 +171,15 @@ public class CustomerView extends AbstractView {
         sitembar.setExpanded(true);
         
         bar.pack();
+        container.pack();
         
         addButton("customer.save");
     }
     
+    /**
+     * 
+     * @param tschedule
+     */
     private final void fillPeriodColumn(TableAssist tschedule) {
         int i = 0;
         
@@ -189,6 +196,10 @@ public class CustomerView extends AbstractView {
         }        
     }
     
+    /**
+     * 
+     * @param customer
+     */
     private final void setControlLoad(Customer customer) {
         int i = 0;
         Controller controller = getController();
@@ -198,6 +209,8 @@ public class CustomerView extends AbstractView {
         TableAssist vstable = controller.getTable("vschedule");
         TableAssist dstable = controller.getTable("dschedule");
         
+        form.setDate("customer.dtreg", customer.getRegDate());
+        form.setTime("customer.tmreg", customer.getRegTime());
         form.setString("customer.aname", customer.getAlternateName());
         form.setString("customer.cnpj", customer.getCodCadFiscal());
         form.setInt("customer.ident", customer.getId());
@@ -271,7 +284,7 @@ public class CustomerView extends AbstractView {
          * Display mode component's configuration
          */
         if (action.equals("customer.show")) {
-//            setTitle("Exibir cliente");
+            setTitlebar("customer.show.title");
             setButtonVisible("customer.save", false);
             contacts.clear();
             contacts.setEditable(false);
@@ -294,7 +307,7 @@ public class CustomerView extends AbstractView {
          * Edit mode component's configuration
          */
         if (action.equals("customer.edit")) {
-//            setTitle("Editar cliente");            
+            setTitlebar("customer.edit.title");
             setButtonVisible("customer.save", true);
             contacts.clear();
             contacts.setEditable(true);
@@ -317,7 +330,7 @@ public class CustomerView extends AbstractView {
          * Creation mode component's configuration
          */
         if (action.equals("customer.create")) {            
-//            setTitle("Criar cliente");
+            setTitlebar("customer.create.title");
             setButtonVisible("customer.save", true);
             contacts.clear();
             contacts.setEditable(true);

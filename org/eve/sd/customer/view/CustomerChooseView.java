@@ -38,7 +38,8 @@ public class CustomerChooseView extends AbstractView {
      */
     @Override
     public void reload(String action) {
-        getController().setAction(action);        
+        getController().setAction(action);
+        setTitlebar("customer.sel.title");
     }
 
 }

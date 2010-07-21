@@ -38,6 +38,7 @@ public class Main extends ApplicationWindow {
         app.setSelector(selector);
         app.buildUserArea(apparea);
         app.addControllers(app.getControllers(), listener);
+        
         apparea.setWeights(new int[] {2, 8});
         
         shell.setText("Eve "+app.getVersion());

@@ -1,6 +1,9 @@
 package org.eve.view;
 
+import java.sql.Time;
+import java.text.DateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,6 +22,7 @@ public class Form {
     private Map<String, FormComponent> fields;
     private MessageSource messages;
     private Locale locale;
+    private DateFormat dateformat;
     
     public Form() {
         fields = new LinkedHashMap<String, FormComponent>();
@@ -32,6 +36,8 @@ public class Form {
     
     public final void setLocale(Locale locale) {
         this.locale = locale;
+        
+        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);        
     }
     
     /**
@@ -77,6 +83,30 @@ public class Form {
      */
     public final void setFloat(String field, float value) {
         setString(field, Float.toString(value));
+    }
+    
+    /**
+     * 
+     * @param field
+     * @param date
+     */
+    public final void setDate(String field, Date date) {        
+        if (date == null)
+            setString(field, "");
+        else 
+            setString(field, dateformat.format(date));
+    }
+    
+    /**
+     * 
+     * @param field
+     * @param time
+     */
+    public final void setTime(String field, Time time) {
+        if (time == null)
+            setString(field, "");
+        else
+            setString(field, time.toString());
     }
     
     /*
@@ -240,7 +270,7 @@ public class Form {
      */
     public final void put(String id, int length, boolean visible) {
         fields.put(id, new FormComponent(
-                messages.getMessage(id, null, locale), length, visible));        
+                messages.getMessage(id, null, id, locale), length, visible));
     }
 
     /**
