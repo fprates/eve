@@ -22,9 +22,9 @@ public class CustomerChooseView extends AbstractView {
         
         ctable.setLocale(getLocale());
         ctable.putMark("customer.mark", EVE.single);
-        ctable.put("customer.ident");
-        ctable.put("customer.name");
-        ctable.put("customer.aname");
+        ctable.put("customer.ident", 12);
+        ctable.put("customer.name", 40);
+        ctable.put("customer.aname", 40);
         
         ctable.setEditable(false);
         ctable.define(container, getController());
