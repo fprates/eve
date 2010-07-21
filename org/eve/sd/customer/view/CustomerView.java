@@ -84,6 +84,7 @@ public class CustomerView extends AbstractView {
          */
         ctable.setLocale(getLocale());
         ctable.setLines(4);
+        ctable.putMark("contact.mark", EVE.multi);
         ctable.put("contact.rname");
         ctable.put("contact.funct");
         ctable.put("contact.teln1");
@@ -102,7 +103,8 @@ public class CustomerView extends AbstractView {
          */
         atable.setLocale(getLocale());
         atable.setLines(3);
-        atable.putCombo("address.type", 10, new String[] {
+        atable.putMark("address.mark", EVE.multi);
+        atable.putCombo("address.type", 11, new String[] {
                 getMessage("address.billing"),
                 getMessage("address.delivery"),
                 getMessage("address.charging")});
@@ -112,7 +114,7 @@ public class CustomerView extends AbstractView {
         atable.put("address.compl", 8);
         atable.put("address.cdend", 8);
         atable.putCombo("address.coduf", 2, null);
-        atable.putCombo("address.munic", 40, null);
+        atable.putCombo("address.munic", 30, null);
         atable.setReference("address.munic", "address.coduf");
         
         localcontainer = atable.define(bar, controller);

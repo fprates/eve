@@ -11,8 +11,6 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -44,7 +42,6 @@ public class TableAssist implements SelectionListener {
     private TableItem[] selectedItens;
     private int lines;
     private int currentline;
-    private TableListener tablelistener;
     private String name;
     private Controller controller;
     
@@ -82,9 +79,6 @@ public class TableAssist implements SelectionListener {
      */
     public final void setEditable(boolean editable) {        
         this.editable = editable;
-        
-        if (tablelistener != null)
-            tablelistener.setEditable(editable);
         
         if (btarea != null)
             btarea.setVisible(editable);
@@ -352,6 +346,7 @@ public class TableAssist implements SelectionListener {
         String[] options;
         CCombo combo;
         Text text;
+        Button button;
         TableEditor editor;
         TableComponent component;
         int charh;
@@ -372,10 +367,33 @@ public class TableAssist implements SelectionListener {
             celllistener.setTableAssist(this);
 
             switch(component.getType()) {
+            case EVE.single:
+                button = new Button(comptable, SWT.RADIO);
+                button.setBackground(item.getBackground());
+                button.pack();
+                
+                editor.minimumWidth = button.getSize().x;
+                editor.horizontalAlignment = SWT.LEFT;
+                editor.setEditor(button, item, k);
+                
+                component.getColumn().setWidth(button.getSize().x);
+                break;
+                
+            case EVE.multi:
+                button = new Button(comptable, SWT.CHECK);
+                button.setBackground(item.getBackground());
+                button.pack();
+                
+                editor.minimumWidth = button.getSize().x;
+                editor.horizontalAlignment = SWT.LEFT;
+                editor.setEditor(button, item, k);
+                
+                component.getColumn().setWidth(button.getSize().x);                
+                break;
+                
             case EVE.text:
                 text = new Text(comptable, SWT.NONE);
                 text.setEditable(component.isEnabled());
-                text.setTextLimit(component.getLength());                
                 text.addListener (SWT.FocusOut, celllistener);
                 text.addListener (SWT.Traverse, celllistener);
                 
@@ -393,7 +411,6 @@ public class TableAssist implements SelectionListener {
             case EVE.combo:
                 combo = new CCombo(comptable, SWT.NONE);
                 combo.setEditable(component.isEnabled());
-                combo.setTextLimit(component.getLength());                
                 combo.addListener (SWT.FocusOut, celllistener);
                 combo.addListener (SWT.Traverse, celllistener);
                 
@@ -480,6 +497,16 @@ public class TableAssist implements SelectionListener {
         table.put(id, component);
     }
     
+    public final void putMark(String id, int type) {
+        TableComponent component = new TableComponent(
+                messages.getMessage(id, null, id, locale));
+        
+        component.setType(type);
+        component.setLength(1);
+        
+        table.put(id, component);
+    }
+    
     /**
      * Constrói tabela
      * @param container
@@ -510,10 +537,6 @@ public class TableAssist implements SelectionListener {
         comptable.addSelectionListener(this);
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
-        tablelistener = new TableListener(comptable);
-        tablelistener.setEditable(editable);
-        comptable.addListener(SWT.MouseDown, tablelistener);
-        
         btins = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
         btins.addSelectionListener(controller);
@@ -532,15 +555,15 @@ public class TableAssist implements SelectionListener {
             component = table.get(id);
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
-            component.setColumn(tablecol);
-//            tablecol.pack();
+            component.setColumn(tablecol);            
         }
         
-        for (k = 0; k < lines; k++)
+        for (k = 0; k < lines; k++) {
             addTableItem(controller, k);
+            comptable.pack();
+        }
         
-        this.controller = controller;
-        
+        this.controller = controller;        
         area.pack();
         
         return area;
@@ -601,8 +624,11 @@ class CellListener implements Listener {
         
         if (control instanceof Text)
             return ((Text)control).getText();
-        else
+        
+        if (control instanceof CCombo)
             return ((CCombo)control).getText();
+        else
+            return null;
     }
     
     @Override
@@ -642,63 +668,3 @@ class CellListener implements Listener {
         }
     }    
 }
-
-class TableListener implements Listener {
-    private Table table;
-    private boolean editable;
-    private TableAssist tableassist;
-    
-    public TableListener(Table table) {
-        this.table = table;
-    }
-    
-    public final void setTableAssist(TableAssist tableassist) {
-        this.tableassist = tableassist;
-    }
-    
-    public final void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-    
-    @Override
-    public void handleEvent (Event event) {
-        boolean visible;
-        Rectangle rect;
-        TableItem item;
-        Rectangle clientarea;
-        int index;
-        int col;
-        Point pt;
-        
-        if (!editable)
-            return;
-        
-        clientarea = table.getClientArea();
-        pt = new Point(event.x, event.y);
-        index = table.getTopIndex();
-        
-        while (index < table.getItemCount()) {
-            visible = false;
-            item = table.getItem(index);
-            
-            for (col = 0; col < table.getColumnCount(); col++) {
-                rect = item.getBounds(col);
-                
-                if (rect.contains(pt)) {
-                    tableassist.sel(col, index);
-                    return;
-                }
-                
-                if (!visible && rect.intersects(clientarea))
-                    visible = true;
-            }
-            
-            if (!visible)
-                return;
-            
-            index++;
-        }
-    }
-}
-
-

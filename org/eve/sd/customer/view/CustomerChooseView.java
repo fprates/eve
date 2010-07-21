@@ -3,6 +3,7 @@ package org.eve.sd.customer.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.main.EVE;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.TableAssist;
@@ -20,6 +21,7 @@ public class CustomerChooseView extends AbstractView {
         addAction("customer.edit.choose", false);
         
         ctable.setLocale(getLocale());
+        ctable.putMark("customer.mark", EVE.single);
         ctable.put("customer.ident");
         ctable.put("customer.name");
         ctable.put("customer.aname");
