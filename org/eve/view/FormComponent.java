@@ -19,6 +19,7 @@ public class FormComponent {
     private Control control;
     private int type;
     private String[] options;
+    private boolean nocase;
     
     /**
      * 
@@ -30,8 +31,8 @@ public class FormComponent {
         this.name = name;
         this.length = length;
         this.enabled = enabled;
-        type = EVE.text;
-        
+        this.nocase = false;
+        type = EVE.text;        
     }
     
     /*
@@ -47,6 +48,7 @@ public class FormComponent {
     public final String getName() {
         return name;
     }
+    
     /**
      * 
      * @return the length
@@ -112,6 +114,14 @@ public class FormComponent {
         return options[index];
     }
     
+    /**
+     * 
+     * @return
+     */
+    public final boolean isNocase() {
+        return nocase;
+    }
+    
     /*
      * 
      * Setters
@@ -173,5 +183,13 @@ public class FormComponent {
             ((Combo)control).setEnabled(enabled);
             break;
         }
+    }
+    
+    /**
+     * 
+     * @param nocase
+     */
+    public final void setNocase(boolean nocase) {
+        this.nocase = nocase;
     }
 }

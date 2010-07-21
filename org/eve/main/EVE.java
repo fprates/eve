@@ -10,4 +10,5 @@ public class EVE {
     public static final int multi = 3;
     public static final int readonly = 0x00000001b;
     public static final int invisible = 0x00000010b;
+    public static final int nocase = 0x00000100b;
 }

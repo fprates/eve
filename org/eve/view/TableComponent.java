@@ -24,6 +24,7 @@ public class TableComponent {
     private int type;
     private String[] options;
     private boolean enabled;
+    private boolean nocase;
     private int length;
     private ComponentListener complistener;
     private TableColumn column;
@@ -34,6 +35,7 @@ public class TableComponent {
         type = EVE.text;
         editors = new ArrayList<TableEditor>();        
         enabled = true;
+        nocase = false;
     }
 
     /*
@@ -69,16 +71,28 @@ public class TableComponent {
             editor.getEditor().setEnabled(enabled);
     }
     
+    /**
+     * 
+     * @param length
+     */
     public final void setLength(int length) {
         this.length = length;
     }
     
+    /**
+     * 
+     * @param column
+     */
     public final void setColumn(TableColumn column) {
         this.column = column;
     }
     
-    public final void addEditor(TableEditor editor) {
-        editors.add(editor);
+    /**
+     * 
+     * @param nocase
+     */
+    public final void setNocase(boolean nocase) {
+        this.nocase = nocase;
     }
     
     /*
@@ -86,6 +100,7 @@ public class TableComponent {
      * Getters
      * 
      */
+    
     /**
      * 
      * @return
@@ -135,12 +150,29 @@ public class TableComponent {
         return length;
     }
     
+    /**
+     * 
+     * @return
+     */
     public final TableColumn getColumn() {
         return column;
     }
     
+    /**
+     * 
+     * @param row
+     * @return
+     */
     public final TableEditor getEditor(int row) {
         return editors.get(row);
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final boolean isNocase() {
+        return nocase;
     }
     
     /*
@@ -175,6 +207,14 @@ public class TableComponent {
      */
     public final void setListenerReference(String id) {
         complistener.setReference(id);
+    }
+    
+    /**
+     * 
+     * @param editor
+     */
+    public final void addEditor(TableEditor editor) {
+        editors.add(editor);
     }
 }
 

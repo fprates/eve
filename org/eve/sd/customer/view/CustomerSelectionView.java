@@ -39,10 +39,12 @@ public class CustomerSelectionView extends AbstractView {
         addAction("customer.show.sel");
         addAction("customer.edit.sel");
         
+        form.setLocale(getLocale());
         form.put("customer.ident", 12);        
         form.define(container);
         
         selpor = new Group(container, SWT.SHADOW_IN);
+        selporform.setLocale(getLocale());
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
         selpor.setText(getMessage("customer.select.by"));
         

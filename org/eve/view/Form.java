@@ -34,6 +34,21 @@ public class Form {
      * 
      */
     
+    /**
+     * 
+     * @param upcase
+     */
+    public final void setProperties(String id, int properties) {
+        FormComponent component = fields.get(id);
+        
+        if ((properties & EVE.nocase) == EVE.nocase)
+            component.setNocase(true);
+    }
+    
+    /**
+     * 
+     * @param locale
+     */
     public final void setLocale(Locale locale) {
         this.locale = locale;
         
@@ -54,7 +69,12 @@ public class Form {
      * @param value
      */
     public final void setString(String field, String value) {
-        fields.get(field).setText((value == null)?"":value);
+        FormComponent component = fields.get(field);
+        
+        if (!component.isNocase() && value != null)
+            value = value.toUpperCase(locale);
+        
+        component.setText((value == null)? "" : value);
     }
     
     /**

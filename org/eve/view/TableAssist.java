@@ -100,6 +100,10 @@ public class TableAssist {
         for (String id_ : table.keySet())
             if (id_.equals(id)) {
                 component = table.get(id);
+                
+                if (!component.isNocase() && value != null)
+                    value = value.toUpperCase(locale);
+                
                 switch (component.getType()) {
                 case EVE.text:
                     ((Text)component.getControl(row)).setText(value);
@@ -212,6 +216,9 @@ public class TableAssist {
         
         if ((EVE.readonly & property) == EVE.readonly)
             component.setEnabled(false);
+        
+        if ((EVE.nocase & property) == EVE.nocase)
+            component.setNocase(true);
     }
     
     /**

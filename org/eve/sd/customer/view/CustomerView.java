@@ -217,14 +217,15 @@ public class CustomerView extends AbstractView {
         form.setString("customer.name", customer.getName());
         form.setInt("customer.status", customer.getStatus());
         form.setString("customer.homep", customer.getHomePage());
+        form.setProperties("customer.homep", EVE.nocase);
         form.setString("customer.email", customer.getEmail());
+        form.setProperties("customer.email", EVE.nocase);
         form.setInt("customer.tpinc", customer.getIncentive());
         form.setInt("customer.cdivf", customer.getIVF());
         form.setFloat("customer.vlipr", customer.getProductIncentiveValue());
         form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
         form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
-        form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());
-        
+        form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
         
         ctable.clear();
         for (CustomerContact contact : customer.getContacts()) {
