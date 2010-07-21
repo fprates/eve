@@ -102,17 +102,17 @@ public class CustomerView extends AbstractView {
          */
         atable.setLocale(getLocale());
         atable.setLines(3);
-        atable.putCombo("address.type", new String[] {
+        atable.putCombo("address.type", 10, new String[] {
                 getMessage("address.billing"),
                 getMessage("address.delivery"),
                 getMessage("address.charging")});
         
-        atable.put("address.logra");
-        atable.put("address.numer");
-        atable.put("address.compl");
-        atable.put("address.cdend");
-        atable.putCombo("address.coduf", null);
-        atable.putCombo("address.munic", null);
+        atable.put("address.logra", 60);
+        atable.put("address.numer", 5);
+        atable.put("address.compl", 8);
+        atable.put("address.cdend", 8);
+        atable.putCombo("address.coduf", 2, null);
+        atable.putCombo("address.munic", 40, null);
         atable.setReference("address.munic", "address.coduf");
         
         localcontainer = atable.define(bar, controller);

@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Widget;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eve.main.EVE;
 
 /**
@@ -22,14 +23,16 @@ public class TableComponent {
     private String name;
     private int type;
     private String[] options;
-    private List<Control> controls;
     private boolean enabled;
+    private int length;
     private ComponentListener complistener;
+    private TableColumn column;
+    private List<TableEditor> editors;
     
     public TableComponent(String name) {
         this.name = name;
         type = EVE.text;
-        controls = new ArrayList<Control>();
+        editors = new ArrayList<TableEditor>();        
         enabled = true;
     }
 
@@ -62,8 +65,20 @@ public class TableComponent {
     public final void setEnabled(boolean enabled) {
         this.enabled = enabled;
         
-        for (Control control : controls)
-            control.setEnabled(enabled);
+        for (TableEditor editor : editors)
+            editor.getEditor().setEnabled(enabled);
+    }
+    
+    public final void setLength(int length) {
+        this.length = length;
+    }
+    
+    public final void setColumn(TableColumn column) {
+        this.column = column;
+    }
+    
+    public final void addEditor(TableEditor editor) {
+        editors.add(editor);
     }
     
     /*
@@ -100,8 +115,8 @@ public class TableComponent {
      * @param row
      * @return
      */
-    public final Widget getControl(int row) {
-        return controls.get(row);
+    public final Control getControl(int row) {
+        return editors.get(row).getEditor();
     }
     
     /**
@@ -112,6 +127,27 @@ public class TableComponent {
         return enabled;
     }
     
+    /**
+     * 
+     * @return
+     */
+    public final int getLength() {
+        return length;
+    }
+    
+    public final TableColumn getColumn() {
+        return column;
+    }
+    
+    public final TableEditor getEditor(int row) {
+        return editors.get(row);
+    }
+    
+    /*
+     * 
+     * Others
+     * 
+     */
     /**
      * 
      * @param id
@@ -139,19 +175,6 @@ public class TableComponent {
      */
     public final void setListenerReference(String id) {
         complistener.setReference(id);
-    }
-    
-    /*
-     * 
-     * Others
-     * 
-     */
-    
-    /**
-     * 
-     */
-    public final void addControl(Control control) {
-        controls.add(control);
     }
 }
 

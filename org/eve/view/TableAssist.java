@@ -11,13 +11,13 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -43,7 +43,6 @@ public class TableAssist implements SelectionListener {
     private TableItem[] selectedItens;
     private int lines;
     private int currentline;
-    private TableEditor editor;
     private TableListener tablelistener;
     private String name;
     private Controller controller;
@@ -100,15 +99,22 @@ public class TableAssist implements SelectionListener {
      * @param value
      */
     public final void setStringValue(String id, int row, String value) {
-        int i = 0;
+        TableComponent component;
         
-        for (String id_ : table.keySet()) {
+        for (String id_ : table.keySet())
             if (id_.equals(id)) {
-                comptable.getItem(row).setText(i, value);
+                component = table.get(id);
+                switch (component.getType()) {
+                case EVE.text:
+                    ((Text)component.getControl(row)).setText(value);
+                    break;
+                    
+                case EVE.combo:
+                    ((CCombo)component.getControl(row)).setText(value);
+                    break;
+                }
                 break;
             }
-            i++;
-        }
     }
     
     /**
@@ -118,7 +124,6 @@ public class TableAssist implements SelectionListener {
      * @param value
      */
     public final void setIntValue(String id, int row, int value) {
-        CCombo combo;
         TableComponent component = table.get(id);
         
         switch (component.getType()) {
@@ -127,8 +132,8 @@ public class TableAssist implements SelectionListener {
             break;
             
         case EVE.combo:
-            combo = (CCombo)component.getControl(row);
-            combo.setText(combo.getItem(value));
+            setStringValue(id, row, component.getOptions()[value]);
+            break;
         }
     }
     
@@ -138,11 +143,8 @@ public class TableAssist implements SelectionListener {
      * @param row
      * @param value
      */
-    public final void setTimeValue(String id, int row, Time value) {
-        if (value == null)
-            value = Time.valueOf("00:00:00");
-            
-        setStringValue(id, row, value.toString());
+    public final void setTimeValue(String id, int row, Time time) {
+        setStringValue(id, row, (time == null)?"":time.toString());
     }
     
     /**
@@ -153,18 +155,35 @@ public class TableAssist implements SelectionListener {
         this.lines = lines;
     }
     
+    /**
+     * 
+     * @param insert
+     */
     public final void setInsert(boolean insert) {
         this.insert = insert;
     }
     
+    /**
+     * 
+     * @param remove
+     */
     public final void setRemove(boolean remove) {
         this.remove = remove;
     }
     
+    /**
+     * 
+     * @param name
+     */
     public final void setName(String name) {
         this.name = name;
     }
     
+    /**
+     * 
+     * @param id
+     * @param property
+     */
     public final void setColumnProperties(String id, int property) {
         TableComponent component = table.get(id);
         
@@ -172,6 +191,11 @@ public class TableAssist implements SelectionListener {
             component.setEnabled(false);
     }
     
+    /**
+     * 
+     * @param id
+     * @param idref
+     */
     public final void setReference(String id, String idref) {
         references.put(id, idref);
     }
@@ -181,23 +205,34 @@ public class TableAssist implements SelectionListener {
      * Getters
      * 
      */
-    
+
     public final String getStringValue(String id, int row) {
-        String value;
-        int i = 0;
-        TableItem item = comptable.getItem(row);
+        TableComponent component;
+        String value = null;
         
-        for (String id_ : table.keySet()) {
+        for (String id_ : table.keySet())
             if (id_.equals(id)) {
-                value = item.getText(i);
+                component = table.get(id);
+                switch (component.getType()) {
+                case EVE.combo:
+                    value = ((CCombo)component.getControl(row)).getText();
+                    break;
+                    
+                case EVE.text:
+                    value = ((Text)component.getControl(row)).getText();
+                    break;
+                }
+                
                 return (value == null)?"" : value;
             }
-            i++;
-        }
         
         return "";
     }
     
+    /**
+     * 
+     * @return
+     */
     public final int getItensSize() {
         return comptable.getItems().length;
     }
@@ -208,24 +243,18 @@ public class TableAssist implements SelectionListener {
      * @param row linha
      * @return conteúdo inteiro
      */
-    public final int getIntValue(String id, int row) throws NumberFormatException {
-        CCombo combo;
+    public final int getIntValue(String id, int row)
+        throws NumberFormatException {
         String value;
         int value_;
         
         switch (table.get(id).getType()) {
         case EVE.text:
-            value = getStringValue(id, row);
-            
-            if (value.equals(""))
-                return 0;
-            
-            return Integer.parseInt(value);
+            value = getStringValue(id, row);            
+            return (value.equals(""))? 0 : Integer.parseInt(value);
             
         case EVE.combo:
-            combo = (CCombo)table.get(id).getControl(row);
-            value_ = combo.getSelectionIndex();
-            
+            value_ = ((CCombo)table.get(id).getControl(row)).getSelectionIndex();            
             return (value_ == -1)? 0 : value_;
             
         default:            
@@ -243,7 +272,7 @@ public class TableAssist implements SelectionListener {
         String value = getStringValue(id, row);
         
         if (value.equals(""))
-            return null;
+            return Time.valueOf("00:00:00");
         
         return Time.valueOf(value);
     }
@@ -318,22 +347,61 @@ public class TableAssist implements SelectionListener {
     /**
      * Adiciona item em tabela
      */
-    private final void addTableItem(Controller controller) {
+    private final void addTableItem(Controller controller, int row) {
         String[] options;
         CCombo combo;
-        TableComponent component;
+        Text text;
         TableEditor editor;
+        TableComponent component;
+        int charh;
+        int charw;
         int k = 0;
+        CellListener celllistener = null;
         TableItem item = new TableItem(comptable, SWT.NONE);
         
         for (String id : table.keySet()) {
             component = table.get(id);
-                
+            
+            editor = new TableEditor(comptable);
+            editor.grabHorizontal = true;
+            component.addEditor(editor);
+            
+            celllistener = new CellListener(editor);
+            celllistener.setCol(k);
+
             switch(component.getType()) {
+            case EVE.text:
+                text = new Text(comptable, SWT.NONE);
+                text.setEditable(component.isEnabled());
+                text.setTextLimit(component.getLength());                
+                text.addListener (SWT.FocusOut, celllistener);
+                text.addListener (SWT.Traverse, celllistener);
+                
+                charw = ViewUtils.getCharWidth(text);
+                charh = ViewUtils.getCharHeight(text);
+                
+                text.setSize(text.computeSize(
+                        (component.getLength() * charw), charh));
+                
+                component.getColumn().setWidth(text.getSize().x);
+                editor.setEditor(text, item, k);
+                
+                break;
+                
             case EVE.combo:
                 combo = new CCombo(comptable, SWT.NONE);
                 combo.setEditable(component.isEnabled());
-                component.addControl(combo);
+                combo.setTextLimit(component.getLength());                
+                combo.addListener (SWT.FocusOut, celllistener);
+                combo.addListener (SWT.Traverse, celllistener);
+                
+                charw = ViewUtils.getCharWidth(combo);
+                charh = ViewUtils.getCharHeight(combo);
+                
+                combo.setSize(combo.computeSize(
+                        (component.getLength() * charw) + 35, charh));
+                
+                component.getColumn().setWidth(combo.getSize().x);
                 options = component.getOptions();
                 
                 /*
@@ -349,13 +417,13 @@ public class TableAssist implements SelectionListener {
                             id, controller, comptable.getItemCount() - 1));
                     component.setTableReference(table);
                     component.setListenerReference(references.get(id));
-                }                
+                }
                 
-                editor = new TableEditor(comptable);
-                editor.grabHorizontal = true;
                 editor.setEditor(combo, item, k);
+                
                 break;
             }
+            
             k++;
         }
     }
@@ -366,29 +434,46 @@ public class TableAssist implements SelectionListener {
     public final void insert() {
         currentline++;
         if (currentline > lines)
-            addTableItem(controller);
+            addTableItem(controller, currentline);
     }
     
     /**
-     * Insere coluna de campo texto
+     * 
      * @param id
+     * @param length
      */
-    public final void put(String id) {        
-        table.put(id, new TableComponent(
-                messages.getMessage(id, null, id, locale)));        
+    public final void put(String id, int length) {
+        TableComponent component = new TableComponent(
+                messages.getMessage(id, null, id, locale));
+        
+        component.setLength(length);
+        
+        table.put(id, component);
+    }
+    
+    
+    public final void put(String id) {
+        TableComponent component = new TableComponent(
+                messages.getMessage(id, null, id, locale));
+        
+        component.setLength(10);
+        
+        table.put(id, component);
     }
     
     /**
-     * Insere coluna de combo box
+     * 
      * @param id
+     * @param length
      * @param options
      */
-    public final void putCombo(String id, String[] options) {
+    public final void putCombo(String id, int length, String[] options) {
         TableComponent component = new TableComponent(
                 messages.getMessage(id, null, id, locale));
         
         component.setType(EVE.combo);
         component.setOptions(options);
+        component.setLength(length);
         
         table.put(id, component);
     }
@@ -423,12 +508,7 @@ public class TableAssist implements SelectionListener {
         comptable.addSelectionListener(this);
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
-        editor = new TableEditor(comptable);
-        editor.horizontalAlignment = SWT.LEFT;
-        editor.grabHorizontal = true;
-        
         tablelistener = new TableListener(comptable);
-        tablelistener.setTableAssist(this);
         tablelistener.setEditable(editable);
         comptable.addListener(SWT.MouseDown, tablelistener);
         
@@ -450,11 +530,12 @@ public class TableAssist implements SelectionListener {
             component = table.get(id);
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
-            tablecol.pack();
+            component.setColumn(tablecol);
+//            tablecol.pack();
         }
         
-        for (k=1; k <= lines; k++)
-            addTableItem(controller);
+        for (k = 0; k < lines; k++)
+            addTableItem(controller, k);
         
         this.controller = controller;
         
@@ -463,27 +544,15 @@ public class TableAssist implements SelectionListener {
         return area;
     }
     
-    /**
-     * Edita célula
-     * @param item
-     * @param col
-     */
-    public void cellEdit(TableItem item, int col) {
-        Text cell;
-        CellListener celllistener;
+    public final void sel(int col, int row) {
+        Object[] objects = table.values().toArray();
+        Control control = ((TableComponent)objects[col]).getEditor(row)
+            .getEditor();
         
-        cell = new Text(comptable, SWT.NONE);
-        celllistener = new CellListener(cell);
-        celllistener.setCol(col);
-        celllistener.setItem(item);
-        celllistener.setTable(this);
+        if (control instanceof Text)
+            ((Text)control).selectAll();
         
-        cell.addListener (SWT.FocusOut, celllistener);
-        cell.addListener (SWT.Traverse, celllistener);
-        editor.setEditor (cell, item, col);
-        cell.setText (item.getText(col));
-        cell.selectAll();
-        cell.setFocus();
+        control.setFocus();
         
     }
 
@@ -505,76 +574,73 @@ public class TableAssist implements SelectionListener {
 }
 
 class CellListener implements Listener {
-    private TableAssist table;
-    private TableItem item;
-    private Text text;
+    private TableEditor editor;
+    private TableAssist tableassist;
     private int col;
+    private int row;
     
-    public CellListener(Text text) {
-        this.text = text;
+    public CellListener(TableEditor editor) {
+        this.editor = editor;
     }
     
-    public final void setItem(TableItem item) {
-        this.item = item;
+    public final void setTableAssist(TableAssist tableassist) {
+        this.tableassist = tableassist;
     }
     
     public final void setCol(int col) {
         this.col = col;
     }
     
-    public final void setTable(TableAssist table) {
-        this.table = table;
+    public final void setRow(int row) {
+        this.row = row;
+    }
+    
+    private String getText() {
+        Control control = editor.getEditor();
+        
+        if (control instanceof Text)
+            return ((Text)control).getText();
+        else
+            return ((CCombo)control).getText();
     }
     
     @Override
-    public void handleEvent(Event ev) {        
+    public void handleEvent(Event ev) {
+        TableItem item = editor.getItem();
+        
         switch (ev.type) {
-            case SWT.FocusOut:
-                item.setText(col, text.getText());
-                text.dispose();
+        case SWT.FocusOut:
+            item.setText(col, getText());
+            break;
+            
+        case SWT.Traverse:
+            switch (ev.detail) {
+            case SWT.TRAVERSE_RETURN:
+                item.setText(col, getText());
+                ev.doit = false;
                 break;
                 
-            case SWT.Traverse:
-                switch (ev.detail) {
-                    case SWT.TRAVERSE_RETURN:
-                        item.setText(col, text.getText());
-                        text.dispose();
-                        ev.doit = false;
-                        break;
-                        
-                    case SWT.TRAVERSE_ESCAPE:
-                        text.dispose();
-                        ev.doit = false;
-                        break;
-                        
-                    case SWT.TRAVERSE_TAB_PREVIOUS:
-                        item.setText(col, text.getText());
-                        text.dispose();
-                        ev.doit = false;
-                        
-                        text.dispose();
-                        table.cellEdit(item, --col);
-                        break;                        
-                        
-                    case SWT.TRAVERSE_TAB_NEXT:
-                        item.setText(col, text.getText());
-                        text.dispose();
-                        ev.doit = false;
-                        
-                        text.dispose();
-                        table.cellEdit(item, ++col);
-                        break;
-                }
-                
+            case SWT.TRAVERSE_ESCAPE:
+                ev.doit = false;
                 break;
+                
+            case SWT.TRAVERSE_TAB_PREVIOUS:                
+            case SWT.TRAVERSE_TAB_NEXT:
+                item.setText(col, getText());
+                ev.doit = false;
+                tableassist.sel(col, row);
+                break;
+            }
+            
+            break;
         }
     }    
 }
 
 class TableListener implements Listener {
     private Table table;
-    private TableAssist tableassist;
     private boolean editable;
+    private TableAssist tableassist;
     
     public TableListener(Table table) {
         this.table = table;
@@ -592,29 +658,25 @@ class TableListener implements Listener {
     public void handleEvent (Event event) {
         boolean visible;
         Rectangle rect;
-        TableItem item;        
+        TableItem item;
         Rectangle clientArea;
-        Point pt;        
         int index;
+        int col;
         
         if (!editable)
             return;
         
         clientArea = table.getClientArea();
-        pt = new Point(event.x, event.y);        
         index = table.getTopIndex();
         
         while (index < table.getItemCount()) {
             visible = false;
             item = table.getItem(index);
             
-            for (int col = 0; col < table.getColumnCount(); col++) {
+            for (col = 0; col < table.getColumnCount(); col++) {
                 rect = item.getBounds(col);
                 
-                if (rect.contains(pt)) {
-                    tableassist.cellEdit(item, col);                    
-                    return;
-                }
+                tableassist.sel(col, index);
                 
                 if (!visible && rect.intersects(clientArea))
                     visible = true;
