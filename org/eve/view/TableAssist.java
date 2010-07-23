@@ -593,9 +593,9 @@ public class TableAssist {
             title.setText(messages.getMessage(name, null, name, locale));
         }
         
-        comptable = new Table(area, SWT.NONE);
+        comptable = new Table(area, SWT.BORDER);
         comptable.setHeaderVisible(true);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         for (String id : table.keySet()) {
             component = table.get(id);

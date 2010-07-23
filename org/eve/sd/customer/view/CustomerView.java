@@ -1,6 +1,7 @@
 package org.eve.sd.customer.view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -29,6 +30,7 @@ public class CustomerView extends AbstractView {
     public void defineView(Composite container) {
         ExpandItem itembar;
         Composite localcontainer;
+        Composite expandcontainer;
         ExpandBar bar;
         Composite schedule;
         TableAssist table;
@@ -39,7 +41,7 @@ public class CustomerView extends AbstractView {
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
-        container.setLayout(new GridLayout(1, false));
+        container.setLayout(new GridLayout());
         
         /*
          * Dados básicos
@@ -73,9 +75,11 @@ public class CustomerView extends AbstractView {
         
         form.define(container);
         
-        bar = new ExpandBar(container, SWT.NONE);
-        bar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        expandcontainer = new Composite(container, SWT.NONE);
+        expandcontainer.setLayout(new FillLayout());
+        expandcontainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
+        bar = new ExpandBar(expandcontainer, SWT.BORDER);
         /*
          * Contatos
          */
@@ -163,8 +167,6 @@ public class CustomerView extends AbstractView {
         itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setControl(schedule);
         itembar.setExpanded(true);
-        
-        bar.pack();
         
         addButton("customer.save");
     }

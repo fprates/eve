@@ -128,6 +128,7 @@ public class EveApp implements EveAPI {
         layout.topControl = view.getContainer();
         container.layout();
         container.pack();
+        container.setSize(scontainer.getSize().x, container.getSize().y);
         
         layout = (StackLayout)buttonbar.getLayout();
         layout.topControl = buttonmap.get(view);
