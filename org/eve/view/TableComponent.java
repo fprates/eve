@@ -216,6 +216,18 @@ public class TableComponent {
     public final void addEditor(TableEditor editor) {
         editors.add(editor);
     }
+    
+    /**
+     * 
+     */
+    public final void clear() {
+        for (TableEditor editor : editors) {
+            editor.getEditor().dispose();
+            editor.dispose();
+        }
+        
+        editors.clear();
+    }
 }
 
 class ComponentListener implements Listener {

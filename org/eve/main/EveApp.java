@@ -9,6 +9,7 @@ import java.util.Map;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -36,7 +37,6 @@ public class EveApp implements EveAPI {
     private Map<View, Controller> controlmap;
     private Map<String, View> viewmap;
     private Map<View, Composite> buttonmap;
-    
     
     public EveApp() {
         viewmap = new HashMap<String, View>();
@@ -71,7 +71,6 @@ public class EveApp implements EveAPI {
             for(String viewname: views.keySet())
                 controlmap.put(views.get(viewname), controller);
         }
-        
     }
     
     /**
@@ -192,20 +191,23 @@ public class EveApp implements EveAPI {
         Composite globalcontainer = new Composite(userarea, SWT.NONE);
         
         globalcontainer.setLayout(new GridLayout(1, false));
+        
         titlebar = new Label(globalcontainer, SWT.NONE);
-        titlebar.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
+        titlebar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
         
         scontainer = new ScrolledComposite(globalcontainer,
                 SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        scontainer.setLayout(new FillLayout());
         scontainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
-        container = new Composite(scontainer, SWT.BORDER);
+        container = new Composite(scontainer, SWT.NONE);
+        container.setLayout(new StackLayout());
         
         scontainer.setContent(container);
-        container.setLayout(new StackLayout());
         
         buttonbar = new Composite(globalcontainer, SWT.NONE);
         buttonbar.setLayout(new StackLayout());
+        buttonbar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
         messagebar = new MessageBar(globalcontainer);
     }
@@ -261,6 +263,7 @@ public class EveApp implements EveAPI {
                     subitem.setText(action.getText());
                     listener.putSelectorItem(subitem, action.getId());
                 }
+                item.setExpanded(true);
                 
                 appbuttonbar = new Composite(buttonbar, SWT.NONE);
                 appbuttonbar.setLayout(new FormLayout());
@@ -276,6 +279,6 @@ public class EveApp implements EveAPI {
                 
                 buttonmap.put(view, appbuttonbar);
             }
-        }        
+        }
     }
 }

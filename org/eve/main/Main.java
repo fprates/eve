@@ -40,9 +40,9 @@ public class Main extends ApplicationWindow {
         app.addControllers(app.getControllers(), listener);
         
         apparea.setWeights(new int[] {2, 8});
-        
+
+        parent.pack();
         shell.setText("Eve "+app.getVersion());
-        shell.pack();
         shell.setMaximized(true);
         
         return apparea;

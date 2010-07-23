@@ -361,22 +361,18 @@ public class TableAssist {
      * Limpa conteúdo da tabela
      */
     public final void clear() {
-        TableComponent component;
+        currentline = 0;
         
-        if (comptable != null) {
-            comptable.clearAll();
-            for (String id : table.keySet()) {
-                component = table.get(id);
-                
-                switch (component.getType()) {
-                case EVE.single:
-                case EVE.multi:
-                    for (int k = 0; k < comptable.getItemCount(); k++)
-                        ((Button)component.getControl(k)).setSelection(false);
-                }
-                break;
-            }
-        }
+        if (comptable == null)
+            return;
+        
+        for (String id : table.keySet())
+            table.get(id).clear();
+        
+        comptable.removeAll();
+        
+        for (int k = 0; k < lines; k++)
+            addTableItem(controller, k);
     }
     
     /**
@@ -499,7 +495,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Insere coluna campo texto
      * @param id
      * @param length
      */
@@ -513,7 +509,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Insere coluna campo texto, tamanho 10 caracteres
      * @param id
      */
     public final void put(String id) {
@@ -526,7 +522,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Insere coluna combo box
      * @param id
      * @param length
      * @param options
@@ -543,7 +539,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Insere coluna de marcação de linha
      * @param id
      * @param type
      */
@@ -568,23 +564,15 @@ public class TableAssist {
         TableComponent component;
         Button btins;
         Button btdel;
-        int k;
+        Label title;
 
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
 
         btarea = new Composite(area, SWT.NONE);
         btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
+        btarea.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
         btarea.setVisible(editable);
-        btarea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        
-        if (name != null)
-            new Label(area, SWT.NONE).setText(
-                    messages.getMessage(name, null, name, locale));
-        
-        comptable = new Table(area, SWT.NONE);
-        comptable.setHeaderVisible(true);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         btins = new Button(btarea, SWT.NONE);
         btins.setText("Novo");
@@ -600,19 +588,27 @@ public class TableAssist {
         
         btarea.pack();
         
+        if (name != null) {
+            title = new Label(area, SWT.NONE);
+            title.setText(messages.getMessage(name, null, name, locale));
+        }
+        
+        comptable = new Table(area, SWT.NONE);
+        comptable.setHeaderVisible(true);
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
         for (String id : table.keySet()) {
             component = table.get(id);
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
+            tablecol.pack();
             component.setColumn(tablecol);            
         }
         
-        for (k = 0; k < lines; k++) {
+        for (int k = 0; k < lines; k++)
             addTableItem(controller, k);
-            comptable.pack();
-        }
         
-        this.controller = controller;        
+        this.controller = controller;
         area.pack();
         
         return area;

@@ -27,18 +27,13 @@ public class CustomerView extends AbstractView {
      */
     @Override
     public void defineView(Composite container) {
-        ExpandItem citembar;
-        ExpandItem aitembar;
-        ExpandItem sitembar;
+        ExpandItem itembar;
         Composite localcontainer;
         ExpandBar bar;
         Composite schedule;
+        TableAssist table;
         Controller controller = getController();
         Form form = controller.getForm("main");
-        TableAssist ctable = controller.getTable("contacts");
-        TableAssist atable = controller.getTable("addresses");
-        TableAssist vstable = controller.getTable("vschedule");
-        TableAssist dstable = controller.getTable("dschedule");
         
         addAction("customer.create");
         addAction("customer.edit", false);
@@ -78,100 +73,98 @@ public class CustomerView extends AbstractView {
         
         form.define(container);
         
-        bar = new ExpandBar(container, SWT.V_SCROLL);
+        bar = new ExpandBar(container, SWT.NONE);
         bar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         /*
          * Contatos
          */
-        ctable.setLocale(getLocale());
-        ctable.setLines(4);
-        ctable.putMark("contact.mark", EVE.multi);
-        ctable.put("contact.rname", 40);
-        ctable.put("contact.funct", 20);
-        ctable.put("contact.teln1", 12);
-        ctable.put("contact.teln2", 12);
+        table = controller.getTable("contacts");
+        table.setLocale(getLocale());
+        table.setLines(4);
+        table.putMark("contact.mark", EVE.multi);
+        table.put("contact.rname", 40);
+        table.put("contact.funct", 20);
+        table.put("contact.teln1", 12);
+        table.put("contact.teln2", 12);
         
-        localcontainer = ctable.define(bar, controller);
-        citembar = new ExpandItem(bar, SWT.NONE, 0);
-        citembar.setText(getMessage("customer.contacts"));
-        citembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-        citembar.setControl(localcontainer);
-        citembar.setExpanded(true);
-        localcontainer.pack();
+        localcontainer = table.define(bar, controller);
+        itembar = new ExpandItem(bar, SWT.NONE, 0);
+        itembar.setText(getMessage("customer.contacts"));
+        itembar.setHeight(localcontainer.getSize().y + itembar.getHeaderHeight());
+        itembar.setControl(localcontainer);
+        itembar.setExpanded(true);
         
         /*
          * Endereços
          */
-        atable.setLocale(getLocale());
-        atable.setLines(3);
-        atable.putMark("address.mark", EVE.multi);
-        atable.putCombo("address.type", 11, new String[] {
+        table = controller.getTable("addresses");
+        table.setLocale(getLocale());
+        table.setLines(3);
+        table.putMark("address.mark", EVE.multi);
+        table.putCombo("address.type", 11, new String[] {
                 getMessage("address.billing"),
                 getMessage("address.delivery"),
                 getMessage("address.charging")});
         
-        atable.put("address.logra", 60);
-        atable.put("address.numer", 5);
-        atable.put("address.compl", 8);
-        atable.put("address.cdend", 8);
-        atable.putCombo("address.coduf", 2, null);
-        atable.putCombo("address.munic", 40, null);
-        atable.setReference("address.munic", "address.coduf");
+        table.put("address.logra", 60);
+        table.put("address.numer", 5);
+        table.put("address.compl", 8);
+        table.put("address.cdend", 8);
+        table.putCombo("address.coduf", 2, null);
+        table.putCombo("address.munic", 40, null);
+        table.setReference("address.munic", "address.coduf");
         
-        localcontainer = atable.define(bar, controller);
-        aitembar = new ExpandItem(bar, SWT.NONE, 1);
-        aitembar.setText(getMessage("customer.addresses"));
-        aitembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-        aitembar.setControl(localcontainer);
-        aitembar.setExpanded(true);
-        localcontainer.pack();
+        localcontainer = table.define(bar, controller);
+        itembar = new ExpandItem(bar, SWT.NONE, 1);
+        itembar.setText(getMessage("customer.addresses"));
+        itembar.setHeight(localcontainer.getSize().y + itembar.getHeaderHeight());
+        itembar.setControl(localcontainer);
+        itembar.setExpanded(true);
 
         /*
          * Horários
          */        
         schedule = new Composite(bar, SWT.NONE);
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
+
+        table = controller.getTable("vschedule");
+        table.setLocale(getLocale());
+        table.setLines(2);
+        table.setInsert(false);
+        table.setRemove(false);
+        table.put("schedule.per");
+        table.put("schedule.mon");
+        table.put("schedule.tue");
+        table.put("schedule.wed");
+        table.put("schedule.thu");
+        table.put("schedule.fri");
+        table.setColumnProperties("schedule.per", EVE.readonly);
+        table.setName("schedule.visit");
+        table.define(schedule, controller);        
+
+        table = controller.getTable("dschedule");
+        table.setLocale(getLocale());
+        table.setLines(2);
+        table.setInsert(false);
+        table.setRemove(false);
+        table.put("schedule.per");
+        table.put("schedule.mon");
+        table.put("schedule.tue");
+        table.put("schedule.wed");
+        table.put("schedule.thu");
+        table.put("schedule.fri");
+        table.setColumnProperties("schedule.per", EVE.readonly);
+        table.setName("schedule.delivery");
+        table.define(schedule, controller);
         
-        vstable.setLocale(getLocale());
-        vstable.setLines(2);
-        vstable.setInsert(false);
-        vstable.setRemove(false);
-        vstable.put("schedule.per");
-        vstable.put("schedule.mon");
-        vstable.put("schedule.tue");
-        vstable.put("schedule.wed");
-        vstable.put("schedule.thu");
-        vstable.put("schedule.fri");
-        vstable.setColumnProperties("schedule.per", EVE.readonly);
-        
-        vstable.setName("schedule.visit");
-        vstable.define(schedule, controller);
-        
-        
-        dstable.setLocale(getLocale());
-        dstable.setLines(2);
-        dstable.setInsert(false);
-        dstable.setRemove(false);
-        dstable.put("schedule.per");
-        dstable.put("schedule.mon");
-        dstable.put("schedule.tue");
-        dstable.put("schedule.wed");
-        dstable.put("schedule.thu");
-        dstable.put("schedule.fri");
-        dstable.setColumnProperties("schedule.per", EVE.readonly);
-        
-        dstable.setName("schedule.delivery");
-        dstable.define(schedule, controller);
-        
-        sitembar = new ExpandItem(bar, SWT.NONE, 2);
-        sitembar.setText(getMessage("customer.schedule"));
-        sitembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-        sitembar.setControl(schedule);
-        sitembar.setExpanded(true);
+        itembar = new ExpandItem(bar, SWT.NONE, 2);
+        itembar.setText(getMessage("customer.schedule"));
+        itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        itembar.setControl(schedule);
+        itembar.setExpanded(true);
         
         bar.pack();
-        container.pack();
         
         addButton("customer.save");
     }
