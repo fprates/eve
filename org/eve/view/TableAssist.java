@@ -25,6 +25,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.springframework.context.MessageSource;
 
+/**
+ * Assistente de tabela
+ * @author francisco.prates
+ *
+ */
 public class TableAssist {
     private static final int LINES = 5;
     private Map<String, TableComponent> table;
@@ -59,7 +64,7 @@ public class TableAssist {
      */
     
     /**
-     * 
+     * Define localização
      * @param locale
      */
     public final void setLocale(Locale locale) {
@@ -138,7 +143,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Define campo de seleção de itens
      * @param row
      * @param value
      */
@@ -157,7 +162,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Define valor do campo hora
      * @param id
      * @param row
      * @param value
@@ -183,7 +188,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Habilita inserção de linha
      * @param insert
      */
     public final void setInsert(boolean insert) {
@@ -191,7 +196,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Habilita remoção de linha
      * @param remove
      */
     public final void setRemove(boolean remove) {
@@ -199,7 +204,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Habilita título da tabela
      * @param name
      */
     public final void setName(String name) {
@@ -207,7 +212,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Define propriedades da coluna
      * @param id
      * @param property
      */
@@ -222,7 +227,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Define campo de referência
      * @param id
      * @param idref
      */
@@ -237,7 +242,7 @@ public class TableAssist {
      */
 
     /**
-     * 
+     * Define valor do campo string
      * @param id
      * @param row
      * @return
@@ -266,7 +271,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Retorna número de itens
      * @return
      */
     public final int getItensSize() {
@@ -274,7 +279,7 @@ public class TableAssist {
     }
     
     /**
-     * Retorna inteiro da tabela
+     * Retorna valor do campo inteiro
      * @param id coluna
      * @param row linha
      * @return conteúdo inteiro
@@ -299,7 +304,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Retorna valor do campo hora
      * @param id
      * @param row
      * @return
@@ -332,7 +337,7 @@ public class TableAssist {
     }
     
     /**
-     * 
+     * Retorna valor do campo de marcação de linha
      * @param row
      * @return
      */
@@ -372,13 +377,13 @@ public class TableAssist {
         comptable.removeAll();
         
         for (int k = 0; k < lines; k++)
-            addTableItem(controller, k);
+            addTableItem(new TableItem(comptable, SWT.NONE), controller);
     }
     
     /**
      * Adiciona item em tabela
      */
-    private final void addTableItem(Controller controller, int row) {
+    private final void addTableItem(TableItem item, Controller controller) {
         String[] options;
         CCombo combo;
         Text text;
@@ -389,7 +394,6 @@ public class TableAssist {
         int charw;
         int k = 0;
         CellListener celllistener = null;
-        TableItem item = new TableItem(comptable, SWT.NONE);
         
         for (String id : table.keySet()) {
             component = table.get(id);
@@ -491,7 +495,7 @@ public class TableAssist {
     public final void insert() {
         currentline++;
         if (currentline > lines)
-            addTableItem(controller, currentline);
+            addTableItem(new TableItem(comptable, SWT.NONE), controller);
     }
     
     /**
@@ -602,20 +606,25 @@ public class TableAssist {
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
             tablecol.pack();
-            component.setColumn(tablecol);            
+            component.setColumn(tablecol);
         }
         
         for (int k = 0; k < lines; k++)
-            addTableItem(controller, k);
+            new TableItem(comptable, SWT.NONE);
         
-        this.controller = controller;
-        area.pack();
+        /*
+         * por motivos que não conheço, não se recomenda usar TableEditor
+         * logo após TableItem. Ocorrem problemas graves de dimensionamento
+         * do controle de tabela.
+         */
+        for (TableItem item : comptable.getItems())
+            addTableItem(item, controller);
         
         return area;
     }
     
     /**
-     * 
+     * Seleciona foco do campo
      * @param col
      * @param row
      */
@@ -631,6 +640,11 @@ public class TableAssist {
     }
 }
 
+/**
+ * Listener para campos
+ * @author francisco.prates
+ *
+ */
 class CellListener implements Listener {
     private TableEditor editor;
     private TableAssist tableassist;

@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 
 /**
+ * Componente do formulário de entrada
  * @author francisco.prates
  *
  */
@@ -21,12 +22,6 @@ public class FormComponent {
     private String[] options;
     private boolean nocase;
     
-    /**
-     * 
-     * @param name
-     * @param length
-     * @param enabled
-     */
     public FormComponent(String name, int length, boolean enabled) {
         this.name = name;
         this.length = length;
@@ -42,7 +37,7 @@ public class FormComponent {
      */
     
     /**
-     * 
+     * Retorna nome
      * @return the name
      */
     public final String getName() {
@@ -50,7 +45,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna comprimento
      * @return the length
      */
     public final int getLength() {
@@ -58,7 +53,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna indicador de habilitação
      * @return
      */
     public final boolean isEnabled() {
@@ -66,7 +61,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna controle associado
      * @return
      */
     public final Control getControl() {
@@ -74,7 +69,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna lista de valores fixos
      * @return
      */
     public final String[] getOptions() {
@@ -82,7 +77,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna conteúdo
      * @return
      */
     public final String getText() {
@@ -98,7 +93,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna tipo
      * @return
      */
     public final int getType() {
@@ -106,7 +101,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna valor da lista de opções
      * @param index
      * @return
      */
@@ -115,7 +110,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Retorna indicador de sensibilidade
      * @return
      */
     public final boolean isNocase() {
@@ -129,7 +124,7 @@ public class FormComponent {
      */    
     
     /**
-     * 
+     * Ajusta controle associado
      * @param text
      */
     public final void setControl(Control control) {
@@ -137,7 +132,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Ajusta tipo
      * @param type
      */
     public final void setType(int type) {
@@ -145,7 +140,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Define valores fixos
      * @param options
      */
     public final void setOptions(String[] options) {
@@ -153,7 +148,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Ajusta valor do campo
      * @param text
      */
     public final void setText(String text) {
@@ -170,7 +165,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Ajusta indicador de habilitação
      * @param enabled
      */
     public final void setEnabled(boolean enabled) {
@@ -186,7 +181,7 @@ public class FormComponent {
     }
     
     /**
-     * 
+     * Ajusta indicador de sensibilidade
      * @param nocase
      */
     public final void setNocase(boolean nocase) {

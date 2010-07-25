@@ -3,6 +3,11 @@ package org.eve.view;
 import org.eclipse.swt.graphics.Drawable;
 import org.eclipse.swt.graphics.GC;
 
+/**
+ * Utilitários para visão
+ * @author francisco.prates
+ *
+ */
 public class ViewUtils {
     
     /**

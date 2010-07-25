@@ -18,6 +18,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.springframework.context.MessageSource;
 
+/**
+ * Assistente para formulário de entrada
+ * @author francisco.prates
+ *
+ */
 public class Form {
     private Map<String, FormComponent> fields;
     private MessageSource messages;
@@ -35,8 +40,9 @@ public class Form {
      */
     
     /**
-     * 
-     * @param upcase
+     * Defie propriedades do campo
+     * @param id
+     * @param properties
      */
     public final void setProperties(String id, int properties) {
         FormComponent component = fields.get(id);
@@ -46,7 +52,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Define localização
      * @param locale
      */
     public final void setLocale(Locale locale) {
@@ -97,7 +103,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Ajusta valor de ponto flutuante para campo
      * @param field
      * @param value
      */
@@ -106,7 +112,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Ajusta valor data para campo
      * @param field
      * @param date
      */
@@ -118,7 +124,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Ajusta valor hora para campo
      * @param field
      * @param time
      */
@@ -136,7 +142,7 @@ public class Form {
      */
     
     /**
-     * 
+     * Retorna componente de formulário
      * @param id
      * @return
      */
@@ -189,7 +195,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Retorna valor de ponto flutuante de um campo
      * @param field
      * @return
      */
@@ -283,7 +289,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Insere campo com definição de comprimento e visibilidade
      * @param id
      * @param length
      * @param visible
@@ -294,7 +300,7 @@ public class Form {
     }
 
     /**
-     * 
+     * Insere campo com definição de comprimento
      * @param id
      * @param length
      */
@@ -304,7 +310,7 @@ public class Form {
     }
     
     /**
-     * 
+     * Insere combobox
      * @param id
      * @param options
      * @param length

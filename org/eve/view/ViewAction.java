@@ -4,6 +4,7 @@
 package org.eve.view;
 
 /**
+ * Ação para visão
  * @author francisco.prates
  *
  */
@@ -13,9 +14,6 @@ public class ViewAction {
     private String text;
     private boolean visible;
     
-    /**
-     * 
-     */
     public ViewAction(View view, String id, String text, boolean visible) {
         this.id = id;
         this.view = view;
@@ -24,28 +22,28 @@ public class ViewAction {
     }
 
     /**
-     * @return the view
+     * @return visão
      */
     public final View getView() {
         return view;
     }
 
     /**
-     * @return the text
+     * @return título
      */
     public final String getText() {
         return text;
     }
 
     /**
-     * @return the id
+     * @return identificador
      */
     public final String getId() {
         return id;
     }
 
     /**
-     * @return the visible
+     * @return indicador de visibilidade
      */
     public final boolean isVisible() {
         return visible;

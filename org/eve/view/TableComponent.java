@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eve.main.EVE;
 
 /**
+ * Componente do assistente de tabela
  * @author francisco.prates
  *
  */
@@ -45,7 +46,7 @@ public class TableComponent {
      */
 
     /**
-     * 
+     * Define tipo
      * @param type
      */
     public final void setType(int type) {
@@ -53,7 +54,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Define valores fixos
      * @param options
      */
     public final void setOptions(String[] options) {
@@ -61,7 +62,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Define permissão para edição
      * @param editable
      */
     public final void setEnabled(boolean enabled) {
@@ -72,7 +73,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Define largura
      * @param length
      */
     public final void setLength(int length) {
@@ -80,7 +81,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Define coluna do componente Table
      * @param column
      */
     public final void setColumn(TableColumn column) {
@@ -88,11 +89,27 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Define sensibilidade para maiúscula/minuscula
      * @param nocase
      */
     public final void setNocase(boolean nocase) {
         this.nocase = nocase;
+    }
+    
+    /**
+     * Define campos de referência 
+     * @param table
+     */
+    public final void setTableReference(Map<String, TableComponent> table) {
+        complistener.setTableReference(table);
+    }
+    
+    /**
+     * Define campo de referência
+     * @param id
+     */
+    public final void setListenerReference(String id) {
+        complistener.setReference(id);
     }
     
     /*
@@ -102,7 +119,7 @@ public class TableComponent {
      */
     
     /**
-     * 
+     * Retorna título
      * @return
      */
     public final String getName() {
@@ -110,7 +127,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna tipo
      * @return
      */
     public final int getType() {
@@ -118,7 +135,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna valores fixos
      * @return
      */
     public final String[] getOptions() {
@@ -126,7 +143,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna componente gráfico
      * @param row
      * @return
      */
@@ -135,7 +152,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna indicador de habilitação
      * @return
      */
     public final boolean isEnabled() {
@@ -143,7 +160,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna comprimento
      * @return
      */
     public final int getLength() {
@@ -151,7 +168,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna componente do Table
      * @return
      */
     public final TableColumn getColumn() {
@@ -159,7 +176,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna componente editor
      * @param row
      * @return
      */
@@ -168,7 +185,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Retorna indicador de sensibilidade
      * @return
      */
     public final boolean isNocase() {
@@ -180,8 +197,9 @@ public class TableComponent {
      * Others
      * 
      */
+    
     /**
-     * 
+     * gera listener de campos
      * @param id
      * @param controller
      * @param table
@@ -194,23 +212,7 @@ public class TableComponent {
     }
     
     /**
-     * 
-     * @param table
-     */
-    public final void setTableReference(Map<String, TableComponent> table) {
-        complistener.setTableReference(table);
-    }
-    
-    /**
-     * 
-     * @param id
-     */
-    public final void setListenerReference(String id) {
-        complistener.setReference(id);
-    }
-    
-    /**
-     * 
+     * Adiciona editor
      * @param editor
      */
     public final void addEditor(TableEditor editor) {
@@ -218,7 +220,7 @@ public class TableComponent {
     }
     
     /**
-     * 
+     * Limpa campos da coluna
      */
     public final void clear() {
         for (TableEditor editor : editors) {

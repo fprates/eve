@@ -1,7 +1,6 @@
 package org.eve.sd.customer.view;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -30,18 +29,18 @@ public class CustomerView extends AbstractView {
     public void defineView(Composite container) {
         ExpandItem itembar;
         Composite localcontainer;
-        Composite expandcontainer;
         ExpandBar bar;
         Composite schedule;
         TableAssist table;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
+        setWidth(1260);
         addAction("customer.create");
         addAction("customer.edit", false);
         addAction("customer.show", false);
         
-        container.setLayout(new GridLayout());
+        container.setLayout(new GridLayout(1, false));
         
         /*
          * Dados básicos
@@ -75,11 +74,9 @@ public class CustomerView extends AbstractView {
         
         form.define(container);
         
-        expandcontainer = new Composite(container, SWT.NONE);
-        expandcontainer.setLayout(new FillLayout());
-        expandcontainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        bar = new ExpandBar(container, SWT.NONE);
+        bar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
-        bar = new ExpandBar(expandcontainer, SWT.BORDER);
         /*
          * Contatos
          */
@@ -95,8 +92,8 @@ public class CustomerView extends AbstractView {
         localcontainer = table.define(bar, controller);
         itembar = new ExpandItem(bar, SWT.NONE, 0);
         itembar.setText(getMessage("customer.contacts"));
-        itembar.setHeight(localcontainer.getSize().y + itembar.getHeaderHeight());
         itembar.setControl(localcontainer);
+        itembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setExpanded(true);
         
         /*
@@ -122,8 +119,8 @@ public class CustomerView extends AbstractView {
         localcontainer = table.define(bar, controller);
         itembar = new ExpandItem(bar, SWT.NONE, 1);
         itembar.setText(getMessage("customer.addresses"));
-        itembar.setHeight(localcontainer.getSize().y + itembar.getHeaderHeight());
         itembar.setControl(localcontainer);
+        itembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setExpanded(true);
 
         /*
@@ -164,8 +161,8 @@ public class CustomerView extends AbstractView {
         
         itembar = new ExpandItem(bar, SWT.NONE, 2);
         itembar.setText(getMessage("customer.schedule"));
-        itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setControl(schedule);
+        itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setExpanded(true);
         
         addButton("customer.save");

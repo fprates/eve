@@ -7,6 +7,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eve.main.EVE;
 
+/**
+ * Barra de mensagens
+ * @author francisco.prates
+ *
+ */
 public class MessageBar {
     private Label msgtxt;
     

@@ -9,6 +9,11 @@ import org.eve.main.EveAPI;
 import org.eve.model.Model;
 import org.springframework.context.MessageSource;
 
+/**
+ * Interface do controlador
+ * @author francisco.prates
+ *
+ */
 public interface Controller extends SelectionListener {
 
     /*

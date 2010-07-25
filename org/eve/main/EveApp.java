@@ -51,13 +51,17 @@ public class EveApp implements EveAPI {
      * 
      */
     
+    /**
+     * Define listeners
+     * @param listener
+     */
     public final void setListener(GeneralListener listener) {
         this.listener = listener;
         this.listener.setSystem(this);
     }
     
     /**
-     * 
+     * Define controladores
      * @param controllers
      */
     public final void setControllers(List<Controller> controllers) {
@@ -74,7 +78,7 @@ public class EveApp implements EveAPI {
     }
     
     /**
-     * 
+     * Define seletor
      * @param selector
      */
     public final void setSelector(Tree selector) {
@@ -87,6 +91,10 @@ public class EveApp implements EveAPI {
      * 
      */
     
+    /**
+     * Retorna controladores
+     * @return
+     */
     public final List<Controller> getControllers() {
         return controllers;
     }
@@ -113,8 +121,13 @@ public class EveApp implements EveAPI {
      * 
      */
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.main.EveAPI#call(java.lang.String)
+     */
     @Override
     public final void call(String action) {
+        int width;
         StackLayout layout;
         View view = viewmap.get(action);
         
@@ -128,7 +141,10 @@ public class EveApp implements EveAPI {
         layout.topControl = view.getContainer();
         container.layout();
         container.pack();
-        container.setSize(scontainer.getSize().x, container.getSize().y);
+        
+        width = view.getWidth();
+        if (width > 0)
+            container.setSize(width, container.getSize().y);
         
         layout = (StackLayout)buttonbar.getLayout();
         layout.topControl = buttonmap.get(view);
@@ -185,7 +201,7 @@ public class EveApp implements EveAPI {
     }
     
     /**
-     * 
+     * Constrói conteineres da aplicação
      * @param container
      */
     public final void buildUserArea(Composite userarea) {
@@ -218,7 +234,9 @@ public class EveApp implements EveAPI {
      * @param lviews
      * @param listener
      */
-    public void addControllers(List<Controller> lcontrollers, GeneralListener listener) {
+    public void addControllers(List<Controller> lcontrollers,
+            GeneralListener listener) {
+        
         Button button;
         TreeItem item;
         TreeItem subitem;

@@ -10,6 +10,11 @@ import org.eve.main.EveAPI;
 import org.eve.model.Model;
 import org.springframework.context.MessageSource;
 
+/**
+ * Implementação parcial de controlador
+ * @author francisco.prates
+ *
+ */
 public abstract class AbstractController implements Controller {
     private Object object;
     private String action;
@@ -31,6 +36,15 @@ public abstract class AbstractController implements Controller {
      * Setters
      * 
      */
+    
+    /**
+     * Ajusta mensagem
+     * @param status
+     * @param id
+     */
+    protected final void setMessage(int status, String id) {
+        system.setMessage(status, messages.getMessage(id, null, id, locale));
+    }
     
     /*
      * (non-Javadoc)
@@ -111,10 +125,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
-    }
-    
-    protected final void setMessage(int status, String id) {
-        system.setMessage(status, messages.getMessage(id, null, id, locale));
     }
     
     /*
@@ -205,6 +215,18 @@ public abstract class AbstractController implements Controller {
      * 
      */
     
+    /**
+     * Chamada à visão
+     * @param action
+     */
+    protected void call(String action) {
+        system.call(action);
+    }
+    
+    /**
+     * Processamento de eventos do usuário
+     * @param input
+     */
     public abstract void userInput(String input);
 
     /*
@@ -232,13 +254,5 @@ public abstract class AbstractController implements Controller {
     public final void widgetSelected(SelectionEvent ev) {        
         system.clearMessage();
         userInput(widgets.get(ev.getSource()));
-    }
-    
-    /**
-     * Chamada à visão
-     * @param action
-     */
-    protected void call(String action) {
-        system.call(action);
     }
 }

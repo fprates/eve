@@ -12,6 +12,11 @@ import org.eve.main.EveAPI;
 import org.eve.view.ViewAction;
 import org.springframework.context.MessageSource;
 
+/**
+ * Implementação parcial de visão
+ * @author francisco.prates
+ *
+ */
 public abstract class AbstractView implements View {
     private String name;
     private MessageSource messages;
@@ -20,10 +25,12 @@ public abstract class AbstractView implements View {
     private Composite container;
     private List<ViewAction> actions;
     private Map<String, Button> buttons;
+    private int width;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
         buttons = new LinkedHashMap<String, Button>();
+        width = 0;
     }
     
     /*
@@ -33,7 +40,7 @@ public abstract class AbstractView implements View {
      */
     
     /**
-     * 
+     * Ajusta flag de visibilidade para botão
      * @param id
      * @param visible
      */    
@@ -42,11 +49,27 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Ajusta título
      * @param id
      */
     protected final void setTitlebar(String id) {
         system.setTitleBar(messages.getMessage(id, null, id, locale));
+    }
+    
+    /**
+     * Ajusta largura
+     * @param width
+     */
+    protected final void setWidth(int width) {
+        this.width = width;
+    }
+    
+    /**
+     * Ajusta identificador da visão
+     * @param name
+     */
+    protected final void setName(String name) {
+        this.name = name;
     }
     
     /*
@@ -77,19 +100,36 @@ public abstract class AbstractView implements View {
         this.system = system;
     }
     
-    /**
-     * Ajusta nome da visão
-     * @param name
-     */
-    protected final void setName(String name) {
-        this.name = name;
-    }
-    
     /*
      * 
      * Getters
      * 
      */
+    
+    /**
+     * Retorna a localização atual
+     * @return
+     */
+    protected final Locale getLocale() {
+        return locale;
+    }
+    
+    /**
+     * Retorna mensagem
+     * @param id
+     * @return
+     */
+    protected final String getMessage(String id) {
+        return messages.getMessage(id, null, id, locale);
+    }
+    
+    /**
+     * Retorna controlador associado
+     * @return
+     */
+    protected final Controller getController() {
+        return system.getController(this);
+    }
 
     /*
      *  (non-Javadoc)
@@ -118,29 +158,13 @@ public abstract class AbstractView implements View {
         return container;
     }
     
-    /**
-     * Retorna a localização atual
-     * @return
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#getWidth()
      */
-    protected final Locale getLocale() {
-        return locale;
-    }
-    
-    /**
-     * 
-     * @param id
-     * @return
-     */
-    protected final String getMessage(String id) {
-        return messages.getMessage(id, null, id, locale);
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    protected final Controller getController() {
-        return system.getController(this);
+    @Override
+    public final int getWidth() {
+        return width;
     }
     
     /*
@@ -158,7 +182,26 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Adiciona ação à visão
+     * @param id
+     */
+    protected final void addAction(String id) {
+        actions.add(new ViewAction(this, id,
+                messages.getMessage(id, null, id, locale), true));
+    }
+    
+    /**
+     * Adiciona ação à visão
+     * @param id
+     * @param visible
+     */
+    protected final void addAction(String id, boolean visible) {
+        actions.add(new ViewAction(this, id,
+                messages.getMessage(id, null, locale), visible));
+    }
+    
+    /**
+     * Processamento da visao do usuário
      * @param container
      */
     protected abstract void defineView(Composite container);
@@ -182,24 +225,5 @@ public abstract class AbstractView implements View {
     public final void addButtonbar(String id, Button button) {
         button.setText(messages.getMessage(id, null, id, locale));
         buttons.put(id, button);
-    }
-    
-    /**
-     * Adiciona ação à visão
-     * @param id
-     */
-    protected final void addAction(String id) {
-        actions.add(new ViewAction(this, id,
-                messages.getMessage(id, null, id, locale), true));
-    }
-    
-    /**
-     * Adiciona ação à visão
-     * @param id
-     * @param visible
-     */
-    protected final void addAction(String id, boolean visible) {
-        actions.add(new ViewAction(this, id,
-                messages.getMessage(id, null, locale), visible));
     }
 }

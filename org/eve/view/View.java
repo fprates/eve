@@ -9,6 +9,11 @@ import org.eve.main.EveAPI;
 import org.eve.view.ViewAction;
 import org.springframework.context.MessageSource;
 
+/**
+ * Interface para visão
+ * @author francisco.prates
+ *
+ */
 public interface View {
     
     /*
@@ -30,6 +35,8 @@ public interface View {
     public abstract String getName();
     
     public abstract Composite getContainer();
+    
+    public abstract int getWidth();
     
     /*
      * Others
