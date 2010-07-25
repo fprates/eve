@@ -599,7 +599,7 @@ public class TableAssist {
         
         comptable = new Table(area, SWT.BORDER);
         comptable.setHeaderVisible(true);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         for (String id : table.keySet()) {
             component = table.get(id);

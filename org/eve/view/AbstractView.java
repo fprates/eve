@@ -26,11 +26,13 @@ public abstract class AbstractView implements View {
     private List<ViewAction> actions;
     private Map<String, Button> buttons;
     private int width;
+    private int height;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
         buttons = new LinkedHashMap<String, Button>();
         width = 0;
+        height = 0;
     }
     
     /*
@@ -57,11 +59,19 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * Ajusta largura
+     * Ajusta largura do container da aplicação
      * @param width
      */
     protected final void setWidth(int width) {
         this.width = width;
+    }
+    
+    /**
+     * Ajusta altura do container da aplicação
+     * @param height
+     */
+    protected final void setHeight(int height) {
+        this.height = height;
     }
     
     /**
@@ -165,6 +175,15 @@ public abstract class AbstractView implements View {
     @Override
     public final int getWidth() {
         return width;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#getHeight()
+     */
+    @Override
+    public final int getHeight() {
+        return height;
     }
     
     /*

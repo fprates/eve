@@ -38,6 +38,8 @@ public interface View {
     
     public abstract int getWidth();
     
+    public abstract int getHeight();
+    
     /*
      * Others
      */

@@ -128,6 +128,7 @@ public class EveApp implements EveAPI {
     @Override
     public final void call(String action) {
         int width;
+        int height;
         StackLayout layout;
         View view = viewmap.get(action);
         
@@ -145,6 +146,10 @@ public class EveApp implements EveAPI {
         width = view.getWidth();
         if (width > 0)
             container.setSize(width, container.getSize().y);
+
+        height = view.getHeight();
+        if (height > 0)
+            container.setSize(container.getSize().x, height);
         
         layout = (StackLayout)buttonbar.getLayout();
         layout.topControl = buttonmap.get(view);
