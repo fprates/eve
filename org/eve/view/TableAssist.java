@@ -570,6 +570,8 @@ public class TableAssist {
         Button btdel;
         Label title;
 
+        this.controller = controller;
+        
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
 
