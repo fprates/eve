@@ -233,6 +233,7 @@ public class TableComponent {
 }
 
 class ComponentListener implements Listener {
+    private Object object;
     private int index;
     private String id;
     private Controller controller;
@@ -241,6 +242,7 @@ class ComponentListener implements Listener {
     private Map<Object, String> results;
     
     public ComponentListener(String id, Controller controller, int index) {
+        object = null;
         this.id = id;
         this.controller = controller;
         this.index = index;
@@ -268,29 +270,28 @@ class ComponentListener implements Listener {
      */
     @Override
     public final void handleEvent(Event ev) {
-        Object object;
+        Object object_;
         TableComponent component;
         CCombo combo = (CCombo)ev.widget;
         
-        if (combo.getListVisible() || combo.getItems().length > 0)
+        if (combo.getListVisible())
             return;
-        
-        combo.clearSelection();
-        combo.removeAll();
         
         if (reference != null) {
             component = table.get(reference);
             switch (component.getType()) {
             case EVE.combo:
-                object = ((CCombo)component.getControl(index)).getText();
+                object_ = ((CCombo)component.getControl(index)).getText();
+                
+                if (object_ == null || object_.equals(object))
+                    return;
+                
+                object = object_;
                 break;
                 
             default:
-                object = null;
-                break;
-            } 
-        } else {
-            object = null;
+                return;
+            }
         }
         
         results = controller.getResults(id, object);
@@ -298,7 +299,8 @@ class ComponentListener implements Listener {
         if (results == null)
             return;
         
-        for (Object object_ : results.keySet())
-            combo.add(results.get(object_));
+        combo.removeAll();
+        for (Object value : results.keySet())
+            combo.add(results.get(value));
     }    
 }

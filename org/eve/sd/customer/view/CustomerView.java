@@ -238,15 +238,17 @@ public class CustomerView extends AbstractView {
             
             munic = address.getMunicipio();
             results = controller.getResults("address.munic", address.getEstado());
-            for (Object object : results.keySet()) {
-                munic_ = (Integer)object;
-                if (!(munic_ == munic))
-                    continue;
-                
-                atable.setStringValue("address.munic", i, results.get(object));
-                break;
+            if (results != null) {
+                for (Object object : results.keySet()) {
+                    munic_ = (Integer)object;
+                    if (!(munic_ == munic))
+                        continue;
+                    
+                    atable.setStringValue("address.munic", i, results.get(object));
+                    break;
+                }
+                i++;
             }
-            i++;
         }
         
         fillPeriodColumn(vstable);
