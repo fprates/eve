@@ -238,6 +238,7 @@ class ComponentListener implements Listener {
     private Controller controller;
     private String reference;
     private Map<String, TableComponent> table;
+    private Map<Object, String> results;
     
     public ComponentListener(String id, Controller controller, int index) {
         this.id = id;
@@ -268,11 +269,10 @@ class ComponentListener implements Listener {
     @Override
     public final void handleEvent(Event ev) {
         Object object;
-        Object[] results;
         TableComponent component;
         CCombo combo = (CCombo)ev.widget;
         
-        if (combo.getListVisible())
+        if (combo.getListVisible() || combo.getItems().length > 0)
             return;
         
         combo.clearSelection();
@@ -298,8 +298,7 @@ class ComponentListener implements Listener {
         if (results == null)
             return;
         
-        for (Object object_ : results)
-            combo.add((String)object_);
-    }
-    
+        for (Object object_ : results.keySet())
+            combo.add(results.get(object_));
+    }    
 }

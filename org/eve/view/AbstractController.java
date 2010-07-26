@@ -166,6 +166,8 @@ public abstract class AbstractController implements Controller {
     public final Form getForm(String formname) {
         Form form = forms.get(formname);
         form.setMessages(messages);
+        form.setLocale(locale);
+        form.setSystem(system);
         
         return form;
     }
@@ -178,6 +180,7 @@ public abstract class AbstractController implements Controller {
     public final TableAssist getTable(String tablename) {
         TableAssist table = tables.get(tablename);
         table.setMessages(messages);
+        table.setLocale(locale);
         
         return table;
     }
@@ -205,7 +208,7 @@ public abstract class AbstractController implements Controller {
      * @see org.eve.view.Controller#getResults(java.lang.String, java.lang.Object)
      */
     @Override
-    public Object[] getResults(String id, Object object) {
+    public Map<Object, String> getResults(String id, Object object) {
         return null;
     }
     

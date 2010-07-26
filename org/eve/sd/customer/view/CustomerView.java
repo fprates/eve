@@ -1,5 +1,7 @@
 package org.eve.sd.customer.view;
 
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -45,7 +47,6 @@ public class CustomerView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.setLocale(getLocale());
         form.put("customer.ident", 12, false);
         form.put("customer.dtreg", 10, false);
         form.put("customer.tmreg", 8, false);
@@ -81,7 +82,6 @@ public class CustomerView extends AbstractView {
          * Contatos
          */
         table = controller.getTable("contacts");
-        table.setLocale(getLocale());
         table.setLines(4);
         table.putMark("contact.mark", EVE.multi);
         table.put("contact.rname", 40);
@@ -193,6 +193,9 @@ public class CustomerView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Customer customer) {
+        int munic;
+        int munic_;
+        Map<Object, String> results;
         int i = 0;
         Controller controller = getController();
         Form form = controller.getForm("main");
@@ -228,7 +231,22 @@ public class CustomerView extends AbstractView {
         i = 0;
         for (CustomerAddress address : customer.getAddresses()) {
             atable.setStringValue("address.logra", i, address.getAddress());
-            atable.setIntValue("address.numer", i++, address.getNumber());
+            atable.setIntValue("address.numer", i, address.getNumber());
+            atable.setStringValue("address.compl", i, address.getComplemento());
+            atable.setStringValue("address.cdend", i, address.getCEP());
+            atable.setStringValue("address.coduf", i, address.getEstado());
+            
+            munic = address.getMunicipio();
+            results = controller.getResults("address.munic", address.getEstado());
+            for (Object object : results.keySet()) {
+                munic_ = (Integer)object;
+                if (!(munic_ == munic))
+                    continue;
+                
+                atable.setStringValue("address.munic", i, results.get(object));
+                break;
+            }
+            i++;
         }
         
         fillPeriodColumn(vstable);

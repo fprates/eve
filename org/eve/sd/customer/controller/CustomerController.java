@@ -1,6 +1,7 @@
 package org.eve.sd.customer.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
+import org.hibernate.HibernateException;
 
 public class CustomerController extends AbstractController {
     private Country country;
@@ -26,11 +28,16 @@ public class CustomerController extends AbstractController {
         cities = new HashMap<String, List<?>>();
     }
     
+    /**
+     * 
+     * @param tschedule
+     * @param customer
+     * @param i
+     */
     private final void loadSchedule(TableAssist tschedule, Customer customer, int i) {
-        int k;
         CustomerSchedule schedule;
         
-        for (k = 0; k < 2 ; k++) {
+        for (int k = 0; k < 2 ; k++) {
             schedule = new CustomerSchedule();
             
             schedule.setCustomer(customer);
@@ -46,11 +53,16 @@ public class CustomerController extends AbstractController {
         }
     }
     
-    public final Object[] getResults(String id, Object object) {
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractController#getResults(java.lang.String, java.lang.Object)
+     */
+    @Override
+    public final Map<Object, String> getResults(String id, Object object) {
         int size;
         String ufkey;
-        Object[] objects;
         List<?> results;
+        Map<Object, String> results_;
         City city;
         Model model = getModel();
         
@@ -64,12 +76,12 @@ public class CustomerController extends AbstractController {
             if (size == 0)
                 return null;
             
-            objects = new Object[size];
+            results_ = new LinkedHashMap<Object, String>();
             size = 0;
             for (State state : country.getStates())
-                objects[size++] = state.getIdent();
+                results_.put(state.getIdent(), state.getIdent());
             
-            return objects;
+            return results_;
         }
         
         if (id.equals("address.munic")) {
@@ -92,15 +104,12 @@ public class CustomerController extends AbstractController {
             if (size == 0)
                 return null;
             
-            objects = new Object[size];
-            size = 0;
+            results_ = new LinkedHashMap<Object, String>();
             for (Object object_ : results) {
                 city = (City)object_;
-                objects[size++] = new StringBuffer(city.getIdent())
-                    .append(" ").append(city.getName()).toString();
+                results_.put(city.getIdent(), city.getName());
             }
-            
-            return objects;
+            return results_;
         }
         
         return null;
@@ -108,10 +117,12 @@ public class CustomerController extends AbstractController {
     
     @Override
     public final void userInput(String input) {
-        int k;
+        String ufkey;
         String name;
         CustomerContact contact;
         CustomerAddress address;
+        City city;
+        List<?> results;
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
@@ -141,7 +152,7 @@ public class CustomerController extends AbstractController {
                  * inclui contatos
                  */
                 customer.getContacts().clear();
-                for (k = 0; k < contacts.getItensSize(); k++) {
+                for (int k = 0; k < contacts.getItensSize(); k++) {
                     name = contacts.getStringValue("contact.rname", k);
                     
                     if (name.equals(""))
@@ -161,7 +172,7 @@ public class CustomerController extends AbstractController {
                  * inclui endereços
                  */
                 customer.getAddresses().clear();
-                for (k = 0; k < addresses.getItensSize(); k++) {
+                for (int k = 0; k < addresses.getItensSize(); k++) {
                     name = addresses.getStringValue("address.logra", k);
                     
                     if (name.equals(""))
@@ -174,6 +185,24 @@ public class CustomerController extends AbstractController {
                     address.setType(addresses.getIntValue("address.type", k));
                     address.setAddress(name);
                     address.setNumber(addresses.getIntValue("address.numer", k));
+                    address.setEstado(addresses.getStringValue("address.coduf", k));
+
+                    ufkey = "BRA"+address.getEstado();
+                    results = cities.get(ufkey);
+                    if (results == null) {
+                        results = model.select("sel_cities", new Object[] {ufkey});
+                        cities.put(ufkey, results);
+                    }
+
+                    name = addresses.getStringValue("address.munic", k);
+                    for (Object object : results) {
+                        city = (City)object;
+                        if (!city.getName().equals(name))
+                            continue;
+                        
+                        address.setMunicipio(city.getIdent());
+                        break;
+                    }
                     
                     customer.getAddresses().add(address);
                 }
@@ -193,9 +222,11 @@ public class CustomerController extends AbstractController {
                 setMessage(EVE.status, "customer.save.success");
                 
                 return;
-            } catch (Exception ev) {                
+            } catch (HibernateException ex) {
                 setMessage(EVE.error, "customer.save.error");
-                ev.printStackTrace();
+                ex.printStackTrace();                
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
         

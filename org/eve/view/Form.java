@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
+import org.eve.main.EveAPI;
 import org.springframework.context.MessageSource;
 
 /**
@@ -28,6 +29,7 @@ public class Form {
     private MessageSource messages;
     private Locale locale;
     private DateFormat dateformat;
+    private EveAPI system;
     
     public Form() {
         fields = new LinkedHashMap<String, FormComponent>();
@@ -135,6 +137,14 @@ public class Form {
             setString(field, time.toString());
     }
     
+    /**
+     * 
+     * @param system
+     */
+    public final void setSystem(EveAPI system) {
+        this.system = system;
+    }
+    
     /*
      * 
      * Getters
@@ -204,7 +214,12 @@ public class Form {
         
         test = getString(field);
         
-        return test.equals("")? 0:Float.parseFloat(test);
+        try {
+            return test.equals("")? 0:Float.parseFloat(test);
+        } catch (NumberFormatException ex) {
+            system.setMessage(EVE.error, "invalid.format");
+            throw new NumberFormatException();
+        }
     }
     
     /**

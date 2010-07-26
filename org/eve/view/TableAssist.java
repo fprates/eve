@@ -109,6 +109,9 @@ public class TableAssist {
                 if (!component.isNocase() && value != null)
                     value = value.toUpperCase(locale);
                 
+                if (value == null)
+                    value = "";
+                
                 switch (component.getType()) {
                 case EVE.text:
                     ((Text)component.getControl(row)).setText(value);
@@ -248,23 +251,39 @@ public class TableAssist {
      * @return
      */
     public final String getStringValue(String id, int row) {
+        Control control;
         TableComponent component;
-        String value = null;
+        String value;
         
         for (String id_ : table.keySet())
             if (id_.equals(id)) {
                 component = table.get(id);
+                control = component.getControl(row);
+                
                 switch (component.getType()) {
                 case EVE.combo:
-                    value = ((CCombo)component.getControl(row)).getText();
+                    value = ((CCombo)control).getText();
+                    if (value == null)
+                        return "";
+                    
+                    if (!component.isNocase())
+                        ((CCombo)control).setText(value.toUpperCase(locale));
                     break;
                     
                 case EVE.text:
-                    value = ((Text)component.getControl(row)).getText();
+                    value = ((Text)control).getText();
+                    if (value == null)
+                        return "";
+                    
+                    if (!component.isNocase())
+                        ((Text)control).setText(value.toUpperCase(locale));
                     break;
+                    
+                default:
+                    value = "";
                 }
                 
-                return (value == null)?"" : value;
+                return value;
             }
         
         return "";
