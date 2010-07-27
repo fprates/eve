@@ -228,6 +228,7 @@ public class Form {
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.float.format"));
             fields.get(field).getControl().setFocus();
+            
             throw new NumberFormatException();
         }
     }

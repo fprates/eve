@@ -181,6 +181,7 @@ public abstract class AbstractController implements Controller {
         TableAssist table = tables.get(tablename);
         table.setMessages(messages);
         table.setLocale(locale);
+        table.setSystem(system);
         
         return table;
     }

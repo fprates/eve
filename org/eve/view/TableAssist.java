@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
+import org.eve.main.EveAPI;
 import org.springframework.context.MessageSource;
 
 /**
@@ -46,6 +47,7 @@ public class TableAssist {
     private int currentline;
     private String name;
     private Controller controller;
+    private EveAPI system;
     
     public TableAssist() {
         table = new LinkedHashMap<String, TableComponent>();
@@ -238,11 +240,28 @@ public class TableAssist {
         references.put(id, idref);
     }
     
+    /**
+     * 
+     * @param system
+     */
+    public final void setSystem(EveAPI system) {
+        this.system = system;
+    }
+    
     /*
      * 
      * Getters
      * 
      */
+    
+    /**
+     * 
+     * @param message
+     * @return
+     */
+    private final String getMessage(String message) {
+        return messages.getMessage(message, null, message, locale);
+    }
 
     /**
      * Define valor do campo string
@@ -337,11 +356,17 @@ public class TableAssist {
         
         value = value.replace(":", "");
         len = value.length(); 
-        if ((len % 2) != 0)
-            return null;
+        if ((len % 2) != 0) {
+            system.setMessage(EVE.error, getMessage("invalid.time.format"));
+            table.get(id).getControl(row).setFocus();
+            throw new IllegalArgumentException();
+        }
         
-        if ((len != 4) && (len != 6))
-            return null;
+        if ((len != 4) && (len != 6)) {
+            system.setMessage(EVE.error, getMessage("invalid.time.format"));
+            table.get(id).getControl(row).setFocus();
+            throw new IllegalArgumentException();
+        }
         
         if (len == 4)
             value = value.concat("00");
