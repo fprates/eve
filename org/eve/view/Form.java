@@ -152,6 +152,15 @@ public class Form {
      */
     
     /**
+     * 
+     * @param message
+     * @return
+     */
+    private final String getMessage(String message) {
+        return messages.getMessage(message, null, message, locale);        
+    }
+    
+    /**
      * Retorna componente de formulário
      * @param id
      * @return
@@ -217,7 +226,8 @@ public class Form {
         try {
             return test.equals("")? 0:Float.parseFloat(test);
         } catch (NumberFormatException ex) {
-            system.setMessage(EVE.error, "invalid.format");
+            system.setMessage(EVE.error, getMessage("invalid.float.format"));
+            fields.get(field).getControl().setFocus();
             throw new NumberFormatException();
         }
     }
