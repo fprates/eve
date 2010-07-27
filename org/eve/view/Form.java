@@ -202,8 +202,15 @@ public class Form {
         
         switch (component.getType()) {
         case EVE.text:
-            test = getString(field);            
-            return test.equals("")? 0:Integer.parseInt(test);
+            test = getString(field);
+            try {
+                return test.equals("")? 0:Integer.parseInt(test);                
+            } catch (NumberFormatException ex) {
+                system.setMessage(EVE.error, getMessage("invalid.int.format"));
+                component.getControl().setFocus();
+                
+                throw new NumberFormatException();
+            }
         
         case EVE.combo:
             test_ = ((Combo)component.getControl()).getSelectionIndex();
@@ -303,7 +310,7 @@ public class Form {
                 charh = ViewUtils.getCharHeight(combo);
                 
                 combo.setSize(combo.computeSize(
-                        (component.getLength() * charw) + 35, charh));
+                        (component.getLength() * charw) + 40, charh));
                 
                 component.setControl(combo);
                 

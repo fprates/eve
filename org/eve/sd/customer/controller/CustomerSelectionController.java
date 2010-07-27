@@ -30,12 +30,11 @@ public class CustomerSelectionController extends AbstractController {
             table = getTable("customers");
             ident = 0;
             
-            for (int k = 0; k < table.getItensSize(); k++) {
+            for (int k = 0; k < table.getItensSize(); k++)
                 if (table.getMarkValue(k)) {
                     ident = table.getIntValue("customer.ident", k);
                     break;
-                }                    
-            }
+                }
             
             if (ident == 0) {
                 setMessage(EVE.error, "select.one");
@@ -64,49 +63,49 @@ public class CustomerSelectionController extends AbstractController {
                         selporform.getStringLike("customer.name"),
                         selporform.getStringLike("customer.aname")});
                 
-                if (customers != null) {
-                    if (customers.size() > 0) {
-                        table = getTable("customers");
-                        ident = 0;
-                        
-                        for(Object object : customers) {
-                            table.insert();
-                            customer_ = (Customer)object;
-                            table.setIntValue("customer.ident", ident,
-                                    customer_.getId());
-                            table.setStringValue("customer.name", ident,
-                                    customer_.getName());
-                            table.setStringValue("customer.aname", ident,
-                                    customer_.getAlternateName());
-                            ident++;
-                        }
-                        
-                        if (action.equals("customer.show.sel"))
-                            call("customer.show.choose");
-                        
-                        if (action.equals("customer.edit.sel"))
-                            call("customer.edit.choose");
-                        
-                    } else {
-                        setMessage(EVE.error, "customer.select.empty");
-                        return;
-                    }
-                } else {
+                if (customers == null) {
                     setMessage(EVE.error, "customer.not.found");
                     return;
                 }
+                
+                if (customers.size() == 0) {
+                    setMessage(EVE.error, "customer.select.empty");
+                    return;
+                }
+                
+                table = getTable("customers");
+                ident = 0;
+                
+                for(Object object : customers) {
+                    table.insert();
+                    customer_ = (Customer)object;
+                    table.setIntValue("customer.ident", ident,
+                            customer_.getId());
+                    table.setStringValue("customer.name", ident,
+                            customer_.getName());
+                    table.setStringValue("customer.aname", ident,
+                            customer_.getAlternateName());
+                    ident++;
+                }
+                
+                if (action.equals("customer.show.sel"))
+                    call("customer.show.choose");
+                
+                if (action.equals("customer.edit.sel"))
+                    call("customer.edit.choose");
+                
             } else {            
                 model.load(Customer.class, ident, customer);
-                if (customer != null) {
-                    if (action.equals("customer.show.sel"))
-                        call("customer.show");
-                    
-                    if (action.equals("customer.edit.sel"))
-                        call("customer.edit");
-                } else {
+                if (customer == null) {
                     setMessage(EVE.error, "customer.not.found");
                     return;
                 }
+                
+                if (action.equals("customer.show.sel"))
+                    call("customer.show");
+                
+                if (action.equals("customer.edit.sel"))
+                    call("customer.edit");
             }
         }
         
