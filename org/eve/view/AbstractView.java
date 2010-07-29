@@ -226,7 +226,7 @@ public abstract class AbstractView implements View {
     protected abstract void defineView(Composite container);
     
     /**
-     * 
+     * Cria nova instância de formulário
      * @param id
      * @return
      */
@@ -243,7 +243,7 @@ public abstract class AbstractView implements View {
     }
     
     /**
-     * 
+     * Cria nova instância do assistente de tabela
      * @param id
      * @return
      */

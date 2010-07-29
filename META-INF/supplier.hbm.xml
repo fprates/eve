@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>    
+    <class name="org.eve.sd.supplier.Supplier" table="SUPPLR001">
+        <id name="id" column="IDENT"/>
+        <property name="name" column="RNAME"/>
+        <property name="alternateName" column="ANAME"/>
+        <property name="regDate" column="DTREG"/>
+        <property name="regTime" column="HRREG"/>
+        <property name="regUser" column="USREG"/>
+    </class>
+</hibernate-mapping>

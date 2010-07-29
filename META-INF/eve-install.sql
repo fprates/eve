@@ -9,6 +9,7 @@ drop table custmr004 if exists;
 drop table custmr003 if exists;
 drop table custmr002 if exists;
 drop table custmr001 if exists;
+drop table supplr001 if exists;
 drop table sdcomm003 if exists;
 drop table sdcomm002 if exists;
 drop table sdcomm001 if exists;
@@ -102,12 +103,23 @@ create table custmr004 (
    hrsun time
 );
 
+/* mestre de fornecedores - dados básicos */
+create table supplr001 (
+   ident numeric(10) primary key,
+   rname char(40),
+   aname char(40),
+   dtreg date,
+   hrreg time,
+   usreg char(8)
+);
+
 \p tables generated.
 
 grant select, insert, update, delete on custmr001 to evedb;
 grant select, insert, update, delete on custmr002 to evedb;
 grant select, insert, update, delete on custmr003 to evedb;
 grant select, insert, update, delete on custmr004 to evedb;
+grant select, insert, update, delete on supplr001 to evedb;
 grant select, insert, update, delete on sdcomm001 to evedb;
 grant select, insert, update, delete on sdcomm002 to evedb;
 grant select, insert, update, delete on sdcomm003 to evedb;
@@ -115,6 +127,7 @@ grant select, insert, update, delete on numrng to evedb;
 \p permissions granted.
 
 insert into numrng (range, crrnt) values ('CUSTMR', 0);
+insert into numrng (range, crrnt) values ('SUPPLR', 0);
 
 insert into sdcomm001 (cntry) values ('BRA');
 

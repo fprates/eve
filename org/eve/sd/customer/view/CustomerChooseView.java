@@ -19,7 +19,6 @@ public class CustomerChooseView extends AbstractView {
         addAction("customer.show.choose", false);
         addAction("customer.edit.choose", false);
         
-        ctable.setLocale(getLocale());
         ctable.setLines(10);
         ctable.putMark("customer.mark", EVE.single);
         ctable.put("customer.ident", 12);

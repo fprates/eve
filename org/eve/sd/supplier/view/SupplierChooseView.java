@@ -1,14 +1,31 @@
 package org.eve.sd.supplier.view;
 
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.main.EVE;
 import org.eve.view.AbstractView;
+import org.eve.view.TableAssist;
 
 public class SupplierChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
+        TableAssist stable = addTable("suppliers");
+
+        setHeight(350);
+        container.setLayout(new FillLayout());
+        
         addAction("supplier.show.choose", false);
         addAction("supplier.edit.choose", false);
+        
+        stable.setLines(10);
+        stable.putMark("supplier.mark", EVE.single);
+        stable.put("supplier.ident", 12);
+        stable.put("supplier.name", 40);
+        stable.put("supplier.aname", 40);
+        
+        stable.setEditable(false);
+        stable.define(container);
         
         addButton("supplier.choose");
     }
