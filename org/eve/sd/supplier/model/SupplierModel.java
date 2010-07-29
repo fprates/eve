@@ -1,6 +1,8 @@
 package org.eve.sd.supplier.model;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Calendar;
 
 import org.eve.model.AbstractModel;
 //import org.eve.sd.common.Country;
@@ -63,6 +65,67 @@ public class SupplierModel extends AbstractModel {
 //            country_ = (Country)session.get(class_, object_);
 //            copyCountry(country_, country);
 //        }
+        
+        session.getTransaction().commit();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.model.Model#save(java.lang.Object)
+     */
+    @Override
+    @Transactional(propagation=Propagation.SUPPORTS)
+    public final void save(Object object) {
+        Calendar calendar;
+//        int k = 0;
+        Supplier supplier = (Supplier)object;
+        Session session = getSessionFactory().getCurrentSession();
+        
+        session.beginTransaction();
+        
+        if (supplier.getId() == 0) {
+            supplier.setId(getNextIdent(session, "SUPPLR"));
+            session.save(supplier);
+            calendar = Calendar.getInstance();
+            supplier.setRegDate(calendar.getTime());
+            supplier.setRegTime(new Time(calendar.getTimeInMillis()));
+            
+//            for (SupplierContact contact : supplier.getContacts()) {
+//                contact.setItem(++k + (supplier.getId() * 100));
+//                session.save(contact);
+//            }
+//            
+//            k = 0;
+//            for (SupplierAddress address : supplier.getAddresses()) {
+//                address.setItem(++k + (supplier.getId() * 100));
+//                session.save(address);
+//            }
+//            
+//            k = 0;
+//            for (SupplierSchedule schedule : supplier.getSchedule()) {
+//                schedule.setItem(++k + (supplier.getId() * 100));
+//                session.save(schedule);
+//            }
+        } else {
+            session.update(supplier);
+            
+//            for (SupplierContact contact : supplier.getContacts()) {
+//                contact.setItem(++k + (supplier.getId() * 100));
+//                session.saveOrUpdate(contact);
+//            }
+//            
+//            k = 0;
+//            for (SupplierAddress address : supplier.getAddresses()) {
+//                address.setItem(++k + (supplier.getId() * 100));
+//                session.saveOrUpdate(address);
+//            }
+//            
+//            k = 0;
+//            for (SupplierSchedule schedule : supplier.getSchedule()) {
+//                schedule.setItem(++k + (supplier.getId() * 100));
+//                session.saveOrUpdate(schedule);
+//            }
+        }
         
         session.getTransaction().commit();
     }

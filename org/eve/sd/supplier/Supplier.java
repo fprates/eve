@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
+import org.eve.sd.supplier.Supplier;
+
 public class Supplier implements Serializable {
     private static final long serialVersionUID = -4022380613384815458L;
     private int id;
@@ -14,8 +16,8 @@ public class Supplier implements Serializable {
     private String regUser;
 
     public Supplier() {
-//        contacts = new TreeSet<CustomerContact>();
-//        addresses = new TreeSet<CustomerAddress>();
+//        contacts = new TreeSet<SupplierContact>();
+//        addresses = new TreeSet<SupplierAddress>();
     }
     
     /*
@@ -118,5 +120,27 @@ public class Supplier implements Serializable {
      */
     public void setRegUser(String regUser) {
         this.regUser = regUser;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        Supplier supplier;
+        
+        if (this == object)
+            return true;
+        
+        if (!(object instanceof Supplier))
+            return false;
+        
+        supplier = (Supplier)object;
+        if (id != supplier.getId())
+            return false;
+        
+        return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Integer.toString(id).hashCode();
     }
 }
