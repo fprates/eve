@@ -249,7 +249,7 @@ public abstract class AbstractView implements View {
      */
     protected final TableAssist addTable(String id) {
         Controller controller = getController();
-        TableAssist table = new TableAssist(controller, id);
+        TableAssist table = new TableAssist(controller);
         
         table.setLocale(locale);
         table.setMessages(messages);

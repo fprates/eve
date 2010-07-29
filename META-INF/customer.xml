@@ -40,7 +40,7 @@
         </property>
     </bean>
     
-    <!-- Seleção de clientes -->    
+    <!-- Seleção de clientes -->
     <bean id="cust_sel_view" class="org.eve.sd.customer.view.CustomerSelectionView"/>
     
     <!-- Escolha de múltiplos clientes -->
