@@ -14,6 +14,8 @@
         </property>
     </bean>
     
+    <bean id="supplier" class="org.eve.sd.supplier.Supplier"/>
+    
     <bean id="supp_model" class="org.eve.sd.supplier.model.SupplierModel">
         <property name="sessionFactory" ref="session_factory"/>
     </bean>
@@ -22,9 +24,7 @@
     
     <bean id="supp_control" class="org.eve.sd.supplier.controller.SupplierController">
         <property name="messages" ref="supp_msg"/>
-        <property name="object">
-            <bean class="org.eve.sd.supplier.Supplier"/>
-        </property>
+        <property name="object" ref="supplier"/>
         <property name="model" ref="supp_model"/>
         <property name="views">
             <map>
@@ -39,9 +39,7 @@
     
     <bean id="supp_sel_control" class="org.eve.sd.supplier.controller.SupplierController">
         <property name="messages" ref="supp_msg"/>
-        <property name="object">
-            <bean class="org.eve.sd.supplier.Supplier"/>
-        </property>
+        <property name="object" ref="supplier"/>
         <property name="model" ref="supp_model"/>
         <property name="views">
             <map>
