@@ -30,10 +30,6 @@ public interface Controller extends SelectionListener {
     
     public abstract void setSystem(EveAPI system);
     
-    public abstract void setForms(Map<String, Form> forms);
-    
-    public abstract void setTables(Map<String, TableAssist> tables);
-    
     public abstract void setViews(Map<String, View> views);
     
     public abstract void setMessages(MessageSource messages);
@@ -65,4 +61,8 @@ public interface Controller extends SelectionListener {
      */
     
     public abstract void putWidget(Widget widget, String id);
+    
+    public abstract void putForm(String id, Form form);
+    
+    public abstract void putTable(String id, TableAssist table);
 }

@@ -31,15 +31,24 @@ public class Form {
     private DateFormat dateformat;
     private EveAPI system;
     
-    public Form() {
+    public Form(String id) {
         fields = new LinkedHashMap<String, FormComponent>();
     }
-
+    
     /*
      * 
      * Setters
      * 
      */
+    
+    /**
+     * Define localização
+     * @param locale
+     */
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+    }
     
     /**
      * Defie propriedades do campo
@@ -51,16 +60,6 @@ public class Form {
         
         if ((properties & EVE.nocase) == EVE.nocase)
             component.setNocase(true);
-    }
-    
-    /**
-     * Define localização
-     * @param locale
-     */
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
-        
-        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);        
     }
     
     /**

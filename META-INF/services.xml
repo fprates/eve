@@ -17,6 +17,7 @@
                 <ref bean="cust_control"/>
                 <ref bean="cust_sel_control"/>
                 <ref bean="supp_control"/>
+                <ref bean="supp_sel_control"/>
             </list>
         </property>
     </bean>

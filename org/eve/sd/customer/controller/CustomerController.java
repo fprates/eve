@@ -129,6 +129,16 @@ public class CustomerController extends AbstractController {
         TableAssist contacts = getTable("contacts");
         TableAssist addresses = getTable("addresses");
         
+        if (contacts.hasEvent(input)) {
+            contacts.userInput(input);
+            return;
+        }
+        
+        if (addresses.hasEvent(input)) {
+            addresses.userInput(input);
+            return;
+        }
+        
         if (input.equals("customer.save")) {
             try {
                 /*

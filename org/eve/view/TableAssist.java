@@ -49,7 +49,8 @@ public class TableAssist {
     private Controller controller;
     private EveAPI system;
     
-    public TableAssist() {
+    public TableAssist(Controller controller) {
+        this.controller = controller;
         table = new LinkedHashMap<String, TableComponent>();
         references = new HashMap<String, String>();
         editable = true;
@@ -400,6 +401,18 @@ public class TableAssist {
         return false;
     }
     
+    /**
+     * 
+     * @param event
+     * @return
+     */
+    public final boolean hasEvent(String event) {
+        if (event.equals(name+".new") || event.equals(name+".del"))
+            return true;
+        else
+            return false;
+    }
+    
     /*
      * 
      * Others
@@ -607,14 +620,12 @@ public class TableAssist {
      * @param listener
      * @return
      */
-    public final Composite define(Composite container, Controller controller) {
+    public final Composite define(Composite container) {
         TableColumn tablecol;
         TableComponent component;
         Button btins;
         Button btdel;
         Label title;
-
-        this.controller = controller;
         
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
@@ -628,13 +639,13 @@ public class TableAssist {
         btins.setText("Novo");
         btins.addSelectionListener(controller);
         btins.setVisible(insert);
-//      widgetresponse.put(btins, name+".new");
+        controller.putWidget(btins, name+".new");
         
         btdel = new Button(btarea, SWT.NONE);
         btdel.setText("Remover");
         btdel.addSelectionListener(controller);
         btdel.setVisible(remove);
-//        widgetresponse.put(btdel, name+".del");
+        controller.putWidget(btdel, name+".del");
         
         btarea.pack();
         
@@ -683,6 +694,22 @@ public class TableAssist {
             ((Text)control).selectAll();
         
         control.setFocus();        
+    }
+    
+    /**
+     * 
+     * @param input
+     */
+    public final void userInput(String input) {
+        if (input.equals(name+".new")) {
+            System.out.println("nova linha");
+            return;
+        }
+        
+        if (input.equals(name+".del")) {
+            System.out.println("apagar linha");
+            return;
+        }
     }
 }
 

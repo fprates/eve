@@ -197,7 +197,7 @@ public abstract class AbstractView implements View {
      * @param id
      */
     protected final void addButton(String id) {
-        system.addButton(id);
+        system.addButton(this, id);
     }
     
     /**
@@ -216,7 +216,7 @@ public abstract class AbstractView implements View {
      */
     protected final void addAction(String id, boolean visible) {
         actions.add(new ViewAction(this, id,
-                messages.getMessage(id, null, locale), visible));
+                messages.getMessage(id, null, id, locale), visible));
     }
     
     /**
@@ -224,6 +224,41 @@ public abstract class AbstractView implements View {
      * @param container
      */
     protected abstract void defineView(Composite container);
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    protected final Form addForm(String id) {
+        Form form = new Form(id);
+        
+        form.setMessages(messages);
+        form.setSystem(system);
+        form.setLocale(locale);
+
+        getController().putForm(id, form);
+        
+        return form;
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    protected final TableAssist addTable(String id) {
+        Controller controller = getController();
+        TableAssist table = new TableAssist(controller, id);
+        
+        table.setLocale(locale);
+        table.setMessages(messages);
+        table.setSystem(system);
+        
+        controller.putTable(id, table);
+        
+        return table;
+    }
     
     /*
      * (non-Javadoc)

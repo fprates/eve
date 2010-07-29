@@ -27,39 +27,12 @@
         </property>
     </bean>
     
-    <bean id="cust_form" class="org.eve.view.Form"/>
-    
-    <bean id="cust_sel_form" class="org.eve.view.Form"/>
-    
-    <bean id="cust_selpor_form" class="org.eve.view.Form"/>
-    
-    <bean id="cust_contacts_table" class="org.eve.view.TableAssist"/>
-    
-    <bean id="cust_addresses_table" class="org.eve.view.TableAssist"/>
-    
-    <bean id="cust_vschedule_table" class="org.eve.view.TableAssist"/>
-    
-    <bean id="cust_dschedule_table" class="org.eve.view.TableAssist"/>
-    
     <bean id="cust_view" class="org.eve.sd.customer.view.CustomerView"/>
     
     <bean id="cust_control" class="org.eve.sd.customer.controller.CustomerController">
         <property name="messages" ref="cust_msg"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
-        <property name="forms">
-            <map>
-                <entry key="main" value-ref="cust_form"/>
-            </map>
-        </property>
-        <property name="tables">
-            <map>
-                <entry key="contacts" value-ref="cust_contacts_table"/>
-                <entry key="addresses" value-ref="cust_addresses_table"/>
-                <entry key="vschedule" value-ref="cust_vschedule_table"/>
-                <entry key="dschedule" value-ref="cust_dschedule_table"/>
-            </map>
-        </property>
         <property name="views">
             <map>
                 <entry key="cust_view" value-ref="cust_view"/>
@@ -67,9 +40,7 @@
         </property>
     </bean>
     
-    <!-- Seleção de clientes -->
-    <bean id="cust_selpor_table" class="org.eve.view.TableAssist"/>
-    
+    <!-- Seleção de clientes -->    
     <bean id="cust_sel_view" class="org.eve.sd.customer.view.CustomerSelectionView"/>
     
     <!-- Escolha de múltiplos clientes -->
@@ -79,17 +50,6 @@
         <property name="messages" ref="cust_msg"/>
         <property name="object" ref="customer"/>
         <property name="model" ref="cust_model"/>
-        <property name="forms">
-            <map>
-                <entry key="main" value-ref="cust_sel_form"/>
-                <entry key="selpor" value-ref="cust_selpor_form"/>
-            </map>
-        </property>
-        <property name="tables">
-            <map>
-                <entry key="customers" value-ref="cust_selpor_table"/>
-            </map>
-        </property>
         <property name="views">
             <map>
                 <entry key="cust_sel_view" value-ref="cust_sel_view"/>

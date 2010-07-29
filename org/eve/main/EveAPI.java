@@ -10,7 +10,7 @@ public interface EveAPI {
     
     public abstract void setTitleBar(String id);
     
-    public abstract void addButton(String id);
+    public abstract void addButton(View view, String id);
     
     public abstract void setMessage(int status, String id);
     

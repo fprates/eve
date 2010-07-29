@@ -34,8 +34,7 @@ public class CustomerView extends AbstractView {
         ExpandBar bar;
         Composite schedule;
         TableAssist table;
-        Controller controller = getController();
-        Form form = controller.getForm("main");
+        Form form = addForm("main");
         
         setWidth(1260);
         addAction("customer.create");
@@ -81,7 +80,7 @@ public class CustomerView extends AbstractView {
         /*
          * Contatos
          */
-        table = controller.getTable("contacts");
+        table = addTable("contacts");
         table.setLines(4);
         table.putMark("contact.mark", EVE.multi);
         table.put("contact.rname", 40);
@@ -89,7 +88,7 @@ public class CustomerView extends AbstractView {
         table.put("contact.teln1", 12);
         table.put("contact.teln2", 12);
         
-        localcontainer = table.define(bar, controller);
+        localcontainer = table.define(bar);
         itembar = new ExpandItem(bar, SWT.NONE, 0);
         itembar.setText(getMessage("customer.contacts"));
         itembar.setControl(localcontainer);
@@ -99,8 +98,7 @@ public class CustomerView extends AbstractView {
         /*
          * Endereços
          */
-        table = controller.getTable("addresses");
-        table.setLocale(getLocale());
+        table = addTable("addresses");
         table.setLines(3);
         table.putMark("address.mark", EVE.multi);
         table.putCombo("address.type", 11, new String[] {
@@ -116,7 +114,7 @@ public class CustomerView extends AbstractView {
         table.putCombo("address.munic", 40, null);
         table.setReference("address.munic", "address.coduf");
         
-        localcontainer = table.define(bar, controller);
+        localcontainer = table.define(bar);
         itembar = new ExpandItem(bar, SWT.NONE, 1);
         itembar.setText(getMessage("customer.addresses"));
         itembar.setControl(localcontainer);
@@ -129,8 +127,7 @@ public class CustomerView extends AbstractView {
         schedule = new Composite(bar, SWT.NONE);
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
 
-        table = controller.getTable("vschedule");
-        table.setLocale(getLocale());
+        table = addTable("vschedule");
         table.setLines(2);
         table.setInsert(false);
         table.setRemove(false);
@@ -142,10 +139,9 @@ public class CustomerView extends AbstractView {
         table.put("schedule.fri");
         table.setColumnProperties("schedule.per", EVE.readonly);
         table.setName("schedule.visit");
-        table.define(schedule, controller);        
+        table.define(schedule);
 
-        table = controller.getTable("dschedule");
-        table.setLocale(getLocale());
+        table = addTable("dschedule");
         table.setLines(2);
         table.setInsert(false);
         table.setRemove(false);
@@ -157,7 +153,7 @@ public class CustomerView extends AbstractView {
         table.put("schedule.fri");
         table.setColumnProperties("schedule.per", EVE.readonly);
         table.setName("schedule.delivery");
-        table.define(schedule, controller);
+        table.define(schedule);
         
         itembar = new ExpandItem(bar, SWT.NONE, 2);
         itembar.setText(getMessage("customer.schedule"));

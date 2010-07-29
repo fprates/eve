@@ -11,8 +11,7 @@ public class CustomerChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
-        Controller controller = getController();
-        TableAssist ctable = controller.getTable("customers");
+        TableAssist ctable = addTable("customers");
 
         setHeight(350);
         container.setLayout(new FillLayout());
@@ -28,7 +27,7 @@ public class CustomerChooseView extends AbstractView {
         ctable.put("customer.aname", 40);
         
         ctable.setEditable(false);
-        ctable.define(container, controller);
+        ctable.define(container);
         
         addButton("customer.choose");
     }

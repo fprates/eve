@@ -29,6 +29,8 @@ public abstract class AbstractController implements Controller {
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
+        forms = new HashMap<String, Form>();
+        tables = new HashMap<String, TableAssist>();
     }
     
     /*
@@ -80,24 +82,6 @@ public abstract class AbstractController implements Controller {
     @Override
     public final void setSystem(EveAPI system) {        
         this.system = system;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#setForms(java.util.Map)
-     */
-    @Override
-    public final void setForms(Map<String, Form> forms) {
-        this.forms = forms;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Controller#setTables(java.util.Map)
-     */
-    @Override
-    public final void setTables(Map<String, TableAssist> tables) {
-        this.tables = tables;
     }
     
     /*
@@ -164,12 +148,7 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final Form getForm(String formname) {
-        Form form = forms.get(formname);
-        form.setMessages(messages);
-        form.setLocale(locale);
-        form.setSystem(system);
-        
-        return form;
+        return forms.get(formname);
     }
     
     /*
@@ -178,12 +157,7 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final TableAssist getTable(String tablename) {
-        TableAssist table = tables.get(tablename);
-        table.setMessages(messages);
-        table.setLocale(locale);
-        table.setSystem(system);
-        
-        return table;
+        return tables.get(tablename);
     }
 
     /*
@@ -247,16 +221,33 @@ public abstract class AbstractController implements Controller {
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public final void widgetDefaultSelected(SelectionEvent ev) {
-    }
+    public final void widgetDefaultSelected(SelectionEvent ev) { }
 
     /*
      * (non-Javadoc)
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      */
     @Override
-    public final void widgetSelected(SelectionEvent ev) {        
+    public final void widgetSelected(SelectionEvent ev) {
         system.clearMessage();
         userInput(widgets.get(ev.getSource()));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#putForm(java.lang.String, org.eve.view.Form)
+     */
+    @Override
+    public final void putForm(String id, Form form) {
+        forms.put(id, form);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#putTable(java.lang.String, org.eve.view.TableAssist)
+     */
+    @Override
+    public final void putTable(String id, TableAssist table) {
+        tables.put(id, table);
     }
 }

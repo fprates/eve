@@ -30,9 +30,8 @@ public class CustomerSelectionView extends AbstractView {
     @Override
     public void defineView(Composite container) {
         Group selpor;
-        Controller controller = getController();
-        Form form = controller.getForm("main");
-        Form selporform = controller.getForm("selpor");
+        Form form = addForm("main");
+        Form selporform = addForm("selpor");
         
         container.setLayout(new RowLayout(SWT.VERTICAL));
         

@@ -14,13 +14,13 @@
         </property>
     </bean>
     
-    <bean id="supp_model" class="org.eve.sd.supplier.SupplierModel">
+    <bean id="supp_model" class="org.eve.sd.supplier.model.SupplierModel">
         <property name="sessionFactory" ref="session_factory"/>
     </bean>
     
-    <bean id="supp_view" class="org.eve.sd.supplier.SupplierView"/>
+    <bean id="supp_view" class="org.eve.sd.supplier.view.SupplierView"/>
     
-    <bean id="supp_control" class="org.eve.sd.supplier.SupplierController">
+    <bean id="supp_control" class="org.eve.sd.supplier.controller.SupplierController">
         <property name="messages" ref="supp_msg"/>
         <property name="object">
             <bean class="org.eve.sd.supplier.Supplier"/>
@@ -29,6 +29,24 @@
         <property name="views">
             <map>
                 <entry key="supp_view" value-ref="supp_view"/>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="supp_sel_view" class="org.eve.sd.supplier.view.SupplierSelectionView"/>
+    
+    <bean id="supp_choose_view" class="org.eve.sd.supplier.view.SupplierChooseView"/>
+    
+    <bean id="supp_sel_control" class="org.eve.sd.supplier.controller.SupplierController">
+        <property name="messages" ref="supp_msg"/>
+        <property name="object">
+            <bean class="org.eve.sd.supplier.Supplier"/>
+        </property>
+        <property name="model" ref="supp_model"/>
+        <property name="views">
+            <map>
+                <entry key="supp_sel_view" value-ref="supp_sel_view"/>
+                <entry key="supp_choose_view" value-ref="supp_choose_view"/>
             </map>
         </property>
     </bean>

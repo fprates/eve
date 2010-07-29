@@ -33,7 +33,7 @@ public class EveApp implements EveAPI {
     private Composite buttonbar;
     private MessageBar messagebar;
     private List<Controller> controllers;
-    private List<String> buttonbarlist;
+    private Map<View, List<String>> buttonbarmap;
     private Map<View, Controller> controlmap;
     private Map<String, View> viewmap;
     private Map<View, Composite> buttonmap;
@@ -41,7 +41,7 @@ public class EveApp implements EveAPI {
     public EveApp() {
         viewmap = new HashMap<String, View>();
         controlmap = new HashMap<View, Controller>();
-        buttonbarlist = new LinkedList<String>();
+        buttonbarmap = new HashMap<View, List<String>>();
         buttonmap = new HashMap<View, Composite>();
     }
     
@@ -86,6 +86,25 @@ public class EveApp implements EveAPI {
     }
     
     /*
+     * (non-Javadoc)
+     * @see org.eve.main.EveAPI#setTitleBar(java.lang.String)
+     */
+    @Override
+    public final void setTitleBar(String text) {
+        titlebar.setText(text);
+        titlebar.pack();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.main.EveAPI#setMessage(int, java.lang.String)
+     */
+    @Override
+    public final void setMessage(int status, String message) {
+        messagebar.setMessage(status, message);
+    }
+    
+    /*
      * 
      * Getters
      * 
@@ -113,6 +132,15 @@ public class EveApp implements EveAPI {
      */
     public final String getVersion() {
         return VERSION;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.main.EveAPI#getController(org.eve.view.View)
+     */
+    @Override
+    public final Controller getController(View view) {
+        return controlmap.get(view);
     }
     
     /*
@@ -161,39 +189,11 @@ public class EveApp implements EveAPI {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.main.EveAPI#getController(org.eve.view.View)
-     */
-    @Override
-    public final Controller getController(View view) {
-        return controlmap.get(view);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.main.EveAPI#setTitleBar(java.lang.String)
-     */
-    @Override
-    public final void setTitleBar(String text) {
-        titlebar.setText(text);
-        titlebar.pack();
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.main.EveAPI#addButton(java.lang.String)
      */
     @Override
-    public final void addButton(String id) {
-        buttonbarlist.add(id);        
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.main.EveAPI#setMessage(int, java.lang.String)
-     */
-    @Override
-    public final void setMessage(int status, String message) {
-        messagebar.setMessage(status, message);
+    public final void addButton(View view, String id) {
+        buttonbarmap.get(view).add(id);        
     }
     
     /*
@@ -264,6 +264,9 @@ public class EveApp implements EveAPI {
                 container = new Composite(this.container, SWT.NONE);
                 
                 view = views.get(viewname);
+                
+                buttonbarmap.put(view, new LinkedList<String>());
+                
                 view.setSystem(this);
                 view.setMessages(controller.getMessages());
                 view.setLocale(locale);
@@ -293,7 +296,7 @@ public class EveApp implements EveAPI {
                 appbuttonbar.setLayout(new FormLayout());
                 appbuttonbar.pack();
                 
-                for (String id : buttonbarlist) {
+                for (String id : buttonbarmap.get(view)) {
                     button = new Button(appbuttonbar, SWT.PUSH);
                     button.addSelectionListener(controller);
                     
