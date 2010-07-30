@@ -20,6 +20,7 @@ public class SupplierModel extends AbstractModel {
         supplier.setRegTime(supplier_.getRegTime());
         supplier.setRegUser(supplier_.getRegUser());
         supplier.setId(supplier_.getId());
+        supplier.setReference(supplier_.getReference());
         supplier.setName(supplier_.getName());
 //        supplier.setHomePage(supplier_.getHomePage());
 //        supplier.setEmail(supplier_.getEmail());

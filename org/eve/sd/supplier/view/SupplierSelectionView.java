@@ -47,6 +47,7 @@ public class SupplierSelectionView extends AbstractView {
         
         selporform.put("supplier.name", 40);
         selporform.put("supplier.aname", 40);
+        selporform.put("supplier.refer", 12);
         selporform.define(selpor);
         selpor.pack();
         

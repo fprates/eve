@@ -110,7 +110,8 @@ create table supplr001 (
    aname char(40),
    dtreg date,
    hrreg time,
-   usreg char(8)
+   usreg char(8),
+   refer char(12)
 );
 
 \p tables generated.

@@ -9,6 +9,7 @@ import org.eve.sd.supplier.Supplier;
 public class Supplier implements Serializable {
     private static final long serialVersionUID = -4022380613384815458L;
     private int id;
+    private String reference;
     private String name;
     private String alternateName;
     private Date regDate;
@@ -29,6 +30,14 @@ public class Supplier implements Serializable {
      */
     public int getId() {
         return id;
+    }
+    
+    /**
+     * Retorna referência
+     * @return
+     */
+    public String getReference() {
+        return reference;
     }
     
     /**
@@ -80,6 +89,14 @@ public class Supplier implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
+    }
+    
+    /**
+     * Ajusta referência
+     * @param reference
+     */
+    public void setReference(String reference) {
+        this.reference = reference;
     }
     
     /**

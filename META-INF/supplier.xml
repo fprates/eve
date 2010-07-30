@@ -20,7 +20,8 @@
         <property name="sessionFactory" ref="session_factory"/>
         <property name="queries">
             <map>
-                <entry key="selby_suppliers" value="from Supplier where name like ? and alternateName like ?"/>
+                <entry key="selby_suppliers"
+                    value="from Supplier where name like ? and alternateName like ? and reference like ?"/>
             </map>
         </property>
     </bean>

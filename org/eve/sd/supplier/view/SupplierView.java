@@ -33,6 +33,7 @@ public class SupplierView extends AbstractView {
         form.put("supplier.ident", 12, false);
         form.put("supplier.dtreg", 10, false);
         form.put("supplier.tmreg", 8, false);
+        form.put("supplier.refer", 12);
         form.put("supplier.name", 40);
         form.put("supplier.aname", 40);
         form.put("supplier.cnpj", 18);
@@ -61,7 +62,7 @@ public class SupplierView extends AbstractView {
 //        TableAssist atable = controller.getTable("addresses");
 //        TableAssist vstable = controller.getTable("vschedule");
 //        TableAssist dstable = controller.getTable("dschedule");
-        
+        form.setString("supplier.refer", supplier.getReference());
         form.setDate("supplier.dtreg", supplier.getRegDate());
         form.setTime("supplier.tmreg", supplier.getRegTime());
         form.setString("supplier.aname", supplier.getAlternateName());

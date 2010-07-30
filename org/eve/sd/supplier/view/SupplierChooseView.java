@@ -22,6 +22,7 @@ public class SupplierChooseView extends AbstractView {
         stable.setLines(10);
         stable.putMark("supplier.mark", EVE.single);
         stable.put("supplier.ident", 12);
+        stable.put("supplier.refer", 12);
         stable.put("supplier.name", 40);
         stable.put("supplier.aname", 40);
         
