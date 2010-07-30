@@ -25,11 +25,37 @@ public class SupplierSelectionController extends AbstractController {
         Supplier supplier = (Supplier)getObject();
         Model model = getModel();
         String action = getAction();
+
+        if (input.equals("supplier.choose")) {
+            table = getTable("suppliers");
+            ident = 0;
+            
+            for (int k = 0; k < table.getItensSize(); k++)
+                if (table.getMarkValue(k)) {
+                    ident = table.getIntValue("supplier.ident", k);
+                    break;
+                }
+            
+            if (ident == 0) {
+                setMessage(EVE.error, "select.one");
+                return;
+            }
+            
+            model.load(Supplier.class, ident, supplier);
+            
+            if (action.equals("supplier.show.choose"))
+                call("supplier.show");
+            
+            if (action.equals("supplier.edit.choose"))
+                call("supplier.edit");
+            
+            return;
+        }
         
         form = getForm("main");
-        ident = form.getInt("customer.ident");
+        ident = form.getInt("supplier.ident");
         
-        if (input.equals("customer.sel")) {
+        if (input.equals("supplier.sel")) {
             if (ident == 0) {
                 selporform = getForm("selpor");
                 

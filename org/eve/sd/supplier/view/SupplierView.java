@@ -2,6 +2,7 @@ package org.eve.sd.supplier.view;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;
@@ -45,6 +46,97 @@ public class SupplierView extends AbstractView {
         addButton("supplier.save");
     }
     
+    /**
+     * 
+     * @param customer
+     */
+    private final void setControlLoad(Supplier supplier) {
+//        int munic;
+//        int munic_;
+//        Map<Object, String> results;
+//        int i = 0;
+        Controller controller = getController();
+        Form form = controller.getForm("main");
+//        TableAssist ctable = controller.getTable("contacts");
+//        TableAssist atable = controller.getTable("addresses");
+//        TableAssist vstable = controller.getTable("vschedule");
+//        TableAssist dstable = controller.getTable("dschedule");
+        
+        form.setDate("supplier.dtreg", supplier.getRegDate());
+        form.setTime("supplier.tmreg", supplier.getRegTime());
+        form.setString("supplier.aname", supplier.getAlternateName());
+//        form.setString("supplier.cnpj", supplier.getCodCadFiscal());
+        form.setInt("supplier.ident", supplier.getId());
+        form.setString("supplier.name", supplier.getName());
+//        form.setInt("supplier.status", supplier.getStatus());
+//        form.setString("supplier.homep", supplier.getHomePage());
+//        form.setProperties("supplier.homep", EVE.nocase);
+//        form.setString("supplier.email", supplier.getEmail());
+//        form.setProperties("supplier.email", EVE.nocase);
+//        form.setInt("supplier.tpinc", supplier.getIncentive());
+//        form.setInt("supplier.cdivf", supplier.getIVF());
+//        form.setFloat("supplier.vlipr", supplier.getProductIncentiveValue());
+//        form.setFloat("supplier.vlibl", supplier.getBillingIncentiveValue());
+//        form.setFloat("supplier.dvcsp", supplier.getSupplierIncentiveValue());
+//        form.setFloat("supplier.dvcpt", supplier.getPartnerIncentiveValue());        
+//        
+//        ctable.clear();
+//        for (SupplierContact contact : supplier.getContacts()) {
+//            ctable.setStringValue("contact.rname", i, contact.getName());
+//            ctable.setStringValue("contact.funct", i++, contact.getFunction());
+//        }
+//        
+//        i = 0;
+//        for (SupplierAddress address : supplier.getAddresses()) {
+//            atable.setStringValue("address.logra", i, address.getAddress());
+//            atable.setIntValue("address.numer", i, address.getNumber());
+//            atable.setStringValue("address.compl", i, address.getComplemento());
+//            atable.setStringValue("address.cdend", i, address.getCEP());
+//            atable.setStringValue("address.coduf", i, address.getEstado());
+//            
+//            munic = address.getMunicipio();
+//            results = controller.getResults("address.munic", address.getEstado());
+//            if (results != null) {
+//                for (Object object : results.keySet()) {
+//                    munic_ = (Integer)object;
+//                    if (!(munic_ == munic))
+//                        continue;
+//                    
+//                    atable.setStringValue("address.munic", i, results.get(object));
+//                    break;
+//                }
+//                i++;
+//            }
+//        }
+//        
+//        fillPeriodColumn(vstable);
+//        fillPeriodColumn(dstable);
+//        
+//        i = 0;
+//        for (SupplierSchedule schedule : supplier.getSchedule()) {
+//            switch (i) {
+//            case 0:
+//            case 1:                
+//                vstable.setTimeValue("schedule.mon", i, schedule.getMonday());
+//                vstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
+//                vstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
+//                vstable.setTimeValue("schedule.thu", i, schedule.getThursday());
+//                vstable.setTimeValue("schedule.fri", i, schedule.getFriday());
+//                break;
+//                
+//            case 2:
+//            case 3:                
+//                dstable.setTimeValue("schedule.mon", i-2, schedule.getMonday());
+//                dstable.setTimeValue("schedule.tue", i-2, schedule.getTuesday());
+//                dstable.setTimeValue("schedule.wed", i-2, schedule.getWednesday());
+//                dstable.setTimeValue("schedule.thu", i-2, schedule.getThursday());
+//                dstable.setTimeValue("schedule.fri", i-2, schedule.getFriday());
+//                break;
+//            }
+//            i++;
+//        }
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.View#reload(java.lang.String)
@@ -52,6 +144,7 @@ public class SupplierView extends AbstractView {
     @Override
     public final void reload(String action) {
         Controller controller = getController();
+        Supplier supplier = (Supplier)controller.getObject();
         Form form = controller.getForm("main");
         
         /*
@@ -63,6 +156,8 @@ public class SupplierView extends AbstractView {
             
             for (FormComponent component : form.getComponents())
                 component.setEnabled(false);
+            
+            setControlLoad(supplier);
             
             return;
         }
@@ -76,6 +171,8 @@ public class SupplierView extends AbstractView {
 
             for (FormComponent component : form.getComponents())
                 component.setEnabled(component.isEnabled());
+            
+            setControlLoad(supplier);
                 
             return;
         }
@@ -89,6 +186,8 @@ public class SupplierView extends AbstractView {
 
             for (FormComponent component : form.getComponents())
                 component.setEnabled(component.isEnabled());
+            
+            setControlLoad(supplier);
             
             getController().getForm("main").clear();
             

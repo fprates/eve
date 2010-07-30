@@ -18,6 +18,11 @@
     
     <bean id="supp_model" class="org.eve.sd.supplier.model.SupplierModel">
         <property name="sessionFactory" ref="session_factory"/>
+        <property name="queries">
+            <map>
+                <entry key="selby_suppliers" value="from Supplier where name like ? and alternateName like ?"/>
+            </map>
+        </property>
     </bean>
     
     <bean id="supp_view" class="org.eve.sd.supplier.view.SupplierView"/>
@@ -35,9 +40,10 @@
     
     <bean id="supp_sel_view" class="org.eve.sd.supplier.view.SupplierSelectionView"/>
     
+    <!--  -->
     <bean id="supp_choose_view" class="org.eve.sd.supplier.view.SupplierChooseView"/>
     
-    <bean id="supp_sel_control" class="org.eve.sd.supplier.controller.SupplierController">
+    <bean id="supp_sel_control" class="org.eve.sd.supplier.controller.SupplierSelectionController">
         <property name="messages" ref="supp_msg"/>
         <property name="object" ref="supplier"/>
         <property name="model" ref="supp_model"/>

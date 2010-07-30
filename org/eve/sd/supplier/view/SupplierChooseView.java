@@ -4,6 +4,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EVE;
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.TableAssist;
 
 public class SupplierChooseView extends AbstractView {
@@ -35,7 +36,10 @@ public class SupplierChooseView extends AbstractView {
      * @see org.eve.view.View#reload(java.lang.String)
      */
     @Override
-    public void reload(String action) {        
+    public void reload(String action) {
+        Controller controller = getController();
+        controller.setAction(action);
+        
         setTitlebar("supplier.sel.title");        
     }
 
