@@ -61,7 +61,8 @@ public class CustomerSelectionController extends AbstractController {
                 
                 customers = model.select("selby_customers", new Object[] {
                         selporform.getStringLike("customer.name"),
-                        selporform.getStringLike("customer.aname")});
+                        selporform.getStringLike("customer.aname"),
+                        selporform.getStringLike("customer.refer")});
                 
                 if (customers == null) {
                     setMessage(EVE.error, "customer.not.found");
@@ -85,6 +86,8 @@ public class CustomerSelectionController extends AbstractController {
                             customer_.getName());
                     table.setStringValue("customer.aname", ident,
                             customer_.getAlternateName());
+                    table.setStringValue("customer.refer", ident,
+                            customer_.getReference());
                     ident++;
                 }
                 

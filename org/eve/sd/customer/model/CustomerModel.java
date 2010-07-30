@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerModel extends AbstractModel {
 
     private final void copyCustomer(Customer customer_, Customer customer) {
+        customer.setReference(customer_.getReference());
         customer.setAlternateName(customer_.getAlternateName());
         customer.setCodCadFiscal(customer_.getCodCadFiscal());
         customer.setRegDate(customer_.getRegDate());

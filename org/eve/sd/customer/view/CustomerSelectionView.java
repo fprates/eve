@@ -49,6 +49,7 @@ public class CustomerSelectionView extends AbstractView {
         
         selporform.put("customer.name", 40);
         selporform.put("customer.aname", 40);
+        selporform.put("customer.refer", 12);
         selporform.define(selpor);
         selpor.pack();
         

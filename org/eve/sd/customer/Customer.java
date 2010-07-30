@@ -31,6 +31,7 @@ public class Customer implements Serializable {
     private float billinc;
     private float splrinc;
     private float prtninc;
+    private String reference;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
@@ -132,6 +133,14 @@ public class Customer implements Serializable {
      */
     public int getIVF() {
         return ivf;
+    }
+    
+    /**
+     * Retorna código de referência
+     * @return
+     */
+    public String getReference() {
+        return reference;
     }
     
     /**
@@ -257,6 +266,14 @@ public class Customer implements Serializable {
      */
     public void setIVF(int ivf) {
         this.ivf = ivf;
+    }
+    
+    /**
+     * Ajusta código de referência
+     * @param reference
+     */
+    public void setReference(String reference) {
+        this.reference = reference;
     }
     
     /**

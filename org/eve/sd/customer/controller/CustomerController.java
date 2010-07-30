@@ -144,6 +144,7 @@ public class CustomerController extends AbstractController {
                 /*
                  * dados base
                  */
+                customer.setReference(form.getString("customer.refer"));
                 customer.setAlternateName(form.getString("customer.aname"));
                 customer.setCodCadFiscal(form.getString("customer.cnpj"));
                 customer.setId(form.getInt("customer.ident"));

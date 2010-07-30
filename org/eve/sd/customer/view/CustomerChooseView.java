@@ -22,6 +22,7 @@ public class CustomerChooseView extends AbstractView {
         ctable.setLines(10);
         ctable.putMark("customer.mark", EVE.single);
         ctable.put("customer.ident", 12);
+        ctable.put("customer.refer", 12);
         ctable.put("customer.name", 40);
         ctable.put("customer.aname", 40);
         

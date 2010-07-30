@@ -21,6 +21,7 @@
         <property name="billingIncentiveValue" column="VLIBL"/>
         <property name="supplierIncentiveValue" column="DVCSP"/>
         <property name="partnerIncentiveValue" column="DVCPT"/>
+        <property name="reference" column="REFER"/>
         
         <set name="contacts" inverse="true">
             <key column="IDENT"/>

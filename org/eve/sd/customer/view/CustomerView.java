@@ -49,6 +49,7 @@ public class CustomerView extends AbstractView {
         form.put("customer.ident", 12, false);
         form.put("customer.dtreg", 10, false);
         form.put("customer.tmreg", 8, false);
+        form.put("customer.refer", 12);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
         form.put("customer.cnpj", 18);
@@ -200,6 +201,7 @@ public class CustomerView extends AbstractView {
         TableAssist vstable = controller.getTable("vschedule");
         TableAssist dstable = controller.getTable("dschedule");
         
+        form.setString("customer.refer", customer.getReference());
         form.setDate("customer.dtreg", customer.getRegDate());
         form.setTime("customer.tmreg", customer.getRegTime());
         form.setString("customer.aname", customer.getAlternateName());
