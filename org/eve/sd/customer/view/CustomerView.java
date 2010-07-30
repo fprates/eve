@@ -72,7 +72,7 @@ public class CustomerView extends AbstractView {
         form.put("customer.vlibl", 7);
         form.put("customer.dvcsp", 7);
         form.put("customer.dvcpt", 7);
-        form.put("customer.stdsp", 12);
+        form.putCombo("customer.stdsp", null, 12);
         
         form.define(container);
         
