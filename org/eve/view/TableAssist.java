@@ -33,7 +33,7 @@ import org.springframework.context.MessageSource;
  */
 public class TableAssist {
     private static final int LINES = 5;
-    private Map<String, TableComponent> table;
+    private Map<String, Component> table;
     private Map<String, String> references;
     private MessageSource messages;
     private Locale locale;
@@ -48,16 +48,19 @@ public class TableAssist {
     private String name;
     private Controller controller;
     private EveAPI system;
+    private ComboAssist comboassist;
     
     public TableAssist(Controller controller) {
         this.controller = controller;
-        table = new LinkedHashMap<String, TableComponent>();
+        table = new LinkedHashMap<String, Component>();
         references = new HashMap<String, String>();
         editable = true;
         insert = true;
         remove = true;
         currentline = 0;
         lines = LINES;
+        comboassist = new ComboAssist();
+        comboassist.setType(EVE.ccombo_widget);
     }
     
     /*
@@ -103,7 +106,7 @@ public class TableAssist {
      * @param value
      */
     public final void setStringValue(String id, int row, String value) {
-        TableComponent component;
+        Component component;
         
         for (String id_ : table.keySet())
             if (id_.equals(id)) {
@@ -135,7 +138,7 @@ public class TableAssist {
      * @param value
      */
     public final void setIntValue(String id, int row, int value) {
-        TableComponent component = table.get(id);
+        Component component = table.get(id);
         
         switch (component.getType()) {
         case EVE.text:
@@ -154,7 +157,7 @@ public class TableAssist {
      * @param value
      */
     public final void setMarkValue(int row, boolean value) {
-        TableComponent component;
+        Component component;
         
         for (String id : table.keySet()) {
             component = table.get(id);
@@ -223,7 +226,7 @@ public class TableAssist {
      * @param property
      */
     public final void setColumnProperties(String id, int property) {
-        TableComponent component = table.get(id);
+        Component component = table.get(id);
         
         if ((EVE.readonly & property) == EVE.readonly)
             component.setEnabled(false);
@@ -272,7 +275,7 @@ public class TableAssist {
      */
     public final String getStringValue(String id, int row) {
         Control control;
-        TableComponent component;
+        Component component;
         String value;
         
         for (String id_ : table.keySet())
@@ -387,7 +390,7 @@ public class TableAssist {
      * @return
      */
     public final boolean getMarkValue(int row) {
-        TableComponent component;
+        Component component;
         
         for (String id : table.keySet()) {
             component = table.get(id);
@@ -441,7 +444,6 @@ public class TableAssist {
      * Adiciona item em tabela
      */
     private final void addTableItem(TableItem item, Controller controller) {
-        String[] options;
         CCombo combo;
         Text text;
         Button button;
@@ -453,7 +455,7 @@ public class TableAssist {
         CellListener celllistener = null;
         
         for (String id : table.keySet()) {
-            component = table.get(id);
+            component = (TableComponent)table.get(id);
             
             editor = new TableEditor(comptable);
             editor.grabHorizontal = true;
@@ -508,34 +510,17 @@ public class TableAssist {
                 break;
                 
             case EVE.combo:
-                combo = new CCombo(comptable, SWT.NONE);
+                comboassist.setItem(comptable.getItemCount() - 1);
+                comboassist.setOptions(component.getOptions());
+                comboassist.setTableReference(table);
+                comboassist.setReference(references.get(id));
+                combo = (CCombo)comboassist.newInstance();
+                
                 combo.setEditable(component.isEnabled());
                 combo.addListener (SWT.FocusOut, celllistener);
                 combo.addListener (SWT.Traverse, celllistener);
                 
-                charw = ViewUtils.getCharWidth(combo);
-                charh = ViewUtils.getCharHeight(combo);
-                
-                combo.setSize(combo.computeSize(
-                        (component.getLength() * charw) + 35, charh));
-                
                 component.getColumn().setWidth(combo.getSize().x);
-                options = component.getOptions();
-                
-                /*
-                 * definições para carga dinâmica de valores
-                 */
-                if (options != null && options.length > 0) {
-                    combo.setText(options[0]);
-                    combo.setItems(options);
-                }
-                
-                if (options == null) {
-                    combo.addListener(SWT.MouseDown, component.listener(
-                            id, controller, comptable.getItemCount() - 1));
-                    component.setTableReference(table);
-                    component.setListenerReference(references.get(id));
-                }
                 
                 editor.setEditor(combo, item, k);
                 
@@ -561,7 +546,7 @@ public class TableAssist {
      * @param length
      */
     public final void put(String id, int length) {
-        TableComponent component = new TableComponent(
+        Component component = new TableComponent(
                 messages.getMessage(id, null, id, locale));
         
         component.setLength(length);
@@ -659,7 +644,7 @@ public class TableAssist {
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         for (String id : table.keySet()) {
-            component = table.get(id);
+            component = (TableComponent)table.get(id);
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
             tablecol.pack();

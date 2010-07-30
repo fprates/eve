@@ -34,6 +34,7 @@ public class CustomerModel extends AbstractModel {
         customer.setBillingIncentiveValue(customer_.getBillingIncentiveValue());
         customer.setSupplierIncentiveValue(customer_.getSupplierIncentiveValue());
         customer.setPartnerIncentiveValue(customer_.getPartnerIncentiveValue());
+        customer.setStandardSupplier(customer_.getStandardSupplier());
         
         customer.getContacts().clear();
         customer.getContacts().addAll(customer_.getContacts());

@@ -32,6 +32,7 @@ public class Customer implements Serializable {
     private float splrinc;
     private float prtninc;
     private String reference;
+    private int standardsupplier;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
@@ -141,6 +142,14 @@ public class Customer implements Serializable {
      */
     public String getReference() {
         return reference;
+    }
+    
+    /**
+     * Retorna fornecedor padrão
+     * @return
+     */
+    public int getStandardSupplier() {
+        return standardsupplier;
     }
     
     /**
@@ -274,6 +283,14 @@ public class Customer implements Serializable {
      */
     public void setReference(String reference) {
         this.reference = reference;
+    }
+    
+    /**
+     * Ajusta fornecedor padrão
+     * @param standardsupplier
+     */
+    public void setStandardSupplier(int standardsupplier) {
+        this.standardsupplier = standardsupplier;
     }
     
     /**

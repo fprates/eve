@@ -62,7 +62,8 @@ create table custmr001 (
    VLIBL decimal(6,3),
    dvcsp decimal(6,3),
    dvcpt decimal(6,3),
-   refer char(12)
+   refer char(12),
+   stdsp numeric(10)
 );
 
 /* mestre de clientes - contatos */

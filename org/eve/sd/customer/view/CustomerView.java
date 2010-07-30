@@ -46,7 +46,7 @@ public class CustomerView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put("customer.ident", 12, false);
+        form.put("customer.ident", 10, false);
         form.put("customer.dtreg", 10, false);
         form.put("customer.tmreg", 8, false);
         form.put("customer.refer", 12);
@@ -72,6 +72,7 @@ public class CustomerView extends AbstractView {
         form.put("customer.vlibl", 7);
         form.put("customer.dvcsp", 7);
         form.put("customer.dvcpt", 7);
+        form.putCombo("customer.stdsp", null, 12);
         
         form.define(container);
         
@@ -219,6 +220,7 @@ public class CustomerView extends AbstractView {
         form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
         form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
         form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
+        form.setInt("customer.stdsp", customer.getStandardSupplier());
         
         ctable.clear();
         for (CustomerContact contact : customer.getContacts()) {
