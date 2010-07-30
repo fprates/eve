@@ -158,6 +158,7 @@ public class CustomerController extends AbstractController {
                 customer.setBillingIncentiveValue(form.getFloat("customer.vlibl"));
                 customer.setSupplierIncentiveValue(form.getFloat("customer.dvcsp"));
                 customer.setPartnerIncentiveValue(form.getFloat("customer.dvcpt"));
+                customer.setStandardSupplier(form.getInt("customer.stdsp"));
                 
                 /*
                  * inclui contatos
