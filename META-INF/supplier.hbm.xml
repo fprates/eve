@@ -11,5 +11,6 @@
         <property name="regDate" column="DTREG"/>
         <property name="regTime" column="HRREG"/>
         <property name="regUser" column="USREG"/>
+        <property name="reference" column="REFER"/>
     </class>
 </hibernate-mapping>

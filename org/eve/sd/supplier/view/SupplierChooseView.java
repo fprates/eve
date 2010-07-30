@@ -4,6 +4,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EVE;
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.TableAssist;
 
 public class SupplierChooseView extends AbstractView {
@@ -21,6 +22,7 @@ public class SupplierChooseView extends AbstractView {
         stable.setLines(10);
         stable.putMark("supplier.mark", EVE.single);
         stable.put("supplier.ident", 12);
+        stable.put("supplier.refer", 12);
         stable.put("supplier.name", 40);
         stable.put("supplier.aname", 40);
         
@@ -35,7 +37,10 @@ public class SupplierChooseView extends AbstractView {
      * @see org.eve.view.View#reload(java.lang.String)
      */
     @Override
-    public void reload(String action) {        
+    public void reload(String action) {
+        Controller controller = getController();
+        controller.setAction(action);
+        
         setTitlebar("supplier.sel.title");        
     }
 

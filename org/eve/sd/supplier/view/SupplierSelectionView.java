@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eve.view.AbstractView;
+import org.eve.view.Controller;
 import org.eve.view.Form;
 
 /**
@@ -46,6 +47,7 @@ public class SupplierSelectionView extends AbstractView {
         
         selporform.put("supplier.name", 40);
         selporform.put("supplier.aname", 40);
+        selporform.put("supplier.refer", 12);
         selporform.define(selpor);
         selpor.pack();
         
@@ -56,7 +58,14 @@ public class SupplierSelectionView extends AbstractView {
      * @see org.eve.ui.View#reload(java.lang.String)
      */
     @Override
-    public void reload(String action) {        
+    public void reload(String action) {
+        Controller controller = getController();
+        
+        controller.setAction(action);
+        controller.getForm("main").clear();
+        controller.getForm("selpor").clear();
+        controller.getTable("suppliers").clear();
+        
         setTitlebar("supplier.sel.title");
     }
 

@@ -24,6 +24,7 @@ public class SupplierController extends AbstractController {
 //                supplier.setCodCadFiscal(form.getString("supplier.cnpj"));
                 supplier.setId(form.getInt("supplier.ident"));
                 supplier.setName(form.getString("supplier.name"));
+                supplier.setReference(form.getString("supplier.refer"));
 //                supplier.setStatus(form.getInt("supplier.status"));
 //                supplier.setHomePage(form.getString("supplier.homep"));
 //                supplier.setEmail(form.getString("supplier.email"));
