@@ -58,47 +58,66 @@ public class ComboListener implements Listener {
         this.type = type;
     }
     
+    /**
+     * 
+     * @param component
+     * @param type
+     * @return
+     */
+    private final Control getControl(Component component, int index) {
+        switch (type) {
+        case EVE.single:
+            return component.getControl();
+        
+        case EVE.multi:
+            return component.getControl(index);
+            
+        default:
+            return null;
+        }
+        
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
     @Override
     public final void handleEvent(Event ev) {
-        Control control;
         Component component;
+        Component component_ = table.get(id);
+        Control control_ = getControl(component_, index);
         Object object_ = null;
-        CCombo combo = (CCombo)ev.widget;
         
-        if (combo.getListVisible())
-            return;
-        
-        if (reference != null) {
-            
-            component = table.get(reference);
-            switch (type) {
-            case EVE.multi:
-                control = component.getControl(index);
-                break;
-                
-            case EVE.single:
-                control = component.getControl();
-                break;
-                
-            default:
+        switch (component_.getType()) {
+        case EVE.combo:
+            if (((Combo)control_).getListVisible())
                 return;
-            }
+            break;
+            
+        case EVE.ccombo:
+            if (((CCombo)control_).getListVisible())
+                return;
+            break;
+            
+        default:
+            return;
+        }
+            
+        if (reference != null) {
+            component = table.get(reference);
             
             switch (component.getType()) {
             case EVE.ccombo:
-                object_ = ((CCombo)control).getText();
+                object_ = ((CCombo)getControl(component, index)).getText();
                 break;
                 
             case EVE.combo:
-                object_ = ((Combo)control).getText();
+                object_ = ((Combo)getControl(component, index)).getText();
                 break;
                 
             case EVE.text:
-                object_ = ((Text)control).getText();
+                object_ = ((Text)getControl(component, index)).getText();
                 break;
                 
             default:
@@ -116,8 +135,20 @@ public class ComboListener implements Listener {
         if (results == null)
             return;
         
-        combo.removeAll();
-        for (Object value : results.keySet())
-            combo.add(results.get(value));
+        switch (component_.getType()) {
+        case EVE.combo:
+            ((Combo)control_).removeAll();
+            for (Object value : results.keySet())
+                ((Combo)control_).add(results.get(value));
+            
+            break;
+            
+        case EVE.ccombo:
+            ((CCombo)control_).removeAll();
+            for (Object value : results.keySet())
+                ((CCombo)control_).add(results.get(value));
+            
+            break;
+        }
     }    
 }
