@@ -50,8 +50,7 @@ public class TableAssist {
     private EveAPI system;
     private ComboAssist comboassist;
     
-    public TableAssist(Controller controller) {
-        this.controller = controller;
+    public TableAssist() {
         table = new LinkedHashMap<String, Component>();
         references = new HashMap<String, String>();
         editable = true;
@@ -60,7 +59,8 @@ public class TableAssist {
         currentline = 0;
         lines = LINES;
         comboassist = new ComboAssist();
-        comboassist.setType(EVE.ccombo_widget);
+        comboassist.setType(EVE.ccombo);
+        comboassist.setControlType(EVE.multi);
     }
     
     /*
@@ -68,6 +68,14 @@ public class TableAssist {
      * Setters
      * 
      */
+    
+    /**
+     * 
+     * @param controller
+     */
+    public final void setController(Controller controller) {
+        this.controller = controller;
+    }
     
     /**
      * Define localização
@@ -284,7 +292,7 @@ public class TableAssist {
                 control = component.getControl(row);
                 
                 switch (component.getType()) {
-                case EVE.combo:
+                case EVE.ccombo:
                     value = ((CCombo)control).getText();
                     if (value == null)
                         return "";
@@ -437,13 +445,13 @@ public class TableAssist {
         comptable.removeAll();
         
         for (int k = 0; k < lines; k++)
-            addTableItem(new TableItem(comptable, SWT.NONE), controller);
+            addTableItem(new TableItem(comptable, SWT.NONE));
     }
     
     /**
      * Adiciona item em tabela
      */
-    private final void addTableItem(TableItem item, Controller controller) {
+    private final void addTableItem(TableItem item) {
         CCombo combo;
         Text text;
         Button button;
@@ -509,13 +517,15 @@ public class TableAssist {
                 
                 break;
                 
-            case EVE.combo:
+            case EVE.ccombo:
                 comboassist.setItem(comptable.getItemCount() - 1);
                 comboassist.setOptions(component.getOptions());
                 comboassist.setTableReference(table);
                 comboassist.setReference(references.get(id));
-                combo = (CCombo)comboassist.newInstance();
+                comboassist.setLength(component.getLength());
+                comboassist.setId(id);
                 
+                combo = (CCombo)comboassist.newInstance();                
                 combo.setEditable(component.isEnabled());
                 combo.addListener (SWT.FocusOut, celllistener);
                 combo.addListener (SWT.Traverse, celllistener);
@@ -537,7 +547,7 @@ public class TableAssist {
     public final void insert() {
         currentline++;
         if (currentline > lines)
-            addTableItem(new TableItem(comptable, SWT.NONE), controller);
+            addTableItem(new TableItem(comptable, SWT.NONE));
     }
     
     /**
@@ -577,7 +587,7 @@ public class TableAssist {
         TableComponent component = new TableComponent(
                 messages.getMessage(id, null, id, locale));
         
-        component.setType(EVE.combo);
+        component.setType(EVE.ccombo);
         component.setOptions(options);
         component.setLength(length);
         
@@ -644,6 +654,7 @@ public class TableAssist {
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         comboassist.setContainer(comptable);
+        comboassist.setController(controller);
         
         for (String id : table.keySet()) {
             component = (TableComponent)table.get(id);
@@ -662,7 +673,7 @@ public class TableAssist {
          * do controle de tabela.
          */
         for (TableItem item : comptable.getItems())
-            addTableItem(item, controller);
+            addTableItem(item);
         
         return area;
     }

@@ -3,6 +3,7 @@ package org.eve.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -202,6 +203,10 @@ public abstract class AbstractComponent implements Component {
         case EVE.combo:
             ((Combo)control).setText("");
             break;
+            
+        case EVE.ccombo:
+            ((CCombo)control).setText("");
+            break;
         }        
     }
     
@@ -216,6 +221,9 @@ public abstract class AbstractComponent implements Component {
         for (ControlEditor editor : editors)
             editor.getEditor().setEnabled(enabled);
         
+        if (control == null)
+            return;
+        
         switch (type) {
         case EVE.text:
             ((Text)control).setEnabled(isEnabled());
@@ -223,6 +231,10 @@ public abstract class AbstractComponent implements Component {
             
         case EVE.combo:
             ((Combo)control).setEnabled(isEnabled());
+            break;
+            
+        case EVE.ccombo:
+            ((CCombo)control).setEnabled(isEnabled());
             break;
         }        
     }

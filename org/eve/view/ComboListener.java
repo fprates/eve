@@ -4,8 +4,10 @@ import java.util.Map;
 
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 
 public class ComboListener implements Listener {
@@ -14,6 +16,7 @@ public class ComboListener implements Listener {
     private String id;
     private String reference;
     private int index;
+    private int type;
     private Map<String, Component> table;
     private Map<Object, String> results;
     
@@ -47,28 +50,55 @@ public class ComboListener implements Listener {
         this.index = index;
     }
     
+    /**
+     * 
+     * @param type
+     */
+    public final void setType(int type) {
+        this.type = type;
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
     @Override
     public final void handleEvent(Event ev) {
-        Object object_;
+        Control control;
         Component component;
+        Object object_ = null;
         CCombo combo = (CCombo)ev.widget;
         
         if (combo.getListVisible())
             return;
         
         if (reference != null) {
+            
             component = table.get(reference);
-            switch (component.getType()) {
-            case EVE.table:
-                object_ = ((CCombo)component.getControl(index)).getText();
+            switch (type) {
+            case EVE.multi:
+                control = component.getControl(index);
                 break;
                 
-            case EVE.form:
-                object_ = ((Combo)component.getControl()).getText();
+            case EVE.single:
+                control = component.getControl();
+                break;
+                
+            default:
+                return;
+            }
+            
+            switch (component.getType()) {
+            case EVE.ccombo:
+                object_ = ((CCombo)control).getText();
+                break;
+                
+            case EVE.combo:
+                object_ = ((Combo)control).getText();
+                break;
+                
+            case EVE.text:
+                object_ = ((Text)control).getText();
                 break;
                 
             default:

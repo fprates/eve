@@ -13,6 +13,7 @@ public class ComboAssist {
     private int type;
     private int length;
     private int item;
+    private int controltype;
     private String id;
     private String reference;
     private String[] options;
@@ -96,6 +97,14 @@ public class ComboAssist {
     
     /**
      * 
+     * @param controltype
+     */
+    public final void setControlType(int controltype) {
+        this.controltype = controltype;
+    }
+    
+    /**
+     * 
      * @return
      */
     public final Widget newInstance() {
@@ -106,14 +115,14 @@ public class ComboAssist {
         ComboListener listener;
         
         switch(type) {
-        case EVE.ccombo_widget:
+        case EVE.ccombo:
             ccombo = new CCombo(container, SWT.NONE);
             
             charw = ViewUtils.getCharWidth(ccombo);
             charh = ViewUtils.getCharHeight(ccombo);
             
             ccombo.setSize(ccombo.computeSize(
-                    (length * charw) + 35, charh));
+                    (length * charw) + 40, charh));
             
             /*
              * definições para carga dinâmica de valores
@@ -128,19 +137,20 @@ public class ComboAssist {
                 listener.setIndex(item);
                 listener.setTableReference(table);
                 listener.setReference(reference);
+                listener.setType(controltype);
+                
                 ccombo.addListener(SWT.MouseDown, listener);
             }
             
             return ccombo;
             
-        case EVE.combo_widget:
+        case EVE.combo:
             combo = new Combo(container, SWT.BORDER);
             
             charw = ViewUtils.getCharWidth(combo);
             charh = ViewUtils.getCharHeight(combo);
 
-            combo.setSize(combo.computeSize(
-                    (length * charw) + 35, charh));
+            combo.setSize(combo.computeSize((length * charw) + 35, charh));
             
             /*
              * definições para carga dinâmica de valores
@@ -154,6 +164,8 @@ public class ComboAssist {
                 listener = new ComboListener(id, controller);
                 listener.setTableReference(table);
                 listener.setReference(reference);
+                listener.setType(controltype);
+                
                 combo.addListener(SWT.MouseDown, listener);
             }
             

@@ -231,13 +231,15 @@ public abstract class AbstractView implements View {
      * @return
      */
     protected final Form addForm(String id) {
+        Controller controller = getController();
         Form form = new Form(id);
         
+        form.setController(controller);
         form.setMessages(messages);
         form.setSystem(system);
         form.setLocale(locale);
 
-        getController().putForm(id, form);
+        controller.putForm(id, form);
         
         return form;
     }
@@ -249,8 +251,9 @@ public abstract class AbstractView implements View {
      */
     protected final TableAssist addTable(String id) {
         Controller controller = getController();
-        TableAssist table = new TableAssist(controller);
+        TableAssist table = new TableAssist();
         
+        table.setController(controller);
         table.setLocale(locale);
         table.setMessages(messages);
         table.setSystem(system);

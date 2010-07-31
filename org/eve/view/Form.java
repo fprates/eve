@@ -31,11 +31,13 @@ public class Form {
     private DateFormat dateformat;
     private EveAPI system;
     private ComboAssist comboassist;
+    private Controller controller;
     
     public Form(String id) {
         fields = new LinkedHashMap<String, FormComponent>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
+        comboassist.setControlType(EVE.single);
     }
     
     /*
@@ -51,6 +53,14 @@ public class Form {
     public final void setLocale(Locale locale) {
         this.locale = locale;
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+    }
+    
+    /**
+     * 
+     * @param controller
+     */
+    public final void setController(Controller controller) {
+        this.controller = controller;
     }
     
     /**
@@ -272,7 +282,7 @@ public class Form {
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
-        comboassist.setType(EVE.combo_widget);
+        comboassist.setController(controller);
         
         for(String field : fields.keySet()) {
             component = fields.get(field);
@@ -301,6 +311,9 @@ public class Form {
             case EVE.combo:
                 comboassist.setContainer(fieldComposite);
                 comboassist.setOptions(component.getOptions());
+                comboassist.setLength(component.getLength());
+                comboassist.setId(component.getName());
+                
                 combo = (Combo)comboassist.newInstance();
                 
                 component.setControl(combo);
