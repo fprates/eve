@@ -282,42 +282,12 @@ public class TableAssist {
      * @return
      */
     public final String getStringValue(String id, int row) {
-        Control control;
-        Component component;
-        String value;
-        
         for (String id_ : table.keySet())
-            if (id_.equals(id)) {
-                component = table.get(id);
-                control = component.getControl(row);
-                
-                switch (component.getType()) {
-                case EVE.ccombo:
-                    value = ((CCombo)control).getText();
-                    if (value == null)
-                        return "";
-                    
-                    if (!component.isNocase())
-                        ((CCombo)control).setText(value.toUpperCase(locale));
-                    break;
-                    
-                case EVE.text:
-                    value = ((Text)control).getText();
-                    if (value == null)
-                        return "";
-                    
-                    if (!component.isNocase())
-                        ((Text)control).setText(value.toUpperCase(locale));
-                    break;
-                    
-                default:
-                    value = "";
-                }
-                
-                return value;
-            }
+            if (id_.equals(id))
+                return table.get(id).getString(row);
         
         return "";
+        
     }
     
     /**
@@ -344,7 +314,7 @@ public class TableAssist {
             value = getStringValue(id, row);            
             return (value.equals(""))? 0 : Integer.parseInt(value);
             
-        case EVE.combo:
+        case EVE.ccombo:
             value_ = ((CCombo)table.get(id).getControl(row)).getSelectionIndex();            
             return (value_ == -1)? 0 : value_;
             
@@ -662,6 +632,7 @@ public class TableAssist {
             tablecol.setText(component.getName());
             tablecol.pack();
             component.setColumn(tablecol);
+            component.setLocale(locale);
         }
         
         for (int k = 0; k < lines; k++)

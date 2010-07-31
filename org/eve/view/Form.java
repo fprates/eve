@@ -25,7 +25,7 @@ import org.springframework.context.MessageSource;
  *
  */
 public class Form {
-    private Map<String, FormComponent> fields;
+    private Map<String, Component> fields;
     private MessageSource messages;
     private Locale locale;
     private DateFormat dateformat;
@@ -34,7 +34,7 @@ public class Form {
     private Controller controller;
     
     public Form(String id) {
-        fields = new LinkedHashMap<String, FormComponent>();
+        fields = new LinkedHashMap<String, Component>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
         comboassist.setControlType(EVE.single);
@@ -69,7 +69,7 @@ public class Form {
      * @param properties
      */
     public final void setProperties(String id, int properties) {
-        FormComponent component = fields.get(id);
+        Component component = fields.get(id);
         
         if ((properties & EVE.nocase) == EVE.nocase)
             component.setNocase(true);
@@ -88,13 +88,8 @@ public class Form {
      * @param field
      * @param value
      */
-    public final void setString(String field, String value) {
-        FormComponent component = fields.get(field);
-        
-        if (!component.isNocase() && value != null)
-            value = value.toUpperCase(locale);
-        
-        component.setText((value == null)? "" : value);
+    public final void setString(String field, String text) {
+        fields.get(field).setString(text);
     }
     
     /**
@@ -103,17 +98,7 @@ public class Form {
      * @param value
      */
     public final void setInt(String field, int value) {
-        FormComponent component = fields.get(field);
-        
-        switch (component.getType()) {
-        case EVE.text:
-            setString(field, Integer.toString(value));
-            break;
-            
-        case EVE.combo:
-            component.setText(component.getOption(value));
-            break;
-        }
+        fields.get(field).setInt(value);
     }
     
     /**
@@ -177,7 +162,7 @@ public class Form {
      * @param id
      * @return
      */
-    public final FormComponent get(String id) {
+    public final Component get(String id) {
         return fields.get(id);
     }
     
@@ -187,7 +172,7 @@ public class Form {
      * @return
      */
     public final String getString(String field) {
-        return fields.get(field).getText();
+        return fields.get(field).getString();
     }
     
     /**
@@ -208,28 +193,15 @@ public class Form {
      * @return
      */
     public final int getInt(String field) {
-        String test;
-        int test_;
-        FormComponent component = fields.get(field);
+        Component component = fields.get(field);
         
-        switch (component.getType()) {
-        case EVE.text:
-            test = getString(field);
-            try {
-                return test.equals("")? 0:Integer.parseInt(test);                
-            } catch (NumberFormatException ex) {
-                system.setMessage(EVE.error, getMessage("invalid.int.format"));
-                component.getControl().setFocus();
-                
-                throw new NumberFormatException();
-            }
-        
-        case EVE.combo:
-            test_ = ((Combo)component.getControl()).getSelectionIndex();
-            return (test_ < 0)? 0:test_;
+        try {
+            return component.getInt();
+        } catch (NumberFormatException ex) {
+            system.setMessage(EVE.error, getMessage("invalid.int.format"));
+            component.getControl().setFocus();                
+            throw ex;
         }
-        
-        return 0;
     }
     
     /**
@@ -256,7 +228,7 @@ public class Form {
      * Retorna components do formulário
      * @return
      */
-    public final Collection<FormComponent> getComponents() {
+    public final Collection<Component> getComponents() {
         return fields.values();
     }
     
@@ -278,14 +250,15 @@ public class Form {
         int charw;
         int charh;
         Composite fieldComposite;
-        FormComponent component;
+        Component component;
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
         comboassist.setController(controller);
         
         for(String field : fields.keySet()) {
-            component = fields.get(field);
+            component = fields.get(field);            
+            component.setLocale(locale);
             
             label = new Label(composite, SWT.NONE);
             label.setText(component.getName());
@@ -366,8 +339,8 @@ public class Form {
      * Limpa formulário
      */
     public final void clear() {
-        for (FormComponent component : fields.values())
-            component.setText("");
+        for (Component component : fields.values())
+            component.clear();
     }
     
 }

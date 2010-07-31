@@ -1,7 +1,9 @@
 package org.eve.view;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
@@ -16,9 +18,11 @@ public abstract class AbstractComponent implements Component {
     private int type;
     private boolean nocase;
     private boolean enabled;
+    private Locale locale;
     private String[] options;
     private Control control;
     private List<ControlEditor> editors;
+    private DateFormat dateformat;
 
     public AbstractComponent() {
         nocase = false;
@@ -42,6 +46,29 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final Control getControl(int index) {
         return editors.get(index).getEditor();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getInt()
+     */
+    @Override
+    public final int getInt() {
+        String test;
+        int test_;
+        
+        switch (type) {
+        case EVE.text:
+            test = getString();
+            return test.equals("")? 0:Integer.parseInt(test);
+        
+        case EVE.combo:
+            test_ = ((Combo)control).getSelectionIndex();
+            return (test_ < 0)? 0:test_;
+            
+        default:
+            return 0;
+        }
     }
     
     /*
@@ -91,6 +118,58 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#getString()
+     */
+    @Override
+    public final String getString() {
+        switch (type) {
+        case EVE.combo:
+            return ((Combo)control).getText();
+            
+        case EVE.text:
+            return ((Text)control).getText();
+            
+        default:
+            return null;
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getStringValue(int)
+     */
+    @Override
+    public final String getString(int index) {
+        String value;
+        Control control = editors.get(index).getEditor();
+        
+        switch (type) {
+        case EVE.ccombo:
+            value = ((CCombo)control).getText();
+            if (value == null)
+                return "";
+            
+            if (!nocase)
+                ((CCombo)control).setText(value.toUpperCase(locale));
+            
+            return value;
+            
+        case EVE.text:
+            value = ((Text)control).getText();
+            if (value == null)
+                return "";
+            
+            if (!nocase)
+                ((Text)control).setText(value.toUpperCase(locale));
+            
+            return value;
+            
+        default:
+            return "";
+        }
+    }
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#isNocase()
      */
     @Override
@@ -127,6 +206,23 @@ public abstract class AbstractComponent implements Component {
 
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#setInt(int)
+     */
+    @Override
+    public final void setInt(int value) {        
+        switch (type) {
+        case EVE.text:
+            setString(Integer.toString(value));
+            break;
+            
+        case EVE.combo:
+            setString(options[value]);
+            break;
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#setLength(int)
      */
     @Override
@@ -134,6 +230,15 @@ public abstract class AbstractComponent implements Component {
         this.length = length;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setLocale(java.util.Locale)
+     */
+    @Override
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+    }
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#setName(java.lang.String)
@@ -168,6 +273,27 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setType(int type) {
         this.type = type;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setString(java.lang.String)
+     */
+    @Override
+    public final void setString(String text) {
+        String text_ = (text == null)? "" : text;
+        
+        if (!nocase)
+            text_ = text_.toUpperCase(locale);
+        
+        switch (type) {
+        case EVE.text:
+            ((Text)control).setText(text_);
+            break;
+            
+        case EVE.combo:
+            ((Combo)control).setText(text_);
+        }
     }
     
     /*

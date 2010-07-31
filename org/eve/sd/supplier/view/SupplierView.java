@@ -4,9 +4,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractView;
+import org.eve.view.Component;
 import org.eve.view.Controller;
 import org.eve.view.Form;
-import org.eve.view.FormComponent;
 
 public class SupplierView extends AbstractView {
 
@@ -155,8 +155,10 @@ public class SupplierView extends AbstractView {
             setTitlebar("supplier.show.title");
             setButtonVisible("supplier.save", false);
             
-            for (FormComponent component : form.getComponents())
+            for (Component component : form.getComponents()) {
                 component.setEnabled(false);
+                component.commit();
+            }
             
             setControlLoad(supplier);
             
@@ -170,8 +172,10 @@ public class SupplierView extends AbstractView {
             setTitlebar("supplier.edit.title");
             setButtonVisible("supplier.save", true);
 
-            for (FormComponent component : form.getComponents())
+            for (Component component : form.getComponents()) {
                 component.setEnabled(component.isEnabled());
+                component.commit();
+            }
             
             setControlLoad(supplier);
                 
@@ -185,8 +189,10 @@ public class SupplierView extends AbstractView {
             setTitlebar("supplier.create.title");
             setButtonVisible("supplier.save", true);
 
-            for (FormComponent component : form.getComponents())
+            for (Component component : form.getComponents()) {
                 component.setEnabled(component.isEnabled());
+                component.commit();
+            }
             
             setControlLoad(supplier);
             

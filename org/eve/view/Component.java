@@ -1,10 +1,18 @@
 package org.eve.view;
 
+import java.util.Locale;
+
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
 
 public interface Component {
 
+    /**
+     * 
+     * @return
+     */
+    public abstract int getInt();
+    
     /**
      * 
      * @return
@@ -63,6 +71,21 @@ public interface Component {
     
     /**
      * 
+     * @param id
+     * @return
+     */
+    public abstract String getString();
+    
+    /**
+     * 
+     * @param id
+     * @param index
+     * @return
+     */
+    public abstract String getString(int index);
+    
+    /**
+     * 
      * @param control
      */
     public abstract void setControl(Control control);
@@ -78,6 +101,18 @@ public interface Component {
      * @param enabled
      */
     public abstract void setEnabled(boolean enabled);
+    
+    /**
+     * 
+     * @param value
+     */
+    public abstract void setInt(int value);
+    
+    /**
+     * 
+     * @param locale
+     */
+    public abstract void setLocale(Locale locale);
     
     /**
      * 
@@ -102,6 +137,12 @@ public interface Component {
      * @param type
      */
     public abstract void setType(int type);
+    
+    /**
+     * 
+     * @param value
+     */
+    public abstract void setString(String text);
     
     /**
      * 
