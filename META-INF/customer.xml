@@ -24,6 +24,7 @@
                 <entry key="sel_customer" value="from Customer where ident = ?"/>
                 <entry key="selby_customers"
                     value="from Customer where name like ? and alternateName like ? and reference like ?"/>
+                <entry key="sel_suppliers" value="from Supplier"/>
             </map>
         </property>
     </bean>

@@ -14,6 +14,7 @@ import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
 import org.eve.sd.customer.CustomerSchedule;
+import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
@@ -59,12 +60,27 @@ public class CustomerController extends AbstractController {
      */
     @Override
     public final Map<Object, String> getResults(String id, Object object) {
-        int size;
         String ufkey;
         List<?> results;
         Map<Object, String> results_;
         City city;
+        Supplier supplier;        
         Model model = getModel();
+        
+        if (id.equals("customer.stdsp")) {
+            results = model.select("sel_suppliers", null);
+            
+            if (results.size() == 0)
+                return null;
+            
+            results_ = new LinkedHashMap<Object, String>();
+            for (Object object_ : results) {
+                supplier = (Supplier)object_;                
+                results_.put(supplier.getId(), supplier.getName());                
+            }
+            
+            return results_;
+        }
         
         if (id.equals("address.coduf")) {
             model.load(Country.class, "BRA", country);
@@ -72,12 +88,10 @@ public class CustomerController extends AbstractController {
             if (country == null)
                 return null;
             
-            size = country.getStates().size();
-            if (size == 0)
+            if (country.getStates().size() == 0)
                 return null;
             
             results_ = new LinkedHashMap<Object, String>();
-            size = 0;
             for (State state : country.getStates())
                 results_.put(state.getIdent(), state.getIdent());
             
@@ -100,8 +114,7 @@ public class CustomerController extends AbstractController {
             if (results == null)
                 return null;
             
-            size = results.size();
-            if (size == 0)
+            if (results.size() == 0)
                 return null;
             
             results_ = new LinkedHashMap<Object, String>();
@@ -115,6 +128,10 @@ public class CustomerController extends AbstractController {
         return null;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractController#userInput(java.lang.String)
+     */
     @Override
     public final void userInput(String input) {
         String ufkey;
@@ -159,6 +176,9 @@ public class CustomerController extends AbstractController {
                 customer.setSupplierIncentiveValue(form.getFloat("customer.dvcsp"));
                 customer.setPartnerIncentiveValue(form.getFloat("customer.dvcpt"));
                 customer.setStandardSupplier(form.getInt("customer.stdsp"));
+                customer.setInscricaoEstadual(form.getString("customer.ie"));
+                customer.setTipoComunicacao(form.getInt("customer.tpcom"));
+                customer.setTipoEstabelecimento(form.getInt("customer.tpest"));
                 
                 /*
                  * inclui contatos

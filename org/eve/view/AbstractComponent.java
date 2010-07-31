@@ -286,6 +286,9 @@ public abstract class AbstractComponent implements Component {
         
         case EVE.ccombo:
         case EVE.combo:
+            if (options == null)
+                break;
+            
             setString(options[value]);
             break;
         }
@@ -304,6 +307,9 @@ public abstract class AbstractComponent implements Component {
         
         case EVE.ccombo:
         case EVE.combo:
+            if (options == null)
+                break;
+            
             setString(options[value], index);
             break;
         }

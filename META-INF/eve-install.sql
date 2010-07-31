@@ -63,7 +63,10 @@ create table custmr001 (
    dvcsp decimal(6,3),
    dvcpt decimal(6,3),
    refer char(12),
-   stdsp numeric(10)
+   stdsp numeric(10),
+   codie numeric(12),
+   tpest numeric(1),
+   tpcom numeric(1),
 );
 
 /* mestre de clientes - contatos */

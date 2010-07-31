@@ -23,6 +23,9 @@
         <property name="partnerIncentiveValue" column="DVCPT"/>
         <property name="reference" column="REFER"/>
         <property name="standardSupplier" column="STDSP"/>
+        <property name="inscricaoEstadual" column="CODIE"/>
+        <property name="tipoComunicacao" column="TPCOM"/>
+        <property name="tipoEstabelecimento" column="TPEST"/>
         
         <set name="contacts" inverse="true">
             <key column="IDENT"/>

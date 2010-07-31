@@ -241,6 +241,7 @@ public class Form {
         
         composite.setLayout(new GridLayout(2, false));
         comboassist.setController(controller);
+        comboassist.setTableReference(fields);
         
         for(String field : fields.keySet()) {
             component = fields.get(field);            

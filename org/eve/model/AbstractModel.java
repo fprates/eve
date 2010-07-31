@@ -119,8 +119,9 @@ public abstract class AbstractModel implements Model {
         session.beginTransaction();
         query = session.createQuery(queries.get(queryid));
         
-        for (Object object : criteria)
-            query.setParameter(id++, object);
+        if (criteria != null)
+            for (Object object : criteria)
+                query.setParameter(id++, object);
         
         results = query.list();
         session.getTransaction().commit();

@@ -53,10 +53,15 @@ public class CustomerView extends AbstractView {
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
         form.put("customer.cnpj", 18);
+        form.put("customer.ie", 12);
+        form.putCombo("customer.tpest", new String[] {
+                getMessage("tpest.super"),
+                getMessage("tpest.indus"),
+                getMessage("tpest.reven")}, 12);
         
         form.putCombo("customer.status", new String[] {
-                getMessage("customer.active"),
-                getMessage("customer.inactive")}, 7);
+                getMessage("customer.inactive"),
+                getMessage("customer.active")}, 7);
         
         form.putCombo("customer.tpinc", new String[] {
                 getMessage("incentive.free"),
@@ -73,6 +78,12 @@ public class CustomerView extends AbstractView {
         form.put("customer.dvcsp", 7);
         form.put("customer.dvcpt", 7);
         form.putCombo("customer.stdsp", null, 12);
+        
+        form.putCombo("customer.tpcom", new String[] {
+                getMessage("tpcom.blue"),
+                getMessage("tpcom.green"),
+                getMessage("tpcom.red"),
+                getMessage("tpcom.yellow")}, 8);
         
         form.define(container);
         
@@ -220,7 +231,10 @@ public class CustomerView extends AbstractView {
         form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
         form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
         form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
-//        form.setInt("customer.stdsp", customer.getStandardSupplier());
+        form.setInt("customer.stdsp", customer.getStandardSupplier());
+        form.setString("customer.ie", customer.getInscricaoEstadual());
+        form.setInt("customer.tpest", customer.getTipoEstabelecimento());
+        form.setInt("customer.tpcom", customer.getTipoComunicacao());
         
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {
