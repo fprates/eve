@@ -78,22 +78,6 @@ public class TableAssist {
     }
     
     /**
-     * Define localização
-     * @param locale
-     */
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
-    }
-    
-    /**
-     * Define mensagens para tabela
-     * @param messages
-     */
-    public final void setMessages(MessageSource messages) {
-        this.messages = messages;
-    }
-    
-    /**
      * Define tabela como editável
      * @param editable
      */
@@ -108,35 +92,11 @@ public class TableAssist {
     }
     
     /**
-     * Define string em tabela
-     * @param id
-     * @param row
-     * @param value
+     * Habilita inserção de linha
+     * @param insert
      */
-    public final void setStringValue(String id, int row, String value) {
-        Component component;
-        
-        for (String id_ : table.keySet())
-            if (id_.equals(id)) {
-                component = table.get(id);
-                
-                if (!component.isNocase() && value != null)
-                    value = value.toUpperCase(locale);
-                
-                if (value == null)
-                    value = "";
-                
-                switch (component.getType()) {
-                case EVE.text:
-                    ((Text)component.getControl(row)).setText(value);
-                    break;
-                    
-                case EVE.combo:
-                    ((CCombo)component.getControl(row)).setText(value);
-                    break;
-                }
-                break;
-            }
+    public final void setInsert(boolean insert) {
+        this.insert = insert;
     }
     
     /**
@@ -145,18 +105,24 @@ public class TableAssist {
      * @param row
      * @param value
      */
-    public final void setIntValue(String id, int row, int value) {
-        Component component = table.get(id);
-        
-        switch (component.getType()) {
-        case EVE.text:
-            setStringValue(id, row, Integer.toString(value));
-            break;
-            
-        case EVE.combo:
-            setStringValue(id, row, component.getOptions()[value]);
-            break;
-        }
+    public final void setIntValue(String id, int index, int value) {
+        table.get(id).setInt(value, index);
+    }
+    
+    /**
+     * Define quantidade de linhas visíveis
+     * @param lines
+     */
+    public final void setLines(int lines) {
+        this.lines = lines;
+    }
+    
+    /**
+     * Define localização
+     * @param locale
+     */
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
     }
     
     /**
@@ -179,37 +145,31 @@ public class TableAssist {
     }
     
     /**
+     * Define mensagens para tabela
+     * @param messages
+     */
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
+    }
+    
+    /**
+     * Define string em tabela
+     * @param id
+     * @param row
+     * @param value
+     */
+    public final void setStringValue(String id, int index, String text) {
+        table.get(id).setString(text, index);
+    }
+    
+    /**
      * Define valor do campo hora
      * @param id
      * @param row
      * @param value
      */
-    public final void setTimeValue(String id, int row, Time time) {
-        String value;
-        
-        if (time == null) {
-            setStringValue(id, row, "");
-            return;
-        }
-        
-        value = time.toString();
-        setStringValue(id, row, (value.equals("00:00:00"))?"":value);
-    }
-    
-    /**
-     * Define quantidade de linhas visíveis
-     * @param lines
-     */
-    public final void setLines(int lines) {
-        this.lines = lines;
-    }
-    
-    /**
-     * Habilita inserção de linha
-     * @param insert
-     */
-    public final void setInsert(boolean insert) {
-        this.insert = insert;
+    public final void setTimeValue(String id, int index, Time time) {
+        table.get(id).setTime(time, index);
     }
     
     /**

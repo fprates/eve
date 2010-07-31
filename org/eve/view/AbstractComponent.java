@@ -205,6 +205,35 @@ public abstract class AbstractComponent implements Component {
         return nocase;
     }
     
+    /**
+     * 
+     * @param control
+     * @param text
+     */
+    private final void setText(Control control, String text) {
+        String text_ = text;
+        
+        if (text_ == null)
+            text_ = "";        
+        
+        if (!nocase)
+            text_ = text_.toUpperCase(locale);
+        
+        switch (type) {
+        case EVE.text:
+            ((Text)control).setText(text_);
+            break;
+        
+        case EVE.ccombo:
+            ((CCombo)control).setText(text_);
+            break;
+            
+        case EVE.combo:
+            ((Combo)control).setText(text_);
+            break;
+        }        
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#setControl(org.eclipse.swt.widgets.Control)
@@ -254,11 +283,31 @@ public abstract class AbstractComponent implements Component {
         case EVE.text:
             setString(Integer.toString(value));
             break;
-            
+        
+        case EVE.ccombo:
         case EVE.combo:
             setString(options[value]);
             break;
         }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setInt(int, int)
+     */
+    @Override
+    public final void setInt(int value, int index) {
+        switch (type) {
+        case EVE.text:
+            setString(Integer.toString(value), index);
+            break;
+        
+        case EVE.ccombo:
+        case EVE.combo:
+            setString(options[value], index);
+            break;
+        }
+        
     }
     
     /*
@@ -313,18 +362,47 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setString(String text) {
-        String text_ = (text == null)? "" : text;
+        setText(control, text);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setString(java.lang.String, int)
+     */
+    @Override
+    public final void setString(String text, int index) {
+        setText(editors.get(index).getEditor(), text);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setTime(java.sql.Time)
+     */
+    @Override
+    public final void setTime(Time time) {
+        String value;
         
-        if (!nocase)
-            text_ = text_.toUpperCase(locale);
+        if (time == null) {
+            setString("");
+        } else {
+            value = time.toString();
+            setString(value.equals("00:00:00")?"":value);
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setTime(java.sql.Time, int)
+     */
+    @Override
+    public final void setTime(Time time, int index) {
+        String value;
         
-        switch (type) {
-        case EVE.text:
-            ((Text)control).setText(text_);
-            break;
-            
-        case EVE.combo:
-            ((Combo)control).setText(text_);
+        if (time == null) {
+            setString("", index);
+        } else {
+            value = time.toString();
+            setString(value.equals("00:00:00")?"":value, index);
         }
     }
     
@@ -335,18 +413,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setType(int type) {
         this.type = type;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setTime(java.sql.Time)
-     */
-    @Override
-    public final void setTime(Time time) {
-        if (time == null)
-            setString("");
-        else
-            setString(time.toString());        
     }
     
     /*

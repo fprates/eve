@@ -123,6 +123,13 @@ public interface Component {
     public abstract void setInt(int value);
     
     /**
+     * Ajusta valor inteiro em índice
+     * @param value
+     * @param index
+     */
+    public abstract void setInt(int value, int index);
+    
+    /**
      * Define comprimento
      * @param length
      */
@@ -159,10 +166,24 @@ public interface Component {
     public abstract void setString(String text);
     
     /**
+     * Ajusta texto em índice
+     * @param text
+     * @param index
+     */
+    public abstract void setString(String text, int index);
+    
+    /**
      * Ajusta hora
      * @param time
      */
     public abstract void setTime(Time time);
+    
+    /**
+     * Ajusta hora em índice
+     * @param time
+     * @param index
+     */
+    public abstract void setTime(Time time, int index);
     
     /**
      * Define tipo de componente
