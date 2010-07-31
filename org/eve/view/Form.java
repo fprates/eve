@@ -269,12 +269,10 @@ public class Form {
         int charh;
         Composite fieldComposite;
         FormComponent component;
-        String[] options;
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
-        comboassist = new ComboAssist();
-        comboassist.setType(EVE.combo);
+        comboassist.setType(EVE.combo_widget);
         
         for(String field : fields.keySet()) {
             component = fields.get(field);
@@ -301,15 +299,9 @@ public class Form {
                 break;
             
             case EVE.combo:
+                comboassist.setContainer(fieldComposite);
+                comboassist.setOptions(component.getOptions());
                 combo = (Combo)comboassist.newInstance();
-                
-                combo.setItems(component.getOptions());
-                
-                options = component.getOptions();
-                if (options.length > 0) {
-                    combo.setText(options[0]);
-                    combo.setItems(options);
-                }
                 
                 component.setControl(combo);
                 

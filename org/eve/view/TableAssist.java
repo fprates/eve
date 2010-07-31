@@ -643,6 +643,8 @@ public class TableAssist {
         comptable.setHeaderVisible(true);
         comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
+        comboassist.setContainer(comptable);
+        
         for (String id : table.keySet()) {
             component = (TableComponent)table.get(id);
             tablecol = new TableColumn(comptable, SWT.NONE);
@@ -672,8 +674,7 @@ public class TableAssist {
      */
     public final void sel(int col, int row) {
         Object[] objects = table.values().toArray();
-        Control control = ((TableComponent)objects[col]).getEditor(row)
-            .getEditor();
+        Control control = ((Component)objects[col]).getControl();
         
         if (control instanceof Text)
             ((Text)control).selectAll();
