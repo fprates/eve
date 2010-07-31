@@ -30,12 +30,14 @@ public class Form {
     private EveAPI system;
     private ComboAssist comboassist;
     private Controller controller;
+    private boolean editable;
     
     public Form(String id) {
         fields = new LinkedHashMap<String, Component>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
         comboassist.setControlType(EVE.single);
+        editable = true;
     }
     
     /*
@@ -43,6 +45,49 @@ public class Form {
      * Setters
      * 
      */
+    
+    /**
+     * 
+     * @param controller
+     */
+    public final void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
+    /**
+     * Ajusta valor data para campo
+     * @param field
+     * @param date
+     */
+    public final void setDate(String field, Date date) {
+        fields.get(field).setDate(date);
+    }
+    
+    /**
+     * 
+     * @param editable
+     */
+    public final void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+    /**
+     * Ajusta valor de ponto flutuante para campo
+     * @param field
+     * @param value
+     */
+    public final void setFloat(String field, float value) {
+        fields.get(field).setFloat(value);
+    }
+    
+    /**
+     * Ajusta valor do campo inteiro do formulário
+     * @param field
+     * @param value
+     */
+    public final void setInt(String field, int value) {
+        fields.get(field).setInt(value);
+    }
     
     /**
      * Define localização
@@ -53,11 +98,11 @@ public class Form {
     }
     
     /**
-     * 
-     * @param controller
+     * Define mensagens do sistema
+     * @param messages
      */
-    public final void setController(Controller controller) {
-        this.controller = controller;
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
     }
     
     /**
@@ -73,14 +118,6 @@ public class Form {
     }
     
     /**
-     * Define mensagens do sistema
-     * @param messages
-     */
-    public final void setMessages(MessageSource messages) {
-        this.messages = messages;
-    }
-    
-    /**
      * Ajusta valor do campo caractere do formulário
      * @param field
      * @param value
@@ -90,30 +127,11 @@ public class Form {
     }
     
     /**
-     * Ajusta valor do campo inteiro do formulário
-     * @param field
-     * @param value
+     * 
+     * @param system
      */
-    public final void setInt(String field, int value) {
-        fields.get(field).setInt(value);
-    }
-    
-    /**
-     * Ajusta valor de ponto flutuante para campo
-     * @param field
-     * @param value
-     */
-    public final void setFloat(String field, float value) {
-        fields.get(field).setFloat(value);
-    }
-    
-    /**
-     * Ajusta valor data para campo
-     * @param field
-     * @param date
-     */
-    public final void setDate(String field, Date date) {
-        fields.get(field).setDate(date);
+    public final void setSystem(EveAPI system) {
+        this.system = system;
     }
     
     /**
@@ -123,14 +141,6 @@ public class Form {
      */
     public final void setTime(String field, Time time) {
         fields.get(field).setTime(time);
-    }
-    
-    /**
-     * 
-     * @param system
-     */
-    public final void setSystem(EveAPI system) {
-        this.system = system;
     }
     
     /*
@@ -146,15 +156,6 @@ public class Form {
      */
     private final String getMessage(String message) {
         return messages.getMessage(message, null, message, locale);        
-    }
-    
-    /**
-     * Retorna componente de formulário
-     * @param id
-     * @return
-     */
-    public final Component get(String id) {
-        return fields.get(id);
     }
     
     /**
@@ -223,6 +224,32 @@ public class Form {
      * Others
      * 
      */
+    
+    /**
+     * Limpa formulário
+     */
+    public final void clear() {
+        for (Component component : fields.values())
+            component.clear();
+    }
+    
+    /**
+     * 
+     */
+    public final void commit() {
+        Component component;
+        
+        for (String id: fields.keySet()) {
+            component = fields.get(id);
+            
+            if (!component.isEnabled()) {
+                component.getControl().setEnabled(false);
+                continue;
+            }
+            
+            component.getControl().setEnabled(editable);
+        }
+    }
     
     /**
      * Constrói formulário e inicializa o próximo
@@ -320,14 +347,6 @@ public class Form {
         component.setOptions(options);
         
         fields.put(id, component);
-    }
-    
-    /**
-     * Limpa formulário
-     */
-    public final void clear() {
-        for (Component component : fields.values())
-            component.clear();
     }
     
 }

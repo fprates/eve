@@ -15,7 +15,6 @@ import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
 import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
-import org.eve.view.Component;
 import org.eve.view.Controller;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
@@ -322,10 +321,8 @@ public class CustomerView extends AbstractView {
             dschedule.clear();
             dschedule.setEditable(false);
             
-            for (Component component : form.getComponents()) {
-                component.setEnabled(false);
-                component.commit();
-            }
+            form.setEditable(false);
+            form.commit();
             
             setControlLoad(customer);
             
@@ -346,11 +343,9 @@ public class CustomerView extends AbstractView {
             vschedule.setEditable(true);
             dschedule.clear();
             dschedule.setEditable(true);
-
-            for (Component component : form.getComponents()) {
-                component.setEnabled(component.isEnabled());
-                component.commit();
-            }
+            
+            form.setEditable(true);
+            form.commit();
             
             setControlLoad(customer);
                 
@@ -371,11 +366,9 @@ public class CustomerView extends AbstractView {
             vschedule.setEditable(true);
             dschedule.clear();
             dschedule.setEditable(true);
-
-            for (Component component : form.getComponents()) {
-                component.setEnabled(component.isEnabled());
-                component.commit();
-            }
+            
+            form.setEditable(true);
+            form.commit();
             
             setControlLoad(customer);
             
