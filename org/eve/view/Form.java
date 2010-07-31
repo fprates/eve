@@ -1,7 +1,6 @@
 package org.eve.view;
 
 import java.sql.Time;
-import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -28,7 +27,6 @@ public class Form {
     private Map<String, Component> fields;
     private MessageSource messages;
     private Locale locale;
-    private DateFormat dateformat;
     private EveAPI system;
     private ComboAssist comboassist;
     private Controller controller;
@@ -52,7 +50,6 @@ public class Form {
      */
     public final void setLocale(Locale locale) {
         this.locale = locale;
-        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
     
     /**
@@ -107,7 +104,7 @@ public class Form {
      * @param value
      */
     public final void setFloat(String field, float value) {
-        setString(field, Float.toString(value));
+        fields.get(field).setFloat(value);
     }
     
     /**
@@ -115,11 +112,8 @@ public class Form {
      * @param field
      * @param date
      */
-    public final void setDate(String field, Date date) {        
-        if (date == null)
-            setString(field, "");
-        else 
-            setString(field, dateformat.format(date));
+    public final void setDate(String field, Date date) {
+        fields.get(field).setDate(date);
     }
     
     /**
@@ -128,10 +122,7 @@ public class Form {
      * @param time
      */
     public final void setTime(String field, Time time) {
-        if (time == null)
-            setString(field, "");
-        else
-            setString(field, time.toString());
+        fields.get(field).setTime(time);
     }
     
     /**
@@ -210,17 +201,12 @@ public class Form {
      * @return
      */
     public final float getFloat(String field) {
-        String test;
-        
-        test = getString(field);
-        
         try {
-            return test.equals("")? 0:Float.parseFloat(test);
+            return fields.get(field).getFloat();
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.float.format"));
-            fields.get(field).getControl().setFocus();
-            
-            throw new NumberFormatException();
+            fields.get(field).getControl().setFocus();            
+            throw ex;
         }
     }
     

@@ -1,39 +1,41 @@
 package org.eve.view;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.Locale;
 
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
 
 public interface Component {
-
-    /**
-     * 
-     * @return
-     */
-    public abstract int getInt();
     
     /**
-     * 
-     * @return
-     */
-    public abstract int getType();
-    
-    /**
-     * 
+     * Retorna controle
      * @return
      */
     public abstract Control getControl();
 
     /**
-     * 
+     * Retorna controle em índice
      * @param row
      * @return
      */
-    public abstract Control getControl(int row);
+    public abstract Control getControl(int index);
     
     /**
-     * 
+     * Retorna numérico flutuante 
+     * @return
+     */
+    public abstract float getFloat();
+
+    /**
+     * Retorna numérico inteiro
+     * @return
+     */
+    public abstract int getInt();
+    
+    /**
+     * Retorna comprimento
      * @return
      */
     public abstract int getLength();
@@ -43,6 +45,46 @@ public interface Component {
      * @return the name
      */
     public abstract String getName();
+
+    /**
+     * Retorna lista de valores fixos
+     * @return
+     */
+    public abstract String[] getOptions();
+
+    /**
+     * Retorna valor da lista de opções
+     * @param index
+     * @return
+     */
+    public abstract String getOption(int index);
+    
+    /**
+     * Retorna texto
+     * @param id
+     * @return
+     */
+    public abstract String getString();
+    
+    /**
+     * Retorna texto em índice
+     * @param id
+     * @param index
+     * @return
+     */
+    public abstract String getString(int index);
+    
+    /**
+     * Retorna tipo de controle
+     * @return
+     */
+    public abstract int getType();
+    
+    /**
+     * Retorna flag de habilitação
+     * @return
+     */
+    public abstract boolean isEnabled();
     
     /**
      * Retorna indicador de sensibilidade
@@ -51,80 +93,58 @@ public interface Component {
     public abstract boolean isNocase();
     
     /**
-     * 
-     * @return
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Retorna valor da lista de opções
-     * @param index
-     * @return
-     */
-    public abstract String getOption(int index);
-
-    /**
-     * Retorna lista de valores fixos
-     * @return
-     */
-    public abstract String[] getOptions();
-    
-    /**
-     * 
-     * @param id
-     * @return
-     */
-    public abstract String getString();
-    
-    /**
-     * 
-     * @param id
-     * @param index
-     * @return
-     */
-    public abstract String getString(int index);
-    
-    /**
-     * 
+     * Define controle
      * @param control
      */
     public abstract void setControl(Control control);
     
     /**
-     * 
-     * @param name
+     * Ajusta data
+     * @param date
      */
-    public abstract void setName(String name);
+    public abstract void setDate(Date date);
     
     /**
-     * 
+     * Ajusta habilitação
      * @param enabled
      */
     public abstract void setEnabled(boolean enabled);
     
     /**
-     * 
+     * Ajusta valor ponto flutuante
+     * @param value
+     */
+    public abstract void setFloat(float value);
+    
+    /**
+     * Ajusta valor inteiro
      * @param value
      */
     public abstract void setInt(int value);
     
     /**
-     * 
+     * Define comprimento
+     * @param length
+     */
+    public abstract void setLength(int length);
+    
+    /**
+     * Define localização
      * @param locale
      */
     public abstract void setLocale(Locale locale);
     
     /**
-     * 
+     * Define nome
+     * @param name
+     */
+    public abstract void setName(String name);
+    
+    /**
+     * Define sensibilidade
      * @param nocase
      */
     public abstract void setNocase(boolean nocase);
-    
-    /**
-     * 
-     * @param length
-     */
-    public abstract void setLength(int length);
 
     /**
      * Define valores fixos
@@ -133,29 +153,38 @@ public interface Component {
     public abstract void setOptions(String[] options);
     
     /**
-     * 
-     * @param type
-     */
-    public abstract void setType(int type);
-    
-    /**
-     * 
+     * Ajusta texto
      * @param value
      */
     public abstract void setString(String text);
     
     /**
-     * 
+     * Ajusta hora
+     * @param time
+     */
+    public abstract void setTime(Time time);
+    
+    /**
+     * Define tipo de componente
+     * @param type
+     */
+    public abstract void setType(int type);
+    
+    /**
+     * Adiciona editor
      * @param editor
      */
     public abstract void addEditor(ControlEditor editor);
     
     /**
-     * Ajusta indicador de sensibilidade
+     * Ajusta limpa componente
      * @param nocase
      */
     public abstract void clear();
     
+    /**
+     * Aplica definições
+     */
     public abstract void commit();
     
 }
