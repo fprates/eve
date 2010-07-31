@@ -81,14 +81,18 @@ public class TableAssist {
      * Define tabela como editável
      * @param editable
      */
-    public final void setEditable(boolean editable) {        
+    public final void setEditable(boolean editable) {
+        Component component;
         this.editable = editable;
         
         if (btarea != null)
             btarea.setVisible(editable);
         
-        for (String id : table.keySet())
-            table.get(id).setEnabled(editable);
+        for (String id : table.keySet()) {
+            component = table.get(id);
+            component.setEnabled(editable);
+            component.commit();
+        }
     }
     
     /**

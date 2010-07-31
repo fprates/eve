@@ -194,7 +194,7 @@ public class CustomerView extends AbstractView {
         int munic;
         int munic_;
         Map<Object, String> results;
-        int i = 0;
+        int i;
         Controller controller = getController();
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
@@ -222,7 +222,7 @@ public class CustomerView extends AbstractView {
         form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
 //        form.setInt("customer.stdsp", customer.getStandardSupplier());
         
-        ctable.clear();
+        i = 0;
         for (CustomerContact contact : customer.getContacts()) {
             ctable.setStringValue("contact.rname", i, contact.getName());
             ctable.setStringValue("contact.funct", i++, contact.getFunction());
