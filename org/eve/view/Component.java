@@ -3,6 +3,7 @@ package org.eve.view;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
@@ -50,14 +51,14 @@ public interface Component {
      * Retorna lista de valores fixos
      * @return
      */
-    public abstract String[] getOptions();
+    public abstract Map<Object, String> getOptions();
 
     /**
      * Retorna valor da lista de opções
      * @param index
      * @return
      */
-    public abstract String getOption(int index);
+    public abstract String getOption(Object object);
     
     /**
      * Retorna texto
@@ -158,6 +159,12 @@ public interface Component {
      * @param options
      */
     public abstract void setOptions(String[] options);
+    
+    /**
+     * Define mapa de valores fixos
+     * @param options
+     */
+    public abstract void setOptions(Map<Object, String> options);
     
     /**
      * Ajusta texto

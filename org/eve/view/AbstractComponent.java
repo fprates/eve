@@ -4,8 +4,10 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
@@ -21,7 +23,7 @@ public abstract class AbstractComponent implements Component {
     private boolean nocase;
     private boolean enabled;
     private Locale locale;
-    private String[] options;
+    private Map<Object, String> options;
     private Control control;
     private List<ControlEditor> editors;
     private DateFormat dateformat;
@@ -147,17 +149,17 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#getOptions()
      */
     @Override
-    public final String[] getOptions() {
+    public final Map<Object, String> getOptions() {
         return options;
     }
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#getOption(int)
+     * @see org.eve.view.Component#getOption(java.lang.Object)
      */
     @Override
-    public final String getOption(int index) {
-        return options[index];
+    public final String getOption(Object object) {
+        return options.get(object);
     }
     
     /*
@@ -289,7 +291,7 @@ public abstract class AbstractComponent implements Component {
             if (options == null)
                 break;
             
-            setString(options[value]);
+            setString(options.get(value));
             break;
         }
     }
@@ -310,7 +312,7 @@ public abstract class AbstractComponent implements Component {
             if (options == null)
                 break;
             
-            setString(options[value], index);
+            setString((String)options.values().toArray()[value], index);
             break;
         }
         
@@ -359,6 +361,20 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setOptions(String[] options) {
+        if (this.options == null)
+            this.options = new LinkedHashMap<Object, String>();
+        else
+            this.options.clear();
+        
+        if (options == null)
+            return;
+        
+        for (int k = 0; k < options.length; k++)
+            this.options.put(k, options[k]);            
+    }
+    
+    @Override
+    public final void setOptions(Map<Object, String> options) {
         this.options = options;
     }
     
@@ -467,10 +483,34 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void commit() {
-        boolean enabled = isEnabled();
+        CCombo ccombo;
+        Combo combo;
         
-        for (ControlEditor editor : editors)
+        for (ControlEditor editor : editors) {
             editor.getEditor().setEnabled(enabled);
+            
+            switch (type) {
+            case EVE.combo:
+                combo = (Combo)editor.getEditor();
+                combo.setEnabled(isEnabled());
+                combo.removeAll();
+                
+                for (String option : options.values())
+                    combo.add(option);
+                
+                break;
+                
+            case EVE.ccombo:
+                ccombo = (CCombo)editor.getEditor();
+                ccombo.setEnabled(isEnabled());
+                ccombo.removeAll();
+                
+                for (String option : options.values())
+                    ccombo.add(option);
+                
+                break;
+            }
+        }
         
         if (control == null)
             return;
@@ -481,11 +521,23 @@ public abstract class AbstractComponent implements Component {
             break;
             
         case EVE.combo:
-            ((Combo)control).setEnabled(isEnabled());
+            combo = (Combo)control;
+            combo.setEnabled(isEnabled());
+            combo.removeAll();
+            
+            for (String option : options.values())
+                combo.add(option);
+            
             break;
             
         case EVE.ccombo:
-            ((CCombo)control).setEnabled(isEnabled());
+            ccombo = (CCombo)control;
+            ccombo.setEnabled(isEnabled());
+            ccombo.removeAll();
+            
+            for (String option : options.values())
+                ccombo.add(option);
+            
             break;
         }        
     }

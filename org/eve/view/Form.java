@@ -106,6 +106,14 @@ public class Form {
     }
     
     /**
+     * 
+     * @param options
+     */
+    public final void setOptions(String id, Map<Object, String> options) {
+        fields.get(id).setOptions(options);
+    }
+    
+    /**
      * Defie propriedades do campo
      * @param id
      * @param properties
@@ -241,6 +249,7 @@ public class Form {
         
         for (String id: fields.keySet()) {
             component = fields.get(id);
+            component.commit();
             
             if (!component.isEnabled()) {
                 component.getControl().setEnabled(false);

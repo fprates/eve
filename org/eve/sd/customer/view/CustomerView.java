@@ -234,6 +234,8 @@ public class CustomerView extends AbstractView {
         form.setString("customer.ie", customer.getInscricaoEstadual());
         form.setInt("customer.tpest", customer.getTipoEstabelecimento());
         form.setInt("customer.tpcom", customer.getTipoComunicacao());
+        form.setOptions("customer.stdsp",
+                controller.getResults("customer.stdsp", null));
         
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {
@@ -320,11 +322,10 @@ public class CustomerView extends AbstractView {
             vschedule.setEditable(false);
             dschedule.clear();
             dschedule.setEditable(false);
-            
             form.setEditable(false);
-            form.commit();
             
             setControlLoad(customer);
+            form.commit();
             
             return;
         }
@@ -343,11 +344,10 @@ public class CustomerView extends AbstractView {
             vschedule.setEditable(true);
             dschedule.clear();
             dschedule.setEditable(true);
-            
             form.setEditable(true);
-            form.commit();
             
             setControlLoad(customer);
+            form.commit();
                 
             return;
         }
@@ -366,11 +366,10 @@ public class CustomerView extends AbstractView {
             vschedule.setEditable(true);
             dschedule.clear();
             dschedule.setEditable(true);
-            
             form.setEditable(true);
-            form.commit();
             
             setControlLoad(customer);
+            form.commit();
             
             getController().getForm("main").clear();
             return;

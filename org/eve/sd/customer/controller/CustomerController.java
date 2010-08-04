@@ -76,7 +76,7 @@ public class CustomerController extends AbstractController {
             results_ = new LinkedHashMap<Object, String>();
             for (Object object_ : results) {
                 supplier = (Supplier)object_;                
-                results_.put(supplier.getId(), supplier.getName());                
+                results_.put(supplier.getId(), supplier.getName());
             }
             
             return results_;
