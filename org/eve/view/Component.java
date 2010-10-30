@@ -23,6 +23,12 @@ public interface Component {
      */
     public abstract Control getControl(int index);
     
+//    /**
+//     * Retorna controlador
+//     * @return
+//     */
+//    public abstract Controller getController();
+    
     /**
      * Retorna numérico flutuante 
      * @return
@@ -48,17 +54,23 @@ public interface Component {
     public abstract String getName();
 
     /**
+     * Retorna título
+     * @return
+     */
+    public abstract String getTitle();
+    
+    /**
      * Retorna lista de valores fixos
      * @return
      */
-    public abstract Map<Object, String> getOptions();
+    public abstract String[] getOptions();
 
     /**
      * Retorna valor da lista de opções
      * @param index
      * @return
      */
-    public abstract String getOption(Object object);
+    public abstract String getOption(int index);
     
     /**
      * Retorna texto
@@ -82,6 +94,12 @@ public interface Component {
     public abstract int getType();
     
     /**
+     * Tem ajuda de pesquisa anexada?
+     * @return
+     */
+    public abstract boolean hasSearch();
+    
+    /**
      * Retorna flag de habilitação
      * @return
      */
@@ -98,6 +116,12 @@ public interface Component {
      * @param control
      */
     public abstract void setControl(Control control);
+    
+//    /**
+//     * Define um controlador
+//     * @param controller
+//     */
+//    public abstract void setController(Controller controller);
     
     /**
      * Ajusta data
@@ -149,6 +173,12 @@ public interface Component {
     public abstract void setName(String name);
     
     /**
+     * Define título
+     * @param title
+     */
+    public abstract void setTitle(String title);
+    
+    /**
      * Define sensibilidade
      * @param nocase
      */
@@ -161,10 +191,10 @@ public interface Component {
     public abstract void setOptions(String[] options);
     
     /**
-     * Define mapa de valores fixos
-     * @param options
+     * Define ajuda de pesquisa
+     * @param search
      */
-    public abstract void setOptions(Map<Object, String> options);
+    public abstract void setSearch(boolean search);
     
     /**
      * Ajusta texto
@@ -197,6 +227,12 @@ public interface Component {
      * @param type
      */
     public abstract void setType(int type);
+    
+    /**
+     * Define valores possíveis
+     * @param values
+     */
+    public abstract void setValues(Map<Object, String> values);
     
     /**
      * Adiciona editor

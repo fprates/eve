@@ -135,20 +135,6 @@ public class ComboListener implements Listener {
         if (results == null)
             return;
         
-        switch (component_.getType()) {
-        case EVE.combo:
-            ((Combo)control_).removeAll();
-            for (Object value : results.keySet())
-                ((Combo)control_).add(results.get(value));
-            
-            break;
-            
-        case EVE.ccombo:
-            ((CCombo)control_).removeAll();
-            for (Object value : results.keySet())
-                ((CCombo)control_).add(results.get(value));
-            
-            break;
-        }
+        component_.setValues(results);
     }    
 }

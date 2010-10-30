@@ -33,28 +33,30 @@ import org.springframework.context.MessageSource;
  */
 public class TableAssist {
     private static final int LINES = 5;
+    private boolean editable;
+    private boolean insert;
+    private boolean noeditbar;
+    private boolean remove;
+    private int lines;
+    private int currentline;
+    private ComboAssist comboassist;
+    private Composite btarea;
+    private Composite area;
+    private Controller controller;
+    private EveAPI system;
     private Map<String, Component> table;
     private Map<String, String> references;
     private MessageSource messages;
     private Locale locale;
-    private Table comptable;
-    private Composite btarea;
-    private Composite area;
-    private boolean editable;
-    private boolean insert;
-    private boolean remove;
-    private int lines;
-    private int currentline;
     private String name;
-    private Controller controller;
-    private EveAPI system;
-    private ComboAssist comboassist;
+    private Table comptable;
     
     public TableAssist() {
         table = new LinkedHashMap<String, Component>();
         references = new HashMap<String, String>();
         editable = true;
         insert = true;
+        noeditbar = false;
         remove = true;
         currentline = 0;
         lines = LINES;
@@ -154,6 +156,14 @@ public class TableAssist {
      */
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
+    }
+    
+    /**
+     * Define barra de edição
+     * @param noeditbar
+     */
+    public final void setNoEditBar(boolean noeditbar) {
+        this.noeditbar = noeditbar;
     }
     
     /**
@@ -365,24 +375,6 @@ public class TableAssist {
      */
     
     /**
-     * Limpa conteúdo da tabela
-     */
-    public final void clear() {
-        currentline = 0;
-        
-        if (comptable == null)
-            return;
-        
-        for (String id : table.keySet())
-            table.get(id).clear();
-        
-        comptable.removeAll();
-        
-        for (int k = 0; k < lines; k++)
-            addTableItem(new TableItem(comptable, SWT.NONE));
-    }
-    
-    /**
      * Adiciona item em tabela
      */
     private final void addTableItem(TableItem item) {
@@ -476,6 +468,103 @@ public class TableAssist {
     }
     
     /**
+     * Limpa conteúdo da tabela
+     */
+    public final void clear() {
+        currentline = 0;
+        
+        if (comptable == null)
+            return;
+        
+        for (String id : table.keySet())
+            table.get(id).clear();
+        
+        /*
+         * restaura quantidade de linhas na tabela
+         */
+        comptable.removeAll();
+        
+        for (int k = 0; k < lines; k++)
+            addTableItem(new TableItem(comptable, SWT.NONE));
+    }
+    
+    /**
+     * Constrói tabela
+     * @param container
+     * @param listener
+     * @return
+     */
+    public final Composite define(Composite container) {
+        TableColumn tablecol;
+        TableComponent component;
+        Button btins;
+        Button btdel;
+        Label title;
+        
+        area = new Composite(container, SWT.NONE);
+        area.setLayout(new GridLayout(1, false));
+
+        if (!noeditbar) {
+            btarea = new Composite(area, SWT.NONE);
+            btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
+            btarea.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+            btarea.setVisible(editable);
+            
+            btins = new Button(btarea, SWT.NONE);
+            btins.setText("Novo");
+            btins.addSelectionListener(controller);
+            btins.setVisible(insert);
+            controller.putWidget(btins, name+".new");
+            
+            btdel = new Button(btarea, SWT.NONE);
+            btdel.setText("Remover");
+            btdel.addSelectionListener(controller);
+            btdel.setVisible(remove);
+            controller.putWidget(btdel, name+".del");
+            
+            btarea.pack();
+        }
+        
+        if (name != null) {
+            title = new Label(area, SWT.NONE);
+            title.setText(messages.getMessage(name, null, name, locale));
+        }
+        
+        comptable = new Table(area, SWT.BORDER);
+        comptable.setHeaderVisible(true);
+        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        comboassist.setContainer(comptable);
+        comboassist.setController(controller);
+        
+        for (String id : table.keySet()) {
+            component = (TableComponent)table.get(id);
+            tablecol = new TableColumn(comptable, SWT.NONE);
+            tablecol.setText(component.getName());
+            tablecol.pack();
+            component.setColumn(tablecol);
+            component.setLocale(locale);
+        }
+        
+        for (int k = 0; k < lines; k++)
+            new TableItem(comptable, SWT.NONE);
+        
+        /*
+         * por motivos que não conheço, não se recomenda usar TableEditor
+         * logo após TableItem. Ocorrem problemas graves de dimensionamento
+         * do controle de tabela.
+         */
+        for (TableItem item : comptable.getItems())
+            addTableItem(item);
+        
+        return area;
+    }
+    
+    public final void dispose() {        
+        comptable.dispose();
+    }
+    
+    /**
      * Adiciona item em tabela
      */
     public final void insert() {
@@ -541,76 +630,6 @@ public class TableAssist {
         component.setLength(1);
         
         table.put(id, component);
-    }
-    
-    /**
-     * Constrói tabela
-     * @param container
-     * @param listener
-     * @return
-     */
-    public final Composite define(Composite container) {
-        TableColumn tablecol;
-        TableComponent component;
-        Button btins;
-        Button btdel;
-        Label title;
-        
-        area = new Composite(container, SWT.NONE);
-        area.setLayout(new GridLayout(1, false));
-
-        btarea = new Composite(area, SWT.NONE);
-        btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
-        btarea.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-        btarea.setVisible(editable);
-        
-        btins = new Button(btarea, SWT.NONE);
-        btins.setText("Novo");
-        btins.addSelectionListener(controller);
-        btins.setVisible(insert);
-        controller.putWidget(btins, name+".new");
-        
-        btdel = new Button(btarea, SWT.NONE);
-        btdel.setText("Remover");
-        btdel.addSelectionListener(controller);
-        btdel.setVisible(remove);
-        controller.putWidget(btdel, name+".del");
-        
-        btarea.pack();
-        
-        if (name != null) {
-            title = new Label(area, SWT.NONE);
-            title.setText(messages.getMessage(name, null, name, locale));
-        }
-        
-        comptable = new Table(area, SWT.BORDER);
-        comptable.setHeaderVisible(true);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-        comboassist.setContainer(comptable);
-        comboassist.setController(controller);
-        
-        for (String id : table.keySet()) {
-            component = (TableComponent)table.get(id);
-            tablecol = new TableColumn(comptable, SWT.NONE);
-            tablecol.setText(component.getName());
-            tablecol.pack();
-            component.setColumn(tablecol);
-            component.setLocale(locale);
-        }
-        
-        for (int k = 0; k < lines; k++)
-            new TableItem(comptable, SWT.NONE);
-        
-        /*
-         * por motivos que não conheço, não se recomenda usar TableEditor
-         * logo após TableItem. Ocorrem problemas graves de dimensionamento
-         * do controle de tabela.
-         */
-        for (TableItem item : comptable.getItems())
-            addTableItem(item);
-        
-        return area;
     }
     
     /**

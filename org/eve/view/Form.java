@@ -24,13 +24,13 @@ import org.springframework.context.MessageSource;
  *
  */
 public class Form {
-    private Map<String, Component> fields;
-    private MessageSource messages;
-    private Locale locale;
-    private EveAPI system;
+    private boolean editable;
     private ComboAssist comboassist;
     private Controller controller;
-    private boolean editable;
+    private EveAPI system;
+    private Locale locale;
+    private Map<String, Component> fields;
+    private MessageSource messages;
     
     public Form(String id) {
         fields = new LinkedHashMap<String, Component>();
@@ -103,14 +103,6 @@ public class Form {
      */
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
-    }
-    
-    /**
-     * 
-     * @param options
-     */
-    public final void setOptions(String id, Map<Object, String> options) {
-        fields.get(id).setOptions(options);
     }
     
     /**
@@ -249,7 +241,6 @@ public class Form {
         
         for (String id: fields.keySet()) {
             component = fields.get(id);
-            component.commit();
             
             if (!component.isEnabled()) {
                 component.getControl().setEnabled(false);
@@ -257,6 +248,7 @@ public class Form {
             }
             
             component.getControl().setEnabled(editable);
+            component.commit();
         }
     }
     
@@ -266,13 +258,14 @@ public class Form {
      * @param composite
      */
     public final Composite define(Composite container) {
-        Label label;
-        Text text;
-        Combo combo;
         int charw;
         int charh;
-        Composite fieldComposite;
+        Combo combo;
         Component component;
+        Composite fieldComposite;
+        Label label;
+        Text text;
+        Search search;
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
@@ -284,7 +277,7 @@ public class Form {
             component.setLocale(locale);
             
             label = new Label(composite, SWT.NONE);
-            label.setText(component.getName());
+            label.setText(component.getTitle());
             label.setLayoutData(
                     new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
@@ -302,8 +295,15 @@ public class Form {
                 
                 component.setControl(text);
                 
+                if (component.hasSearch()) {
+                    search = new Search(component, fieldComposite);
+                    search.setLocale(locale);
+                    search.setMessages(messages);
+                    search.setController(controller);
+                }
+                
                 break;
-            
+                
             case EVE.combo:
                 comboassist.setContainer(fieldComposite);
                 comboassist.setOptions(component.getOptions());
@@ -328,8 +328,10 @@ public class Form {
      * @param visible
      */
     public final void put(String id, int length, boolean visible) {
-        fields.put(id, new FormComponent(
-                messages.getMessage(id, null, id, locale), length, visible));
+        FormComponent component = new FormComponent(id, length, visible);        
+
+        component.setTitle(messages.getMessage(id, null, id, locale));
+        fields.put(id, component);
     }
 
     /**
@@ -338,8 +340,7 @@ public class Form {
      * @param length
      */
     public final void put(String id, int length) {
-        fields.put(id, new FormComponent(
-                messages.getMessage(id, null, id, locale), length, true));        
+        put(id, length, true);
     }
     
     /**
@@ -349,13 +350,30 @@ public class Form {
      * @param length
      */
     public final void putCombo(String id, String[] options, int length) {
-        FormComponent component = new FormComponent(
-                messages.getMessage(id, null, id, locale), length, true);
+        FormComponent component = new FormComponent(id, length, true);
         
+        component.setTitle(messages.getMessage(id, null, id, locale));
         component.setType(EVE.combo);
+        if (options == null) {
+            options = new String[1];
+            options[0] = "";
+        }
+        
         component.setOptions(options);
         
         fields.put(id, component);
     }
     
+    /**
+     * Insere campo com ajuda de pesquisa
+     * @param id
+     * @param length
+     */
+    public final void putSearch(String id, int length) {
+        Component component;
+        
+        put(id, length);
+        component = fields.get(id);
+        component.setSearch(true);
+    }
 }

@@ -16,7 +16,7 @@ public class ComboAssist {
     private int controltype;
     private String id;
     private String reference;
-    private Map<Object, String> options;
+    private String[] options;
     private Composite container;
     private Controller controller;
     private Map<String, Component> table;
@@ -67,7 +67,7 @@ public class ComboAssist {
      * 
      * @param options
      */
-    public final void setOptions(Map<Object, String> options) {
+    public final void setOptions(String[] options) {
         this.options = options;
     }
     
@@ -113,11 +113,6 @@ public class ComboAssist {
         CCombo ccombo;
         Combo combo;
         ComboListener listener;
-        int k = 0;
-        String[] options = new String[this.options.size()];
-        
-        for (String option : this.options.values())
-            options[k++] = option;
         
         switch(type) {
         case EVE.ccombo:

@@ -4,7 +4,6 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,19 +16,24 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 
 public abstract class AbstractComponent implements Component {
-    private String name;
-    private int length;
-    private int type;
     private boolean nocase;
     private boolean enabled;
-    private Locale locale;
-    private Map<Object, String> options;
+    private boolean search;
+    private int length;
+    private int type;
     private Control control;
-    private List<ControlEditor> editors;
+//    private Controller controller;
     private DateFormat dateformat;
+    private Locale locale;
+    private String name;
+    private String title;
+    private String[] options;
+    private List<ControlEditor> editors;
+    private Map<Object, String> values;
 
     public AbstractComponent() {
         nocase = false;
+        search = false;
         enabled = true;
         editors = new ArrayList<ControlEditor>();
     }
@@ -92,6 +96,14 @@ public abstract class AbstractComponent implements Component {
         return editors.get(index).getEditor();
     }
     
+//    /*
+//     * (non-Javadoc)
+//     * @see org.eve.view.Component#getController()
+//     */
+//    public final Controller getController() {
+//        return controller;
+//    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#getFloat()
@@ -146,20 +158,29 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#getTitle()
+     */
+    @Override
+    public final String getTitle() {
+        return title;
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#getOptions()
      */
     @Override
-    public final Map<Object, String> getOptions() {
+    public final String[] getOptions() {
         return options;
     }
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#getOption(java.lang.Object)
+     * @see org.eve.view.Component#getOption(int)
      */
     @Override
-    public final String getOption(Object object) {
-        return options.get(object);
+    public final String getOption(int index) {
+        return options[index];
     }
     
     /*
@@ -189,6 +210,15 @@ public abstract class AbstractComponent implements Component {
         return type;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#hasSearch()
+     */
+    @Override
+    public final boolean hasSearch() {
+        return search;
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#isEnabled()
@@ -245,6 +275,15 @@ public abstract class AbstractComponent implements Component {
         this.control = control;
     }
     
+//    /*
+//     * (non-Javadoc)
+//     * @see org.eve.view.Component#setController(org.eve.view.Controller)
+//     */
+//    @Override
+//    public final void setController(Controller controller) {
+//        this.controller = controller;
+//    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#setDate(java.util.Date)
@@ -291,7 +330,7 @@ public abstract class AbstractComponent implements Component {
             if (options == null)
                 break;
             
-            setString(options.get(value));
+            setString(options[value]);
             break;
         }
     }
@@ -312,7 +351,7 @@ public abstract class AbstractComponent implements Component {
             if (options == null)
                 break;
             
-            setString((String)options.values().toArray()[value], index);
+            setString(options[value], index);
             break;
         }
         
@@ -348,6 +387,15 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#setTitle(java.lang.String)
+     */
+    @Override
+    public final void setTitle(String title) {
+        this.title = title;
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#setNocase(boolean)
      */
     @Override
@@ -361,21 +409,16 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setOptions(String[] options) {
-        if (this.options == null)
-            this.options = new LinkedHashMap<Object, String>();
-        else
-            this.options.clear();
-        
-        if (options == null)
-            return;
-        
-        for (int k = 0; k < options.length; k++)
-            this.options.put(k, options[k]);            
+        this.options = options;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setSearch(boolean)
+     */
     @Override
-    public final void setOptions(Map<Object, String> options) {
-        this.options = options;
+    public final void setSearch(boolean search) {
+        this.search = search;
     }
     
     /*
@@ -446,6 +489,11 @@ public abstract class AbstractComponent implements Component {
         editors.add(editor);
     }
     
+    @Override
+    public final void setValues(Map<Object, String> values) {
+        this.values = values;
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#clear()
@@ -483,34 +531,10 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void commit() {
-        CCombo ccombo;
-        Combo combo;
+        boolean enabled = isEnabled();
         
-        for (ControlEditor editor : editors) {
+        for (ControlEditor editor : editors)
             editor.getEditor().setEnabled(enabled);
-            
-            switch (type) {
-            case EVE.combo:
-                combo = (Combo)editor.getEditor();
-                combo.setEnabled(isEnabled());
-                combo.removeAll();
-                
-                for (String option : options.values())
-                    combo.add(option);
-                
-                break;
-                
-            case EVE.ccombo:
-                ccombo = (CCombo)editor.getEditor();
-                ccombo.setEnabled(isEnabled());
-                ccombo.removeAll();
-                
-                for (String option : options.values())
-                    ccombo.add(option);
-                
-                break;
-            }
-        }
         
         if (control == null)
             return;
@@ -521,24 +545,26 @@ public abstract class AbstractComponent implements Component {
             break;
             
         case EVE.combo:
-            combo = (Combo)control;
-            combo.setEnabled(isEnabled());
-            combo.removeAll();
+            ((Combo)control).setEnabled(isEnabled());
             
-            for (String option : options.values())
-                combo.add(option);
+            if (values == null)
+                break;
             
+            ((Combo)control).removeAll();            
+            for (Object value : values.keySet())
+                ((Combo)control).add(values.get(value));
             break;
             
         case EVE.ccombo:
-            ccombo = (CCombo)control;
-            ccombo.setEnabled(isEnabled());
-            ccombo.removeAll();
+            ((CCombo)control).setEnabled(isEnabled());
             
-            for (String option : options.values())
-                ccombo.add(option);
+            if (values == null)
+                break;
             
+            ((CCombo)control).removeAll();            
+            for (Object value : values.keySet())
+                ((CCombo)control).add(values.get(value));
             break;
-        }        
+        }
     }
 }
