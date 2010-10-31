@@ -4,7 +4,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractView;
-import org.eve.view.Component;
 import org.eve.view.Controller;
 import org.eve.view.Form;
 
@@ -33,6 +32,10 @@ public class SupplierView extends AbstractView {
         form.put("supplier.ident", 12, false);
         form.put("supplier.dtreg", 10, false);
         form.put("supplier.tmreg", 8, false);
+        form.setBlocked("supplier.ident");
+        form.setBlocked("supplier.dtreg");
+        form.setBlocked("supplier.tmreg");
+        
         form.put("supplier.refer", 12);
         form.put("supplier.name", 40);
         form.put("supplier.aname", 40);
@@ -155,10 +158,8 @@ public class SupplierView extends AbstractView {
             setTitlebar("supplier.show.title");
             setButtonVisible("supplier.save", false);
             
-            for (Component component : form.getComponents()) {
-                component.setEnabled(false);
-                component.commit();
-            }
+            form.setEditable(false);
+            form.commit();
             
             setControlLoad(supplier);
             
@@ -171,11 +172,9 @@ public class SupplierView extends AbstractView {
         if (action.equals("supplier.edit")) {
             setTitlebar("supplier.edit.title");
             setButtonVisible("supplier.save", true);
-
-            for (Component component : form.getComponents()) {
-                component.setEnabled(component.isEnabled());
-                component.commit();
-            }
+            
+            form.setEditable(true);
+            form.commit();
             
             setControlLoad(supplier);
                 
@@ -188,11 +187,6 @@ public class SupplierView extends AbstractView {
         if (action.equals("supplier.create")) {
             setTitlebar("supplier.create.title");
             setButtonVisible("supplier.save", true);
-
-            for (Component component : form.getComponents()) {
-                component.setEnabled(component.isEnabled());
-                component.commit();
-            }
             
             setControlLoad(supplier);
             

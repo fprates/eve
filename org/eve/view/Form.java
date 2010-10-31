@@ -3,9 +3,11 @@ package org.eve.view;
 import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -30,10 +32,12 @@ public class Form {
     private EveAPI system;
     private Locale locale;
     private Map<String, Component> fields;
+    private Set<String> blocked;
     private MessageSource messages;
     
     public Form(String id) {
         fields = new LinkedHashMap<String, Component>();
+        blocked = new HashSet<String>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
         comboassist.setControlType(EVE.single);
@@ -45,6 +49,10 @@ public class Form {
      * Setters
      * 
      */
+    
+    public final void setBlocked(String field) {
+        blocked.add(field);
+    }
     
     /**
      * 
@@ -267,13 +275,12 @@ public class Form {
         
         for (String id: fields.keySet()) {
             component = fields.get(id);
+
+            if (blocked.contains(id))
+                component.setEnabled(false);
+            else
+                component.setEnabled(editable);
             
-            if (!component.isEnabled()) {
-                component.getControl().setEnabled(false);
-                continue;
-            }
-            
-            component.getControl().setEnabled(editable);
             component.commit();
         }
     }

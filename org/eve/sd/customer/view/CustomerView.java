@@ -48,6 +48,10 @@ public class CustomerView extends AbstractView {
         form.put("customer.ident", 10, false);
         form.put("customer.dtreg", 10, false);
         form.put("customer.tmreg", 8, false);
+        form.setBlocked("customer.ident");
+        form.setBlocked("customer.dtreg");
+        form.setBlocked("customer.tmreg");
+        
         form.put("customer.refer", 12);
         form.put("customer.name", 40);
         form.put("customer.aname", 40);
@@ -201,12 +205,12 @@ public class CustomerView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Customer customer) {
+        int i;
         int munic;
         int munic_;
-        Map<Object, String> results;
-        int i;
         Controller controller = getController();
-        Form form = controller.getForm("main");
+        Map<Object, String> results;
+        Form form = controller.getForm("main");        
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
         TableAssist vstable = controller.getTable("vschedule");

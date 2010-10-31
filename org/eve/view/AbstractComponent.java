@@ -614,15 +614,15 @@ public abstract class AbstractComponent implements Component {
         
         switch (type) {
         case EVE.text:
-            ((Text)control).setEnabled(isEnabled());
+            ((Text)control).setEnabled(enabled);
             break;
             
         case EVE.combo:
-            ((Combo)control).setEnabled(isEnabled());
+            ((Combo)control).setEnabled(enabled);
             break;
             
         case EVE.ccombo:
-            ((CCombo)control).setEnabled(isEnabled());
+            ((CCombo)control).setEnabled(enabled);
             break;
         }
     }

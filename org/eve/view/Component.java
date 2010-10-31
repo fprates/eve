@@ -124,12 +124,6 @@ public interface Component {
      */
     public abstract void setControl(Control control);
     
-//    /**
-//     * Define um controlador
-//     * @param controller
-//     */
-//    public abstract void setController(Controller controller);
-    
     /**
      * Ajusta data
      * @param date
