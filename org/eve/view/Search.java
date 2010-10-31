@@ -141,7 +141,7 @@ public class Search implements SelectionListener, DisposeListener {
         int k = 0;
         
         for (Object result : results.keySet())
-            if (table.getMarkValue(k)) {
+            if (table.getMarkValue(k++)) {
                 component.setString(result.toString());
                 widgetDisposed(null);
                 break;
