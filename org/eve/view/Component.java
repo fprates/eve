@@ -23,12 +23,6 @@ public interface Component {
      */
     public abstract Control getControl(int index);
     
-//    /**
-//     * Retorna controlador
-//     * @return
-//     */
-//    public abstract Controller getController();
-    
     /**
      * Retorna numérico flutuante 
      * @return
@@ -92,6 +86,13 @@ public interface Component {
      * @return
      */
     public abstract int getType();
+    
+    /**
+     * 
+     * @param index
+     * @return
+     */
+    public abstract String[] getValues(int index);
     
     /**
      * Tem ajuda de pesquisa anexada?
@@ -231,8 +232,9 @@ public interface Component {
     /**
      * Define valores possíveis
      * @param values
+     * @param index
      */
-    public abstract void setValues(Map<Object, String> values);
+    public abstract void setValues(Map<Object, String> values, int index);
     
     /**
      * Adiciona editor

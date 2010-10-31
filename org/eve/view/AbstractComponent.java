@@ -22,14 +22,12 @@ public abstract class AbstractComponent implements Component {
     private int length;
     private int type;
     private Control control;
-//    private Controller controller;
     private DateFormat dateformat;
     private Locale locale;
     private String name;
     private String title;
     private String[] options;
     private List<ControlEditor> editors;
-    private Map<Object, String> values;
 
     public AbstractComponent() {
         nocase = false;
@@ -96,14 +94,6 @@ public abstract class AbstractComponent implements Component {
         return editors.get(index).getEditor();
     }
     
-//    /*
-//     * (non-Javadoc)
-//     * @see org.eve.view.Component#getController()
-//     */
-//    public final Controller getController() {
-//        return controller;
-//    }
-    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#getFloat()
@@ -158,15 +148,6 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#getTitle()
-     */
-    @Override
-    public final String getTitle() {
-        return title;
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.Component#getOptions()
      */
     @Override
@@ -200,6 +181,15 @@ public abstract class AbstractComponent implements Component {
     public final String getString(int index) {
         return getText(editors.get(index).getEditor());
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getTitle()
+     */
+    @Override
+    public final String getTitle() {
+        return title;
+    }
 
     /*
      * (non-Javadoc)
@@ -208,6 +198,26 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final int getType() {
         return type;
+    }
+    
+    @Override
+    public final String[] getValues(int index) {
+        Combo combo;
+        CCombo ccombo;
+        
+        switch (type) {            
+        case EVE.combo:
+            combo = (Combo)editors.get(index).getEditor();
+            
+            return combo.getItems();
+            
+        case EVE.ccombo:
+            ccombo = (CCombo)editors.get(index).getEditor();
+            
+            return ccombo.getItems();
+        }
+        
+        return null;
     }
 
     /*
@@ -274,15 +284,6 @@ public abstract class AbstractComponent implements Component {
     public final void setControl(Control control) {
         this.control = control;
     }
-    
-//    /*
-//     * (non-Javadoc)
-//     * @see org.eve.view.Component#setController(org.eve.view.Controller)
-//     */
-//    @Override
-//    public final void setController(Controller controller) {
-//        this.controller = controller;
-//    }
     
     /*
      * (non-Javadoc)
@@ -387,15 +388,6 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#setTitle(java.lang.String)
-     */
-    @Override
-    public final void setTitle(String title) {
-        this.title = title;
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.Component#setNocase(boolean)
      */
     @Override
@@ -473,11 +465,47 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#setTitle(java.lang.String)
+     */
+    @Override
+    public final void setTitle(String title) {
+        this.title = title;
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#setType(int)
      */
     @Override
     public final void setType(int type) {
         this.type = type;
+    }
+    
+    @Override
+    public final void setValues(Map<Object, String> values, int index) {
+        Combo combo;
+        CCombo ccombo;
+        
+        if (values == null)
+            return;
+        
+        switch (type) {            
+        case EVE.combo:
+            combo = (Combo)editors.get(index).getEditor();
+            combo.removeAll();
+            
+            for (Object value : values.keySet())
+                combo.add(values.get(value));
+            break;
+            
+        case EVE.ccombo:
+            ccombo = (CCombo)editors.get(index).getEditor();
+            ccombo.removeAll();
+            
+            for (Object value : values.keySet())
+                ccombo.add(values.get(value));
+            break;
+        }
     }
     
     /*
@@ -487,11 +515,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void addEditor(ControlEditor editor) {
         editors.add(editor);
-    }
-    
-    @Override
-    public final void setValues(Map<Object, String> values) {
-        this.values = values;
     }
     
     /*
@@ -546,24 +569,10 @@ public abstract class AbstractComponent implements Component {
             
         case EVE.combo:
             ((Combo)control).setEnabled(isEnabled());
-            
-            if (values == null)
-                break;
-            
-            ((Combo)control).removeAll();            
-            for (Object value : values.keySet())
-                ((Combo)control).add(values.get(value));
             break;
             
         case EVE.ccombo:
             ((CCombo)control).setEnabled(isEnabled());
-            
-            if (values == null)
-                break;
-            
-            ((CCombo)control).removeAll();            
-            for (Object value : values.keySet())
-                ((CCombo)control).add(values.get(value));
             break;
         }
     }

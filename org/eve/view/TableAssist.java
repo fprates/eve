@@ -362,10 +362,8 @@ public class TableAssist {
      * @return
      */
     public final boolean hasEvent(String event) {
-        if (event.equals(name+".new") || event.equals(name+".del"))
-            return true;
-        else
-            return false;
+        return (event.equals(name+".new") ||
+                event.equals(name+".del"))? true : false;
     }
     
     /*
@@ -378,13 +376,13 @@ public class TableAssist {
      * Adiciona item em tabela
      */
     private final void addTableItem(TableItem item) {
-        CCombo combo;
-        Text text;
-        Button button;
-        TableEditor editor;
-        TableComponent component;
         int charh;
         int charw;
+        Button button;
+        CCombo combo;
+        TableComponent component;
+        TableEditor editor;
+        Text text;
         int k = 0;
         CellListener celllistener = null;
         

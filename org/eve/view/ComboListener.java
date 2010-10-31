@@ -11,14 +11,14 @@ import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 
 public class ComboListener implements Listener {
-    private Object object;
-    private Controller controller;
-    private String id;
-    private String reference;
     private int index;
     private int type;
+    private Controller controller;
     private Map<String, Component> table;
     private Map<Object, String> results;
+    private Object object;
+    private String id;
+    private String reference;
     
     public ComboListener(String id, Controller controller) {
         object = null;
@@ -135,6 +135,8 @@ public class ComboListener implements Listener {
         if (results == null)
             return;
         
-        component_.setValues(results);
-    }    
+        if (((reference == null) && (
+                component_.getValues(index).length == 0)) || reference != null)
+            component_.setValues(results, index);
+    }
 }
