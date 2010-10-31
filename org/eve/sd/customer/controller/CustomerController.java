@@ -176,7 +176,7 @@ public class CustomerController extends AbstractController {
                 customer.setSupplierIncentiveValue(form.getFloat("customer.dvcsp"));
                 customer.setPartnerIncentiveValue(form.getFloat("customer.dvcpt"));
                 customer.setStandardSupplier(form.getInt("customer.stdsp"));
-                customer.setInscricaoEstadual(form.getString("customer.ie"));
+                customer.setInscricaoEstadual(form.getLong("customer.ie"));
                 customer.setTipoComunicacao(form.getInt("customer.tpcom"));
                 customer.setTipoEstabelecimento(form.getInt("customer.tpest"));
                 

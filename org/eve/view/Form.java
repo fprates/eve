@@ -90,6 +90,15 @@ public class Form {
     }
     
     /**
+     * Ajusta valor do campo inteiro longo
+     * @param field
+     * @param value
+     */
+    public final void setLong(String field, long value) {
+        fields.get(field).setLong(value);
+    }
+    
+    /**
      * Define localização
      * @param locale
      */
@@ -180,6 +189,21 @@ public class Form {
     }
     
     /**
+     * Retorna valor de ponto flutuante de um campo
+     * @param field
+     * @return
+     */
+    public final float getFloat(String field) {
+        try {
+            return fields.get(field).getFloat();
+        } catch (NumberFormatException ex) {
+            system.setMessage(EVE.error, getMessage("invalid.float.format"));
+            fields.get(field).getControl().setFocus();            
+            throw ex;
+        }
+    }
+    
+    /**
      * Retorna valor do campo inteiro do formulário
      * @param field
      * @return
@@ -197,16 +221,18 @@ public class Form {
     }
     
     /**
-     * Retorna valor de ponto flutuante de um campo
+     * Retorna valor do campo inteiro do formulário
      * @param field
      * @return
      */
-    public final float getFloat(String field) {
+    public final long getLong(String field) {
+        Component component = fields.get(field);
+        
         try {
-            return fields.get(field).getFloat();
+            return component.getLong();
         } catch (NumberFormatException ex) {
-            system.setMessage(EVE.error, getMessage("invalid.float.format"));
-            fields.get(field).getControl().setFocus();            
+            system.setMessage(EVE.error, getMessage("invalid.int.format"));
+            component.getControl().setFocus();                
             throw ex;
         }
     }

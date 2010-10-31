@@ -231,7 +231,7 @@ public class CustomerView extends AbstractView {
         form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
         form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
         form.setInt("customer.stdsp", customer.getStandardSupplier());
-        form.setString("customer.ie", customer.getInscricaoEstadual());
+        form.setLong("customer.ie", customer.getInscricaoEstadual());
         form.setInt("customer.tpest", customer.getTipoEstabelecimento());
         form.setInt("customer.tpcom", customer.getTipoComunicacao());
         

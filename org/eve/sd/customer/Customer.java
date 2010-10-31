@@ -15,30 +15,30 @@ import java.util.TreeSet;
  */
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 3061311103322489445L;
-	private int id;
-	private String name;
-	private String alternateName;
-	private Date regDate;
-	private Time regTime;
-	private String regUser;
-	private String codCadFiscal;
-    private int status;
-    private String homepage;
-    private String email;
-    private int incentive;
-    private int ivf;
     private float prdctinc;
     private float billinc;
     private float splrinc;
     private float prtninc;
-    private String reference;
+	private int id;
+    private int incentive;
+    private int ivf;
+    private int status;
     private int standardsupplier;
-    private String inscricaoestadual;
     private int tipoestab;
     private int tipocomunicacao;
+    private long inscricaoestadual;
+	private Date regDate;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
+    private String regUser;
+    private String codCadFiscal;
+    private String homepage;
+    private String email;
+    private String reference;
+    private String name;
+    private String alternateName;
+    private Time regTime;
 	
 	public Customer() {
 	    contacts = new TreeSet<CustomerContact>();
@@ -115,7 +115,7 @@ public class Customer implements Serializable {
      * 
      * @return
      */
-    public String getInscricaoEstadual() {
+    public long getInscricaoEstadual() {
         return inscricaoestadual;
     }
     
@@ -313,7 +313,7 @@ public class Customer implements Serializable {
      * 
      * @param inscricaoestadual
      */
-    public void setInscricaoEstadual(String inscricaoestadual) {
+    public void setInscricaoEstadual(long inscricaoestadual) {
         this.inscricaoestadual = inscricaoestadual;
     }
     

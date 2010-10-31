@@ -42,6 +42,12 @@ public interface Component {
     public abstract int getLength();
     
     /**
+     * Retorna numérico long
+     * @return
+     */
+    public abstract long getLong();
+    
+    /**
      * Retorna nome
      * @return the name
      */
@@ -166,6 +172,19 @@ public interface Component {
      * @param locale
      */
     public abstract void setLocale(Locale locale);
+    
+    /**
+     * Ajusta valor inteiro longo
+     * @param value
+     */
+    public abstract void setLong(long value);
+    
+    /**
+     * Ajusta valor inteiro long em índice
+     * @param value
+     * @param index
+     */
+    public abstract void setLong(long value, int index);
     
     /**
      * Define nome

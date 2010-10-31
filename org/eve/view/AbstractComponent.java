@@ -130,6 +130,29 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.Component#getLong()
+     */
+    @Override
+    public final long getLong() {
+        String test;
+        int test_;
+        
+        switch (type) {
+        case EVE.text:
+            test = getString();
+            return test.equals("")? 0:Long.parseLong(test);
+        
+        case EVE.combo:
+            test_ = ((Combo)control).getSelectionIndex();
+            return (test_ < 0)? 0:test_;
+            
+        default:
+            return 0;
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.Component#getLength()
      */
     @Override
@@ -375,6 +398,33 @@ public abstract class AbstractComponent implements Component {
     public final void setLocale(Locale locale) {
         this.locale = locale;
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setLong(long)
+     */
+    @Override
+    public final void setLong(long value) {
+        switch (type) {
+        case EVE.text:
+            setString(Long.toString(value));
+            break;
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setLong(long, int)
+     */
+    @Override
+    public final void setLong(long value, int index) {
+        switch (type) {
+        case EVE.text:
+            setString(Long.toString(value), index);
+            break;
+        }
+        
     }
     
     /*
