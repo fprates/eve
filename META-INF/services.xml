@@ -7,6 +7,7 @@
     <import resource="common.xml"/>
     <import resource="customer.xml"/>
     <import resource="supplier.xml"/>
+    <import resource="material.xml"/>
 
     <bean id="gen_listener" class="org.eve.main.GeneralListener"/>
     
@@ -18,6 +19,10 @@
                 <ref bean="cust_sel_control"/>
                 <ref bean="supp_control"/>
                 <ref bean="supp_sel_control"/>
+                <ref bean="mat_control"/>
+<!--    
+                <ref bean="mat_sel_control"/>
+-->   
             </list>
         </property>
     </bean>

@@ -21,6 +21,7 @@
             <list>
                 <value>META-INF/customer.hbm.xml</value>
                 <value>META-INF/supplier.hbm.xml</value>
+                <value>META-INF/material.hbm.xml</value>
                 <value>META-INF/numericrange.hbm.xml</value>
             </list>
         </property>

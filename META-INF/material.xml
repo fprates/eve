@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <import resource="common.xml"/>
+    
+    <bean id="mat_msg" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>META-INF/material</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="material" class="org.eve.mm.material.Material"/>
+    
+    <bean id="mat_model" class="org.eve.mm.material.model.MaterialModel">
+        <property name="sessionFactory" ref="session_factory"/>
+        <!-- 
+        <property name="queries">
+            <map>
+                <entry key="sel_cities" value="from City where ufkey = ?"/>
+                <entry key="sel_customer" value="from Customer where ident = ?"/>
+                <entry key="selby_customers"
+                    value="from Customer where name like ? and alternateName like ? and reference like ?"/>
+                <entry key="sel_suppliers" value="from Supplier"/>
+            </map>
+        </property>
+         -->
+    </bean>
+    
+    <bean id="mat_view" class="org.eve.mm.material.view.MaterialView"/>
+    
+    <bean id="mat_control" class="org.eve.mm.material.controller.MaterialController">
+        <property name="messages" ref="mat_msg"/>
+        <property name="object" ref="material"/>
+        <property name="model" ref="mat_model"/>
+        <property name="views">
+            <map>
+                <entry key="mat_view" value-ref="mat_view"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!-- Seleção de materiais -->
+ <!-- 
+    <bean id="mat_sel_view" class="org.eve.mm.material.view.MaterialSelectionView"/>
+-->   
+    <!-- Escolha de múltiplos materiais -->
+ <!-- 
+    <bean id="mat_choose_view" class="org.eve.mm.material.view.MaterialChooseView"/>
+-->   
+    
+ <!-- 
+    <bean id="mat_sel_control" class="org.eve.mm.material.controller.MaterialSelectionController">
+        <property name="messages" ref="mat_msg"/>
+        <property name="object" ref="material"/>
+        <property name="model" ref="mat_model"/>
+        <property name="views">
+            <map>
+                <entry key="mat_sel_view" value-ref="mat_sel_view"/>
+                <entry key="mat_choose_view" value-ref="mat_choose_view"/>
+            </map>
+        </property>
+    </bean>
+-->   
+</beans>
