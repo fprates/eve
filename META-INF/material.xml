@@ -45,15 +45,11 @@
     </bean>
     
     <!-- Seleção de materiais -->
- <!-- 
     <bean id="mat_sel_view" class="org.eve.mm.material.view.MaterialSelectionView"/>
--->   
-    <!-- Escolha de múltiplos materiais -->
- <!-- 
-    <bean id="mat_choose_view" class="org.eve.mm.material.view.MaterialChooseView"/>
--->   
     
- <!-- 
+    <!-- Escolha de múltiplos materiais -->
+    <bean id="mat_choose_view" class="org.eve.mm.material.view.MaterialChooseView"/>
+
     <bean id="mat_sel_control" class="org.eve.mm.material.controller.MaterialSelectionController">
         <property name="messages" ref="mat_msg"/>
         <property name="object" ref="material"/>
@@ -65,5 +61,4 @@
             </map>
         </property>
     </bean>
--->   
 </beans>

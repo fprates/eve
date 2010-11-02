@@ -20,9 +20,7 @@
                 <ref bean="supp_control"/>
                 <ref bean="supp_sel_control"/>
                 <ref bean="mat_control"/>
-<!--    
                 <ref bean="mat_sel_control"/>
--->   
             </list>
         </property>
     </bean>
