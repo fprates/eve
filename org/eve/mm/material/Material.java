@@ -1,6 +1,8 @@
 package org.eve.mm.material;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Date;
 
 /**
  * Material
@@ -10,14 +12,16 @@ import java.io.Serializable;
 public class Material implements Serializable {
     private static final long serialVersionUID = 4251254484945797800L;
     private int materialType;
-    private long id;
     private float netPrice;
+    private Date regDate;
+    private String id;
     private String name;
+    private Time regTime;
     
     /**
      * @return the id
      */
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -43,9 +47,24 @@ public class Material implements Serializable {
     }
     
     /**
+     * @return the creation
+     */
+    public Date getRegDate() {
+        return regDate;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Time getRegTime() {
+        return regTime;
+    }
+    
+    /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -68,6 +87,21 @@ public class Material implements Serializable {
      */
     public void setNetPrice(float netPrice) {
         this.netPrice = netPrice;
+    }
+    
+    /**
+     * @param creation the creation to set
+     */
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
+    
+    /**
+     * 
+     * @param regTime
+     */
+    public void setRegTime(Time regTime) {
+        this.regTime = regTime;
     }
     
 }

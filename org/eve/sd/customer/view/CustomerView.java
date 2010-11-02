@@ -210,7 +210,7 @@ public class CustomerView extends AbstractView {
         int munic_;
         Controller controller = getController();
         Map<Object, String> results;
-        Form form = controller.getForm("main");        
+        Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
         TableAssist vstable = controller.getTable("vschedule");
