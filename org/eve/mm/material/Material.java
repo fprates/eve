@@ -12,11 +12,22 @@ import java.util.Date;
 public class Material implements Serializable {
     private static final long serialVersionUID = 4251254484945797800L;
     private int materialType;
+    private float netWeight;
+    private float grossWeight;
     private float netPrice;
+    private float quantity;
     private Date regDate;
     private String id;
-    private String name;
+    private String netPriceUnit;
+	private String quantityUnit;
+    private String regUser;
+    private String reference;
+    private String weightUnit;
     private Time regTime;
+
+	public float getGrossWeight() {
+		return grossWeight;
+	}
     
     /**
      * @return the id
@@ -31,19 +42,44 @@ public class Material implements Serializable {
     public int getMaterialType() {
         return materialType;
     }
-    
+
     /**
-     * @return the name
+     * 
+     * @return
      */
-    public String getName() {
-        return name;
-    }
+	public String getNetPriceUnit() {
+		return netPriceUnit;
+	}
 
     /**
      * @return the netPrice
      */
     public float getNetPrice() {
         return netPrice;
+    }
+
+    /**
+     * 
+     * @return
+     */
+	public float getNetWeight() {
+		return netWeight;
+	}
+
+	public float getQuantity() {
+		return quantity;
+	}
+
+	public String getQuantityUnit() {
+		return quantityUnit;
+	}
+    
+    /**
+     * 
+     * @return
+     */
+    public String getReference() {
+    	return reference;
     }
     
     /**
@@ -62,6 +98,48 @@ public class Material implements Serializable {
     }
     
     /**
+     * 
+     * @return
+     */
+    public String getRegUser() {
+    	return regUser;
+    }
+
+    /**
+     * 
+     * @return
+     */
+	public String getWeightUnit() {
+		return weightUnit;
+	}
+
+    /*
+     * 
+     * Setters
+     * 
+     */
+
+	public void setGrossWeight(float grossWeight) {
+		this.grossWeight = grossWeight;
+	}
+
+	public void setQuantity(float quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setWeightUnit(String weightUnit) {
+		this.weightUnit = weightUnit;
+	}
+
+	public void setQuantityUnit(String quantityUnit) {
+		this.quantityUnit = quantityUnit;
+	}
+
+	public void setNetPriceUnit(String netPriceUnit) {
+		this.netPriceUnit = netPriceUnit;
+	}
+    
+    /**
      * @param id the id to set
      */
     public void setId(String id) {
@@ -74,19 +152,24 @@ public class Material implements Serializable {
     public void setMaterialType(int materialType) {
         this.materialType = materialType;
     }
-    
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * @param netPrice the netPrice to set
      */
     public void setNetPrice(float netPrice) {
         this.netPrice = netPrice;
+    }
+
+	public void setNetWeight(float netWeight) {
+		this.netWeight = netWeight;
+	}
+    
+    /**
+     * 
+     * @param reference
+     */
+    public void setReference(String reference) {
+    	this.reference = reference;
     }
     
     /**
@@ -104,4 +187,11 @@ public class Material implements Serializable {
         this.regTime = regTime;
     }
     
+    /**
+     * 
+     * @param user
+     */
+    public void setRegUser(String user) {
+    	regUser = user;
+    }
 }

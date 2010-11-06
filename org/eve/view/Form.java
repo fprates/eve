@@ -3,6 +3,7 @@ package org.eve.view;
 import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
+//import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -32,12 +33,14 @@ public class Form {
     private EveAPI system;
     private Locale locale;
     private Map<String, Component> fields;
+//    private Map<String, ComponentConcat> concatenates;
     private Set<String> blocked;
     private MessageSource messages;
     
     public Form(String id) {
         fields = new LinkedHashMap<String, Component>();
         blocked = new HashSet<String>();
+//        concatenates = new HashMap<String, ComponentConcat>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
         comboassist.setControlType(EVE.single);
@@ -285,6 +288,10 @@ public class Form {
         }
     }
     
+//    public final void concat(String id, String component1, String component2) {
+//    	concatenates.put(component1, new ComponentConcat(id, component2));
+//    }
+    
     /**
      * Constrói formulário e inicializa o próximo
      * @param form
@@ -410,3 +417,21 @@ public class Form {
         component.setSearch(true);
     }
 }
+
+//class ComponentConcat {
+//	private String component;
+//	private String id;
+//	
+//	public ComponentConcat(String id, String component) {
+//		this.id = id;
+//		this.component = component;
+//	}
+//	
+//	public final String getComponent() {
+//		return component;
+//	}
+//	
+//	public final String getId() {
+//		return id;
+//	}
+//}

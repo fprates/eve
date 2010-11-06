@@ -9,6 +9,7 @@ drop table custmr004 if exists;
 drop table custmr003 if exists;
 drop table custmr002 if exists;
 drop table custmr001 if exists;
+drop table mat001 if exists;
 drop table supplr001 if exists;
 drop table sdcomm003 if exists;
 drop table sdcomm002 if exists;
@@ -108,6 +109,22 @@ create table custmr004 (
    hrsun time
 );
 
+/* mestre de materiais */
+create table mat001 (
+   ident char(18) primary key,
+   dtreg date,
+   tmreg time,
+   usreg char(8),
+   refer char(60),
+   psliq decimal(9,3),
+   psbrt decimal(9,3),
+   undps char(3),
+   quant decimal(9,3),
+   undqt char(3),
+   vlliq decimal(12,3),
+   unvlq char(3)
+);
+
 /* mestre de fornecedores - dados básicos */
 create table supplr001 (
    ident numeric(10) primary key,
@@ -125,6 +142,7 @@ grant select, insert, update, delete on custmr001 to evedb;
 grant select, insert, update, delete on custmr002 to evedb;
 grant select, insert, update, delete on custmr003 to evedb;
 grant select, insert, update, delete on custmr004 to evedb;
+grant select, insert, update, delete on mat001 to evedb;
 grant select, insert, update, delete on supplr001 to evedb;
 grant select, insert, update, delete on sdcomm001 to evedb;
 grant select, insert, update, delete on sdcomm002 to evedb;

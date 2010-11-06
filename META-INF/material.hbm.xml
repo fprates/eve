@@ -6,13 +6,16 @@
 <hibernate-mapping>    
     <class name="org.eve.mm.material.Material" table="MAT001">
         <id name="id" column="IDENT"/>
-        <!-- 
-        <property name="name" column="RNAME"/>
-        <property name="alternateName" column="ANAME"/>
-        <property name="regDate" column="DTREG"/>
-        <property name="regTime" column="HRREG"/>
-        <property name="regUser" column="USREG"/>
         <property name="reference" column="REFER"/>
-         -->
+        <property name="netWeight" column="PSLIQ"/>
+        <property name="grossWeight" column="PSBRT"/>
+        <property name="weightUnit" column="UNDPS"/>
+        <property name="quantity" column="QUANT"/>
+        <property name="quantityUnit" column="UNDQT"/>
+        <property name="netPrice" column="VLLIQ"/>
+        <property name="netPriceUnit" column="UNVLQ"/>
+        <property name="regDate" column="DTREG"/>
+        <property name="regTime" column="TMREG"/>
+        <property name="regUser" column="USREG"/>
     </class>
 </hibernate-mapping>

@@ -26,9 +26,15 @@ public class MaterialView extends AbstractView {
         form.put("material.ident", 18, false);
         form.put("material.dtreg", 10, false);
         form.put("material.tmreg", 8, false);
-        form.setBlocked("material.ident");
         form.setBlocked("material.dtreg");
         form.setBlocked("material.tmreg");
+        form.put("material.refer", 60);
+        form.put("material.undps", 3);
+        form.put("material.psliq", 13);
+//        form.concat("material.psliq", "material.undps", "material.psliq");
+        form.put("material.undqt", 3);
+        form.put("material.quant", 13);
+//        form.concat("material.quant", "material.undqt", "material.quant");
         
         form.define(container);
         
