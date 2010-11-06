@@ -26,8 +26,6 @@ public class MaterialView extends AbstractView {
         form.put("material.ident", 18, false);
         form.put("material.dtreg", 10, false);
         form.put("material.tmreg", 8, false);
-        form.setBlocked("material.dtreg");
-        form.setBlocked("material.tmreg");
         form.put("material.refer", 60);
         form.put("material.undps", 3);
         form.put("material.psliq", 13);
@@ -73,16 +71,10 @@ public class MaterialView extends AbstractView {
         if (action.equals("material.show")) {
             setTitlebar("material.show.title");
             setButtonVisible("material.save", false);
-//            contacts.clear();
-//            contacts.setEditable(false);
-//            addresses.clear();
-//            addresses.setEditable(false);
-//            vschedule.clear();
-//            vschedule.setEditable(false);
-//            dschedule.clear();
-//            dschedule.setEditable(false);
-//            
             form.setEditable(false);
+            form.setBlocked("material.ident");
+            form.setBlocked("material.dtreg");
+            form.setBlocked("material.tmreg");
             form.commit();
             
             setControlLoad(material);
@@ -96,16 +88,10 @@ public class MaterialView extends AbstractView {
         if (action.equals("material.edit")) {
             setTitlebar("material.edit.title");
             setButtonVisible("material.save", true);
-//            contacts.clear();
-//            contacts.setEditable(true);
-//            addresses.clear();
-//            addresses.setEditable(true);
-//            vschedule.clear();
-//            vschedule.setEditable(true);
-//            dschedule.clear();
-//            dschedule.setEditable(true);
-            
             form.setEditable(true);
+            form.setBlocked("material.ident");
+            form.setBlocked("material.dtreg");
+            form.setBlocked("material.tmreg");
             form.commit();
             
             setControlLoad(material);
@@ -119,16 +105,10 @@ public class MaterialView extends AbstractView {
         if (action.equals("material.create")) {            
             setTitlebar("material.create.title");
             setButtonVisible("material.save", true);
-//            contacts.clear();
-//            contacts.setEditable(true);
-//            addresses.clear();
-//            addresses.setEditable(true);
-//            vschedule.clear();
-//            vschedule.setEditable(true);
-//            dschedule.clear();
-//            dschedule.setEditable(true);
-            
             form.setEditable(true);
+            form.setUnBlocked("material.ident");
+            form.setBlocked("material.dtreg");
+            form.setBlocked("material.tmreg");
             form.commit();
             
             setControlLoad(material);

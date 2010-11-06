@@ -163,6 +163,14 @@ public class Form {
         fields.get(field).setTime(time);
     }
     
+    /**
+     * 
+     * @param field
+     */
+    public final void setUnBlocked(String field) {
+        blocked.remove(field);
+    }
+    
     /*
      * 
      * Getters

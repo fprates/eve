@@ -1,5 +1,7 @@
 package org.eve.mm.material.controller;
 
+import java.util.List;
+
 import org.eve.main.EVE;
 import org.eve.mm.material.Material;
 import org.eve.model.Model;
@@ -29,8 +31,13 @@ public class MaterialSelectionController extends AbstractController {
 	
     @Override
     public void userInput(String input) {
-    	Form form;
+        int c;
+        Form selporform;
+        Form form;
+        List<?> materials;
+        Material material_;
     	String ident;
+        TableAssist table;
         Material material = (Material)getObject();
         Model model = getModel();
         String action = getAction();
@@ -52,46 +59,40 @@ public class MaterialSelectionController extends AbstractController {
         
         if (input.equals("material.sel")) {
             if (ident.equals("")) {
-//                selporform = getForm("selpor");
-//                
-//                materials = model.select("selby_materials", new Object[] {
-//                        selporform.getStringLike("material.name"),
-//                        selporform.getStringLike("material.aname"),
-//                        selporform.getStringLike("material.refer")});
-//                
-//                if (materials == null) {
-//                    setMessage(EVE.error, "material.not.found");
-//                    return;
-//                }
-//                
-//                if (materials.size() == 0) {
-//                    setMessage(EVE.error, "material.select.empty");
-//                    return;
-//                }
-//                
-//                table = getTable("materials");
-//                ident = 0;
-//                
-//                for(Object object : materials) {
-//                    table.insert();
-//                    material_ = (Material)object;
-//                    table.setIntValue("material.ident", ident,
-//                            material_.getId());
-//                    table.setStringValue("material.name", ident,
-//                            material_.getName());
-//                    table.setStringValue("material.aname", ident,
-//                            material_.getAlternateName());
-//                    table.setStringValue("material.refer", ident,
-//                            material_.getReference());
-//                    ident++;
-//                }
-//                
-//                if (action.equals("material.show.sel"))
-//                    call("material.show.choose");
-//                
-//                if (action.equals("material.edit.sel"))
-//                    call("material.edit.choose");
-//                
+                selporform = getForm("selpor");
+                
+                materials = model.select("selby_materials", new Object[] {
+                selporform.getStringLike("material.refer")});
+                
+                if (materials == null) {
+                    setMessage(EVE.error, "material.not.found");
+                    return;
+                }
+                
+                if (materials.size() == 0) {
+                    setMessage(EVE.error, "material.select.empty");
+                    return;
+                }
+                
+                table = getTable("materials");
+                c = 0;
+                
+                for(Object object : materials) {
+                    table.insert();
+                    material_ = (Material)object;
+                    table.setStringValue("material.ident", c,
+                            material_.getId());
+                    table.setStringValue("material.refer", c,
+                            material_.getReference());
+                    c++;
+                }
+                
+                if (action.equals("material.show.sel"))
+                    call("material.show.choose");
+                
+                if (action.equals("material.edit.sel"))
+                    call("material.edit.choose");
+                
             } else {            
                 model.load(Material.class, ident, material);
                 if (material == null) {

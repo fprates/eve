@@ -3,6 +3,7 @@ package org.eve.mm.material.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;
@@ -11,7 +12,9 @@ public class MaterialSelectionView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
+        Group selpor;
         Form form = addForm("main");
+        Form selporform = addForm("selpor");
         
         container.setLayout(new RowLayout(SWT.VERTICAL));
         
@@ -22,6 +25,15 @@ public class MaterialSelectionView extends AbstractView {
         form.put("material.ident", 12);        
         form.define(container);
         
+        selpor = new Group(container, SWT.SHADOW_IN);
+        selporform.setLocale(getLocale());
+        selpor.setLayout(new RowLayout(SWT.VERTICAL));
+        selpor.setText(getMessage("material.select.by"));
+        
+        selporform.put("material.refer", 60);
+        selporform.define(selpor);
+        selpor.pack();
+        
         addButton("material.sel");
     }
 
@@ -31,8 +43,8 @@ public class MaterialSelectionView extends AbstractView {
         
         controller.setAction(action);
         controller.getForm("main").clear();
-//        controller.getForm("selpor").clear();
-//        controller.getTable("materials").clear();
+        controller.getForm("selpor").clear();
+        controller.getTable("materials").clear();
         
         setTitlebar("material.sel.title");
     }

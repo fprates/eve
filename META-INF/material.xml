@@ -18,17 +18,13 @@
     
     <bean id="mat_model" class="org.eve.mm.material.model.MaterialModel">
         <property name="sessionFactory" ref="session_factory"/>
-        <!-- 
         <property name="queries">
             <map>
-                <entry key="sel_cities" value="from City where ufkey = ?"/>
-                <entry key="sel_customer" value="from Customer where ident = ?"/>
-                <entry key="selby_customers"
-                    value="from Customer where name like ? and alternateName like ? and reference like ?"/>
-                <entry key="sel_suppliers" value="from Supplier"/>
+                <entry key="sel_material" value="from Material where ident = ?"/>
+                <entry key="selby_materials" value="from Material
+                	where reference like ?"/>
             </map>
         </property>
-         -->
     </bean>
     
     <bean id="mat_view" class="org.eve.mm.material.view.MaterialView"/>
