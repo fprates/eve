@@ -18,7 +18,7 @@ public class Material implements Serializable {
     private float quantity;
     private Date regDate;
     private String id;
-    private String netPriceUnit;
+    private String priceUnit;
 	private String quantityUnit;
     private String regUser;
     private String reference;
@@ -44,14 +44,6 @@ public class Material implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     */
-	public String getNetPriceUnit() {
-		return netPriceUnit;
-	}
-
-    /**
      * @return the netPrice
      */
     public float getNetPrice() {
@@ -64,6 +56,14 @@ public class Material implements Serializable {
      */
 	public float getNetWeight() {
 		return netWeight;
+	}
+
+    /**
+     * 
+     * @return
+     */
+	public String getPriceUnit() {
+		return priceUnit;
 	}
 
 	public float getQuantity() {
@@ -122,22 +122,6 @@ public class Material implements Serializable {
 	public void setGrossWeight(float grossWeight) {
 		this.grossWeight = grossWeight;
 	}
-
-	public void setQuantity(float quantity) {
-		this.quantity = quantity;
-	}
-
-	public void setWeightUnit(String weightUnit) {
-		this.weightUnit = weightUnit;
-	}
-
-	public void setQuantityUnit(String quantityUnit) {
-		this.quantityUnit = quantityUnit;
-	}
-
-	public void setNetPriceUnit(String netPriceUnit) {
-		this.netPriceUnit = netPriceUnit;
-	}
     
     /**
      * @param id the id to set
@@ -162,6 +146,10 @@ public class Material implements Serializable {
 
 	public void setNetWeight(float netWeight) {
 		this.netWeight = netWeight;
+	}
+
+	public void setPriceUnit(String priceUnit) {
+		this.priceUnit = priceUnit;
 	}
     
     /**
@@ -194,4 +182,16 @@ public class Material implements Serializable {
     public void setRegUser(String user) {
     	regUser = user;
     }
+
+	public void setQuantity(float quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setQuantityUnit(String quantityUnit) {
+		this.quantityUnit = quantityUnit;
+	}
+
+	public void setWeightUnit(String weightUnit) {
+		this.weightUnit = weightUnit;
+	}
 }

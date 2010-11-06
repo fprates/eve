@@ -52,6 +52,13 @@ public class MaterialView extends AbstractView {
         form.setString("material.ident", material.getId());
         form.setDate("material.dtreg", material.getRegDate());
         form.setTime("material.tmreg", material.getRegTime());
+        form.setString("material.refer", material.getReference());
+        form.setString("material.undps", material.getWeightUnit());
+        form.setFloat("material.psliq", material.getNetWeight());
+//        form.concat("material.psliq", "material.undps", "material.psliq");
+        form.setString("material.undqt", material.getQuantityUnit());
+        form.setFloat("material.quant", material.getQuantity());
+//        form.concat("material.quant", "material.undqt", "material.quant");
     }
 
     @Override
