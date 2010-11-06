@@ -134,5 +134,5 @@ public abstract class AbstractModel implements Model {
      * @see org.eve.model.Model#save(java.lang.Object)
      */
     @Override
-    public void save(Object object) { }
+    public void save(Object object) throws EveException { }
 }

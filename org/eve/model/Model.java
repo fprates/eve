@@ -29,5 +29,5 @@ public interface Model {
     
     public abstract List<?> select(String query, Object[] criteria);
     
-    public abstract void save(Object object);
+    public abstract void save(Object object) throws EveException;
 }

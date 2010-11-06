@@ -2,6 +2,7 @@ package org.eve.mm.material.controller;
 
 import org.eve.main.EVE;
 import org.eve.mm.material.Material;
+import org.eve.model.EveException;
 import org.eve.model.Model;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
@@ -10,10 +11,11 @@ import org.hibernate.HibernateException;
 public class MaterialController extends AbstractController {
 
 	private void save() {
+        boolean firstsave = false;
         Model model = getModel();
         Material material = (Material)getObject();
         Form form = getForm("main");
-		
+	
         try {
             /*
              * dados base
@@ -24,6 +26,7 @@ public class MaterialController extends AbstractController {
         	if (material.getId().equals("") ||
         	    material.getReference().equals("")) {
                 setMessage(EVE.error, "material.obligatory.field");
+                
                 return;
         	}
             
@@ -32,16 +35,26 @@ public class MaterialController extends AbstractController {
         	material.setQuantity(form.getFloat("material.quant"));
         	material.setQuantityUnit(form.getString("material.undqt"));
         	
+        	if (material.getRegUser() == null)
+        	    firstsave = true;
+        	
             model.save(material);
             form.setDate("material.dtreg", material.getRegDate());
             form.setTime("material.tmreg", material.getRegTime());
             
             setMessage(EVE.status, "material.save.success");
             
-            return;
+            if (firstsave) {
+                form.setBlocked("material.ident");
+                form.commit();
+            }
+            
         } catch (HibernateException ex) {
             setMessage(EVE.error, "material.save.error");
-            ex.printStackTrace();                
+            ex.printStackTrace();
+        } catch (EveException ex) {
+            setMessage(EVE.error, ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

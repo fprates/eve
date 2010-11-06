@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.eve.mm.material.Material;
 import org.eve.model.AbstractModel;
+import org.eve.model.EveException;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,14 +51,20 @@ public class MaterialModel extends AbstractModel {
 	 */
     @Override
     @Transactional(propagation=Propagation.SUPPORTS)
-    public final void save(Object object) {
+    public final void save(Object object) throws EveException {
         Calendar calendar;
+        Material material_;
         Material material = (Material)object;
         Session session = getSessionFactory().getCurrentSession();
         
         session.beginTransaction();
         
         if (material.getRegUser() == null || material.getRegUser().equals("")) {
+            material_ = (Material)session.load(Material.class, material.getId());
+            
+            if (material_.getId() == null)
+                throw new EveException("material.duplicated.ident");
+            
         	material.setRegUser("SYSTEM");
             calendar = Calendar.getInstance();
             material.setRegDate(calendar.getTime());
