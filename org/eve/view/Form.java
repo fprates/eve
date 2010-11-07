@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
+import org.eve.model.AbstractDocument;
 import org.springframework.context.MessageSource;
 
 /**
@@ -52,6 +53,10 @@ public class Form {
      * Setters
      * 
      */
+    
+    public final void setBlocked(AbstractDocument document, int id) {
+        blocked.add(document.getName(id));
+    }
     
     public final void setBlocked(String field) {
         blocked.add(field);
@@ -367,6 +372,15 @@ public class Form {
         }
         
         return composite;
+    }
+    
+    public final void put(AbstractDocument document, int id) {
+        String name = document.getName(id);
+        FormComponent component = new FormComponent(
+                name, document.getLength(id), !document.isKey(id));
+        
+        component.setTitle(messages.getMessage(name, null, name, locale));
+        fields.put(name, component);
     }
     
     /**

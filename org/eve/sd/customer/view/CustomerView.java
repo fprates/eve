@@ -33,6 +33,7 @@ public class CustomerView extends AbstractView {
         ExpandBar bar;
         Composite schedule;
         TableAssist table;
+        Customer customer = (Customer)getController().getObject();
         Form form = addForm("main");
         
         setWidth(1260);
@@ -45,12 +46,9 @@ public class CustomerView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put("customer.ident", 10, false);
-        form.put("customer.dtreg", 10, false);
-        form.put("customer.tmreg", 8, false);
-        form.setBlocked("customer.ident");
-        form.setBlocked("customer.dtreg");
-        form.setBlocked("customer.tmreg");
+        form.put(customer, Customer.IDENT);
+        form.put(customer, Customer.DTREG);
+        form.put(customer, Customer.TMREG);
         
         form.put("customer.refer", 12);
         form.put("customer.name", 40);
@@ -326,6 +324,9 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(false);
             
             form.setEditable(false);
+            form.setBlocked(customer, Customer.IDENT);
+            form.setBlocked(customer, Customer.DTREG);
+            form.setBlocked(customer, Customer.TMREG);
             form.commit();
             
             setControlLoad(customer);
@@ -349,6 +350,9 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
             
             form.setEditable(true);
+            form.setBlocked(customer, Customer.IDENT);
+            form.setBlocked(customer, Customer.DTREG);
+            form.setBlocked(customer, Customer.TMREG);
             form.commit();
             
             setControlLoad(customer);
@@ -372,11 +376,15 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
             
             form.setEditable(true);
+            form.setBlocked(customer, Customer.IDENT);
+            form.setBlocked(customer, Customer.DTREG);
+            form.setBlocked(customer, Customer.TMREG);
             form.commit();
             
             setControlLoad(customer);
             
             getController().getForm("main").clear();
+            
             return;
         }
     }

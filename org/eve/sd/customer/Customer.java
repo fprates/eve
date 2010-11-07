@@ -3,17 +3,22 @@
  */
 package org.eve.sd.customer;
 
-import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eve.model.AbstractDocument;
+
 /**
  * @author francisco.prates
  *
  */
-public class Customer implements Serializable {
+public class Customer extends AbstractDocument {
+    public static final int IDENT = 0;
+    public static final int DTREG = 1;
+    public static final int TMREG = 2;
+    
 	private static final long serialVersionUID = 3061311103322489445L;
     private float prdctinc;
     private float billinc;
@@ -44,6 +49,9 @@ public class Customer implements Serializable {
 	    contacts = new TreeSet<CustomerContact>();
 	    addresses = new TreeSet<CustomerAddress>();
 	    schedule = new TreeSet<CustomerSchedule>();
+	    put(IDENT, "customer.ident", true, datatype.INT, 10);
+        put(DTREG, "customer.dtreg", false, datatype.DATE, 10);
+        put(TMREG, "customer.tmreg", false, datatype.TIME, 8);
 	}
 	
 	/*
