@@ -20,27 +20,7 @@ public class CustomerModel extends AbstractModel {
         for (Object id : customer_.getIds())
             customer.setFieldValue((String)id, customer_.getFieldValue((String)id));
         
-        customer.setReference(customer_.getReference());
-        customer.setAlternateName(customer_.getAlternateName());
-        customer.setCodCadFiscal(customer_.getCodCadFiscal());
-//        customer.setRegDate(customer_.getRegDate());
-//        customer.setRegTime(customer_.getRegTime());
-//        customer.setRegUser(customer_.getRegUser());
-//        customer.setId(customer_.getId());
-        customer.setName(customer_.getName());
-        customer.setHomePage(customer_.getHomePage());
-        customer.setEmail(customer_.getEmail());
-        customer.setStatus(customer_.getStatus());
-        customer.setIVF(customer_.getIVF());
-        customer.setIncentive(customer_.getIncentive());
-        customer.setProductIncentiveValue(customer_.getProductIncentiveValue());
-        customer.setBillingIncentiveValue(customer_.getBillingIncentiveValue());
-        customer.setSupplierIncentiveValue(customer_.getSupplierIncentiveValue());
-        customer.setPartnerIncentiveValue(customer_.getPartnerIncentiveValue());
         customer.setStandardSupplier(customer_.getStandardSupplier());
-        customer.setInscricaoEstadual(customer_.getInscricaoEstadual());
-        customer.setTipoComunicacao(customer_.getTipoComunicacao());
-        customer.setTipoEstabelecimento(customer_.getTipoEstabelecimento());
         
         customer.getContacts().clear();
         customer.getContacts().addAll(customer_.getContacts());

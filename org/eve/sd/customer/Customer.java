@@ -19,6 +19,23 @@ public class Customer extends AbstractDocument {
     public static final String DTREG = "regDate";
     public static final String TMREG = "regTime";
     public static final String USREG = "regUser";
+    public static final String TPINC = "incentive";
+    public static final String CDIVF = "IVF";
+    public static final String STATUS = "status";
+    public static final String STDSP = "standardSupplier";
+    public static final String TPEST = "tipoEstabelecimento";
+    public static final String TPCOM = "tipoComunicacao";
+    public static final String REFER = "reference";
+    public static final String NAME = "name";
+    public static final String ANAME = "alternateName";
+    public static final String CNPJ = "codCadFiscal";
+    public static final String IE = "inscricaoEstadual";
+    public static final String EMAIL = "email";
+    public static final String HOMEP = "homePage";
+    public static final String VLIPR = "productIncentiveValue";
+    public static final String VLIBL = "billingIncentiveValue";
+    public static final String DVCSP = "supplierIncentiveValue";
+    public static final String DVCPT = "partnerIncentiveValue";
     
 	private static final long serialVersionUID = 3061311103322489445L;
     private float prdctinc;
@@ -55,6 +72,45 @@ public class Customer extends AbstractDocument {
         put(DTREG, "customer.dtreg", false, datatype.DATE, 10);
         put(TMREG, "customer.tmreg", false, datatype.TIME, 8);
         put(USREG, "customer.usreg", false, datatype.CHAR, 12);
+        put(REFER, "customer.refer", false, datatype.CHAR, 12);
+        put(NAME, "customer.name", false, datatype.CHAR, 40);
+        put(ANAME, "customer.aname", false, datatype.CHAR, 40);
+        put(CNPJ, "customer.cnpj", false, datatype.CHAR, 18);
+        put(IE, "customer.ie", false, datatype.LONG, 12);
+        put(HOMEP, "customer.homep", false, datatype.CHAR, 128);
+        put(EMAIL, "customer.email", false, datatype.CHAR, 128);
+        put(VLIPR, "customer.vlipr", false, datatype.FLOAT, 13);
+        put(VLIBL, "customer.vlibl", false, datatype.FLOAT, 7);
+        put(DVCSP, "customer.dvcsp", false, datatype.FLOAT, 7);
+        put(DVCPT, "customer.dvcpt", false, datatype.FLOAT, 7);
+
+        put(TPINC, "customer.tpinc", false, datatype.INT, 1);
+        putValues(TPINC, new String[] {
+                "incentive.free",
+                "incentive.product",
+                "incentive.bill"});
+        
+        put(CDIVF, "customer.cdivf", false, datatype.INT, 1);
+        putValues(CDIVF, new String[] {"A", "B", "C"});
+        
+        put(STATUS, "customer.status", false, datatype.INT, 1);
+        putValues(STATUS, new String[] {
+                "customer.inactive",
+                "customer.active"});
+        
+        put(STDSP, "customer.stdsp", false, datatype.INT, 10);
+        put(TPEST, "customer.tpest", false, datatype.INT, 12);
+        putValues(TPEST, new String[] {
+                "tpest.super",
+                "tpest.indus",
+                "tpest.reven"});
+        
+        put(TPCOM, "customer.tpcom", false, datatype.INT, 1);
+        putValues(TPCOM, new String[] {
+                "tpcom.blue",
+                "tpcom.green",
+                "tpcom.red",
+                "tpcom.yellow"});
 	}
 	
 	/*

@@ -169,24 +169,7 @@ public class CustomerController extends AbstractController {
                     customer.setFieldValue((String)id, form.getFieldValue(
                             customer.getName((String)id)));
                 }
-                
-                customer.setReference(form.getString("customer.refer"));
-                customer.setAlternateName(form.getString("customer.aname"));
-                customer.setCodCadFiscal(form.getString("customer.cnpj"));
-                customer.setName(form.getString("customer.name"));
-                customer.setStatus(form.getInt("customer.status"));
-                customer.setHomePage(form.getString("customer.homep"));
-                customer.setEmail(form.getString("customer.email"));
-                customer.setIVF(form.getInt("customer.cdivf"));
-                customer.setIncentive(form.getInt("customer.tpinc"));
-                customer.setProductIncentiveValue(form.getFloat("customer.vlipr"));
-                customer.setBillingIncentiveValue(form.getFloat("customer.vlibl"));
-                customer.setSupplierIncentiveValue(form.getFloat("customer.dvcsp"));
-                customer.setPartnerIncentiveValue(form.getFloat("customer.dvcpt"));
                 customer.setStandardSupplier(form.getInt("customer.stdsp"));
-                customer.setInscricaoEstadual(form.getLong("customer.ie"));
-                customer.setTipoComunicacao(form.getInt("customer.tpcom"));
-                customer.setTipoEstabelecimento(form.getInt("customer.tpest"));
                 
                 /*
                  * inclui contatos
