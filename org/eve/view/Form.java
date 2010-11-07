@@ -88,6 +88,33 @@ public class Form {
     }
     
     /**
+     * 
+     * @param id
+     * @param value
+     */
+    public final void setFieldValue(String id, Object value) {        
+        switch (fields.get(id).getDataType()) {
+        case CHAR:
+        case DATE:
+        case TIME:
+            setString(id, (String)value);
+            break;
+        
+        case INT:
+            setInt(id, (Integer)value);
+            break;
+        
+        case LONG:
+            setLong(id, (Long)value);
+            break;
+            
+        case FLOAT:
+            setFloat(id, (Float)value);
+            break;
+        }
+    }
+    
+    /**
      * Ajusta valor de ponto flutuante para campo
      * @param field
      * @param value
@@ -106,20 +133,20 @@ public class Form {
     }
     
     /**
+     * Define localização
+     * @param locale
+     */
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
+    /**
      * Ajusta valor do campo inteiro longo
      * @param field
      * @param value
      */
     public final void setLong(String field, long value) {
         fields.get(field).setLong(value);
-    }
-    
-    /**
-     * Define localização
-     * @param locale
-     */
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
     }
     
     /**
@@ -182,6 +209,19 @@ public class Form {
      * 
      */
     
+    /**
+     * Retorna components do formulário
+     * @return
+     */
+    public final Collection<Component> getComponents() {
+        return fields.values();
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public final Object getFieldValue(String id) {
         switch (fields.get(id).getDataType()) {
         case CHAR:
@@ -191,40 +231,13 @@ public class Form {
         
         case INT:
             return getInt(id);
+        
+        case FLOAT:
+            return getFloat(id);
             
         default:
             return null;
         }
-    }
-    
-    /**
-     * 
-     * @param message
-     * @return
-     */
-    private final String getMessage(String message) {
-        return messages.getMessage(message, null, message, locale);        
-    }
-    
-    /**
-     * Retorna valor do campo caractere do formulário
-     * @param field
-     * @return
-     */
-    public final String getString(String field) {
-        return fields.get(field).getString();
-    }
-    
-    /**
-     * Retorna valor do campo caractere do formulário,
-     * em formato "like" para seleção
-     * @param field
-     * @return
-     */
-    public final String getStringLike(String field) {
-        String value = getString(field).replace("*", "%");
-        
-        return (value.equals(""))?"%":value;
     }
     
     /**
@@ -277,11 +290,33 @@ public class Form {
     }
     
     /**
-     * Retorna components do formulário
+     * 
+     * @param message
      * @return
      */
-    public final Collection<Component> getComponents() {
-        return fields.values();
+    private final String getMessage(String message) {
+        return messages.getMessage(message, null, message, locale);        
+    }
+    
+    /**
+     * Retorna valor do campo caractere do formulário
+     * @param field
+     * @return
+     */
+    public final String getString(String field) {
+        return fields.get(field).getString();
+    }
+    
+    /**
+     * Retorna valor do campo caractere do formulário,
+     * em formato "like" para seleção
+     * @param field
+     * @return
+     */
+    public final String getStringLike(String field) {
+        String value = getString(field).replace("*", "%");
+        
+        return (value.equals(""))?"%":value;
     }
     
     /*
@@ -423,6 +458,27 @@ public class Form {
         put(id, length, true);
     }
     
+    public final void putCombo(AbstractDocument document, String id, int length) {
+        String[] options;
+        String name = document.getName(id);
+        FormComponent component = new FormComponent(
+                name, length, !document.isKey(id));
+        
+        component.setTitle(messages.getMessage(name, null, name, locale));
+        component.setType(EVE.combo);
+        
+        options = document.getValues(id);
+        if (options == null) {
+            options = new String[1];
+            options[0] = "";
+        }
+        
+        component.setOptions(options);
+        component.setDataType(document.getType(id));
+        
+        fields.put(name, component);
+    }
+    
     /**
      * Insere combobox
      * @param id
@@ -442,6 +498,19 @@ public class Form {
         component.setOptions(options);
         
         fields.put(id, component);
+    }
+    
+    /**
+     * 
+     * @param document
+     * @param id
+     */
+    public final void putSearch(AbstractDocument document, String id) {
+        Component component;
+        
+        put(document, id);
+        component = fields.get(document.getName(id));
+        component.setSearch(true);
     }
     
     /**

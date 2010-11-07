@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractDocument implements Serializable {
-    public enum datatype {CHAR, INT, FLOAT, DATE, TIME};
+    public enum datatype {CHAR, INT, LONG, FLOAT, DATE, TIME};
     private static final long serialVersionUID = 6622123475315846780L;
     private Map<String, Field> fields;
     
@@ -28,7 +28,7 @@ public abstract class AbstractDocument implements Serializable {
         String name = new StringBuffer("get").append(
                 id.substring(0, 1).toUpperCase()).append(
                         id.substring(1)).toString();
-        
+
         try {
             method = getClass().getMethod(name, new Class<?>[0]);
             
@@ -84,6 +84,15 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
+    public final String[] getValues(String id) {
+        return fields.get(id).getValues();
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public final datatype getType(String id) {
         return fields.get(id).getType();
     }
@@ -112,6 +121,10 @@ public abstract class AbstractDocument implements Serializable {
             
         case INT:
             class_ = new Class[] {Integer.TYPE};
+            break;
+        
+        case LONG:
+            class_ = new Class[] {Long.TYPE};
             break;
             
         case FLOAT:
@@ -173,6 +186,15 @@ public abstract class AbstractDocument implements Serializable {
         
         fields.put(id, field);
     }
+    
+    /**
+     * 
+     * @param id
+     * @param values
+     */
+    public final void putValues(String id, String[] values) {
+        fields.get(id).setValues(values);
+    }
 }
 
 class Field {
@@ -180,6 +202,7 @@ class Field {
     private int length;
     private AbstractDocument.datatype type;
     private String name;
+    private String[] values;
     
     public Field(String name) {
         this.name = name;
@@ -207,6 +230,10 @@ class Field {
         return type;
     }
     
+    public final String[] getValues() {
+        return values;
+    }
+    
     public final boolean isKey() {
         return key;
     }
@@ -231,5 +258,9 @@ class Field {
     
     public final void setType(AbstractDocument.datatype type) {
         this.type = type;
+    }
+    
+    public final void setValues(String[] values) {
+        this.values = values;
     }
 }

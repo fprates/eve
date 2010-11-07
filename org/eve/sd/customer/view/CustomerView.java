@@ -50,41 +50,26 @@ public class CustomerView extends AbstractView {
         form.put(customer, Customer.DTREG);
         form.put(customer, Customer.TMREG);
         
-        form.put("customer.refer", 12);
-        form.put("customer.name", 40);
-        form.put("customer.aname", 40);
-        form.put("customer.cnpj", 18);
-        form.put("customer.ie", 12);
-        form.putCombo("customer.tpest", new String[] {
-                getMessage("tpest.super"),
-                getMessage("tpest.indus"),
-                getMessage("tpest.reven")}, 12);
+        form.put(customer, Customer.REFER);
+        form.put(customer, Customer.NAME);
+        form.put(customer, Customer.ANAME);
+        form.put(customer, Customer.CNPJ);
+        form.put(customer, Customer.IE);
+        form.putCombo(customer, Customer.TPEST, 12);
+        form.putCombo(customer, Customer.STATUS, 7);
+        form.putCombo(customer, Customer.TPINC, 7);
         
-        form.putCombo("customer.status", new String[] {
-                getMessage("customer.inactive"),
-                getMessage("customer.active")}, 7);
+        form.put(customer, Customer.HOMEP);
+        form.put(customer, Customer.EMAIL);
+        form.putCombo(customer, Customer.CDIVF, 1);
         
-        form.putCombo("customer.tpinc", new String[] {
-                getMessage("incentive.free"),
-                getMessage("incentive.product"),
-                getMessage("incentive.bill")}, 7);
+        form.put(customer, Customer.VLIPR);
+        form.put(customer, Customer.VLIBL);
+        form.put(customer, Customer.DVCSP);
+        form.put(customer, Customer.DVCPT);
+        form.putSearch(customer, Customer.STDSP);
         
-        form.put("customer.homep", 128);
-        form.put("customer.email", 128);
-        form.putCombo("customer.cdivf", new String[] {
-                "A", "B", "C"}, 1);
-        
-        form.put("customer.vlipr", 13);
-        form.put("customer.vlibl", 7);
-        form.put("customer.dvcsp", 7);
-        form.put("customer.dvcpt", 7);
-        form.putSearch("customer.stdsp", 12);
-        
-        form.putCombo("customer.tpcom", new String[] {
-                getMessage("tpcom.blue"),
-                getMessage("tpcom.green"),
-                getMessage("tpcom.red"),
-                getMessage("tpcom.yellow")}, 8);
+        form.putCombo(customer, Customer.TPCOM, 8);
         
         form.define(container);
         
@@ -208,34 +193,23 @@ public class CustomerView extends AbstractView {
         int munic_;
         Controller controller = getController();
         Map<Object, String> results;
+        String id_;
+        String name;
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
         TableAssist vstable = controller.getTable("vschedule");
         TableAssist dstable = controller.getTable("dschedule");
         
-        form.setString("customer.refer", customer.getReference());
-        form.setDate("customer.dtreg", customer.getRegDate());
-        form.setTime("customer.tmreg", customer.getRegTime());
-        form.setString("customer.aname", customer.getAlternateName());
-        form.setString("customer.cnpj", customer.getCodCadFiscal());
-        form.setInt("customer.ident", customer.getId());
-        form.setString("customer.name", customer.getName());
-        form.setInt("customer.status", customer.getStatus());
-        form.setString("customer.homep", customer.getHomePage());
-        form.setProperties("customer.homep", EVE.nocase);
-        form.setString("customer.email", customer.getEmail());
-        form.setProperties("customer.email", EVE.nocase);
-        form.setInt("customer.tpinc", customer.getIncentive());
-        form.setInt("customer.cdivf", customer.getIVF());
-        form.setFloat("customer.vlipr", customer.getProductIncentiveValue());
-        form.setFloat("customer.vlibl", customer.getBillingIncentiveValue());
-        form.setFloat("customer.dvcsp", customer.getSupplierIncentiveValue());
-        form.setFloat("customer.dvcpt", customer.getPartnerIncentiveValue());        
-        form.setInt("customer.stdsp", customer.getStandardSupplier());
-        form.setLong("customer.ie", customer.getInscricaoEstadual());
-        form.setInt("customer.tpest", customer.getTipoEstabelecimento());
-        form.setInt("customer.tpcom", customer.getTipoComunicacao());
+        for (Object id : customer.getIds()) {
+            if (id.equals(Customer.USREG))
+                continue;
+            
+            id_ = (String)id;
+            name = customer.getName(id_);
+            
+            form.setFieldValue(name, customer.getFieldValue(id_));
+        }
         
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {
