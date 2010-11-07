@@ -54,7 +54,7 @@ public class Form {
      * 
      */
     
-    public final void setBlocked(AbstractDocument document, int id) {
+    public final void setBlocked(AbstractDocument document, String id) {
         blocked.add(document.getName(id));
     }
     
@@ -374,7 +374,7 @@ public class Form {
         return composite;
     }
     
-    public final void put(AbstractDocument document, int id) {
+    public final void put(AbstractDocument document, String id) {
         String name = document.getName(id);
         FormComponent component = new FormComponent(
                 name, document.getLength(id), !document.isKey(id));

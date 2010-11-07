@@ -17,13 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerModel extends AbstractModel {
 
     private final void copyCustomer(Customer customer_, Customer customer) {
+        for (Object id : customer_.getIds())
+            customer.setFieldValue((String)id, customer_.getFieldValue((String)id));
+        
         customer.setReference(customer_.getReference());
         customer.setAlternateName(customer_.getAlternateName());
         customer.setCodCadFiscal(customer_.getCodCadFiscal());
-        customer.setRegDate(customer_.getRegDate());
-        customer.setRegTime(customer_.getRegTime());
-        customer.setRegUser(customer_.getRegUser());
-        customer.setId(customer_.getId());
+//        customer.setRegDate(customer_.getRegDate());
+//        customer.setRegTime(customer_.getRegTime());
+//        customer.setRegUser(customer_.getRegUser());
+//        customer.setId(customer_.getId());
         customer.setName(customer_.getName());
         customer.setHomePage(customer_.getHomePage());
         customer.setEmail(customer_.getEmail());

@@ -1,16 +1,20 @@
 package org.eve.model;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.Time;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractDocument implements Serializable {
     public enum datatype {CHAR, INT, FLOAT, DATE, TIME};
     private static final long serialVersionUID = 6622123475315846780L;
-    private Map<Integer, Field> fields;
+    private Map<String, Field> fields;
     
     public AbstractDocument() {
-        fields = new HashMap<Integer, Field>();
+        fields = new HashMap<String, Field>();
     }
     
     /*
@@ -19,12 +23,50 @@ public abstract class AbstractDocument implements Serializable {
      * 
      */
     
+    public final Object getFieldValue(String id) {
+        Method method;
+        String name = new StringBuffer("get").append(
+                id.substring(0, 1).toUpperCase()).append(
+                        id.substring(1)).toString();
+        
+        try {
+            method = getClass().getMethod(name, new Class<?>[0]);
+            
+            return method.invoke(this, new Object[0]);
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public final Object[] getIds() {
+        return fields.keySet().toArray();
+    }
+    
     /**
      * 
      * @param id
      * @return
      */
-    public final int getLength(int id) {
+    public final int getLength(String id) {
         return fields.get(id).getLength();
     }
     
@@ -33,7 +75,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
-    public final String getName(int id) {
+    public final String getName(String id) {
         return fields.get(id).getName();
     }
     
@@ -42,7 +84,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
-    public final datatype getType(int id) {
+    public final datatype getType(String id) {
         return fields.get(id).getType();
     }
     
@@ -51,8 +93,64 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
-    public final boolean isKey(int id) {
+    public final boolean isKey(String id) {
         return fields.get(id).isKey();
+    }
+    
+    public final void setFieldValue(String id, Object object) {
+        Method method;
+        Class<?>[] class_;
+        Field field = fields.get(id);
+        String name = new StringBuffer("set").append(
+                id.substring(0, 1).toUpperCase()).append(
+                        id.substring(1)).toString();
+        
+        switch (field.getType()) {
+        case CHAR:
+            class_ = new Class[] {String.class};
+            break;
+            
+        case INT:
+            class_ = new Class[] {Integer.TYPE};
+            break;
+            
+        case FLOAT:
+            class_ = new Class[] {Float.TYPE};
+            break;
+            
+        case DATE:
+            class_ = new Class[] {Date.class};
+            break;
+        
+        case TIME:
+            class_ = new Class[] {Time.class};
+            break;
+            
+        default:
+            return;
+        }
+        
+        try {
+            method = getClass().getMethod(name, class_);
+            
+            method.invoke(this, new Object[] {object});
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
     }
     
     /*
@@ -66,7 +164,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @param name
      */
-    public final void put(int id, String name, boolean key, datatype type, int length) {
+    public final void put(String id, String name, boolean key, datatype type, int length) {
         Field field =  new Field(name);
         
         field.setKey(key);

@@ -15,9 +15,10 @@ import org.eve.model.AbstractDocument;
  *
  */
 public class Customer extends AbstractDocument {
-    public static final int IDENT = 0;
-    public static final int DTREG = 1;
-    public static final int TMREG = 2;
+    public static final String IDENT = "id";
+    public static final String DTREG = "regDate";
+    public static final String TMREG = "regTime";
+    public static final String USREG = "regUser";
     
 	private static final long serialVersionUID = 3061311103322489445L;
     private float prdctinc;
@@ -49,9 +50,11 @@ public class Customer extends AbstractDocument {
 	    contacts = new TreeSet<CustomerContact>();
 	    addresses = new TreeSet<CustomerAddress>();
 	    schedule = new TreeSet<CustomerSchedule>();
+	    
 	    put(IDENT, "customer.ident", true, datatype.INT, 10);
         put(DTREG, "customer.dtreg", false, datatype.DATE, 10);
         put(TMREG, "customer.tmreg", false, datatype.TIME, 8);
+        put(USREG, "customer.usreg", false, datatype.CHAR, 12);
 	}
 	
 	/*
