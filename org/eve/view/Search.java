@@ -83,11 +83,18 @@ public class Search implements SelectionListener, DisposeListener {
         Composite btarea;
         Display display;
         
+        results = controller.getResults(component.getName(), null);
+        
+        if (results == null) {
+            system.setMessage(EVE.status, messages.getMessage(
+                    "search.no.results", null, "search.no.results", locale));
+            return;
+        }
+        
         dialog = new Shell(container.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         dialog.setLayout(new GridLayout(1, false));
         display = dialog.getDisplay();
         
-        results = controller.getResults(component.getName(), null);
         k = results.size();
         
         table = new TableAssist();    

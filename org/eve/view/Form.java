@@ -368,6 +368,7 @@ public class Form {
                     search.setLocale(locale);
                     search.setMessages(messages);
                     search.setController(controller);
+                    search.setSystem(system);
                 }
                 
                 break;
