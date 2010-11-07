@@ -182,6 +182,21 @@ public class Form {
      * 
      */
     
+    public final Object getFieldValue(String id) {
+        switch (fields.get(id).getDataType()) {
+        case CHAR:
+        case DATE:
+        case TIME:
+            return getString(id);
+        
+        case INT:
+            return getInt(id);
+            
+        default:
+            return null;
+        }
+    }
+    
     /**
      * 
      * @param message
@@ -380,6 +395,8 @@ public class Form {
                 name, document.getLength(id), !document.isKey(id));
         
         component.setTitle(messages.getMessage(name, null, name, locale));
+        component.setDataType(document.getType(id));
+        
         fields.put(name, component);
     }
     

@@ -161,10 +161,18 @@ public class CustomerController extends AbstractController {
                 /*
                  * dados base
                  */
+                for (Object id : customer.getIds()) {
+                    if (id.equals("regDate") || id.equals("regTime") ||
+                            id.equals("regUser"))
+                        continue;
+                    
+                    customer.setFieldValue((String)id, form.getFieldValue(
+                            customer.getName((String)id)));
+                }
+                
                 customer.setReference(form.getString("customer.refer"));
                 customer.setAlternateName(form.getString("customer.aname"));
                 customer.setCodCadFiscal(form.getString("customer.cnpj"));
-                customer.setId(form.getInt("customer.ident"));
                 customer.setName(form.getString("customer.name"));
                 customer.setStatus(form.getInt("customer.status"));
                 customer.setHomePage(form.getString("customer.homep"));

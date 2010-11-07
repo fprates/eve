@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
+import org.eve.model.AbstractDocument;
 
 public abstract class AbstractComponent implements Component {
     private boolean nocase;
@@ -21,6 +22,7 @@ public abstract class AbstractComponent implements Component {
     private boolean search;
     private int length;
     private int type;
+    private AbstractDocument.datatype datatype;
     private Control control;
     private DateFormat dateformat;
     private Locale locale;
@@ -92,6 +94,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final Control getControl(int index) {
         return editors.get(index).getEditor();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getDataType()
+     */
+    @Override
+    public final AbstractDocument.datatype getDataType() {
+        return datatype;
     }
     
     /*
@@ -306,6 +317,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setControl(Control control) {
         this.control = control;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setDataType(org.eve.model.AbstractDocument.datatype)
+     */
+    @Override
+    public final void setDataType(AbstractDocument.datatype datatype) {
+        this.datatype = datatype;
     }
     
     /*

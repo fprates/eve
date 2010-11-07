@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
+import org.eve.model.AbstractDocument;
 
 public interface Component {
     
@@ -22,6 +23,12 @@ public interface Component {
      * @return
      */
     public abstract Control getControl(int index);
+    
+    /**
+     * 
+     * @return
+     */
+    public abstract AbstractDocument.datatype getDataType();
     
     /**
      * Retorna numérico flutuante 
@@ -123,6 +130,12 @@ public interface Component {
      * @param control
      */
     public abstract void setControl(Control control);
+    
+    /**
+     * 
+     * @param datatype
+     */
+    public abstract void setDataType(AbstractDocument.datatype datatype);
     
     /**
      * Ajusta data
