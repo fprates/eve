@@ -32,9 +32,6 @@ public class SupplierView extends AbstractView {
         form.put("supplier.ident", 12, false);
         form.put("supplier.dtreg", 10, false);
         form.put("supplier.tmreg", 8, false);
-        form.setBlocked("supplier.ident");
-        form.setBlocked("supplier.dtreg");
-        form.setBlocked("supplier.tmreg");
         
         form.put("supplier.refer", 12);
         form.put("supplier.name", 40);
@@ -159,6 +156,9 @@ public class SupplierView extends AbstractView {
             setButtonVisible("supplier.save", false);
             
             form.setEditable(false);
+            form.setBlocked("supplier.ident");
+            form.setBlocked("supplier.dtreg");
+            form.setBlocked("supplier.tmreg");
             form.commit();
             
             setControlLoad(supplier);
@@ -174,6 +174,9 @@ public class SupplierView extends AbstractView {
             setButtonVisible("supplier.save", true);
             
             form.setEditable(true);
+            form.setBlocked("supplier.ident");
+            form.setBlocked("supplier.dtreg");
+            form.setBlocked("supplier.tmreg");
             form.commit();
             
             setControlLoad(supplier);
@@ -189,6 +192,10 @@ public class SupplierView extends AbstractView {
             setButtonVisible("supplier.save", true);
             
             setControlLoad(supplier);
+            form.setBlocked("supplier.ident");
+            form.setBlocked("supplier.dtreg");
+            form.setBlocked("supplier.tmreg");
+            form.commit();
             
             getController().getForm("main").clear();
             
