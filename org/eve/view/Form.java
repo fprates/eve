@@ -95,9 +95,15 @@ public class Form {
     public final void setFieldValue(String id, Object value) {        
         switch (fields.get(id).getDataType()) {
         case CHAR:
-        case DATE:
-        case TIME:
             setString(id, (String)value);
+            break;
+            
+        case DATE:
+            setDate(id, (Date)value);
+            break;
+            
+        case TIME:
+            setTime(id, (Time)value);
             break;
         
         case INT:

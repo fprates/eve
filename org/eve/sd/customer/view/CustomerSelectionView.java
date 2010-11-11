@@ -17,8 +17,6 @@ import org.eve.view.Form;
  *
  */
 public class CustomerSelectionView extends AbstractView {
-    Customer customer;
-
     /**
      * 
      */
@@ -30,6 +28,7 @@ public class CustomerSelectionView extends AbstractView {
     @Override
     public void defineView(Composite container) {
         Group selpor;
+        Customer customer = (Customer)getController().getObject();
         Form form = addForm("main");
         Form selporform = addForm("selpor");
         
@@ -39,7 +38,7 @@ public class CustomerSelectionView extends AbstractView {
         addAction("customer.edit.sel");
         
         form.setLocale(getLocale());
-        form.put("customer.ident", 12);        
+        form.put(customer, Customer.IDENT);
         form.define(container);
         
         selpor = new Group(container, SWT.SHADOW_IN);
@@ -47,9 +46,9 @@ public class CustomerSelectionView extends AbstractView {
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
         selpor.setText(getMessage("customer.select.by"));
         
-        selporform.put("customer.name", 40);
-        selporform.put("customer.aname", 40);
-        selporform.put("customer.refer", 12);
+        selporform.put(customer, Customer.NAME);
+        selporform.put(customer, Customer.ANAME);
+        selporform.put(customer, Customer.REFER);
         selporform.define(selpor);
         selpor.pack();
         
