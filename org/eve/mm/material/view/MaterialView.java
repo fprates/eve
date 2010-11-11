@@ -12,6 +12,7 @@ public class MaterialView extends AbstractView {
     @Override
     protected void defineView(Composite container) {
         Form form = addForm("main");
+        Material material = (Material)getController().getObject();
         
         setWidth(1260);
         addAction("material.create");
@@ -23,15 +24,15 @@ public class MaterialView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put("material.ident", 18, false);
-        form.put("material.dtreg", 10, false);
-        form.put("material.tmreg", 8, false);
-        form.put("material.refer", 60);
-        form.put("material.undps", 3);
-        form.put("material.psliq", 13);
+        form.put(material, Material.IDENT);
+        form.put(material, Material.DTREG);
+        form.put(material, Material.TMREG);
+        form.put(material, Material.REFER);
+        form.put(material, Material.UNDPS);
+        form.put(material, Material.PSLIQ);
+        form.put(material, Material.UNDQT);
+        form.put(material, Material.QUANT);
 //        form.concat("material.psliq", "material.undps", "material.psliq");
-        form.put("material.undqt", 3);
-        form.put("material.quant", 13);
 //        form.concat("material.quant", "material.undqt", "material.quant");
         
         form.define(container);
@@ -44,19 +45,20 @@ public class MaterialView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Material material) {
+        String id_;
+        String name;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
-        form.setString("material.ident", material.getId());
-        form.setDate("material.dtreg", material.getRegDate());
-        form.setTime("material.tmreg", material.getRegTime());
-        form.setString("material.refer", material.getReference());
-        form.setString("material.undps", material.getWeightUnit());
-        form.setFloat("material.psliq", material.getNetWeight());
-//        form.concat("material.psliq", "material.undps", "material.psliq");
-        form.setString("material.undqt", material.getQuantityUnit());
-        form.setFloat("material.quant", material.getQuantity());
-//        form.concat("material.quant", "material.undqt", "material.quant");
+        for (Object id : material.getIds()) {
+            if (id.equals(Material.USREG))
+                continue;
+            
+            id_ = (String)id;
+            name = material.getName(id_);
+            
+            form.setFieldValue(name, material.getFieldValue(id_));
+        }
     }
 
     @Override

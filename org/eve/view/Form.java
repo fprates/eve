@@ -442,28 +442,6 @@ public class Form {
         fields.put(name, component);
     }
     
-    /**
-     * Insere campo com definição de comprimento e visibilidade
-     * @param id
-     * @param length
-     * @param visible
-     */
-    public final void put(String id, int length, boolean visible) {
-        FormComponent component = new FormComponent(id, length, visible);        
-
-        component.setTitle(messages.getMessage(id, null, id, locale));
-        fields.put(id, component);
-    }
-
-    /**
-     * Insere campo com definição de comprimento
-     * @param id
-     * @param length
-     */
-    public final void put(String id, int length) {
-        put(id, length, true);
-    }
-    
     public final void putCombo(AbstractDocument document, String id, int length) {
         String[] options;
         String name = document.getName(id);
@@ -486,27 +464,6 @@ public class Form {
     }
     
     /**
-     * Insere combobox
-     * @param id
-     * @param options
-     * @param length
-     */
-    public final void putCombo(String id, String[] options, int length) {
-        FormComponent component = new FormComponent(id, length, true);
-        
-        component.setTitle(messages.getMessage(id, null, id, locale));
-        component.setType(EVE.combo);
-        if (options == null) {
-            options = new String[1];
-            options[0] = "";
-        }
-        
-        component.setOptions(options);
-        
-        fields.put(id, component);
-    }
-    
-    /**
      * 
      * @param document
      * @param id
@@ -516,19 +473,6 @@ public class Form {
         
         put(document, id);
         component = fields.get(document.getName(id));
-        component.setSearch(true);
-    }
-    
-    /**
-     * Insere campo com ajuda de pesquisa
-     * @param id
-     * @param length
-     */
-    public final void putSearch(String id, int length) {
-        Component component;
-        
-        put(id, length);
-        component = fields.get(id);
         component.setSearch(true);
     }
 }

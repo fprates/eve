@@ -18,6 +18,7 @@ public class SupplierView extends AbstractView {
     @Override
     public void defineView(Composite container) {
         Form form = addForm("main");
+        Supplier supplier = (Supplier)getController().getObject();
         
         setWidth(1260);
         addAction("supplier.create");
@@ -29,18 +30,16 @@ public class SupplierView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put("supplier.ident", 12, false);
-        form.put("supplier.dtreg", 10, false);
-        form.put("supplier.tmreg", 8, false);
-        
-        form.put("supplier.refer", 12);
-        form.put("supplier.name", 40);
-        form.put("supplier.aname", 40);
-        form.put("supplier.cnpj", 18);
-        
-        form.putCombo("supplier.status", new String[] {
-                getMessage("supplier.active"),
-                getMessage("supplier.inactive")}, 7);
+        form.put(supplier, Supplier.IDENT);
+        form.put(supplier, Supplier.DTREG);
+        form.put(supplier, Supplier.TMREG);
+
+        form.put(supplier, Supplier.REFER);
+        form.put(supplier, Supplier.NAME);
+        form.put(supplier, Supplier.ANAME);
+//        form.put(supplier, Supplier.CNPJ);
+//        
+//        form.putCombo(supplier, Supplier.STATUS, 7);
         
         form.define(container);
         
@@ -52,90 +51,20 @@ public class SupplierView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Supplier supplier) {
-//        int munic;
-//        int munic_;
-//        Map<Object, String> results;
-//        int i = 0;
+        String id_;
+        String name;
         Controller controller = getController();
         Form form = controller.getForm("main");
-//        TableAssist ctable = controller.getTable("contacts");
-//        TableAssist atable = controller.getTable("addresses");
-//        TableAssist vstable = controller.getTable("vschedule");
-//        TableAssist dstable = controller.getTable("dschedule");
-        form.setString("supplier.refer", supplier.getReference());
-        form.setDate("supplier.dtreg", supplier.getRegDate());
-        form.setTime("supplier.tmreg", supplier.getRegTime());
-        form.setString("supplier.aname", supplier.getAlternateName());
-//        form.setString("supplier.cnpj", supplier.getCodCadFiscal());
-        form.setInt("supplier.ident", supplier.getId());
-        form.setString("supplier.name", supplier.getName());
-//        form.setInt("supplier.status", supplier.getStatus());
-//        form.setString("supplier.homep", supplier.getHomePage());
-//        form.setProperties("supplier.homep", EVE.nocase);
-//        form.setString("supplier.email", supplier.getEmail());
-//        form.setProperties("supplier.email", EVE.nocase);
-//        form.setInt("supplier.tpinc", supplier.getIncentive());
-//        form.setInt("supplier.cdivf", supplier.getIVF());
-//        form.setFloat("supplier.vlipr", supplier.getProductIncentiveValue());
-//        form.setFloat("supplier.vlibl", supplier.getBillingIncentiveValue());
-//        form.setFloat("supplier.dvcsp", supplier.getSupplierIncentiveValue());
-//        form.setFloat("supplier.dvcpt", supplier.getPartnerIncentiveValue());        
-//        
-//        ctable.clear();
-//        for (SupplierContact contact : supplier.getContacts()) {
-//            ctable.setStringValue("contact.rname", i, contact.getName());
-//            ctable.setStringValue("contact.funct", i++, contact.getFunction());
-//        }
-//        
-//        i = 0;
-//        for (SupplierAddress address : supplier.getAddresses()) {
-//            atable.setStringValue("address.logra", i, address.getAddress());
-//            atable.setIntValue("address.numer", i, address.getNumber());
-//            atable.setStringValue("address.compl", i, address.getComplemento());
-//            atable.setStringValue("address.cdend", i, address.getCEP());
-//            atable.setStringValue("address.coduf", i, address.getEstado());
-//            
-//            munic = address.getMunicipio();
-//            results = controller.getResults("address.munic", address.getEstado());
-//            if (results != null) {
-//                for (Object object : results.keySet()) {
-//                    munic_ = (Integer)object;
-//                    if (!(munic_ == munic))
-//                        continue;
-//                    
-//                    atable.setStringValue("address.munic", i, results.get(object));
-//                    break;
-//                }
-//                i++;
-//            }
-//        }
-//        
-//        fillPeriodColumn(vstable);
-//        fillPeriodColumn(dstable);
-//        
-//        i = 0;
-//        for (SupplierSchedule schedule : supplier.getSchedule()) {
-//            switch (i) {
-//            case 0:
-//            case 1:                
-//                vstable.setTimeValue("schedule.mon", i, schedule.getMonday());
-//                vstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
-//                vstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
-//                vstable.setTimeValue("schedule.thu", i, schedule.getThursday());
-//                vstable.setTimeValue("schedule.fri", i, schedule.getFriday());
-//                break;
-//                
-//            case 2:
-//            case 3:                
-//                dstable.setTimeValue("schedule.mon", i-2, schedule.getMonday());
-//                dstable.setTimeValue("schedule.tue", i-2, schedule.getTuesday());
-//                dstable.setTimeValue("schedule.wed", i-2, schedule.getWednesday());
-//                dstable.setTimeValue("schedule.thu", i-2, schedule.getThursday());
-//                dstable.setTimeValue("schedule.fri", i-2, schedule.getFriday());
-//                break;
-//            }
-//            i++;
-//        }
+        
+        for (Object id : supplier.getIds()) {
+            if (id.equals(Supplier.USREG))
+                continue;
+            
+            id_ = (String)id;
+            name = supplier.getName(id_);
+            
+            form.setFieldValue(name, supplier.getFieldValue(id_));
+        }
     }
     
     /*

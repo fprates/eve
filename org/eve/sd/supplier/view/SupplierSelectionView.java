@@ -7,6 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;
@@ -30,6 +31,7 @@ public class SupplierSelectionView extends AbstractView {
         Group selpor;
         Form form = addForm("main");
         Form selporform = addForm("selpor");
+        Supplier supplier = (Supplier)getController().getObject();
         
         container.setLayout(new RowLayout(SWT.VERTICAL));
 
@@ -37,7 +39,7 @@ public class SupplierSelectionView extends AbstractView {
         addAction("supplier.edit.sel");
         
         form.setLocale(getLocale());
-        form.put("supplier.ident", 12);        
+        form.put(supplier, Supplier.IDENT);
         form.define(container);
         
         selpor = new Group(container, SWT.SHADOW_IN);
@@ -45,9 +47,9 @@ public class SupplierSelectionView extends AbstractView {
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
         selpor.setText(getMessage("supplier.select.by"));
         
-        selporform.put("supplier.name", 40);
-        selporform.put("supplier.aname", 40);
-        selporform.put("supplier.refer", 12);
+        selporform.put(supplier, Supplier.NAME);
+        selporform.put(supplier, Supplier.ANAME);
+        selporform.put(supplier, Supplier.REFER);
         selporform.define(selpor);
         selpor.pack();
         
