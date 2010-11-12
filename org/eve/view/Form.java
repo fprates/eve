@@ -225,21 +225,36 @@ public class Form {
     
     /**
      * 
+     * @param field
+     * @return
+     */
+    public final Date getDate(String field) {
+        return fields.get(field).getDate();
+    }
+    
+    /**
+     * 
      * @param id
      * @return
      */
-    public final Object getFieldValue(String id) {
-        switch (fields.get(id).getDataType()) {
+    public final Object getFieldValue(AbstractDocument document, String id) {
+        String id_ = document.getName(id);
+        
+        switch (fields.get(id_).getDataType()) {
         case CHAR:
+            return getString(id_);
+            
         case DATE:
+            return getDate(id_);
+            
         case TIME:
-            return getString(id);
+            return getTime(id_);
         
         case INT:
-            return getInt(id);
+            return getInt(id_);
         
         case FLOAT:
-            return getFloat(id);
+            return getFloat(id_);
             
         default:
             return null;
@@ -323,6 +338,15 @@ public class Form {
         String value = getString(field).replace("*", "%");
         
         return (value.equals(""))?"%":value;
+    }
+    
+    /**
+     * 
+     * @param field
+     * @return
+     */
+    public final Time getTime(String field) {
+        return fields.get(field).getTime();
     }
     
     /*

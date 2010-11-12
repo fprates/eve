@@ -24,6 +24,7 @@ public abstract class AbstractComponent implements Component {
     private int type;
     private AbstractDocument.datatype datatype;
     private Control control;
+    private Date date;
     private DateFormat dateformat;
     private Locale locale;
     private String name;
@@ -103,6 +104,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final AbstractDocument.datatype getDataType() {
         return datatype;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getDate()
+     */
+    @Override
+    public final Date getDate() {
+        return date;
     }
     
     /*
@@ -214,6 +224,16 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final String getString(int index) {
         return getText(editors.get(index).getEditor());
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getTime()
+     */
+    @Override
+    public final Time getTime() {
+        String value = getString();
+        return Time.valueOf(value.equals("")?"00:00:00":value);
     }
     
     /*
@@ -338,6 +358,8 @@ public abstract class AbstractComponent implements Component {
             setString("");
         else 
             setString(dateformat.format(date));
+        
+        this.date = date;
     }
     
     /*

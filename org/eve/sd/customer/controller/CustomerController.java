@@ -167,7 +167,7 @@ public class CustomerController extends AbstractController {
                         continue;
                     
                     customer.setFieldValue((String)id, form.getFieldValue(
-                            customer.getName((String)id)));
+                            customer, (String)id));
                 }
                 customer.setStandardSupplier(form.getInt("customer.stdsp"));
                 

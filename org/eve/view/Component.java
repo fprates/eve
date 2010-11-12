@@ -31,6 +31,12 @@ public interface Component {
     public abstract AbstractDocument.datatype getDataType();
     
     /**
+     * 
+     * @return
+     */
+    public abstract Date getDate();
+    
+    /**
      * Retorna numérico flutuante 
      * @return
      */
@@ -60,6 +66,12 @@ public interface Component {
      */
     public abstract String getName();
 
+    /**
+     * 
+     * @return
+     */
+    public abstract Time getTime();
+    
     /**
      * Retorna título
      * @return

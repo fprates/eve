@@ -20,20 +20,21 @@ public class MaterialController extends AbstractController {
             /*
              * dados base
              */
-        	material.setId(form.getString("material.ident"));
-        	material.setReference(form.getString("material.refer"));
-        	
-        	if (material.getId().equals("") ||
-        	    material.getReference().equals("")) {
+            
+            for (Object id : material.getIds()) {
+                if (id.equals(Material.USREG))
+                    continue;
+                
+                material.setFieldValue((String)id,
+                        form.getFieldValue(material, (String)id));
+            }
+            
+            if (material.getId().equals("") ||
+                material.getReference().equals("")) {
                 setMessage(EVE.error, "material.obligatory.field");
                 
                 return;
-        	}
-            
-        	material.setNetWeight(form.getFloat("material.psliq"));
-        	material.setWeightUnit(form.getString("material.undps"));
-        	material.setQuantity(form.getFloat("material.quant"));
-        	material.setQuantityUnit(form.getString("material.undqt"));
+            }
         	
         	if (material.getRegUser() == null)
         	    firstsave = true;

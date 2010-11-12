@@ -12,22 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class MaterialModel extends AbstractModel {
-
-    private void copyMaterial(Material material_, Material material) {
-        material.setId(material_.getId());
-        material.setGrossWeight(material_.getGrossWeight());
-        material.setNetWeight(material_.getNetWeight());
-        material.setWeightUnit(material_.getWeightUnit());
-        material.setMaterialType(material_.getMaterialType());
-        material.setNetPrice(material_.getNetPrice());
-        material.setPriceUnit(material_.getPriceUnit());
-        material.setQuantity(material_.getQuantity());
-        material.setQuantityUnit(material_.getQuantityUnit());
-        material.setReference(material_.getReference());
-        material.setRegDate(material_.getRegDate());
-        material.setRegTime(material_.getRegTime());
-        material.setRegUser(material_.getRegUser());
-    }
 	
     @Override
     @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
@@ -40,7 +24,10 @@ public class MaterialModel extends AbstractModel {
         
         material = (Material)object;
         material_ = (Material)session.get(class_, object_);
-        copyMaterial(material_, material);
+        
+        for (Object id : material_.getIds())
+            material.setFieldValue(
+                    (String)id, material_.getFieldValue((String)id));
         
         session.getTransaction().commit();
     }
