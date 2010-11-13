@@ -78,7 +78,9 @@ public class Customer extends AbstractDocument {
         put(CNPJ, "customer.cnpj", false, datatype.CHAR, 18);
         put(IE, "customer.ie", false, datatype.LONG, 12);
         put(HOMEP, "customer.homep", false, datatype.CHAR, 128);
+        setLowerCase(HOMEP);
         put(EMAIL, "customer.email", false, datatype.CHAR, 128);
+        setLowerCase(EMAIL);
         put(VLIPR, "customer.vlipr", false, datatype.FLOAT, 13);
         put(VLIBL, "customer.vlibl", false, datatype.FLOAT, 7);
         put(DVCSP, "customer.dvcsp", false, datatype.FLOAT, 7);

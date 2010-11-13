@@ -106,6 +106,26 @@ public abstract class AbstractDocument implements Serializable {
         return fields.get(id).isKey();
     }
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    public final boolean isUpcase(String id) {
+        return fields.get(id).isUpcase();
+    }
+    
+    /*
+     * 
+     * Setters
+     * 
+     */
+    
+    /**
+     * 
+     * @param id
+     * @param object
+     */
     public final void setFieldValue(String id, Object object) {
         Method method;
         Class<?>[] class_;
@@ -117,6 +137,9 @@ public abstract class AbstractDocument implements Serializable {
         switch (field.getType()) {
         case CHAR:
             class_ = new Class[] {String.class};
+            if (field.isUpcase())
+                object = ((String)object).toUpperCase();
+            
             break;
             
         case INT:
@@ -155,6 +178,7 @@ public abstract class AbstractDocument implements Serializable {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
+            System.out.println(id);
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
@@ -164,6 +188,10 @@ public abstract class AbstractDocument implements Serializable {
             e.printStackTrace();
         }
         
+    }
+    
+    public final void setLowerCase(String id) {
+        fields.get(id).setUpcase(false);
     }
     
     /*
@@ -199,6 +227,7 @@ public abstract class AbstractDocument implements Serializable {
 
 class Field {
     private boolean key;
+    private boolean upcase;
     private int length;
     private AbstractDocument.datatype type;
     private String name;
@@ -206,6 +235,7 @@ class Field {
     
     public Field(String name) {
         this.name = name;
+        upcase = true;
     }
     
     /*
@@ -238,6 +268,10 @@ class Field {
         return key;
     }
     
+    public final boolean isUpcase() {
+        return upcase;
+    }
+    
     /*
      * 
      * Setters
@@ -258,6 +292,10 @@ class Field {
     
     public final void setType(AbstractDocument.datatype type) {
         this.type = type;
+    }
+    
+    public final void setUpcase(boolean upcase) {
+        this.upcase = upcase;
     }
     
     public final void setValues(String[] values) {
