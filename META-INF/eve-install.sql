@@ -51,7 +51,7 @@ create table custmr001 (
    dtreg date,
    hrreg time,
    usreg char(8),
-   cdfsc char(18),
+   cdfsc numeric(18),
    tpcdn numeric(1),
    nrcdn char(20),
    statu numeric(1),
@@ -65,7 +65,7 @@ create table custmr001 (
    dvcpt decimal(6,3),
    refer char(12),
    stdsp numeric(10),
-   codie numeric(12),
+   codie char(12),
    tpest numeric(1),
    tpcom numeric(1),
 );

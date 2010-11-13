@@ -14,7 +14,7 @@ import org.eve.model.AbstractDocument;
  * @author francisco.prates
  *
  */
-public class Customer extends AbstractDocument {
+public class Customer extends AbstractDocument implements Comparable<Customer> {
     public static final String IDENT = "id";
     public static final String DTREG = "regDate";
     public static final String TMREG = "regTime";
@@ -49,14 +49,14 @@ public class Customer extends AbstractDocument {
     private int standardsupplier;
     private int tipoestab;
     private int tipocomunicacao;
-    private long inscricaoestadual;
+    private long codCadFiscal;
 	private Date regDate;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
     private String regUser;
-    private String codCadFiscal;
     private String homepage;
+    private String inscricaoestadual;
     private String email;
     private String reference;
     private String name;
@@ -75,8 +75,8 @@ public class Customer extends AbstractDocument {
         put(REFER, "customer.refer", false, datatype.CHAR, 12);
         put(NAME, "customer.name", false, datatype.CHAR, 40);
         put(ANAME, "customer.aname", false, datatype.CHAR, 40);
-        put(CNPJ, "customer.cnpj", false, datatype.CHAR, 18);
-        put(IE, "customer.ie", false, datatype.LONG, 12);
+        put(CNPJ, "customer.cnpj", false, datatype.LONG, 18);
+        put(IE, "customer.ie", false, datatype.CHAR, 12);
         put(HOMEP, "customer.homep", false, datatype.CHAR, 128);
         setLowerCase(HOMEP);
         put(EMAIL, "customer.email", false, datatype.CHAR, 128);
@@ -145,7 +145,7 @@ public class Customer extends AbstractDocument {
     /**
      * @return the codCadFiscal
      */
-    public String getCodCadFiscal() {
+    public long getCodCadFiscal() {
         return codCadFiscal;
     }
     
@@ -184,7 +184,7 @@ public class Customer extends AbstractDocument {
      * 
      * @return
      */
-    public long getInscricaoEstadual() {
+    public String getInscricaoEstadual() {
         return inscricaoestadual;
     }
     
@@ -335,7 +335,7 @@ public class Customer extends AbstractDocument {
     /**
      * @param codCadNac the codCadFiscal to set
      */
-    public void setCodCadFiscal(String codCadFiscal) {
+    public void setCodCadFiscal(long codCadFiscal) {
         this.codCadFiscal = codCadFiscal;
     }
     
@@ -382,7 +382,7 @@ public class Customer extends AbstractDocument {
      * 
      * @param inscricaoestadual
      */
-    public void setInscricaoEstadual(long inscricaoestadual) {
+    public void setInscricaoEstadual(String inscricaoestadual) {
         this.inscricaoestadual = inscricaoestadual;
     }
     
@@ -515,5 +515,18 @@ public class Customer extends AbstractDocument {
     @Override
     public int hashCode() {
         return Integer.toString(id).hashCode();
+    }
+
+    @Override
+    public int compareTo(Customer customer) {
+        int r = id - customer.getId();
+        
+        if (r > 0)
+            return 1;
+        
+        if (r < 0)
+            return -1;
+        
+        return 0;
     }
 }

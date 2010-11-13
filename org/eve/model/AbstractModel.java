@@ -3,6 +3,7 @@ package org.eve.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -77,6 +78,9 @@ public abstract class AbstractModel implements Model {
      * 
      */
 
+    @Override
+    public void insert(Set<?> objects) { }
+    
     @Override
     public void load(Class<?> class_, Serializable object_, Object object) { }
     

@@ -137,7 +137,7 @@ public abstract class AbstractDocument implements Serializable {
         switch (field.getType()) {
         case CHAR:
             class_ = new Class[] {String.class};
-            if (field.isUpcase())
+            if ((object != null) && (field.isUpcase()))
                 object = ((String)object).toUpperCase();
             
             break;

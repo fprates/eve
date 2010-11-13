@@ -3,6 +3,7 @@ package org.eve.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 
@@ -22,6 +23,8 @@ public interface Model {
      * Others
      * 
      */
+    
+    public abstract void insert(Set<?> object);
     
     public abstract void load(Class<?> class_, Serializable object_, Object object);
     

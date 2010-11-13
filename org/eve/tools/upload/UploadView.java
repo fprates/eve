@@ -26,6 +26,8 @@ public class UploadView extends AbstractView {
         form.putFileSearch(upload, Upload.FILENAME);
         
         form.define(container);
+        
+        addButton("upload.start");
     }
 
 }

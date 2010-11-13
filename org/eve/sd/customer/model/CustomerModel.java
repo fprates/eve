@@ -3,6 +3,8 @@ package org.eve.sd.customer.model;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
 
 import org.eve.model.AbstractModel;
 import org.eve.sd.common.Country;
@@ -126,5 +128,26 @@ public class CustomerModel extends AbstractModel {
         }
         
         session.getTransaction().commit();
+    }
+
+    @Transactional(propagation=Propagation.SUPPORTS)
+    @Override
+    public void insert(Set<?> objects) {
+        Customer customer;
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        Time time = new Time(calendar.getTimeInMillis());
+        Session session = getSessionFactory().getCurrentSession();
+        
+        session.beginTransaction();
+        for (Object object: objects) {
+            customer = (Customer)object;
+            
+            customer.setRegDate(date);
+            customer.setRegTime(time);
+            session.save(customer);
+        }
+        session.getTransaction().commit();
+        
     }
 }
