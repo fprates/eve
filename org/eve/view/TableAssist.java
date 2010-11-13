@@ -212,9 +212,6 @@ public class TableAssist {
         
         if ((EVE.readonly & property) == EVE.readonly)
             component.setEnabled(false);
-        
-        if ((EVE.nocase & property) == EVE.nocase)
-            component.setNocase(true);
     }
     
     /**

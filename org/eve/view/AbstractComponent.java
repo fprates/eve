@@ -17,7 +17,6 @@ import org.eve.main.EVE;
 import org.eve.model.AbstractDocument;
 
 public abstract class AbstractComponent implements Component {
-    private boolean nocase;
     private boolean enabled;
     private int length;
     private int type;
@@ -26,14 +25,12 @@ public abstract class AbstractComponent implements Component {
     private Date date;
     private DateFormat dateformat;
     private Extension extension;
-    private Locale locale;
     private String name;
     private String title;
     private String[] options;
     private List<ControlEditor> editors;
 
     public AbstractComponent() {
-        nocase = false;
         extension = Extension.NONE;
         enabled = true;
         editors = new ArrayList<ControlEditor>();
@@ -48,9 +45,6 @@ public abstract class AbstractComponent implements Component {
             if (value == null)
                 return "";
             
-            if (!nocase)
-                ((CCombo)control).setText(value.toUpperCase(locale));
-            
             return value;
             
         case EVE.combo:
@@ -58,18 +52,12 @@ public abstract class AbstractComponent implements Component {
             if (value == null)
                 return "";
             
-            if (!nocase)
-                ((Combo)control).setText(value.toUpperCase(locale));
-            
             return value;
             
         case EVE.text:
             value = ((Text)control).getText();
             if (value == null)
                 return "";
-            
-            if (!nocase)
-                ((Text)control).setText(value.toUpperCase(locale));
             
             return value;
             
@@ -296,15 +284,6 @@ public abstract class AbstractComponent implements Component {
         return enabled;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#isNocase()
-     */
-    @Override
-    public final boolean isNocase() {
-        return nocase;
-    }
-    
     /**
      * 
      * @param control
@@ -314,10 +293,7 @@ public abstract class AbstractComponent implements Component {
         String text_ = text;
         
         if (text_ == null)
-            text_ = "";        
-        
-        if (!nocase)
-            text_ = text_.toUpperCase(locale);
+            text_ = "";
         
         switch (type) {
         case EVE.text:
@@ -451,7 +427,6 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setLocale(Locale locale) {
-        this.locale = locale;
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
     
@@ -489,15 +464,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setName(String name) {
         this.name = name;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setNocase(boolean)
-     */
-    @Override
-    public final void setNocase(boolean nocase) {
-        this.nocase = nocase;
     }
     
     /*

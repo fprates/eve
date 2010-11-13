@@ -164,18 +164,6 @@ public class Form {
     }
     
     /**
-     * Defie propriedades do campo
-     * @param id
-     * @param properties
-     */
-    public final void setProperties(String id, int properties) {
-        Component component = fields.get(id);
-        
-        if ((properties & EVE.nocase) == EVE.nocase)
-            component.setNocase(true);
-    }
-    
-    /**
      * Ajusta valor do campo caractere do formulário
      * @param field
      * @param value
@@ -439,7 +427,7 @@ public class Form {
                     break;
                     
                 case FILESEARCH:
-                    search = new FileSearch();
+                    search = new FileSearch(fieldComposite.getShell());
                     search.setLocale(locale);
                     search.setMessages(messages);
                     search.setController(controller);

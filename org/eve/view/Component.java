@@ -133,12 +133,6 @@ public interface Component {
     public abstract boolean isEnabled();
     
     /**
-     * Retorna indicador de sensibilidade
-     * @return
-     */
-    public abstract boolean isNocase();
-    
-    /**
      * Define controle
      * @param control
      */
@@ -223,12 +217,6 @@ public interface Component {
      * @param title
      */
     public abstract void setTitle(String title);
-    
-    /**
-     * Define sensibilidade
-     * @param nocase
-     */
-    public abstract void setNocase(boolean nocase);
 
     /**
      * Define valores fixos
