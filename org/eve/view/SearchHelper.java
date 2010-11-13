@@ -25,7 +25,6 @@ public class SearchHelper extends AbstractSearch {
     private Button btcancel;
     private Button btsel;
     private Map<Object, String> results;
-    private MessageSource messages;
     private Shell dialog;
     private TableAssist table;
     
@@ -46,6 +45,7 @@ public class SearchHelper extends AbstractSearch {
         Controller controller = getController();
         EveAPI system = getSystem();
         Locale locale = getLocale();
+        MessageSource messages = getMessages();
         
         results = controller.getResults(component.getName(), null);
         

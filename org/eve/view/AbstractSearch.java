@@ -58,6 +58,14 @@ public abstract class AbstractSearch implements Search {
      * 
      * @return
      */
+    protected final MessageSource getMessages() {
+        return messages;
+    }
+    
+    /**
+     * 
+     * @return
+     */
     protected final EveAPI getSystem() {
         return system;
     }
