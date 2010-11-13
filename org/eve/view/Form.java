@@ -428,12 +428,23 @@ public class Form {
                 
                 component.setControl(text);
                 
-                if (component.hasSearch()) {
-                    search = new Search(component, fieldComposite);
+                switch(component.getExtension()) {
+                case SEARCH:
+                    search = new SearchHelper();
                     search.setLocale(locale);
                     search.setMessages(messages);
                     search.setController(controller);
                     search.setSystem(system);
+                    search.define(component, fieldComposite);
+                    break;
+                    
+                case FILESEARCH:
+                    search = new FileSearch();
+                    search.setLocale(locale);
+                    search.setMessages(messages);
+                    search.setController(controller);
+                    search.setSystem(system);
+                    search.define(component, fieldComposite);
                 }
                 
                 break;
@@ -497,7 +508,15 @@ public class Form {
         
         put(document, id);
         component = fields.get(document.getName(id));
-        component.setSearch(true);
+        component.setExtension(Component.Extension.SEARCH);
+    }
+    
+    public final void putFileSearch(AbstractDocument document, String id) {
+        Component component;
+        
+        put(document, id);
+        component = fields.get(document.getName(id));
+        component.setExtension(Component.Extension.FILESEARCH);
     }
 }
 

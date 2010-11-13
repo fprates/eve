@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eve.model.AbstractDocument;
 
 public interface Component {
+    public enum Extension {NONE, SEARCH, FILESEARCH};
     
     /**
      * Retorna controle
@@ -35,6 +36,12 @@ public interface Component {
      * @return
      */
     public abstract Date getDate();
+    
+    /**
+     * 
+     * @return
+     */
+    public abstract Extension getExtension();
     
     /**
      * Retorna numérico flutuante 
@@ -120,12 +127,6 @@ public interface Component {
     public abstract String[] getValues(int index);
     
     /**
-     * Tem ajuda de pesquisa anexada?
-     * @return
-     */
-    public abstract boolean hasSearch();
-    
-    /**
      * Retorna flag de habilitação
      * @return
      */
@@ -160,6 +161,12 @@ public interface Component {
      * @param enabled
      */
     public abstract void setEnabled(boolean enabled);
+    
+    /**
+     * Define extensão do campo
+     * @param extension
+     */
+    public abstract void setExtension(Extension extension);
     
     /**
      * Ajusta valor ponto flutuante
@@ -228,12 +235,6 @@ public interface Component {
      * @param options
      */
     public abstract void setOptions(String[] options);
-    
-    /**
-     * Define ajuda de pesquisa
-     * @param search
-     */
-    public abstract void setSearch(boolean search);
     
     /**
      * Ajusta texto

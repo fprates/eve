@@ -14,5 +14,7 @@ public class Upload extends AbstractDocument {
                 "supplier.data",
                 "material.data"
         });
+        
+        put(FILENAME, "upld.filename", false, datatype.CHAR, 120);
     }
 }

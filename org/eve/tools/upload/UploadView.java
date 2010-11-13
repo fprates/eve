@@ -23,7 +23,7 @@ public class UploadView extends AbstractView {
         container.setLayout(new GridLayout(1, false));
         
         form.putCombo(upload, Upload.DOCUMENT, 10);
-//        form.putFileSearch(upload, Upload.FILENAME, 120);
+        form.putFileSearch(upload, Upload.FILENAME);
         
         form.define(container);
     }

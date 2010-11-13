@@ -19,13 +19,13 @@ import org.eve.model.AbstractDocument;
 public abstract class AbstractComponent implements Component {
     private boolean nocase;
     private boolean enabled;
-    private boolean search;
     private int length;
     private int type;
     private AbstractDocument.datatype datatype;
     private Control control;
     private Date date;
     private DateFormat dateformat;
+    private Extension extension;
     private Locale locale;
     private String name;
     private String title;
@@ -34,7 +34,7 @@ public abstract class AbstractComponent implements Component {
 
     public AbstractComponent() {
         nocase = false;
-        search = false;
+        extension = Extension.NONE;
         enabled = true;
         editors = new ArrayList<ControlEditor>();
     }
@@ -113,6 +113,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final Date getDate() {
         return date;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getExtension()
+     */
+    @Override
+    public final Extension getExtension() {
+        return extension;
     }
     
     /*
@@ -254,6 +263,10 @@ public abstract class AbstractComponent implements Component {
         return type;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getValues(int)
+     */
     @Override
     public final String[] getValues(int index) {
         Combo combo;
@@ -272,15 +285,6 @@ public abstract class AbstractComponent implements Component {
         }
         
         return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#hasSearch()
-     */
-    @Override
-    public final boolean hasSearch() {
-        return search;
     }
     
     /*
@@ -369,6 +373,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setExtension(int)
+     */
+    @Override
+    public final void setExtension(Extension extension) {
+        this.extension = extension;
     }
 
     /*
@@ -494,15 +507,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setOptions(String[] options) {
         this.options = options;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setSearch(boolean)
-     */
-    @Override
-    public final void setSearch(boolean search) {
-        this.search = search;
     }
     
     /*
