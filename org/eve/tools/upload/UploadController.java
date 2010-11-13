@@ -79,7 +79,7 @@ public class UploadController extends AbstractController {
                 return;
             }
             
-            setMessage(EVE.status, "file.read.ok");
+            setMessage(EVE.status, "file.upload.ok");
         }
     }
 

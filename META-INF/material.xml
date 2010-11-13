@@ -9,6 +9,7 @@
     <bean id="mat_msg" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
+                <value>META-INF/common</value>
                 <value>META-INF/material</value>
             </list>
         </property>
