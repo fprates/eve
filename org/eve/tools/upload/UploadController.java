@@ -73,6 +73,10 @@ public class UploadController extends AbstractController {
                 setMessage(EVE.error, "file.read.error");
                 ex.printStackTrace();
                 return;
+            } catch (java.text.ParseException ex) {
+                setMessage(EVE.error, "invalid.data.format");
+                ex.printStackTrace();
+                return;
             }
             
             setMessage(EVE.status, "file.read.ok");

@@ -3,7 +3,6 @@ package org.eve.sd.customer.model;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 import org.eve.model.AbstractModel;
@@ -135,7 +134,6 @@ public class CustomerModel extends AbstractModel {
     public void insert(Set<?> objects) {
         Customer customer;
         Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
         Time time = new Time(calendar.getTimeInMillis());
         Session session = getSessionFactory().getCurrentSession();
         
@@ -143,7 +141,6 @@ public class CustomerModel extends AbstractModel {
         for (Object object: objects) {
             customer = (Customer)object;
             
-            customer.setRegDate(date);
             customer.setRegTime(time);
             session.save(customer);
         }

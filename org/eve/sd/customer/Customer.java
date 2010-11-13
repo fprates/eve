@@ -88,12 +88,13 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
 
         put(TPINC, "customer.tpinc", false, datatype.INT, 1);
         putValues(TPINC, new String[] {
+                "none",
                 "incentive.free",
                 "incentive.product",
                 "incentive.bill"});
         
         put(CDIVF, "customer.cdivf", false, datatype.INT, 1);
-        putValues(CDIVF, new String[] {"A", "B", "C"});
+        putValues(CDIVF, new String[] {"none", "A", "B", "C"});
         
         put(STATUS, "customer.status", false, datatype.INT, 1);
         putValues(STATUS, new String[] {
@@ -103,12 +104,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
         put(STDSP, "customer.stdsp", false, datatype.INT, 10);
         put(TPEST, "customer.tpest", false, datatype.INT, 12);
         putValues(TPEST, new String[] {
+                "none",
                 "tpest.super",
                 "tpest.indus",
                 "tpest.reven"});
         
         put(TPCOM, "customer.tpcom", false, datatype.INT, 1);
         putValues(TPCOM, new String[] {
+                "none",
                 "tpcom.blue",
                 "tpcom.green",
                 "tpcom.red",
