@@ -74,7 +74,9 @@ create table custmr001 (
 create table custmr002 (
    nrseq numeric(12) primary key,
    ident numeric(10) foreign key references custmr001(ident),
+   tpctt char(20),
    rname char(40),
+   msgid char(60),
    funct char(20),
    teln1 numeric(12),
    teln2 numeric(12)

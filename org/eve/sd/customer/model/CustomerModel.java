@@ -150,6 +150,12 @@ public class CustomerModel extends AbstractModel {
                 address.setItem(++k + (customer.getId() * 100));
                 session.save(address);
             }
+            
+            k = 0;
+            for (CustomerContact contact : customer.getContacts()) {
+                contact.setItem(++k + (customer.getId() * 100));
+                session.save(contact);
+            }
         }
         session.getTransaction().commit();
         

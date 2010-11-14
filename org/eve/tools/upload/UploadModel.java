@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
-//import org.eve.sd.customer.CustomerContact;
+import org.eve.sd.customer.CustomerContact;
 
 public class UploadModel {
     private InputStream in;
@@ -36,7 +36,7 @@ public class UploadModel {
     public final Set<Customer> getCustomers(BufferedReader reader) throws IOException, ParseException {
         Customer customer;
         CustomerAddress address;
-//        CustomerContact contact;
+        CustomerContact contact;
         Set<Customer> customers;
         String[] args;
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
@@ -81,6 +81,24 @@ public class UploadModel {
             address.setType(0);
             
             customer.getAddresses().add(address);
+            
+            contact = new CustomerContact();
+            contact.setCustomer(customer);
+            contact.setItem(0);
+            contact.setType("CONTATO");
+            contact.setInstantMessenger(args[16]);
+            contact.setName(args[17]);
+            contact.setFunction(args[18]);
+            customer.getContacts().add(contact);
+            
+            contact = new CustomerContact();
+            contact.setCustomer(customer);
+            contact.setItem(1);
+            contact.setType("RESPONSÁVEL COMPRAS");
+            contact.setInstantMessenger("");
+            contact.setName(args[19]);
+            contact.setFunction(args[20]);
+            customer.getContacts().add(contact);
             
             customers.add(customer);
         }

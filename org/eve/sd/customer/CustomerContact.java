@@ -2,8 +2,10 @@ package org.eve.sd.customer;
 
 public class CustomerContact extends AbstractCustomerItem {
     private static final long serialVersionUID = -6501815384505430816L;
+    private String type;
     private String name;
     private String function;
+    private String instantmessenger;
     private int telf1;
     private int telf2;
     
@@ -17,12 +19,16 @@ public class CustomerContact extends AbstractCustomerItem {
      * 
      */
     
-    public String getName() {
-        return name;
-    }
-    
     public String getFunction() {
         return function;
+    }
+    
+    public String getInstantMessenger() {
+        return instantmessenger;
+    }
+    
+    public String getName() {
+        return name;
     }
     
     public int getTelephone1() {
@@ -32,6 +38,11 @@ public class CustomerContact extends AbstractCustomerItem {
     public int getTelephone2() {
         return telf2;
     }
+    
+    public String getType() {
+        return type;
+    }
+    
     /*
      * 
      * Setters
@@ -39,17 +50,25 @@ public class CustomerContact extends AbstractCustomerItem {
      */
 
     /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * @param function the function to set
      */
     public void setFunction(String function) {
         this.function = function;
+    }
+    
+    /**
+     * 
+     * @param instantmessenger
+     */
+    public void setInstantMessenger(String instantmessenger) {
+        this.instantmessenger = instantmessenger;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -64,6 +83,14 @@ public class CustomerContact extends AbstractCustomerItem {
      */
     public void setTelephone2(int telf2) {
         this.telf2 = telf2;
+    }
+    
+    /**
+     * 
+     * @param type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
     
 }

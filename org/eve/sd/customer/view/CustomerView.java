@@ -82,7 +82,9 @@ public class CustomerView extends AbstractView {
         table = addTable("contacts");
         table.setLines(4);
         table.putMark("contact.mark", EVE.multi);
+        table.put("contact.type", 20);
         table.put("contact.rname", 40);
+        table.put("contact.im", 60);
         table.put("contact.funct", 20);
         table.put("contact.teln1", 12);
         table.put("contact.teln2", 12);
@@ -214,6 +216,8 @@ public class CustomerView extends AbstractView {
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {
             ctable.setStringValue("contact.rname", i, contact.getName());
+            ctable.setStringValue("contact.type", i, contact.getType());
+            ctable.setStringValue("contact.im", i, contact.getInstantMessenger());
             ctable.setStringValue("contact.funct", i++, contact.getFunction());
         }
         
