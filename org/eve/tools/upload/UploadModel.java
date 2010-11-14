@@ -65,7 +65,7 @@ public class UploadModel {
             customer.setIVF(getInteger(args[48]));
             customer.setTipoEstabelecimento(Integer.parseInt(args[50]));
             customer.setIncentive(Integer.parseInt(args[51]));
-            customer.setStatus(0);
+            customer.setStatus(1);
             customer.setReference("");
             
             address = new CustomerAddress();
