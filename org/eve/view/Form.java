@@ -450,6 +450,8 @@ public class Form {
                 comboassist.setOptions(component.getOptions());
                 comboassist.setLength(component.getLength());
                 comboassist.setId(component.getName());
+                comboassist.setLocale(locale);
+                comboassist.setMessages(messages);
                 
                 combo = (Combo)comboassist.newInstance();
                 

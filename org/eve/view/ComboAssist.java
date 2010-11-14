@@ -1,5 +1,6 @@
 package org.eve.view;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -8,36 +9,23 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EVE;
+import org.springframework.context.MessageSource;
 
 public class ComboAssist {
     private int type;
     private int length;
     private int item;
     private int controltype;
+    private Locale locale;
     private String id;
     private String reference;
     private String[] options;
     private Composite container;
     private Controller controller;
     private Map<String, Component> table;
+    private MessageSource messages;
     
     public ComboAssist() { }
-    
-    /**
-     * 
-     * @param id
-     */
-    public final void setId(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * 
-     * @param reference
-     */
-    public final void setReference(String reference) {
-        this.reference = reference;
-    }
     
     /**
      * 
@@ -45,46 +33,6 @@ public class ComboAssist {
      */
     public final void setContainer(Composite container) {
         this.container = container;
-    }
-    
-    /**
-     * 
-     * @param type
-     */
-    public final void setType(int type) {
-        this.type = type;
-    }
-    
-    /**
-     * 
-     * @param length
-     */
-    public final void setLength(int length) {
-        this.length = length;
-    }
-    
-    /**
-     * 
-     * @param options
-     */
-    public final void setOptions(String[] options) {
-        this.options = options;
-    }
-    
-    /**
-     * 
-     * @param item
-     */
-    public final void setItem(int item) {
-        this.item = item;
-    }
-    
-    /**
-     * 
-     * @param table
-     */
-    public final void setTableReference(Map<String, Component> table) {
-        this.table = table;
     }
     
     /**
@@ -101,6 +49,78 @@ public class ComboAssist {
      */
     public final void setControlType(int controltype) {
         this.controltype = controltype;
+    }
+    
+    /**
+     * 
+     * @param id
+     */
+    public final void setId(String id) {
+        this.id = id;
+    }
+    
+    /**
+     * 
+     * @param item
+     */
+    public final void setItem(int item) {
+        this.item = item;
+    }
+    
+    /**
+     * 
+     * @param length
+     */
+    public final void setLength(int length) {
+        this.length = length;
+    }
+    
+    /**
+     * 
+     * @param locale
+     */
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
+    /**
+     * 
+     * @param messages
+     */
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
+    }
+    
+    /**
+     * 
+     * @param options
+     */
+    public final void setOptions(String[] options) {
+        this.options = options;
+    }
+    
+    /**
+     * 
+     * @param reference
+     */
+    public final void setReference(String reference) {
+        this.reference = reference;
+    }
+    
+    /**
+     * 
+     * @param type
+     */
+    public final void setType(int type) {
+        this.type = type;
+    }
+    
+    /**
+     * 
+     * @param table
+     */
+    public final void setTableReference(Map<String, Component> table) {
+        this.table = table;
     }
     
     /**
@@ -157,7 +177,8 @@ public class ComboAssist {
              */
             if (options != null && options.length > 0) {
                 combo.setText(options[0]);
-                combo.setItems(options);
+                for (String option : options)
+                    combo.add(messages.getMessage(option, null, option, locale));
             }
             
             if (options == null) {
