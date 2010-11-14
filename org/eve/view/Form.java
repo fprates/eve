@@ -464,23 +464,36 @@ public class Form {
         return composite;
     }
     
+    /**
+     * 
+     * @param document
+     * @param id
+     */
     public final void put(AbstractDocument document, String id) {
         String name = document.getName(id);
         FormComponent component = new FormComponent(
                 name, document.getLength(id), !document.isKey(id));
         
+        component.setMessages(messages);
         component.setTitle(messages.getMessage(name, null, name, locale));
         component.setDataType(document.getType(id));
         
         fields.put(name, component);
     }
     
+    /**
+     * 
+     * @param document
+     * @param id
+     * @param length
+     */
     public final void putCombo(AbstractDocument document, String id, int length) {
         String[] options;
         String name = document.getName(id);
         FormComponent component = new FormComponent(
                 name, length, !document.isKey(id));
         
+        component.setMessages(messages);
         component.setTitle(messages.getMessage(name, null, name, locale));
         component.setType(EVE.combo);
         

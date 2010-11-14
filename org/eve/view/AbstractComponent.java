@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.eve.model.AbstractDocument;
+import org.springframework.context.MessageSource;
 
 public abstract class AbstractComponent implements Component {
     private boolean enabled;
@@ -25,6 +26,8 @@ public abstract class AbstractComponent implements Component {
     private Date date;
     private DateFormat dateformat;
     private Extension extension;
+    private Locale locale;
+    private MessageSource messages;
     private String name;
     private String title;
     private String[] options;
@@ -284,32 +287,6 @@ public abstract class AbstractComponent implements Component {
         return enabled;
     }
     
-    /**
-     * 
-     * @param control
-     * @param text
-     */
-    private final void setText(Control control, String text) {
-        String text_ = text;
-        
-        if (text_ == null)
-            text_ = "";
-        
-        switch (type) {
-        case EVE.text:
-            ((Text)control).setText(text_);
-            break;
-        
-        case EVE.ccombo:
-            ((CCombo)control).setText(text_);
-            break;
-            
-        case EVE.combo:
-            ((Combo)control).setText(text_);
-            break;
-        }        
-    }
-    
     /*
      * (non-Javadoc)
      * @see org.eve.view.Component#setControl(org.eclipse.swt.widgets.Control)
@@ -385,7 +362,8 @@ public abstract class AbstractComponent implements Component {
             if (options == null)
                 break;
             
-            setString(options[value]);
+            setString(messages.getMessage(
+                    options[value], null, options[value], locale));
             break;
         }
     }
@@ -427,6 +405,7 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setLocale(Locale locale) {
+        this.locale = locale;
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
     
@@ -454,7 +433,11 @@ public abstract class AbstractComponent implements Component {
             setString(Long.toString(value), index);
             break;
         }
-        
+    }
+    
+    @Override
+    public final void setMessages(MessageSource messages) {
+        this.messages = messages;
     }
     
     /*
@@ -473,6 +456,32 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setOptions(String[] options) {
         this.options = options;
+    }
+    
+    /**
+     * 
+     * @param control
+     * @param text
+     */
+    private final void setText(Control control, String text) {
+        String text_ = text;
+        
+        if (text_ == null)
+            text_ = "";
+        
+        switch (type) {
+        case EVE.text:
+            ((Text)control).setText(text_);
+            break;
+        
+        case EVE.ccombo:
+            ((CCombo)control).setText(text_);
+            break;
+            
+        case EVE.combo:
+            ((Combo)control).setText(text_);
+            break;
+        }        
     }
     
     /*

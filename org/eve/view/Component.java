@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
 import org.eve.model.AbstractDocument;
+import org.springframework.context.MessageSource;
 
 public interface Component {
     public enum Extension {NONE, SEARCH, FILESEARCH};
@@ -205,6 +206,12 @@ public interface Component {
      * @param index
      */
     public abstract void setLong(long value, int index);
+    
+    /**
+     * 
+     * @param messages
+     */
+    public abstract void setMessages(MessageSource messages);
     
     /**
      * Define nome
