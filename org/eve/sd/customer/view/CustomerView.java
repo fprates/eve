@@ -222,7 +222,7 @@ public class CustomerView extends AbstractView {
             atable.setStringValue("address.logra", i, address.getAddress());
             atable.setIntValue("address.numer", i, address.getNumber());
             atable.setStringValue("address.compl", i, address.getComplemento());
-            atable.setStringValue("address.cdend", i, address.getCEP());
+            atable.setIntValue("address.cdend", i, address.getCEP());
             atable.setStringValue("address.coduf", i, address.getEstado());
             
             munic = address.getMunicipio();

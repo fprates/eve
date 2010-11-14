@@ -10,7 +10,7 @@ public class Upload extends AbstractDocument {
     private String filename;
 
     public Upload() {
-        put(DOCUMENT, "upld.doc", false, datatype.INT, 1);
+        put(DOCUMENT, "upload.document", false, datatype.INT, 1);
         putValues(DOCUMENT, new String[] {
                 "",
                 "customer.data",
@@ -18,7 +18,7 @@ public class Upload extends AbstractDocument {
                 "material.data"
         });
         
-        put(FILENAME, "upld.filename", false, datatype.CHAR, 120);
+        put(FILENAME, "upload.filename", false, datatype.CHAR, 120);
         setLowerCase(FILENAME);
     }
 

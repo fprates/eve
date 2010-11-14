@@ -2,15 +2,15 @@ package org.eve.sd.customer;
 
 public class CustomerAddress extends AbstractCustomerItem {
     private static final long serialVersionUID = -6527551878586866451L;
+    private int cep;
+    private int municipio;
+    private int number;
     private int type;
     private String address;
-    private int number;
     private String complemento;
     private String localidade;
-    private String CEP;
     private String pais;
     private String estado;
-    private int municipio;
     
     public CustomerAddress() {
         hash = 7;
@@ -69,8 +69,8 @@ public class CustomerAddress extends AbstractCustomerItem {
     /**
      * @return the cEP
      */
-    public String getCEP() {
-        return CEP;
+    public int getCEP() {
+        return cep;
     }
 
     /**
@@ -111,8 +111,8 @@ public class CustomerAddress extends AbstractCustomerItem {
     /**
      * @param cEP the cEP to set
      */
-    public void setCEP(String cEP) {
-        CEP = cEP;
+    public void setCEP(int cep) {
+        this.cep = cep;
     }
 
     /**

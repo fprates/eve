@@ -13,9 +13,19 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eve.sd.customer.Customer;
+import org.eve.sd.customer.CustomerAddress;
+//import org.eve.sd.customer.CustomerContact;
 
 public class UploadModel {
     private InputStream in;
+    
+    private int getInteger(String arg) {
+        try {
+            return Integer.parseInt(arg);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
     
     public final BufferedReader upload(String filename) throws FileNotFoundException, IOException {
         in = new FileInputStream(filename);
@@ -25,6 +35,8 @@ public class UploadModel {
     
     public final Set<Customer> getCustomers(BufferedReader reader) throws IOException, ParseException {
         Customer customer;
+        CustomerAddress address;
+//        CustomerContact contact;
         Set<Customer> customers;
         String[] args;
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
@@ -50,15 +62,25 @@ public class UploadModel {
             customer.setHomePage(args[14]);
             customer.setEmail(args[15]);
             customer.setRegDate(format.parse(args[45]));
-            
-            if (args[48].length() == 0)
-                args[48] = "0";
-            
-            customer.setIVF(Integer.parseInt(args[48]));
+            customer.setIVF(getInteger(args[48]));
             customer.setTipoEstabelecimento(Integer.parseInt(args[50]));
             customer.setIncentive(Integer.parseInt(args[51]));
             customer.setStatus(0);
             customer.setReference("");
+            
+            address = new CustomerAddress();
+            
+            address.setCustomer(customer);
+            address.setAddress(args[5]);
+            address.setNumber(getInteger(args[6]));
+            address.setComplemento(args[7]);
+//            address.setMunicipio(args[8]);
+            address.setLocalidade(args[10]);
+            address.setEstado(args[9]);
+            address.setCEP(getInteger(args[11]));
+            address.setType(0);
+            
+            customer.getAddresses().add(address);
             
             customers.add(customer);
         }

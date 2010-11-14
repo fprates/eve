@@ -130,6 +130,14 @@ public class Form {
     }
     
     /**
+     * 
+     * @param field
+     */
+    public final void setFocus(String field) {
+        fields.get(field).getControl().setFocus();
+    }
+    
+    /**
      * Ajusta valor do campo inteiro do formulário
      * @param field
      * @param value

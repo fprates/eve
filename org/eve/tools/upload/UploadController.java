@@ -10,6 +10,7 @@ import org.eve.model.Model;
 import org.eve.sd.customer.Customer;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
+import org.hibernate.HibernateException;
 
 public class UploadController extends AbstractController {
     private UploadModel uploadmodel;
@@ -34,7 +35,14 @@ public class UploadController extends AbstractController {
             for (Object id : upload.getIds())
                 upload.setFieldValue((String)id, form.getFieldValue(upload, (String)id));
             
-            if ((upload.getDocument() == 0) || (upload.getFilename().equals(""))) {
+            if (upload.getDocument() == 0) {
+                form.setFocus("upload.document");
+                setMessage(EVE.error, "obligatory.parameter");
+                return;
+            }
+            
+            if (upload.getFilename().equals("")) {
+                form.setFocus("upload.filename");
                 setMessage(EVE.error, "obligatory.parameter");
                 return;
             }
@@ -73,8 +81,14 @@ public class UploadController extends AbstractController {
                 setMessage(EVE.error, "file.read.error");
                 ex.printStackTrace();
                 return;
+                
             } catch (java.text.ParseException ex) {
                 setMessage(EVE.error, "invalid.data.format");
+                ex.printStackTrace();
+                return;
+                
+            } catch (HibernateException ex) {
+                setMessage(EVE.error, "insert.error");
                 ex.printStackTrace();
                 return;
             }

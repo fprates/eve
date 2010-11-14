@@ -132,6 +132,7 @@ public class CustomerModel extends AbstractModel {
     @Transactional(propagation=Propagation.SUPPORTS)
     @Override
     public void insert(Set<?> objects) {
+        int k;
         Customer customer;
         Calendar calendar = Calendar.getInstance();
         Time time = new Time(calendar.getTimeInMillis());
@@ -143,6 +144,12 @@ public class CustomerModel extends AbstractModel {
             
             customer.setRegTime(time);
             session.save(customer);
+            
+            k = 0;
+            for (CustomerAddress address : customer.getAddresses()) {
+                address.setItem(++k + (customer.getId() * 100));
+                session.save(address);
+            }
         }
         session.getTransaction().commit();
         
