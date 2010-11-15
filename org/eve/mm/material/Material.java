@@ -10,7 +10,7 @@ import org.eve.model.AbstractDocument;
  * @author francisco.prates
  *
  */
-public class Material extends AbstractDocument {
+public class Material extends AbstractDocument implements Comparable<Material> {
     public static final String IDENT = "id";
     public static final String REFER = "reference";
     public static final String DTREG = "regDate";
@@ -216,4 +216,13 @@ public class Material extends AbstractDocument {
 	public void setWeightUnit(String weightUnit) {
 		this.weightUnit = weightUnit;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+    @Override
+    public int compareTo(Material material) {
+        return id.compareTo(material.getId());
+    }
 }

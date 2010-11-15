@@ -6,15 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eve.mm.material.Material;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
+import org.eve.sd.supplier.Supplier;
 
 public class UploadModel {
     private InputStream in;
@@ -107,11 +108,145 @@ public class UploadModel {
         return customers;
     }
     
-    public final void suppliersSave(Reader save) {
-        
+    public final Set<Supplier> getSuppliers(BufferedReader reader) throws IOException, ParseException {
+//        Supplier supplier;
+        Set<Supplier> suppliers;
+//        String[] args;
+//        SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+//        String line = null;
+//        
+        suppliers = new TreeSet<Supplier>();
+//        
+//        while(true) {
+//            line = reader.readLine();
+//            if (line == null)
+//                break;
+//            
+//            supplier = new Supplier();
+//            args = line.split(";");
+//            customer.setId(Integer.parseInt(args[0]));
+//            if (args[1].length() == 0)
+//                args[1] = "0";
+//            
+//            customer.setCodCadFiscal(Long.parseLong(args[1]));
+//            customer.setInscricaoEstadual(args[2]);
+//            customer.setName(args[3]);
+//            customer.setAlternateName(args[4]);
+//            customer.setHomePage(args[14]);
+//            customer.setEmail(args[15]);
+//            customer.setRegDate(format.parse(args[45]));
+//            customer.setIVF(getInteger(args[48]));
+//            customer.setTipoEstabelecimento(Integer.parseInt(args[50]));
+//            customer.setIncentive(Integer.parseInt(args[51]));
+//            customer.setStatus(1);
+//            customer.setReference("");
+//            
+//            address = new CustomerAddress();
+//            
+//            address.setCustomer(customer);
+//            address.setAddress(args[5]);
+//            address.setNumber(getInteger(args[6]));
+//            address.setComplemento(args[7]);
+////            address.setMunicipio(args[8]);
+//            address.setLocalidade(args[10]);
+//            address.setEstado(args[9]);
+//            address.setCEP(getInteger(args[11]));
+//            address.setType(0);
+//            
+//            customer.getAddresses().add(address);
+//            
+//            contact = new CustomerContact();
+//            contact.setCustomer(customer);
+//            contact.setItem(0);
+//            contact.setType("CONTATO");
+//            contact.setInstantMessenger(args[16]);
+//            contact.setName(args[17]);
+//            contact.setFunction(args[18]);
+//            customer.getContacts().add(contact);
+//            
+//            contact = new CustomerContact();
+//            contact.setCustomer(customer);
+//            contact.setItem(1);
+//            contact.setType("RESPONSÁVEL COMPRAS");
+//            contact.setInstantMessenger("");
+//            contact.setName(args[19]);
+//            contact.setFunction(args[20]);
+//            customer.getContacts().add(contact);
+//            
+//            suppliers.add(supplier);
+//        }
+//        
+//        in.close();
+        return suppliers;
     }
     
-    public final void materialsSave(Reader save) {
+    public final Set<Material> getMaterials(BufferedReader reader) throws IOException, ParseException {
+        Material material;
+        Set<Material> materials;
+        String[] args;
+        String line = null;
         
+        materials = new TreeSet<Material>();
+        
+        while(true) {
+            line = reader.readLine();
+            if (line == null)
+                break;
+            
+            material = new Material();
+            args = line.split(";");
+            material.setId(args[0]);
+            material.setReference(args[1]+" "+args[2]);
+//            material.setWidth(Float.parseFloat(args[3]));
+//            material.setThickness(Float.parseFloat(args[4]));
+//            material.setLength(Float.parseFloat(args[5]));
+//            customer.setName(args[3]);
+//            customer.setAlternateName(args[4]);
+//            customer.setHomePage(args[14]);
+//            customer.setEmail(args[15]);
+//            customer.setRegDate(format.parse(args[45]));
+//            customer.setIVF(getInteger(args[48]));
+//            customer.setTipoEstabelecimento(Integer.parseInt(args[50]));
+//            customer.setIncentive(Integer.parseInt(args[51]));
+//            customer.setStatus(1);
+//            customer.setReference("");
+//            
+//            address = new CustomerAddress();
+//            
+//            address.setCustomer(customer);
+//            address.setAddress(args[5]);
+//            address.setNumber(getInteger(args[6]));
+//            address.setComplemento(args[7]);
+////            address.setMunicipio(args[8]);
+//            address.setLocalidade(args[10]);
+//            address.setEstado(args[9]);
+//            address.setCEP(getInteger(args[11]));
+//            address.setType(0);
+//            
+//            customer.getAddresses().add(address);
+//            
+//            contact = new CustomerContact();
+//            contact.setCustomer(customer);
+//            contact.setItem(0);
+//            contact.setType("CONTATO");
+//            contact.setInstantMessenger(args[16]);
+//            contact.setName(args[17]);
+//            contact.setFunction(args[18]);
+//            customer.getContacts().add(contact);
+//            
+//            contact = new CustomerContact();
+//            contact.setCustomer(customer);
+//            contact.setItem(1);
+//            contact.setType("RESPONSÁVEL COMPRAS");
+//            contact.setInstantMessenger("");
+//            contact.setName(args[19]);
+//            contact.setFunction(args[20]);
+//            customer.getContacts().add(contact);
+            
+            materials.add(material);
+        }
+        
+        in.close();
+        return materials;
     }
 }

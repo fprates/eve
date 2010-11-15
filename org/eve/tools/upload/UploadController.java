@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.eve.main.EVE;
+import org.eve.mm.material.Material;
 import org.eve.model.Model;
 import org.eve.sd.customer.Customer;
+import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.hibernate.HibernateException;
@@ -15,6 +17,7 @@ import org.hibernate.HibernateException;
 public class UploadController extends AbstractController {
     private UploadModel uploadmodel;
     private Model customermodel;
+    private Model materialmodel;
     
     public void setUploadModel(UploadModel uploadmodel) {
         this.uploadmodel = uploadmodel;
@@ -24,10 +27,16 @@ public class UploadController extends AbstractController {
         this.customermodel = customermodel;
     }
     
+    public void setMaterialModel(Model materialmodel) {
+        this.materialmodel = materialmodel;
+    }
+    
     @Override
     public void userInput(String input) {
         BufferedReader reader;
         Set<Customer> customers;
+        Set<Material> materials;
+        Set<Supplier> suppliers;
         Form form = getForm("main");
         Upload upload = (Upload)getObject();
         
@@ -68,14 +77,17 @@ public class UploadController extends AbstractController {
                     customermodel.insert(customers);
                     
                     break;
-//                    
-//                case 2:
-//                    model.suppliersSave(reader);
-//                    break;
-//                    
-//                case 3:
-//                    model.materialsSave(reader);
-//                    break;
+                    
+                case 2:
+                    suppliers = uploadmodel.getSuppliers(reader);
+                    
+                    break;
+                    
+                case 3:
+                    materials = uploadmodel.getMaterials(reader);
+                    materialmodel.insert(materials);
+                    
+                    break;
                 }
             } catch (IOException ex) {
                 setMessage(EVE.error, "file.read.error");

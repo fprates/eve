@@ -3,6 +3,8 @@ package org.eve.mm.material.model;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
 
 import org.eve.mm.material.Material;
 import org.eve.model.AbstractModel;
@@ -62,6 +64,31 @@ public class MaterialModel extends AbstractModel {
         }
         
         session.getTransaction().commit();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.model.AbstractModel#insert(java.util.Set)
+     */
+    @Override
+    @Transactional(propagation=Propagation.SUPPORTS)
+    public final void insert(Set<?> objects) {
+        Material material;
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        Time time = new Time(calendar.getTimeInMillis());
+        Session session = getSessionFactory().getCurrentSession();
+        
+        session.beginTransaction();
+        for (Object object: objects) {
+            material = (Material)object;
+            
+            material.setRegDate(date);
+            material.setRegTime(time);
+            session.save(material);
+        }
+        session.getTransaction().commit();
+        
     }
 
 }

@@ -6,6 +6,7 @@
     
     <import resource="common.xml"/>
     <import resource="customer.xml"/>
+    <import resource="material.xml"/>
     
     <bean id="tools_msg" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
@@ -28,6 +29,7 @@
         <property name="object" ref="upload"/>
         <property name="uploadModel" ref="upload_model"/>
         <property name="customerModel" ref="cust_model"/>
+        <property name="materialModel" ref="mat_model"/>
         <property name="views">
             <map>
                 <entry key="upload_view" value-ref="upload_view"/>
