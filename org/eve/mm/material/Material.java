@@ -20,15 +20,23 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     public static final String PSLIQ = "netWeight";
     public static final String UNDQT = "quantityUnit";
     public static final String QUANT = "quantity";
+    public static final String MOEDA = "currency";
+    public static final String VLCST = "netPrice";
+    public static final String LNGTH = "length";
+    public static final String WIDTH = "width";
+    public static final String THICK = "thickness";
     private static final long serialVersionUID = 4251254484945797800L;
     private int materialType;
     private float netWeight;
     private float grossWeight;
     private float netPrice;
     private float quantity;
+    private float length;
+    private float width;
+    private float thickness;
     private Date regDate;
     private String id;
-    private String priceUnit;
+    private String currency;
 	private String quantityUnit;
     private String regUser;
     private String reference;
@@ -45,8 +53,25 @@ public class Material extends AbstractDocument implements Comparable<Material> {
         put(PSLIQ, "material.psliq", false, datatype.FLOAT,13);
         put(UNDQT, "material.undqt", false, datatype.CHAR,3);
         put(QUANT, "material.quant", false, datatype.FLOAT,13);
+        put(MOEDA, "material.moeda", false, datatype.CHAR, 3);
+        put(VLCST, "material.vlcst", false, datatype.FLOAT, 12);
+        put(LNGTH, "material.lngth", false, datatype.FLOAT, 12);
+        put(WIDTH, "material.width", false, datatype.FLOAT, 12);
+        put(THICK, "material.thick", false, datatype.FLOAT, 12);
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getCurrency() {
+        return currency;
     }
     
+    /**
+     * 
+     * @return
+     */
 	public float getGrossWeight() {
 		return grossWeight;
 	}
@@ -56,6 +81,10 @@ public class Material extends AbstractDocument implements Comparable<Material> {
      */
     public String getId() {
         return id;
+    }
+    
+    public float getLength() {
+        return length;
     }
 
     /**
@@ -80,18 +109,18 @@ public class Material extends AbstractDocument implements Comparable<Material> {
 		return netWeight;
 	}
 
-    /**
-     * 
-     * @return
-     */
-	public String getPriceUnit() {
-		return priceUnit;
-	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public float getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getQuantityUnit() {
 		return quantityUnit;
 	}
@@ -126,6 +155,10 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     public String getRegUser() {
     	return regUser;
     }
+    
+    public float getThickness() {
+        return thickness;
+    }
 
     /**
      * 
@@ -135,11 +168,19 @@ public class Material extends AbstractDocument implements Comparable<Material> {
 		return weightUnit;
 	}
 
+	public float getWidth() {
+	    return width;
+	}
+	
     /*
      * 
      * Setters
      * 
      */
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
 	public void setGrossWeight(float grossWeight) {
 		this.grossWeight = grossWeight;
@@ -150,6 +191,14 @@ public class Material extends AbstractDocument implements Comparable<Material> {
      */
     public void setId(String id) {
         this.id = id;
+    }
+    
+    /**
+     * 
+     * @param length
+     */
+    public void setLength(float length) {
+        this.length = length;
     }
 
     /**
@@ -168,10 +217,6 @@ public class Material extends AbstractDocument implements Comparable<Material> {
 
 	public void setNetWeight(float netWeight) {
 		this.netWeight = netWeight;
-	}
-
-	public void setPriceUnit(String priceUnit) {
-		this.priceUnit = priceUnit;
 	}
     
     /**
@@ -205,6 +250,10 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     	regUser = user;
     }
 
+    public void setThickness(float thickness) {
+        this.thickness = thickness;
+    }
+    
 	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
@@ -217,6 +266,9 @@ public class Material extends AbstractDocument implements Comparable<Material> {
 		this.weightUnit = weightUnit;
 	}
 
+	public void setWidth(float width) {
+	    this.width = width;
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)

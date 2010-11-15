@@ -13,9 +13,12 @@
         <property name="quantity" column="QUANT"/>
         <property name="quantityUnit" column="UNDQT"/>
         <property name="netPrice" column="VLLIQ"/>
-        <property name="priceUnit" column="UNVLQ"/>
+        <property name="currency" column="UNVLQ"/>
         <property name="regDate" column="DTREG"/>
         <property name="regTime" column="TMREG"/>
         <property name="regUser" column="USREG"/>
+        <property name="length" column="LNGTH"/>
+        <property name="width" column="WIDTH"/>
+        <property name="thickness" column="THICK"/>
     </class>
 </hibernate-mapping>

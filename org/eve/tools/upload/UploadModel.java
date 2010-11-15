@@ -28,6 +28,14 @@ public class UploadModel {
         }
     }
     
+    private float getFloat(String arg) {
+        try {
+            return Float.parseFloat(arg);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
+    
     public final BufferedReader upload(String filename) throws FileNotFoundException, IOException {
         in = new FileInputStream(filename);
         
@@ -197,13 +205,13 @@ public class UploadModel {
             args = line.split(";");
             material.setId(args[0]);
             material.setReference(args[1]+" "+args[2]);
-//            material.setWidth(Float.parseFloat(args[3]));
-//            material.setThickness(Float.parseFloat(args[4]));
-//            material.setLength(Float.parseFloat(args[5]));
-//            customer.setName(args[3]);
-//            customer.setAlternateName(args[4]);
-//            customer.setHomePage(args[14]);
-//            customer.setEmail(args[15]);
+            material.setWidth(getFloat(args[3]));
+            material.setThickness(getFloat(args[4]));
+            material.setLength(getFloat(args[5]));
+            material.setWeightUnit(args[6]);
+            material.setNetWeight(getFloat(args[7].replace(',', '.')));
+            material.setCurrency("BRL");
+            material.setNetPrice(getFloat(args[9].replace(',', '.')));
 //            customer.setRegDate(format.parse(args[45]));
 //            customer.setIVF(getInteger(args[48]));
 //            customer.setTipoEstabelecimento(Integer.parseInt(args[50]));

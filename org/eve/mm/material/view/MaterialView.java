@@ -32,6 +32,11 @@ public class MaterialView extends AbstractView {
         form.put(material, Material.PSLIQ);
         form.put(material, Material.UNDQT);
         form.put(material, Material.QUANT);
+        form.put(material, Material.MOEDA);
+        form.put(material, Material.VLCST);
+        form.put(material, Material.LNGTH);
+        form.put(material, Material.WIDTH);
+        form.put(material, Material.THICK);
 //        form.concat("material.psliq", "material.undps", "material.psliq");
 //        form.concat("material.quant", "material.undqt", "material.quant");
         

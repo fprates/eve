@@ -124,7 +124,10 @@ create table mat001 (
    quant decimal(9,3),
    undqt char(3),
    vlliq decimal(12,3),
-   unvlq char(3)
+   unvlq char(3),
+   lngth decimal(12,3),
+   width decimal(12,3),
+   thick decimal(12,3)
 );
 
 /* mestre de fornecedores - dados básicos */
