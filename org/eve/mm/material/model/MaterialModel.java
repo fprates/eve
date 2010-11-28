@@ -85,6 +85,7 @@ public class MaterialModel extends AbstractModel {
             
             material.setRegDate(date);
             material.setRegTime(time);
+            material.setRegUser("SYSTEM");
             session.save(material);
         }
         session.getTransaction().commit();
