@@ -45,26 +45,23 @@
     </bean>
     
     <!-- Seleção de clientes -->
-    <!-- 
-    <bean id="cust_sel_view" class="org.eve.sd.customer.view.CustomerSelectionView"/>
-     -->
+    <bean id="ordersd_sel_view" class="org.eve.sd.order.view.OrderSelectionView"/>
     
     <!-- Escolha de múltiplos clientes -->
     <!-- 
     <bean id="cust_choose_view" class="org.eve.sd.customer.view.CustomerChooseView"/>
      -->
     
-    <!--  
-    <bean id="cust_sel_control" class="org.eve.sd.customer.controller.CustomerSelectionController">
-        <property name="messages" ref="cust_msg"/>
-        <property name="object" ref="customer"/>
-        <property name="model" ref="cust_model"/>
+    <bean id="ordersd_sel_control" class="org.eve.sd.order.controller.OrderSelectionController">
+        <property name="messages" ref="ordersd_msg"/>
+        <property name="object" ref="ordersd"/>
+        <!-- 
+        <property name="model" ref="ordersd_model"/>
+         -->
         <property name="views">
             <map>
-                <entry key="cust_sel_view" value-ref="cust_sel_view"/>
-                <entry key="cust_choose_view" value-ref="cust_choose_view"/>
+                <entry key="ordersd_sel_view" value-ref="ordersd_sel_view"/>
             </map>
         </property>
     </bean>
-     -->
 </beans>

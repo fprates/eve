@@ -1,8 +1,5 @@
 package org.eve.mm.material;
 
-import java.sql.Time;
-import java.util.Date;
-
 import org.eve.model.AbstractDocument;
 
 /**
@@ -13,9 +10,6 @@ import org.eve.model.AbstractDocument;
 public class Material extends AbstractDocument implements Comparable<Material> {
     public static final String IDENT = "id";
     public static final String REFER = "reference";
-    public static final String DTREG = "regDate";
-    public static final String TMREG = "regTime";
-    public static final String USREG = "regUser";
     public static final String UNDPS = "weightUnit";
     public static final String PSLIQ = "netWeight";
     public static final String UNDQT = "quantityUnit";
@@ -34,14 +28,11 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     private float length;
     private float width;
     private float thickness;
-    private Date regDate;
     private String id;
     private String currency;
 	private String quantityUnit;
-    private String regUser;
     private String reference;
     private String weightUnit;
-    private Time regTime;
 
     public Material() {
         put(IDENT, "material.ident", true, datatype.CHAR, 12);        
@@ -133,29 +124,6 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     	return reference;
     }
     
-    /**
-     * @return the creation
-     */
-    public Date getRegDate() {
-        return regDate;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public Time getRegTime() {
-        return regTime;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public String getRegUser() {
-    	return regUser;
-    }
-    
     public float getThickness() {
         return thickness;
     }
@@ -225,29 +193,6 @@ public class Material extends AbstractDocument implements Comparable<Material> {
      */
     public void setReference(String reference) {
     	this.reference = reference;
-    }
-    
-    /**
-     * @param creation the creation to set
-     */
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-    
-    /**
-     * 
-     * @param regTime
-     */
-    public void setRegTime(Time regTime) {
-        this.regTime = regTime;
-    }
-    
-    /**
-     * 
-     * @param user
-     */
-    public void setRegUser(String user) {
-    	regUser = user;
     }
 
     public void setThickness(float thickness) {

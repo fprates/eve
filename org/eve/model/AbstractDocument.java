@@ -10,7 +10,14 @@ import java.util.Map;
 
 public abstract class AbstractDocument implements Serializable {
     public enum datatype {CHAR, INT, LONG, FLOAT, DATE, TIME};
+    public static final String DTREG = "regDate";
+    public static final String TMREG = "regTime";
+    public static final String USREG = "regUser";
+    
     private static final long serialVersionUID = 6622123475315846780L;
+    private Date regDate;
+    private String regUser;
+    private Time regTime;
     private Map<String, Field> fields;
     
     public AbstractDocument() {
@@ -80,12 +87,26 @@ public abstract class AbstractDocument implements Serializable {
     }
     
     /**
+     * @return the creation
+     */
+    public Date getRegDate() {
+        return regDate;
+    }
+    
+    /**
      * 
-     * @param id
      * @return
      */
-    public final String[] getValues(String id) {
-        return fields.get(id).getValues();
+    public Time getRegTime() {
+        return regTime;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public String getRegUser() {
+        return regUser;
     }
     
     /**
@@ -95,6 +116,15 @@ public abstract class AbstractDocument implements Serializable {
      */
     public final datatype getType(String id) {
         return fields.get(id).getType();
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    public final String[] getValues(String id) {
+        return fields.get(id).getValues();
     }
     
     /**
@@ -192,6 +222,29 @@ public abstract class AbstractDocument implements Serializable {
     
     public final void setLowerCase(String id) {
         fields.get(id).setUpcase(false);
+    }
+    
+    /**
+     * @param creation the creation to set
+     */
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
+    
+    /**
+     * 
+     * @param regTime
+     */
+    public void setRegTime(Time regTime) {
+        this.regTime = regTime;
+    }
+    
+    /**
+     * 
+     * @param regUser
+     */
+    public void setRegUser(String regUser) {
+        this.regUser = regUser;
     }
     
     /*

@@ -3,8 +3,6 @@
  */
 package org.eve.sd.customer;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,9 +14,6 @@ import org.eve.model.AbstractDocument;
  */
 public class Customer extends AbstractDocument implements Comparable<Customer> {
     public static final String IDENT = "id";
-    public static final String DTREG = "regDate";
-    public static final String TMREG = "regTime";
-    public static final String USREG = "regUser";
     public static final String TPINC = "incentive";
     public static final String CDIVF = "IVF";
     public static final String STATUS = "status";
@@ -50,18 +45,15 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
     private int tipoestab;
     private int tipocomunicacao;
     private long codCadFiscal;
-	private Date regDate;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
-    private String regUser;
     private String homepage;
     private String inscricaoestadual;
     private String email;
     private String reference;
     private String name;
     private String alternateName;
-    private Time regTime;
 	
 	public Customer() {
 	    contacts = new TreeSet<CustomerContact>();
@@ -239,29 +231,6 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
     }
     
     /**
-     * @return the creation
-     */
-    public Date getRegDate() {
-        return regDate;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public Time getRegTime() {
-        return regTime;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public String getRegUser() {
-        return regUser;
-    }
-    
-    /**
      * 
      * @return
      */
@@ -427,29 +396,6 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
     public void setReference(String reference) {
         this.reference = reference;
     }
-	
-	/**
-	 * @param creation the creation to set
-	 */
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-	
-	/**
-	 * 
-	 * @param regTime
-	 */
-	public void setRegTime(Time regTime) {
-	    this.regTime = regTime;
-	}
-	
-	/**
-	 * 
-	 * @param regUser
-	 */
-	public void setRegUser(String regUser) {
-	    this.regUser = regUser;
-	}
     
     /**
      * 

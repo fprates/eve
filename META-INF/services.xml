@@ -24,6 +24,7 @@
                 <ref bean="mat_control"/>
                 <ref bean="mat_sel_control"/>
                 <ref bean="ordersd_control"/>
+                <ref bean="ordersd_sel_control"/>
                 <ref bean="upload_control"/>
             </list>
         </property>

@@ -1,16 +1,10 @@
 package org.eve.sd.supplier;
 
-import java.sql.Time;
-import java.util.Date;
-
 import org.eve.model.AbstractDocument;
 import org.eve.sd.supplier.Supplier;
 
 public class Supplier extends AbstractDocument {
     public static final String IDENT = "id";
-    public static final String DTREG = "regDate";
-    public static final String TMREG = "regTime";
-    public static final String USREG = "regUser";
     public static final String REFER = "reference";
     public static final String NAME = "name";
     public static final String ANAME = "alternateName";
@@ -21,9 +15,6 @@ public class Supplier extends AbstractDocument {
     private String reference;
     private String name;
     private String alternateName;
-    private Date regDate;
-    private Time regTime;
-    private String regUser;
 
     public Supplier() {
         put(IDENT, "supplier.ident", true, datatype.INT, 10);
@@ -76,30 +67,6 @@ public class Supplier extends AbstractDocument {
         return alternateName;
     }
     
-    /**
-     * Retorna data de registro
-     * @return the creation
-     */
-    public Date getRegDate() {
-        return regDate;
-    }
-    
-    /**
-     * Retorna hora de registro
-     * @return
-     */
-    public Time getRegTime() {
-        return regTime;
-    }
-    
-    /**
-     * Retorna usuário de registro
-     * @return
-     */
-    public String getRegUser() {
-        return regUser;
-    }
-    
     /*
      * Setters
      */
@@ -133,30 +100,6 @@ public class Supplier extends AbstractDocument {
      */
     public void setAlternateName(String alternateName) {
         this.alternateName = alternateName;
-    }
-    
-    /**
-     * Define data de registro
-     * @param creation the creation to set
-     */
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-    
-    /**
-     * Define hora de registro
-     * @param regTime
-     */
-    public void setRegTime(Time regTime) {
-        this.regTime = regTime;
-    }
-    
-    /**
-     * Define usuário de registro
-     * @param regUser
-     */
-    public void setRegUser(String regUser) {
-        this.regUser = regUser;
     }
     
     @Override
