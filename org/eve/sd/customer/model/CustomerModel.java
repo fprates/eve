@@ -11,6 +11,7 @@ import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
 import org.eve.sd.customer.CustomerSchedule;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +56,9 @@ public class CustomerModel extends AbstractModel {
             customer = (Customer)object;
             
             customer_ = (Customer)session.get(class_, object_);
+            if (customer_ == null)
+                throw new HibernateException("customer.not.found");
+            
             copyCustomer(customer_, customer);
         }
         

@@ -8,6 +8,7 @@ import org.eve.sd.customer.Customer;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
+import org.hibernate.HibernateException;
 
 public class CustomerSelectionController extends AbstractController {
     
@@ -97,9 +98,10 @@ public class CustomerSelectionController extends AbstractController {
                 if (action.equals("customer.edit.sel"))
                     call("customer.edit.choose");
                 
-            } else {            
-                model.load(Customer.class, ident, customer);
-                if (customer == null) {
+            } else {
+                try {
+                    model.load(Customer.class, ident, customer);
+                } catch (HibernateException ex) {
                     setMessage(EVE.error, "customer.not.found");
                     return;
                 }
