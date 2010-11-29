@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <import resource="common.xml"/>
+    
+    <bean id="ordersd_msg" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>META-INF/common</value>
+                <value>META-INF/ordersd</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ordersd" class="org.eve.sd.order.Order"/>
+    
+    <!-- 
+    <bean id="cust_model" class="org.eve.sd.customer.model.CustomerModel">
+        <property name="sessionFactory" ref="session_factory"/>
+        <property name="queries">
+            <map>
+                <entry key="sel_cities" value="from City where ufkey = ?"/>
+                <entry key="sel_customer" value="from Customer where ident = ?"/>
+                <entry key="selby_customers"
+                    value="from Customer where name like ? and alternateName like ? and reference like ?"/>
+                <entry key="sel_suppliers" value="from Supplier"/>
+            </map>
+        </property>
+    </bean>
+     -->
+    <bean id="ordersd_view" class="org.eve.sd.order.view.OrderView"/>
+    
+    <bean id="ordersd_control" class="org.eve.sd.order.controller.OrderController">
+        <property name="messages" ref="ordersd_msg"/>
+        <property name="object" ref="ordersd"/>
+        <!-- <property name="model" ref="cust_model"/> -->
+        <property name="views">
+            <map>
+                <entry key="ordersd_view" value-ref="ordersd_view"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!-- Seleção de clientes -->
+    <!-- 
+    <bean id="cust_sel_view" class="org.eve.sd.customer.view.CustomerSelectionView"/>
+     -->
+    
+    <!-- Escolha de múltiplos clientes -->
+    <!-- 
+    <bean id="cust_choose_view" class="org.eve.sd.customer.view.CustomerChooseView"/>
+     -->
+    
+    <!--  
+    <bean id="cust_sel_control" class="org.eve.sd.customer.controller.CustomerSelectionController">
+        <property name="messages" ref="cust_msg"/>
+        <property name="object" ref="customer"/>
+        <property name="model" ref="cust_model"/>
+        <property name="views">
+            <map>
+                <entry key="cust_sel_view" value-ref="cust_sel_view"/>
+                <entry key="cust_choose_view" value-ref="cust_choose_view"/>
+            </map>
+        </property>
+    </bean>
+     -->
+</beans>
