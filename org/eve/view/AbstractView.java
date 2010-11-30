@@ -18,19 +18,21 @@ import org.springframework.context.MessageSource;
  *
  */
 public abstract class AbstractView implements View {
-    private String name;
-    private MessageSource messages;
-    private Locale locale;
-    private EveAPI system;
-    private Composite container;
-    private List<ViewAction> actions;
-    private Map<String, Button> buttons;
     private int width;
     private int height;
+    private ComponentFactory factory;
+    private Composite container;
+    private EveAPI system;
+    private Locale locale;
+    private MessageSource messages;
+    private String name;
+    private List<ViewAction> actions;
+    private Map<String, Button> buttons;
     
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
         buttons = new LinkedHashMap<String, Button>();
+        factory = new ComponentFactory();
         width = 0;
         height = 0;
     }
@@ -90,6 +92,7 @@ public abstract class AbstractView implements View {
     public final void setLocale(Locale locale) {
         this.locale = locale;
         system.getController(this).setLocale(locale);
+        factory.setLocale(locale);
     }
     
     /*
@@ -99,6 +102,7 @@ public abstract class AbstractView implements View {
     @Override
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
+        factory.setMessages(messages);
     }
     
     /*
@@ -117,6 +121,22 @@ public abstract class AbstractView implements View {
      */
     
     /**
+     * Retorna controlador associado
+     * @return
+     */
+    protected final Controller getController() {
+        return system.getController(this);
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    protected final ComponentFactory getFactory() {
+        return factory;
+    }
+    
+    /**
      * Retorna a localização atual
      * @return
      */
@@ -131,14 +151,6 @@ public abstract class AbstractView implements View {
      */
     protected final String getMessage(String id) {
         return messages.getMessage(id, null, id, locale);
-    }
-    
-    /**
-     * Retorna controlador associado
-     * @return
-     */
-    protected final Controller getController() {
-        return system.getController(this);
     }
 
     /*

@@ -402,7 +402,7 @@ public class Form {
         comboassist.setTableReference(fields);
         
         for(String field : fields.keySet()) {
-            component = fields.get(field);            
+            component = fields.get(field);
             component.setLocale(locale);
             
             label = new Label(composite, SWT.NONE);
