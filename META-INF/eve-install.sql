@@ -15,6 +15,8 @@ drop table sdcomm003 if exists;
 drop table sdcomm002 if exists;
 drop table sdcomm001 if exists;
 drop table numrng if exists;
+drop table sddoc001 if exists;
+drop table sddoc002 if exists;
 \p tables dropped.
 
 /* range numérico */
@@ -141,6 +143,17 @@ create table supplr001 (
    refer char(12)
 );
 
+/* cabeçalho do documento de venda */
+create table sddoc001 (
+   ident char(12) primary key
+);
+
+/* itens do documento de venda */
+create table sddoc002 (
+   nrseq numeric(5) primary key,
+   ident char(12) foreign key references sddoc001(ident),
+);
+
 \p tables generated.
 
 grant select, insert, update, delete on custmr001 to evedb;
@@ -152,11 +165,14 @@ grant select, insert, update, delete on supplr001 to evedb;
 grant select, insert, update, delete on sdcomm001 to evedb;
 grant select, insert, update, delete on sdcomm002 to evedb;
 grant select, insert, update, delete on sdcomm003 to evedb;
+grant select, insert, update, delete on sddoc001 to evedb;
+grant select, insert, update, delete on sddoc002 to evedb;
 grant select, insert, update, delete on numrng to evedb;
 \p permissions granted.
 
 insert into numrng (range, crrnt) values ('CUSTMR', 0);
 insert into numrng (range, crrnt) values ('SUPPLR', 0);
+insert into numrng (range, crrnt) values ('ORDR01', 0);
 
 insert into sdcomm001 (cntry) values ('BRA');
 
