@@ -37,9 +37,6 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     public Material() {
         put(IDENT, "material.ident", true, datatype.CHAR, 12);        
         put(REFER, "material.refer", false, datatype.CHAR, 60);
-        put(DTREG, "material.dtreg", false, datatype.DATE, 10);
-        put(TMREG, "material.tmreg", false, datatype.TIME, 8);
-        put(USREG, "material.usreg", false, datatype.CHAR, 12);
         put(UNDPS, "material.undps", false, datatype.CHAR, 3);
         put(PSLIQ, "material.psliq", false, datatype.FLOAT,13);
         put(UNDQT, "material.undqt", false, datatype.CHAR,3);

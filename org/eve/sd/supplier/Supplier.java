@@ -18,9 +18,6 @@ public class Supplier extends AbstractDocument {
 
     public Supplier() {
         put(IDENT, "supplier.ident", true, datatype.INT, 10);
-        put(DTREG, "supplier.dtreg", false, datatype.DATE, 10);
-        put(TMREG, "supplier.tmreg", false, datatype.TIME, 8);
-        put(USREG, "supplier.usreg", false, datatype.CHAR, 12);
         put(REFER, "supplier.refer", false, datatype.CHAR, 12);
         put(NAME, "supplier.name", false, datatype.CHAR, 40);
         put(ANAME, "supplier.aname", false, datatype.CHAR, 40);

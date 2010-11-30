@@ -61,9 +61,6 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
 	    schedule = new TreeSet<CustomerSchedule>();
 	    
 	    put(IDENT, "customer.ident", true, datatype.INT, 10);
-        put(DTREG, "customer.dtreg", false, datatype.DATE, 10);
-        put(TMREG, "customer.tmreg", false, datatype.TIME, 8);
-        put(USREG, "customer.usreg", false, datatype.CHAR, 12);
         put(REFER, "customer.refer", false, datatype.CHAR, 12);
         put(NAME, "customer.name", false, datatype.CHAR, 40);
         put(ANAME, "customer.aname", false, datatype.CHAR, 40);

@@ -22,6 +22,9 @@ public abstract class AbstractDocument implements Serializable {
     
     public AbstractDocument() {
         fields = new HashMap<String, Field>();
+        put(DTREG, "document.dtreg", false, datatype.DATE, 10);
+        put(TMREG, "document.tmreg", false, datatype.TIME, 8);
+        put(USREG, "document.usreg", false, datatype.CHAR, 12);
     }
     
     /*

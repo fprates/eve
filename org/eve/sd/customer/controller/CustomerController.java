@@ -238,9 +238,9 @@ public class CustomerController extends AbstractController {
                 loadSchedule(getTable("dschedule"), customer, 1);
                 
                 model.save(customer);
-                form.setInt("customer.ident", customer.getId());
-                form.setDate("customer.dtreg", customer.getRegDate());
-                form.setTime("customer.tmreg", customer.getRegTime());
+                form.setInt("document.ident", customer.getId());
+                form.setDate("document.dtreg", customer.getRegDate());
+                form.setTime("document.tmreg", customer.getRegTime());
                 
                 setMessage(EVE.status, "customer.save.success");
                 

@@ -30,9 +30,9 @@ public class SupplierController extends AbstractController {
                 }
                 
                 model.save(supplier);
-                form.setInt("supplier.ident", supplier.getId());
-                form.setDate("supplier.dtreg", supplier.getRegDate());
-                form.setTime("supplier.tmreg", supplier.getRegTime());
+                form.setInt("document.ident", supplier.getId());
+                form.setDate("document.dtreg", supplier.getRegDate());
+                form.setTime("document.tmreg", supplier.getRegTime());
                 
                 setMessage(EVE.status, "supplier.save.success");
                 

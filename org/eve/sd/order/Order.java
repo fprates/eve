@@ -10,9 +10,6 @@ public class Order extends AbstractDocument {
 
     public Order() {
         put(IDENT, "order.ident", true, datatype.INT, 10);
-        put(DTREG, "order.dtreg", false, datatype.DATE, 10);
-        put(TMREG, "order.tmreg", false, datatype.TIME, 8);
-        put(USREG, "order.usreg", false, datatype.CHAR, 12);
     }
 
     public int getId() {
