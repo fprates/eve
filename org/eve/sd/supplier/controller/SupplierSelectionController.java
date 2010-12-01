@@ -32,7 +32,7 @@ public class SupplierSelectionController extends AbstractController {
             
             for (int k = 0; k < table.getItensSize(); k++)
                 if (table.getMarkValue(k)) {
-                    ident = table.getIntValue("supplier.ident", k);
+                    ident = table.getInt("supplier.ident", k);
                     break;
                 }
             
@@ -80,13 +80,13 @@ public class SupplierSelectionController extends AbstractController {
                 for(Object object : suppliers) {
                     table.insert();
                     supplier_ = (Supplier)object;
-                    table.setIntValue("supplier.ident", ident,
+                    table.setInt("supplier.ident", ident,
                             supplier_.getId());
-                    table.setStringValue("supplier.name", ident,
+                    table.setString("supplier.name", ident,
                             supplier_.getName());
-                    table.setStringValue("supplier.aname", ident,
+                    table.setString("supplier.aname", ident,
                             supplier_.getAlternateName());
-                    table.setStringValue("supplier.refer", ident,
+                    table.setString("supplier.refer", ident,
                             supplier_.getReference());
                     ident++;
                 }

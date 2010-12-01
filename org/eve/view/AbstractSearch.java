@@ -1,7 +1,5 @@
 package org.eve.view;
 
-import java.util.Locale;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.SelectionEvent;
@@ -9,17 +7,13 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eve.main.EveAPI;
-import org.springframework.context.MessageSource;
 
 public abstract class AbstractSearch implements Search {
+    private AbstractComponentFactory factory;
     private Button btsearch;
     private Component component;
     private Composite container;
     private Controller controller;
-    private EveAPI system;
-    private MessageSource messages;
-    private Locale locale;
     private String text;
     
     /**
@@ -50,39 +44,13 @@ public abstract class AbstractSearch implements Search {
      * 
      * @return
      */
-    protected final Locale getLocale() {
-        return locale;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    protected final MessageSource getMessages() {
-        return messages;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    protected final EveAPI getSystem() {
-        return system;
+    protected final AbstractComponentFactory getFactory() {
+        return factory;
     }
 
     @Override
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
-    }
-
-    @Override
-    public final void setMessages(MessageSource messages) {
-        this.messages = messages;
-    }
-
-    @Override
-    public final void setSystem(EveAPI system) {
-        this.system = system;
+    public final void setFactory(AbstractComponentFactory factory) {
+        this.factory = factory;
     }
 
     protected final void setText(String text) {
@@ -121,7 +89,7 @@ public abstract class AbstractSearch implements Search {
                 component.getLength() * charw, charh));
         
         btsearch = new Button(container, SWT.BORDER);
-        btsearch.setText(messages.getMessage(text, null, text, locale));
+        btsearch.setText(factory.getMessage(text));
         btsearch.addSelectionListener(this);
         container.pack();
     }

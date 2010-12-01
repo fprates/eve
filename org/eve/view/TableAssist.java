@@ -1,9 +1,6 @@
 package org.eve.view;
 
-import java.sql.Time;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -23,15 +20,13 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
-import org.eve.main.EveAPI;
-import org.springframework.context.MessageSource;
 
 /**
  * Assistente de tabela
  * @author francisco.prates
  *
  */
-public class TableAssist {
+public class TableAssist extends AbstractComponentFactory {
     private static final int LINES = 5;
     private boolean editable;
     private boolean insert;
@@ -43,16 +38,11 @@ public class TableAssist {
     private Composite btarea;
     private Composite area;
     private Controller controller;
-    private EveAPI system;
-    private Map<String, Component> table;
     private Map<String, String> references;
-    private MessageSource messages;
-    private Locale locale;
     private String name;
     private Table comptable;
     
     public TableAssist() {
-        table = new LinkedHashMap<String, Component>();
         references = new HashMap<String, String>();
         editable = true;
         insert = true;
@@ -84,14 +74,12 @@ public class TableAssist {
      * @param editable
      */
     public final void setEditable(boolean editable) {
-        Component component;
         this.editable = editable;
         
         if (btarea != null)
             btarea.setVisible(editable);
         
-        for (String id : table.keySet()) {
-            component = table.get(id);
+        for (Component component : getComponents()) {
             component.setEnabled(editable);
             component.commit();
         }
@@ -106,16 +94,6 @@ public class TableAssist {
     }
     
     /**
-     * Define valor inteiro em tabela
-     * @param id
-     * @param row
-     * @param value
-     */
-    public final void setIntValue(String id, int index, int value) {
-        table.get(id).setInt(value, index);
-    }
-    
-    /**
      * Define quantidade de linhas visíveis
      * @param lines
      */
@@ -124,23 +102,12 @@ public class TableAssist {
     }
     
     /**
-     * Define localização
-     * @param locale
-     */
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
-    }
-    
-    /**
      * Define campo de seleção de itens
      * @param row
      * @param value
      */
     public final void setMarkValue(int row, boolean value) {
-        Component component;
-        
-        for (String id : table.keySet()) {
-            component = table.get(id);
+        for (Component component : getComponents()) {
             switch (component.getType()) {
             case EVE.single:
             case EVE.multi:
@@ -151,39 +118,11 @@ public class TableAssist {
     }
     
     /**
-     * Define mensagens para tabela
-     * @param messages
-     */
-    public final void setMessages(MessageSource messages) {
-        this.messages = messages;
-    }
-    
-    /**
      * Define barra de edição
      * @param noeditbar
      */
     public final void setNoEditBar(boolean noeditbar) {
         this.noeditbar = noeditbar;
-    }
-    
-    /**
-     * Define string em tabela
-     * @param id
-     * @param row
-     * @param value
-     */
-    public final void setStringValue(String id, int index, String text) {
-        table.get(id).setString(text, index);
-    }
-    
-    /**
-     * Define valor do campo hora
-     * @param id
-     * @param row
-     * @param value
-     */
-    public final void setTimeValue(String id, int index, Time time) {
-        table.get(id).setTime(time, index);
     }
     
     /**
@@ -208,7 +147,7 @@ public class TableAssist {
      * @param property
      */
     public final void setColumnProperties(String id, int property) {
-        Component component = table.get(id);
+        Component component = getComponent(id);
         
         if ((EVE.readonly & property) == EVE.readonly)
             component.setEnabled(false);
@@ -223,14 +162,6 @@ public class TableAssist {
         references.put(id, idref);
     }
     
-    /**
-     * 
-     * @param system
-     */
-    public final void setSystem(EveAPI system) {
-        this.system = system;
-    }
-    
     /*
      * 
      * Getters
@@ -238,119 +169,11 @@ public class TableAssist {
      */
     
     /**
-     * 
-     * @param message
-     * @return
-     */
-    private final String getMessage(String message) {
-        return messages.getMessage(message, null, message, locale);
-    }
-
-    /**
-     * Define valor do campo string
-     * @param id
-     * @param row
-     * @return
-     */
-    public final String getStringValue(String id, int row) {
-        for (String id_ : table.keySet())
-            if (id_.equals(id))
-                return table.get(id).getString(row);
-        
-        return "";
-        
-    }
-    
-    /**
      * Retorna número de itens
      * @return
      */
     public final int getItensSize() {
         return comptable.getItems().length;
-    }
-    
-    /**
-     * Retorna valor do campo inteiro
-     * @param id coluna
-     * @param row linha
-     * @return conteúdo inteiro
-     */
-    public final int getIntValue(String id, int row)
-        throws NumberFormatException {
-        String value;
-        int value_;
-        
-        switch (table.get(id).getType()) {
-        case EVE.text:
-            value = getStringValue(id, row);            
-            return (value.equals(""))? 0 : Integer.parseInt(value);
-            
-        case EVE.ccombo:
-            value_ = ((CCombo)table.get(id).getControl(row)).getSelectionIndex();            
-            return (value_ == -1)? 0 : value_;
-            
-        default:            
-            return 0;
-        }
-    }
-    
-    /**
-     * Retorna valor do campo hora
-     * @param id
-     * @param row
-     * @return
-     */
-    public final Time getTimeValue(String id, int row) {
-        String value = getStringValue(id, row);
-        int len;
-            
-        if (value.equals(""))
-            return Time.valueOf("00:00:00");
-        
-        value = value.replace(":", "");
-        len = value.length(); 
-        if ((len % 2) != 0) {
-            system.setMessage(EVE.error, getMessage("invalid.time.format"));
-            table.get(id).getControl(row).setFocus();
-            throw new IllegalArgumentException();
-        }
-        
-        if ((len != 4) && (len != 6)) {
-            system.setMessage(EVE.error, getMessage("invalid.time.format"));
-            table.get(id).getControl(row).setFocus();
-            throw new IllegalArgumentException();
-        }
-        
-        if (len == 4)
-            value = value.concat("00");
-        
-        value = new StringBuffer(value.substring(0, 2))
-            .append(":").append(value.substring(2, 4))
-            .append(":").append(value.substring(4, 6)).toString();
-        
-        setStringValue(id, row, value);
-        
-        return Time.valueOf(value);
-    }
-    
-    /**
-     * Retorna valor do campo de marcação de linha
-     * @param row
-     * @return
-     */
-    public final boolean getMarkValue(int row) {
-        Component component;
-        
-        for (String id : table.keySet()) {
-            component = table.get(id);
-            switch (component.getType()) {
-            case EVE.single:
-            case EVE.multi:
-                return ((Button)component.getControl(row)).getSelection();
-            }
-        }
-        
-        return false;
     }
     
     /**
@@ -383,9 +206,10 @@ public class TableAssist {
         int k = 0;
         CellListener celllistener = null;
         
-        for (String id : table.keySet()) {
-            component = (TableComponent)table.get(id);
-            
+        comboassist.setFactory(this);
+        
+        for (Component component_ : getComponents()) {
+            component = (TableComponent)component_;
             editor = new TableEditor(comptable);
             editor.grabHorizontal = true;
             component.addEditor(editor);
@@ -441,10 +265,9 @@ public class TableAssist {
             case EVE.ccombo:
                 comboassist.setItem(comptable.getItemCount() - 1);
                 comboassist.setOptions(component.getOptions());
-                comboassist.setTableReference(table);
-                comboassist.setReference(references.get(id));
+                comboassist.setReference(references.get(component.getName()));
                 comboassist.setLength(component.getLength());
-                comboassist.setId(id);
+                comboassist.setId(component.getName());
                 
                 combo = (CCombo)comboassist.newInstance();                
                 combo.setEditable(component.isEnabled());
@@ -471,8 +294,8 @@ public class TableAssist {
         if (comptable == null)
             return;
         
-        for (String id : table.keySet())
-            table.get(id).clear();
+        for (Component component : getComponents())
+            component.clear();
         
         /*
          * restaura quantidade de linhas na tabela
@@ -522,7 +345,7 @@ public class TableAssist {
         
         if (name != null) {
             title = new Label(area, SWT.NONE);
-            title.setText(messages.getMessage(name, null, name, locale));
+            title.setText(getMessage(name));
         }
         
         comptable = new Table(area, SWT.BORDER);
@@ -532,13 +355,13 @@ public class TableAssist {
         comboassist.setContainer(comptable);
         comboassist.setController(controller);
         
-        for (String id : table.keySet()) {
-            component = (TableComponent)table.get(id);
+        for (Component component_ : getComponents()) {
+            component = (TableComponent)component_;
             tablecol = new TableColumn(comptable, SWT.NONE);
             tablecol.setText(component.getName());
             tablecol.pack();
             component.setColumn(tablecol);
-            component.setLocale(locale);
+            component.setLocale(getLocale());
         }
         
         for (int k = 0; k < lines; k++)
@@ -574,12 +397,11 @@ public class TableAssist {
      * @param length
      */
     public final void put(String id, int length) {
-        Component component = new TableComponent(
-                messages.getMessage(id, null, id, locale));
+        Component component = new TableComponent(getMessage(id));
         
         component.setLength(length);
         
-        table.put(id, component);
+        putComponent(id, component);
     }
     
     /**
@@ -587,12 +409,11 @@ public class TableAssist {
      * @param id
      */
     public final void put(String id) {
-        TableComponent component = new TableComponent(
-                messages.getMessage(id, null, id, locale));
+        TableComponent component = new TableComponent(getMessage(id));
         
         component.setLength(10);
         
-        table.put(id, component);
+        putComponent(id, component);
     }
     
     /**
@@ -602,14 +423,13 @@ public class TableAssist {
      * @param options
      */
     public final void putCombo(String id, int length, String[] options) {
-        TableComponent component = new TableComponent(
-                messages.getMessage(id, null, id, locale));
+        TableComponent component = new TableComponent(getMessage(id));
         
         component.setType(EVE.ccombo);
         component.setOptions(options);
         component.setLength(length);
         
-        table.put(id, component);
+        putComponent(id, component);
     }
     
     /**
@@ -618,28 +438,12 @@ public class TableAssist {
      * @param type
      */
     public final void putMark(String id, int type) {
-        TableComponent component = new TableComponent(
-                messages.getMessage(id, null, id, locale));
+        TableComponent component = new TableComponent(getMessage(id));
         
         component.setType(type);
         component.setLength(1);
         
-        table.put(id, component);
-    }
-    
-    /**
-     * Seleciona foco do campo
-     * @param col
-     * @param row
-     */
-    public final void sel(int col, int row) {
-        Object[] objects = table.values().toArray();
-        Control control = ((Component)objects[col]).getControl();
-        
-        if (control instanceof Text)
-            ((Text)control).selectAll();
-        
-        control.setFocus();        
+        putComponent(id, component);
     }
     
     /**

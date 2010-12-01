@@ -17,7 +17,7 @@ public class MaterialSelectionController extends AbstractController {
         
         for (int k = 0; k < table.getItensSize(); k++)
             if (table.getMarkValue(k)) {
-                ident = table.getStringValue("material.ident", k);
+                ident = table.getString("material.ident", k);
                 break;
             }
         
@@ -80,9 +80,9 @@ public class MaterialSelectionController extends AbstractController {
                 for(Object object : materials) {
                     table.insert();
                     material_ = (Material)object;
-                    table.setStringValue("material.ident", c,
+                    table.setString("material.ident", c,
                             material_.getId());
-                    table.setStringValue("material.refer", c,
+                    table.setString("material.refer", c,
                             material_.getReference());
                     c++;
                 }

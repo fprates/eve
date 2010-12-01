@@ -1,6 +1,5 @@
 package org.eve.view;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -14,7 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
-import org.springframework.context.MessageSource;
 
 /**
  * Ajuda de pesquisa
@@ -43,15 +41,13 @@ public class SearchHelper extends AbstractSearch {
         Component component = getComponent();
         Composite container = getContainer();
         Controller controller = getController();
-        EveAPI system = getSystem();
-        Locale locale = getLocale();
-        MessageSource messages = getMessages();
+        AbstractComponentFactory factory = getFactory();
+        EveAPI system = factory.getSystem();
         
         results = controller.getResults(component.getName(), null);
         
         if (results == null) {
-            system.setMessage(EVE.status, messages.getMessage(
-                    "search.no.results", null, "search.no.results", locale));
+            system.setMessage(EVE.status, factory.getMessage("search.no.results"));
             return;
         }
         
@@ -63,8 +59,6 @@ public class SearchHelper extends AbstractSearch {
         
         table = new TableAssist();    
         table.setEditable(false);
-        table.setLocale(locale);
-        table.setMessages(messages);
         table.setSystem(system);
         table.setNoEditBar(true);
         
@@ -81,19 +75,19 @@ public class SearchHelper extends AbstractSearch {
         k = 0;
         for (Object resp : results.keySet()) {
             table.insert();
-            table.setStringValue("search.resp", k, resp.toString());
-            table.setStringValue("search.text", k++, results.get(resp));
+            table.setString("search.resp", k, resp.toString());
+            table.setString("search.text", k++, results.get(resp));
         }
         
         btarea = new Composite(dialog, SWT.NONE);
         btarea.setLayout(new RowLayout());
         
         btsel = new Button(btarea, SWT.NONE);
-        btsel.setText(messages.getMessage("search.sel", null, "search.sel", locale));
+        btsel.setText(factory.getMessage("search.sel"));
         btsel.addSelectionListener(this);
         
         btcancel = new Button(btarea, SWT.NONE);
-        btcancel.setText(messages.getMessage("search.cancel", null, "search.cancel", locale));
+        btcancel.setText(factory.getMessage("search.cancel"));
         btcancel.addSelectionListener(this);
         
         dialog.addDisposeListener(this);

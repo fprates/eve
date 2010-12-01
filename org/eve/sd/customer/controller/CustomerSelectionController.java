@@ -33,7 +33,7 @@ public class CustomerSelectionController extends AbstractController {
             
             for (int k = 0; k < table.getItensSize(); k++)
                 if (table.getMarkValue(k)) {
-                    ident = table.getIntValue("customer.ident", k);
+                    ident = table.getInt("customer.ident", k);
                     break;
                 }
             
@@ -81,13 +81,13 @@ public class CustomerSelectionController extends AbstractController {
                 for(Object object : customers) {
                     table.insert();
                     customer_ = (Customer)object;
-                    table.setIntValue("customer.ident", ident,
+                    table.setInt("customer.ident", ident,
                             customer_.getId());
-                    table.setStringValue("customer.name", ident,
+                    table.setString("customer.name", ident,
                             customer_.getName());
-                    table.setStringValue("customer.aname", ident,
+                    table.setString("customer.aname", ident,
                             customer_.getAlternateName());
-                    table.setStringValue("customer.refer", ident,
+                    table.setString("customer.refer", ident,
                             customer_.getReference());
                     ident++;
                 }

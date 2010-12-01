@@ -44,11 +44,11 @@ public class CustomerController extends AbstractController {
             schedule.setCustomer(customer);
             schedule.setItem((k + (i * 2)) + 1);
             schedule.setType(i);                    
-            schedule.setMonday(tschedule.getTimeValue("schedule.mon", k));
-            schedule.setTuesday(tschedule.getTimeValue("schedule.tue", k));
-            schedule.setWednesday(tschedule.getTimeValue("schedule.wed", k));
-            schedule.setThursday(tschedule.getTimeValue("schedule.thu", k));
-            schedule.setFriday(tschedule.getTimeValue("schedule.fri", k));
+            schedule.setMonday(tschedule.getTime("schedule.mon", k));
+            schedule.setTuesday(tschedule.getTime("schedule.tue", k));
+            schedule.setWednesday(tschedule.getTime("schedule.wed", k));
+            schedule.setThursday(tschedule.getTime("schedule.thu", k));
+            schedule.setFriday(tschedule.getTime("schedule.fri", k));
             
             customer.getSchedule().add(schedule);
         }
@@ -176,7 +176,7 @@ public class CustomerController extends AbstractController {
                  */
                 customer.getContacts().clear();
                 for (int k = 0; k < contacts.getItensSize(); k++) {
-                    name = contacts.getStringValue("contact.rname", k);
+                    name = contacts.getString("contact.rname", k);
                     
                     if (name.equals(""))
                         continue;
@@ -186,7 +186,7 @@ public class CustomerController extends AbstractController {
                     contact.setCustomer(customer);
                     contact.setItem(k);
                     contact.setName(name);
-                    contact.setFunction(contacts.getStringValue("contact.funct", k));
+                    contact.setFunction(contacts.getString("contact.funct", k));
                     
                     customer.getContacts().add(contact);
                 }
@@ -196,7 +196,7 @@ public class CustomerController extends AbstractController {
                  */
                 customer.getAddresses().clear();
                 for (int k = 0; k < addresses.getItensSize(); k++) {
-                    name = addresses.getStringValue("address.logra", k);
+                    name = addresses.getString("address.logra", k);
                     
                     if (name.equals(""))
                         continue;
@@ -205,10 +205,10 @@ public class CustomerController extends AbstractController {
                     
                     address.setCustomer(customer);
                     address.setItem(k);
-                    address.setType(addresses.getIntValue("address.type", k));
+                    address.setType(addresses.getInt("address.type", k));
                     address.setAddress(name);
-                    address.setNumber(addresses.getIntValue("address.numer", k));
-                    address.setEstado(addresses.getStringValue("address.coduf", k));
+                    address.setNumber(addresses.getInt("address.numer", k));
+                    address.setEstado(addresses.getString("address.coduf", k));
 
                     ufkey = "BRA"+address.getEstado();
                     results = cities.get(ufkey);
@@ -217,7 +217,7 @@ public class CustomerController extends AbstractController {
                         cities.put(ufkey, results);
                     }
 
-                    name = addresses.getStringValue("address.munic", k);
+                    name = addresses.getString("address.munic", k);
                     for (Object object : results) {
                         city = (City)object;
                         if (!city.getName().equals(name))

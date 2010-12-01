@@ -175,11 +175,11 @@ public class CustomerView extends AbstractView {
         for (i = 0; i < 2; i++) {
             switch (i) {
             case 0:
-                tschedule.setStringValue("schedule.per", i, getMessage("schedule.am"));
+                tschedule.setString("schedule.per", i, getMessage("schedule.am"));
                 break;
                 
             case 1:
-                tschedule.setStringValue("schedule.per", i, getMessage("schedule.pm"));
+                tschedule.setString("schedule.per", i, getMessage("schedule.pm"));
                 break;
             }
         }        
@@ -215,19 +215,19 @@ public class CustomerView extends AbstractView {
         
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {
-            ctable.setStringValue("contact.rname", i, contact.getName());
-            ctable.setStringValue("contact.type", i, contact.getType());
-            ctable.setStringValue("contact.im", i, contact.getInstantMessenger());
-            ctable.setStringValue("contact.funct", i++, contact.getFunction());
+            ctable.setString("contact.rname", i, contact.getName());
+            ctable.setString("contact.type", i, contact.getType());
+            ctable.setString("contact.im", i, contact.getInstantMessenger());
+            ctable.setString("contact.funct", i++, contact.getFunction());
         }
         
         i = 0;
         for (CustomerAddress address : customer.getAddresses()) {
-            atable.setStringValue("address.logra", i, address.getAddress());
-            atable.setIntValue("address.numer", i, address.getNumber());
-            atable.setStringValue("address.compl", i, address.getComplemento());
-            atable.setIntValue("address.cdend", i, address.getCEP());
-            atable.setStringValue("address.coduf", i, address.getEstado());
+            atable.setString("address.logra", i, address.getAddress());
+            atable.setInt("address.numer", i, address.getNumber());
+            atable.setString("address.compl", i, address.getComplemento());
+            atable.setInt("address.cdend", i, address.getCEP());
+            atable.setString("address.coduf", i, address.getEstado());
             
             munic = address.getMunicipio();
             results = controller.getResults("address.munic", address.getEstado());
@@ -237,7 +237,7 @@ public class CustomerView extends AbstractView {
                     if (!(munic_ == munic))
                         continue;
                     
-                    atable.setStringValue("address.munic", i, results.get(object));
+                    atable.setString("address.munic", i, results.get(object));
                     break;
                 }
                 i++;
@@ -252,20 +252,20 @@ public class CustomerView extends AbstractView {
             switch (i) {
             case 0:
             case 1:                
-                vstable.setTimeValue("schedule.mon", i, schedule.getMonday());
-                vstable.setTimeValue("schedule.tue", i, schedule.getTuesday());
-                vstable.setTimeValue("schedule.wed", i, schedule.getWednesday());
-                vstable.setTimeValue("schedule.thu", i, schedule.getThursday());
-                vstable.setTimeValue("schedule.fri", i, schedule.getFriday());
+                vstable.setTime("schedule.mon", i, schedule.getMonday());
+                vstable.setTime("schedule.tue", i, schedule.getTuesday());
+                vstable.setTime("schedule.wed", i, schedule.getWednesday());
+                vstable.setTime("schedule.thu", i, schedule.getThursday());
+                vstable.setTime("schedule.fri", i, schedule.getFriday());
                 break;
                 
             case 2:
             case 3:                
-                dstable.setTimeValue("schedule.mon", i-2, schedule.getMonday());
-                dstable.setTimeValue("schedule.tue", i-2, schedule.getTuesday());
-                dstable.setTimeValue("schedule.wed", i-2, schedule.getWednesday());
-                dstable.setTimeValue("schedule.thu", i-2, schedule.getThursday());
-                dstable.setTimeValue("schedule.fri", i-2, schedule.getFriday());
+                dstable.setTime("schedule.mon", i-2, schedule.getMonday());
+                dstable.setTime("schedule.tue", i-2, schedule.getTuesday());
+                dstable.setTime("schedule.wed", i-2, schedule.getWednesday());
+                dstable.setTime("schedule.thu", i-2, schedule.getThursday());
+                dstable.setTime("schedule.fri", i-2, schedule.getFriday());
                 break;
             }
             i++;
