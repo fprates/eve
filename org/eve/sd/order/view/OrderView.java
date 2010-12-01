@@ -7,13 +7,69 @@ import org.eve.model.AbstractDocument;
 import org.eve.sd.order.Order;
 import org.eve.view.AbstractView;
 import org.eve.view.ComponentFactory;
+import org.eve.view.Controller;
 
 public class OrderView extends AbstractView {
+    
+    /**
+     * 
+     * @param order
+     */
+    private final void setControlLoad(Order order) {
+        String id_;
+        String name;
+        
+        for (Object id : order.getIds()) {
+            if (id.equals(Order.USREG))
+                continue;
+            
+            id_ = (String)id;
+            name = order.getName(id_);
+            
+//            form.setFieldValue(name, order.getFieldValue(id_));
+        }
+    }
 
     @Override
-    public void reload(String actionText) {
-        // TODO Auto-generated method stub
-
+    public void reload(String action) {
+        Controller controller = getController();
+        Order order = (Order)controller.getObject();
+        
+        /*
+         * Display mode component's configuration
+         */
+        if (action.equals("order.show")) {
+            setTitlebar("order.show.title");
+            setButtonVisible("save.command", false);
+            
+            setControlLoad(order);
+            
+            return;
+        }
+        
+        /*
+         * Edit mode component's configuration
+         */
+        if (action.equals("order.edit")) {
+            setTitlebar("order.edit.title");
+            setButtonVisible("save.command", true);
+            
+            setControlLoad(order);
+                
+            return;
+        }
+        
+        /*
+         * Creation mode component's configuration
+         */
+        if (action.equals("order.create")) {            
+            setTitlebar("order.create.title");
+            setButtonVisible("save.command", true);
+            
+            setControlLoad(order);
+            
+            return;
+        }
     }
 
 //    nº cabeçalho: gerado auto

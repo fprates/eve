@@ -30,39 +30,10 @@ public class ComponentFactory {
     }
     
     public void putTextEntry(AbstractDocument document, String field) {
-//        int charw;
-//        int charh;
-//        Text text;
-//        Label label = new Label(container, SWT.NONE);
-//        Composite fieldComposite = new Composite(container, SWT.NONE);
-//        
-//        label.setText(messages.getMessage(field, null, field, locale));
-//        
-//        charw = ViewUtils.getCharWidth(text);
-//        charh = ViewUtils.getCharHeight(text);
-//        
-//        text.setSize(text.computeSize(
-//                component.getLength() * charw, charh));
-//        
-//        component.setControl(text);
-//        
-//        switch(component.getExtension()) {
-//        case SEARCH:
-//            search = new SearchHelper();
-//            search.setLocale(locale);
-//            search.setMessages(messages);
-//            search.setController(controller);
-//            search.setSystem(system);
-//            search.define(component, fieldComposite);
-//            break;
-//            
-//        case FILESEARCH:
-//            search = new FileSearch(fieldComposite.getShell());
-//            search.setLocale(locale);
-//            search.setMessages(messages);
-//            search.setController(controller);
-//            search.setSystem(system);
-//            search.define(component, fieldComposite);
-//        }
+        Label label = new Label(container, SWT.NONE);
+        Text text = new Text(container, SWT.BORDER);
+        String name = document.getName(field);
+        
+        label.setText(messages.getMessage(name, null, name, locale));
     }
 }
