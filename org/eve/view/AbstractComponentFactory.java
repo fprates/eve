@@ -356,7 +356,7 @@ public abstract class AbstractComponentFactory {
     public final String getString(String field, int row) {
         for (String id_ : fields.keySet())
             if (id_.equals(field))
-                return fields.get(fields).getString(row);
+                return fields.get(field).getString(row);
         
         return "";
         

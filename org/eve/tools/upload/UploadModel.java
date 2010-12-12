@@ -28,6 +28,22 @@ public class UploadModel {
         }
     }
     
+    private long filterLong(String arg) {
+        String arg_ = "";
+        
+        for (char c : arg.toCharArray()) {
+            if (Character.getType(c) != Character.DECIMAL_DIGIT_NUMBER)
+                continue;
+            
+            arg.concat(Character.toString(c));
+        }
+        
+        if (arg_.length() == 0)
+            return 0;
+        
+        return Long.parseLong(arg_);
+    }
+    
     private float getFloat(String arg) {
         try {
             return Float.parseFloat(arg);
@@ -42,7 +58,9 @@ public class UploadModel {
         return new BufferedReader(new InputStreamReader(in));
     }
     
-    public final Set<Customer> getCustomers(BufferedReader reader) throws IOException, ParseException {
+    public final Set<Customer> getCustomers(BufferedReader reader)
+        throws IOException, ParseException, NumberFormatException {
+        
         Customer customer;
         CustomerAddress address;
         CustomerContact contact;
@@ -64,7 +82,7 @@ public class UploadModel {
             if (args[1].length() == 0)
                 args[1] = "0";
             
-            customer.setCodCadFiscal(Long.parseLong(args[1]));
+            customer.setCodCadFiscal(filterLong(args[1]));
             customer.setInscricaoEstadual(args[2]);
             customer.setName(args[3]);
             customer.setAlternateName(args[4]);

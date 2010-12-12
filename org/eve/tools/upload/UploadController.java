@@ -103,6 +103,10 @@ public class UploadController extends AbstractController {
                 setMessage(EVE.error, "insert.error");
                 ex.printStackTrace();
                 return;
+            } catch (NumberFormatException ex) {
+                setMessage(EVE.error, "invalid.data.format");
+                ex.printStackTrace();
+                return;
             }
             
             setMessage(EVE.status, "file.upload.ok");
