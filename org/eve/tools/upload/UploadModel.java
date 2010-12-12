@@ -70,7 +70,10 @@ public class UploadModel {
             customer.setAlternateName(args[4]);
             customer.setHomePage(args[14]);
             customer.setEmail(args[15]);
-            customer.setRegDate(format.parse(args[45]));
+            
+            if (args[45].length() > 0)
+                customer.setRegDate(format.parse(args[45]));
+            
             customer.setIVF(getInteger(args[48]));
             customer.setTipoEstabelecimento(Integer.parseInt(args[50]));
             customer.setIncentive(Integer.parseInt(args[51]));

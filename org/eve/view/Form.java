@@ -221,7 +221,6 @@ public class Form extends AbstractComponentFactory {
      */
     public final void putCombo(AbstractDocument document, String id, int length) {
         String[] options;
-//        MessageSource messages = getMessages();
         String name = document.getName(id);
         FormComponent component = new FormComponent(
                 name, length, !document.isKey(id));

@@ -218,8 +218,15 @@ public abstract class AbstractComponentFactory {
      */
     public final Object getFieldValue(AbstractDocument document, String id) {
         String id_ = document.getName(id);
+        Component component = fields.get(id_);
         
-        switch (fields.get(id_).getDataType()) {
+        /*
+         * significa que o campo do objeto não existe no formulário
+         */
+        if (component == null)
+            return null;
+        
+        switch (component.getDataType()) {
         case CHAR:
             return getString(id_);
             
@@ -452,6 +459,7 @@ public abstract class AbstractComponentFactory {
      */
     public final void putComponent(String name, Component component) {
         component.setMessages(messages);
+        component.setLocale(locale);
         
         fields.put(name, component);
     }

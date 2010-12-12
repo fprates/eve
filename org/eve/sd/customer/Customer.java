@@ -78,9 +78,9 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
         put(TPINC, "customer.tpinc", false, datatype.INT, 1);
         putValues(TPINC, new String[] {
                 "none",
-                "incentive.free",
+                "incentive.bill",
                 "incentive.product",
-                "incentive.bill"});
+                "incentive.free"});
         
         put(CDIVF, "customer.cdivf", false, datatype.INT, 1);
         putValues(CDIVF, new String[] {"none", "A", "B", "C"});
