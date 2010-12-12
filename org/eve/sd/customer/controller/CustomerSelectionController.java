@@ -17,12 +17,15 @@ public class CustomerSelectionController extends AbstractController {
      */
     @Override
     public void userInput(String input) {
-        Customer customer_;
-        List<?> customers;
-        Form selporform;
-        TableAssist table;
-        Form form;
         int ident;
+        Customer customer_;
+        Form form;
+        Form selporform;
+        List<?> customers;
+        String customername;
+        String customeraname;
+        String customerrefer;
+        TableAssist table;
         Customer customer = (Customer)getObject();
         Model model = getModel();
         String action = getAction();
@@ -60,10 +63,16 @@ public class CustomerSelectionController extends AbstractController {
             if (ident == 0) {
                 selporform = getForm("selpor");
                 
-                customers = model.select("selby_customers", new Object[] {
-                        selporform.getStringLike("customer.name"),
-                        selporform.getStringLike("customer.aname"),
-                        selporform.getStringLike("customer.refer")});
+                customername = selporform.getStringLike("customer.name");
+                customeraname = selporform.getStringLike("customer.aname");
+                customerrefer = selporform.getStringLike("customer.refer");
+                
+                if (customername.equals("%") &&
+                        customeraname.equals("%") && customerrefer.equals("%"))
+                    customers = model.select("selby_all_customers", null);
+                else
+                    customers = model.select("selby_customers", new Object[] {
+                        customername, customeraname, customerrefer});
                 
                 if (customers == null) {
                     setMessage(EVE.error, "customer.not.found");
