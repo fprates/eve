@@ -5,13 +5,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eve.main.EVE;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
-import org.eve.view.TableAssist;
+import org.eve.view.EditableTableAssist;
 
 public class SupplierChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
-        TableAssist stable = addTable("suppliers");
+        EditableTableAssist stable = (EditableTableAssist)addTable("suppliers");
 
         setHeight(350);
         container.setLayout(new FillLayout());

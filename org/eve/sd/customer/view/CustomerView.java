@@ -17,6 +17,7 @@ import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
 import org.eve.view.Form;
+import org.eve.view.EditableTableAssist;
 import org.eve.view.TableAssist;
 
 public class CustomerView extends AbstractView {
@@ -32,7 +33,7 @@ public class CustomerView extends AbstractView {
         Composite localcontainer;
         ExpandBar bar;
         Composite schedule;
-        TableAssist table;
+        EditableTableAssist table;
         Customer customer = (Customer)getController().getObject();
         Form form = addForm("main");
         
@@ -79,7 +80,7 @@ public class CustomerView extends AbstractView {
         /*
          * Contatos
          */
-        table = addTable("contacts");
+        table = (EditableTableAssist)addTable("contacts");
         table.setLines(4);
         table.putMark("contact.mark", EVE.multi);
         table.put("contact.type", 20);
@@ -99,7 +100,7 @@ public class CustomerView extends AbstractView {
         /*
          * Endereços
          */
-        table = addTable("addresses");
+        table = (EditableTableAssist)addTable("addresses");
         table.setLines(3);
         table.putMark("address.mark", EVE.multi);
         table.putCombo("address.type", 11, new String[] {
@@ -128,7 +129,7 @@ public class CustomerView extends AbstractView {
         schedule = new Composite(bar, SWT.NONE);
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
 
-        table = addTable("vschedule");
+        table = (EditableTableAssist)addTable("vschedule");
         table.setLines(2);
         table.setInsert(false);
         table.setRemove(false);
@@ -142,7 +143,7 @@ public class CustomerView extends AbstractView {
         table.setName("schedule.visit");
         table.define(schedule);
 
-        table = addTable("dschedule");
+        table = (EditableTableAssist)addTable("dschedule");
         table.setLines(2);
         table.setInsert(false);
         table.setRemove(false);
@@ -281,10 +282,14 @@ public class CustomerView extends AbstractView {
         Controller controller = getController();
         Customer customer = (Customer)controller.getObject();
         Form form = controller.getForm("main");
-        TableAssist contacts = controller.getTable("contacts");
-        TableAssist addresses = controller.getTable("addresses");
-        TableAssist vschedule = controller.getTable("vschedule");
-        TableAssist dschedule = controller.getTable("dschedule");
+        EditableTableAssist contacts =
+            (EditableTableAssist)controller.getTable("contacts");
+        EditableTableAssist addresses =
+            (EditableTableAssist)controller.getTable("addresses");
+        EditableTableAssist vschedule =
+            (EditableTableAssist)controller.getTable("vschedule");
+        EditableTableAssist dschedule =
+            (EditableTableAssist)controller.getTable("dschedule");
         
         /*
          * Display mode component's configuration

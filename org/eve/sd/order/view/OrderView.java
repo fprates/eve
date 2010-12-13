@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eve.model.AbstractDocument;
 import org.eve.sd.order.Order;
 import org.eve.view.AbstractView;
-import org.eve.view.ComponentFactory;
+import org.eve.view.Factory;
 import org.eve.view.Controller;
 
 public class OrderView extends AbstractView {
@@ -16,18 +16,18 @@ public class OrderView extends AbstractView {
      * @param order
      */
     private final void setControlLoad(Order order) {
-        String id_;
-        String name;
-        
-        for (Object id : order.getIds()) {
-            if (id.equals(Order.USREG))
-                continue;
-            
-            id_ = (String)id;
-            name = order.getName(id_);
-            
+//        String id_;
+//        String name;
+//        
+//        for (Object id : order.getIds()) {
+//            if (id.equals(Order.USREG))
+//                continue;
+//            
+//            id_ = (String)id;
+//            name = order.getName(id_);
+//            
 //            form.setFieldValue(name, order.getFieldValue(id_));
-        }
+//        }
     }
 
     @Override
@@ -83,7 +83,7 @@ public class OrderView extends AbstractView {
     protected void defineView(Composite container) {
         AbstractDocument order = (AbstractDocument)getController().getObject();
         Composite header = new Composite(container, SWT.NONE);
-        ComponentFactory factory = getFactory();
+        Factory factory = getFactory();
         
         header.setLayout(new GridLayout(4, false));
         

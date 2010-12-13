@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -31,12 +29,12 @@ public abstract class AbstractComponent implements Component {
     private String name;
     private String title;
     private String[] options;
-    private List<ControlEditor> editors;
+    private List<String> values;
 
     public AbstractComponent() {
         extension = Extension.NONE;
         enabled = true;
-        editors = new ArrayList<ControlEditor>();
+        values = new ArrayList<String>();
     }
     
     private final String getText(Control control) {
@@ -77,15 +75,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final Control getControl() {
         return control;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getControl(int)
-     */
-    @Override
-    public final Control getControl(int index) {
-        return editors.get(index).getEditor();
     }
     
     /*
@@ -223,7 +212,7 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final String getString(int index) {
-        return getText(editors.get(index).getEditor());
+        return values.get(index);
     }
     
     /*
@@ -253,30 +242,30 @@ public abstract class AbstractComponent implements Component {
     public final int getType() {
         return type;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getValues(int)
-     */
-    @Override
-    public final String[] getValues(int index) {
-        Combo combo;
-        CCombo ccombo;
-        
-        switch (type) {            
-        case EVE.combo:
-            combo = (Combo)editors.get(index).getEditor();
-            
-            return combo.getItems();
-            
-        case EVE.ccombo:
-            ccombo = (CCombo)editors.get(index).getEditor();
-            
-            return ccombo.getItems();
-        }
-        
-        return null;
-    }
+//    
+//    /*
+//     * (non-Javadoc)
+//     * @see org.eve.view.Component#getValues(int)
+//     */
+//    @Override
+//    public final String[] getValues(int index) {
+//        Combo combo;
+//        CCombo ccombo;
+//        
+//        switch (type) {            
+//        case EVE.combo:
+//            combo = (Combo)values.get(index).getControl();
+//            
+//            return combo.getItems();
+//            
+//        case EVE.ccombo:
+//            ccombo = (CCombo)values.get(index).getControl();
+//            
+//            return ccombo.getItems();
+//        }
+//        
+//        return null;
+//    }
     
     /*
      * (non-Javadoc)
@@ -499,7 +488,7 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final void setString(String text, int index) {
-        setText(editors.get(index).getEditor(), text);
+        values.set(index, text);
     }
     
     /*
@@ -552,99 +541,105 @@ public abstract class AbstractComponent implements Component {
         this.type = type;
     }
     
+//    @Override
+//    public final void setValues(Map<Object, String> values, int index) {
+//        Combo combo;
+//        CCombo ccombo;
+//        
+//        if (values == null)
+//            return;
+//        
+//        switch (type) {            
+//        case EVE.combo:
+//            combo = (Combo)values.get(index).getControl();
+//            combo.removeAll();
+//            
+//            for (Object value : values.keySet())
+//                combo.add(values.get(value));
+//            break;
+//            
+//        case EVE.ccombo:
+//            ccombo = (CCombo)values.get(index).getControl();
+//            ccombo.removeAll();
+//            
+//            for (Object value : values.keySet())
+//                ccombo.add(values.get(value));
+//            break;
+//        }
+//    }
+    
+    
     @Override
-    public final void setValues(Map<Object, String> values, int index) {
-        Combo combo;
-        CCombo ccombo;
-        
-        if (values == null)
-            return;
-        
-        switch (type) {            
-        case EVE.combo:
-            combo = (Combo)editors.get(index).getEditor();
-            combo.removeAll();
-            
-            for (Object value : values.keySet())
-                combo.add(values.get(value));
-            break;
-            
-        case EVE.ccombo:
-            ccombo = (CCombo)editors.get(index).getEditor();
-            ccombo.removeAll();
-            
-            for (Object value : values.keySet())
-                ccombo.add(values.get(value));
-            break;
-        }
+    public final void addItem(String text) {
+        values.add(text);
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#addEditor(org.eclipse.swt.custom.ControlEditor)
-     */
-    @Override
-    public final void addEditor(ControlEditor editor) {
-        editors.add(editor);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#clear()
-     */
-    @Override
-    public final void clear() {
-        for (ControlEditor editor : editors) {
-            editor.getEditor().dispose();
-            editor.dispose();
-        }
-        
-        editors.clear();
-        
-        if (control == null)
-            return;
-        
-        switch (type) {
-        case EVE.text:
-            ((Text)control).setText("");
-            break;
-            
-        case EVE.combo:
-            ((Combo)control).setText("");
-            break;
-            
-        case EVE.ccombo:
-            ((CCombo)control).setText("");
-            break;
-        }        
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#commit()
-     */
-    @Override
-    public final void commit() {
-        boolean enabled = isEnabled();
-        
-        for (ControlEditor editor : editors)
-            editor.getEditor().setEnabled(enabled);
-        
-        if (control == null)
-            return;
-        
-        switch (type) {
-        case EVE.text:
-            ((Text)control).setEnabled(enabled);
-            break;
-            
-        case EVE.combo:
-            ((Combo)control).setEnabled(enabled);
-            break;
-            
-        case EVE.ccombo:
-            ((CCombo)control).setEnabled(enabled);
-            break;
-        }
-    }
+//    /*
+//     * (non-Javadoc)
+//     * @see org.eve.view.Component#clear()
+//     */
+//    @Override
+//    public final void clear() {
+//        Control control_;
+//        Widget widget;
+//        
+//        for (ComponentItem editor : values) {
+//            control_ = editor.getControl();
+//            widget = editor.getWidget();
+//            
+//            if (control_ != null)
+//                control_.dispose();
+//            
+//            if (widget != null)
+//                widget.dispose();
+//        }
+//        
+//        values.clear();
+//        
+//        if (control == null)
+//            return;
+//        
+//        switch (type) {
+//        case EVE.text:
+//            ((Text)control).setText("");
+//            break;
+//            
+//        case EVE.combo:
+//            ((Combo)control).setText("");
+//            break;
+//            
+//        case EVE.ccombo:
+//            ((CCombo)control).setText("");
+//            break;
+//        }        
+//    }
+//    
+//    /*
+//     * (non-Javadoc)
+//     * @see org.eve.view.Component#commit()
+//     */
+//    @Override
+//    public final void commit() {
+//        boolean enabled = isEnabled();
+//        
+//        for (ComponentItem editor : values)
+//            editor.getControl().setEnabled(enabled);
+//        
+//        if (control == null)
+//            return;
+//        
+//        switch (type) {
+//        case EVE.text:
+//            ((Text)control).setEnabled(enabled);
+//            break;
+//            
+//        case EVE.combo:
+//            ((Combo)control).setEnabled(enabled);
+//            break;
+//            
+//        case EVE.ccombo:
+//            ((CCombo)control).setEnabled(enabled);
+//            break;
+//        }
+//    }
 }

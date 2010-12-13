@@ -16,7 +16,7 @@ import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
 import org.springframework.context.MessageSource;
 
-public abstract class AbstractComponentFactory {
+public abstract class AbstractComponentFactory implements ComponentFactory {
     private Locale locale;
     private MessageSource messages;
     private EveAPI system;
@@ -26,20 +26,18 @@ public abstract class AbstractComponentFactory {
         fields = new LinkedHashMap<String, Component>();
     }
     
-    /**
-     * Ajusta valor data para campo
-     * @param field
-     * @param date
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setDate(java.lang.String, java.util.Date)
      */
+    @Override
     public final void setDate(String field, Date date) {
         fields.get(field).setDate(date);
     }
     
-    /**
-     * 
-     * @param id
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setFieldValue(java.lang.String, java.lang.Object)
      */
+    @Override
     public final void setFieldValue(String id, Object value) {        
         switch (fields.get(id).getDataType()) {
         case CHAR:
@@ -68,118 +66,106 @@ public abstract class AbstractComponentFactory {
         }
     }
     
-    /**
-     * Ajusta valor de ponto flutuante para campo
-     * @param field
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setFloat(java.lang.String, float)
      */
+    @Override
     public final void setFloat(String field, float value) {
         fields.get(field).setFloat(value);
     }
     
-    /**
-     * 
-     * @param field
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setFocus(java.lang.String)
      */
+    @Override
     public final void setFocus(String field) {
         fields.get(field).getControl().setFocus();
     }
     
-    /**
-     * Ajusta valor do campo inteiro do formulário
-     * @param field
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setInt(java.lang.String, int)
      */
+    @Override
     public final void setInt(String field, int value) {
         fields.get(field).setInt(value);
     }
     
-    /**
-     * Define valor inteiro em tabela
-     * @param id
-     * @param row
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setInt(java.lang.String, int, int)
      */
+    @Override
     public final void setInt(String field, int index, int value) {
         fields.get(field).setInt(value, index);
     }
     
-    /**
-     * Define localização
-     * @param locale
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setLocale(java.util.Locale)
      */
+    @Override
     public final void setLocale(Locale locale) {
         this.locale = locale;
     }
     
-    /**
-     * Ajusta valor do campo inteiro longo
-     * @param field
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setLong(java.lang.String, long)
      */
+    @Override
     public final void setLong(String field, long value) {
         fields.get(field).setLong(value);
     }
     
-    /**
-     * 
-     * @param status
-     * @param id
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setMessage(int, java.lang.String)
      */
+    @Override
     public final void setMessage(int status, String id) {
         system.setMessage(status, getMessage(id));
     }
     
-    /**
-     * Define mensagens do sistema
-     * @param messages
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setMessages(org.springframework.context.MessageSource)
      */
+    @Override
     public final void setMessages(MessageSource messages) {
         this.messages = messages;
     }
     
-    /**
-     * Ajusta valor do campo caractere do formulário
-     * @param field
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setString(java.lang.String, java.lang.String)
      */
+    @Override
     public final void setString(String field, String text) {
         fields.get(field).setString(text);
     }
     
-    /**
-     * Define string em tabela
-     * @param id
-     * @param row
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setString(java.lang.String, int, java.lang.String)
      */
+    @Override
     public final void setString(String field, int index, String text) {
         fields.get(field).setString(text, index);
     }
     
-    /**
-     * 
-     * @param system
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setSystem(org.eve.main.EveAPI)
      */
+    @Override
     public final void setSystem(EveAPI system) {
         this.system = system;
     }
     
-    /**
-     * Ajusta valor hora para campo
-     * @param field
-     * @param time
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setTime(java.lang.String, java.sql.Time)
      */
+    @Override
     public final void setTime(String field, Time time) {
         fields.get(field).setTime(time);
     }
     
-    /**
-     * Define valor do campo hora
-     * @param id
-     * @param row
-     * @param value
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setTime(java.lang.String, int, java.sql.Time)
      */
+    @Override
     public final void setTime(String field, int index, Time time) {
         fields.get(field).setTime(time, index);
     }
@@ -194,28 +180,26 @@ public abstract class AbstractComponentFactory {
         return fields.get(field);
     }
     
-    /**
-     * Retorna components do formulário
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getComponents()
      */
+    @Override
     public final Collection<Component> getComponents() {
         return fields.values();
     }
     
-    /**
-     * 
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getDate(java.lang.String)
      */
+    @Override
     public final Date getDate(String field) {
         return fields.get(field).getDate();
     }
     
-    /**
-     * 
-     * @param id
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getFieldValue(org.eve.model.AbstractDocument, java.lang.String)
      */
+    @Override
     public final Object getFieldValue(AbstractDocument document, String id) {
         String id_ = document.getName(id);
         Component component = fields.get(id_);
@@ -247,11 +231,10 @@ public abstract class AbstractComponentFactory {
         }
     }
     
-    /**
-     * Retorna valor de ponto flutuante de um campo
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getFloat(java.lang.String)
      */
+    @Override
     public final float getFloat(String field) {
         try {
             return fields.get(field).getFloat();
@@ -262,11 +245,10 @@ public abstract class AbstractComponentFactory {
         }
     }
     
-    /**
-     * Retorna valor do campo inteiro do formulário
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getInt(java.lang.String)
      */
+    @Override
     public final int getInt(String field) {
         Component component = fields.get(field);
         
@@ -279,25 +261,23 @@ public abstract class AbstractComponentFactory {
         }
     }
     
-    /**
-     * Retorna valor do campo inteiro
-     * @param id coluna
-     * @param row linha
-     * @return conteúdo inteiro
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getInt(java.lang.String, int)
      */
+    @Override
     public final int getInt(String field, int row)
         throws NumberFormatException {
         String value;
-        int value_;
+//        int value_;
         
         switch (fields.get(field).getType()) {
         case EVE.text:
             value = getString(field, row);            
             return (value.equals(""))? 0 : Integer.parseInt(value);
             
-        case EVE.ccombo:
-            value_ = ((CCombo)fields.get(field).getControl(row)).getSelectionIndex();            
-            return (value_ == -1)? 0 : value_;
+//        case EVE.ccombo:
+//            value_ = ((CCombo)fields.get(field).getItem(row).getControl()).getSelectionIndex();            
+//            return (value_ == -1)? 0 : value_;
             
         default:            
             return 0;
@@ -312,11 +292,10 @@ public abstract class AbstractComponentFactory {
         return locale;
     }
     
-    /**
-     * Retorna valor do campo inteiro do formulário
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getLong(java.lang.String)
      */
+    @Override
     public final long getLong(String field) {
         Component component = fields.get(field);
         
@@ -338,21 +317,18 @@ public abstract class AbstractComponentFactory {
         return messages.getMessage(message, null, message, locale);        
     }
     
-    /**
-     * Retorna valor do campo caractere do formulário
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getString(java.lang.String)
      */
+    @Override
     public final String getString(String field) {
         return fields.get(field).getString();
     }
     
-    /**
-     * Define valor do campo string
-     * @param id
-     * @param row
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getString(java.lang.String, int)
      */
+    @Override
     public final String getString(String field, int row) {
         for (String id_ : fields.keySet())
             if (id_.equals(field))
@@ -370,70 +346,66 @@ public abstract class AbstractComponentFactory {
         return system;
     }
     
-    /**
-     * 
-     * @param field
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getTime(java.lang.String)
      */
+    @Override
     public final Time getTime(String field) {
         return fields.get(field).getTime();
     }
     
-    /**
-     * Retorna valor do campo hora
-     * @param id
-     * @param row
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getTime(java.lang.String, int)
      */
+    @Override
     public final Time getTime(String field, int row) {
         String value = getString(field, row);
-        int len;
-            
-        if (value.equals(""))
-            return Time.valueOf("00:00:00");
-        
-        value = value.replace(":", "");
-        len = value.length(); 
-        if ((len % 2) != 0) {
-            setMessage(EVE.error, getMessage("invalid.time.format"));
-            fields.get(field).getControl(row).setFocus();
-            throw new IllegalArgumentException();
-        }
-        
-        if ((len != 4) && (len != 6)) {
-            setMessage(EVE.error, getMessage("invalid.time.format"));
-            fields.get(field).getControl(row).setFocus();
-            throw new IllegalArgumentException();
-        }
-        
-        if (len == 4)
-            value = value.concat("00");
-        
-        value = new StringBuffer(value.substring(0, 2))
-            .append(":").append(value.substring(2, 4))
-            .append(":").append(value.substring(4, 6)).toString();
-        
-        setString(field, row, value);
+//        int len;
+//            
+//        if (value.equals(""))
+//            return Time.valueOf("00:00:00");
+//        
+//        value = value.replace(":", "");
+//        len = value.length(); 
+//        if ((len % 2) != 0) {
+//            setMessage(EVE.error, getMessage("invalid.time.format"));
+//            fields.get(field).getItem(row).getControl().setFocus();
+//            throw new IllegalArgumentException();
+//        }
+//        
+//        if ((len != 4) && (len != 6)) {
+//            setMessage(EVE.error, getMessage("invalid.time.format"));
+//            fields.get(field).getItem(row).getControl().setFocus();
+//            throw new IllegalArgumentException();
+//        }
+//        
+//        if (len == 4)
+//            value = value.concat("00");
+//        
+//        value = new StringBuffer(value.substring(0, 2))
+//            .append(":").append(value.substring(2, 4))
+//            .append(":").append(value.substring(4, 6)).toString();
+//        
+//        setString(field, row, value);
         
         return Time.valueOf(value);
     }
     
-    /**
-     * Retorna valor do campo de marcação de linha
-     * @param row
-     * @return
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getMarkValue(int)
      */
+    @Override
     public final boolean getMarkValue(int row) {
-        Component component;
-        
-        for (String id : fields.keySet()) {
-            component = fields.get(id);
-            switch (component.getType()) {
-            case EVE.single:
-            case EVE.multi:
-                return ((Button)component.getControl(row)).getSelection();
-            }
-        }
+//        Component component;
+//        
+//        for (String id : fields.keySet()) {
+//            component = fields.get(id);
+//            switch (component.getType()) {
+//            case EVE.single:
+//            case EVE.multi:
+//                return ((Button)component.getItem(row).getControl()).getSelection();
+//            }
+//        }
         
         return false;
     }
@@ -444,19 +416,19 @@ public abstract class AbstractComponentFactory {
      * 
      */
     
-    /**
-     * Limpa formulário
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#clear()
      */
+    @Override
     public void clear() {
         for (Component component : fields.values())
             component.clear();
     }
     
-    /**
-     * 
-     * @param name
-     * @param component
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#putComponent(java.lang.String, org.eve.view.Component)
      */
+    @Override
     public final void putComponent(String name, Component component) {
         component.setMessages(messages);
         component.setLocale(locale);
@@ -464,11 +436,10 @@ public abstract class AbstractComponentFactory {
         fields.put(name, component);
     }
     
-    /**
-     * Seleciona foco do campo
-     * @param col
-     * @param row
+    /* (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#sel(int, int)
      */
+    @Override
     public final void sel(int col, int row) {
         Object[] objects = fields.values().toArray();
         Control control = ((Component)objects[col]).getControl();

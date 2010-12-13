@@ -17,6 +17,7 @@ import org.eve.sd.customer.CustomerSchedule;
 import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
+import org.eve.view.EditableTableAssist;
 import org.eve.view.TableAssist;
 import org.hibernate.HibernateException;
 
@@ -143,8 +144,8 @@ public class CustomerController extends AbstractController {
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
-        TableAssist contacts = getTable("contacts");
-        TableAssist addresses = getTable("addresses");
+        EditableTableAssist contacts = (EditableTableAssist)getTable("contacts");
+        EditableTableAssist addresses = (EditableTableAssist)getTable("addresses");
         
         if (contacts.hasEvent(input)) {
             contacts.userInput(input);

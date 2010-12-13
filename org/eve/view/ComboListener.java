@@ -65,16 +65,16 @@ public class ComboListener implements Listener {
      * @return
      */
     private final Control getControl(Component component, int index) {
-        switch (type) {
-        case EVE.single:
-            return component.getControl();
-        
-        case EVE.multi:
-            return component.getControl(index);
-            
-        default:
+//        switch (type) {
+//        case EVE.single:
+//            return component.getControl();
+//        
+//        case EVE.multi:
+//            return component.getItem(index).getControl();
+//            
+//        default:
             return null;
-        }
+//        }
         
     }
     

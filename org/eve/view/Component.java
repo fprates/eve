@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.widgets.Control;
 import org.eve.model.AbstractDocument;
 import org.springframework.context.MessageSource;
@@ -18,13 +17,6 @@ public interface Component {
      * @return
      */
     public abstract Control getControl();
-
-    /**
-     * Retorna controle em índice
-     * @param row
-     * @return
-     */
-    public abstract Control getControl(int index);
     
     /**
      * 
@@ -274,7 +266,7 @@ public interface Component {
      * Adiciona editor
      * @param editor
      */
-    public abstract void addEditor(ControlEditor editor);
+    public abstract void addItem(String text);
     
     /**
      * Ajusta limpa componente

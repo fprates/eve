@@ -20,7 +20,7 @@ import org.springframework.context.MessageSource;
 public abstract class AbstractView implements View {
     private int width;
     private int height;
-    private ComponentFactory factory;
+    private Factory factory;
     private Composite container;
     private EveAPI system;
     private Locale locale;
@@ -32,7 +32,7 @@ public abstract class AbstractView implements View {
     public AbstractView() {
         actions = new LinkedList<ViewAction>();
         buttons = new LinkedHashMap<String, Button>();
-        factory = new ComponentFactory();
+        factory = new Factory();
         width = 0;
         height = 0;
     }
@@ -132,7 +132,7 @@ public abstract class AbstractView implements View {
      * 
      * @return
      */
-    protected final ComponentFactory getFactory() {
+    protected final Factory getFactory() {
         return factory;
     }
     
@@ -263,7 +263,26 @@ public abstract class AbstractView implements View {
      */
     protected final TableAssist addTable(String id) {
         Controller controller = getController();
-        TableAssist table = new TableAssist();
+        TableAssist table = new EditableTableAssist();
+        
+        table.setController(controller);
+        table.setLocale(locale);
+        table.setMessages(messages);
+        table.setSystem(system);
+        
+        controller.putTable(id, table);
+        
+        return table;
+    }
+    
+    /**
+     * Cria nova instância do assistente de tabela
+     * @param id
+     * @return
+     */
+    protected final TableAssist addTableView(String id) {
+        Controller controller = getController();
+        TableAssist table = new TableViewAssist();
         
         table.setController(controller);
         table.setLocale(locale);

@@ -11,7 +11,7 @@ public class MaterialChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
-        TableAssist ctable = addTable("materials");
+        TableAssist ctable = addTableView("materials");
 
         setHeight(350);
         container.setLayout(new FillLayout());
@@ -24,7 +24,6 @@ public class MaterialChooseView extends AbstractView {
         ctable.put("material.ident", 18);
         ctable.put("material.refer", 60);
         
-        ctable.setEditable(false);
         ctable.define(container);
         
         addButton("material.choose");
