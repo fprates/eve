@@ -43,7 +43,12 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setDate(String field, Date date) {
-        setControlValue(fields.get(field), date.toString());
+        Component component = fields.get(field);
+        
+        if (date == null)
+            setControlValue(component, "");
+        else
+            setControlValue(component, date.toString());
     }
     
     /* (non-Javadoc)
@@ -147,7 +152,12 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setString(String field, String text) {
-        setControlValue(fields.get(field), text);
+        Component component = fields.get(field);
+        
+        if (text == null)
+            setControlValue(component, "");
+        else
+            setControlValue(component, text);
     }
     
     /* (non-Javadoc)
@@ -155,7 +165,12 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setString(String field, int index, String text) {
-        setControlValue(fields.get(field), index, text);
+        Component component = fields.get(field);
+        
+        if (text == null)
+            setControlValue(component, index, "");
+        else
+            setControlValue(component, index, text);
     }
     
     /* (non-Javadoc)
@@ -171,7 +186,12 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setTime(String field, Time time) {
-        setControlValue(fields.get(field), time.toString());
+        Component component = fields.get(field);
+        
+        if (time == null)
+            setControlValue(component, "");
+        else
+            setControlValue(component, time.toString());
     }
     
     /* (non-Javadoc)
@@ -179,7 +199,12 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setTime(String field, int index, Time time) {
-        setControlValue(fields.get(field), index, time.toString());
+        Component component = fields.get(field);
+        
+        if (time == null)
+            setControlValue(component, index, "");
+        else
+            setControlValue(component, index, time.toString());
     }
     
     /*
