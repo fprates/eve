@@ -11,6 +11,9 @@ import org.springframework.context.MessageSource;
 
 public interface ComponentFactory {
 
+
+    public abstract void setControlSize(Component component);
+    
     /**
      * Ajusta valor data para campo
      * @param field

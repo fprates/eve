@@ -6,7 +6,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 public abstract class AbstractSearch implements Search {
     private AbstractComponentFactory factory;
@@ -74,19 +73,11 @@ public abstract class AbstractSearch implements Search {
      */
     @Override
     public final void define(Component component, Composite container) {
-        int charw;
-        int charh;
-        Control control = component.getControl();
-        
         this.container = container;
         this.container.setLayout(new RowLayout());
         this.component = component;
         
-        charw = ViewUtils.getCharWidth(control);
-        charh = ViewUtils.getCharHeight(control);
-        
-        control.setSize(control.computeSize(
-                component.getLength() * charw, charh));
+        factory.setControlSize(component);
         
         btsearch = new Button(container, SWT.BORDER);
         btsearch.setText(factory.getMessage(text));

@@ -103,15 +103,19 @@ public class SearchHelper extends AbstractSearch {
      * preenche campo com resultado selecionado.
      */
     private void select() {
-        int k = 0;
-        Component component = getComponent();
-        
-        for (Object result : results.keySet())
-            if (table.getMarkValue(k++)) {
-                component.setString(result.toString());
-                widgetDisposed(null);
-                break;
-            }
+        /*
+         * TODO
+         */
+//        int k = 0;
+//        Component component = getComponent();
+//        ComponentFactory factory = getFactory();
+//        
+//        for (Object result : results.keySet())
+//            if (table.getMarkValue(k++)) {
+//                factory.setString(component, result.toString());
+//                widgetDisposed(null);
+//                break;
+//            }
     }
     
     /*

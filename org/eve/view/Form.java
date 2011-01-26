@@ -1,7 +1,8 @@
 package org.eve.view;
 
-//import java.util.HashMap;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -9,6 +10,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
@@ -23,15 +25,14 @@ public class Form extends AbstractComponentFactory {
     private boolean editable;
     private ComboAssist comboassist;
     private Controller controller;
-//    private Map<String, ComponentConcat> concatenates;
     private Set<String> blocked;
+    private Map<Component, Control> controls;
     
     public Form(String id) {
+        controls = new HashMap<Component, Control>();
         blocked = new HashSet<String>();
-//        concatenates = new HashMap<String, ComponentConcat>();
         comboassist = new ComboAssist();
         comboassist.setType(EVE.combo);
-        comboassist.setControlType(EVE.single);
         editable = true;
     }
     
@@ -58,6 +59,11 @@ public class Form extends AbstractComponentFactory {
         blocked.add(field);
     }
     
+    @Override
+    protected final void setControlFocus(Component component) {
+        controls.get(component).setFocus();
+    }
+    
     /**
      * 
      * @param controller
@@ -65,6 +71,18 @@ public class Form extends AbstractComponentFactory {
     public final void setController(Controller controller) {
         this.controller = controller;
     }
+    
+    public final void setControlSize(Component component) {
+        ViewUtils.setControlSize(component, controls.get(component));
+    }
+    
+    @Override
+    protected final void setControlValue(Component component, String value) {
+        ViewUtils.setControlText(component, controls.get(component), value);
+    }
+    
+    @Override
+    protected final void setControlValue(Component component, int index, String value) { }
     
     /**
      * 
@@ -88,6 +106,15 @@ public class Form extends AbstractComponentFactory {
      * 
      */
     
+    @Override
+    protected final String getControlValue(Component component) {
+        return ViewUtils.getControlText(component, controls.get(component));
+    }
+    
+    protected final String getControlValue(Component component, int index) {
+        return null;
+    }
+    
     /**
      * Retorna valor do campo caractere do formulário,
      * em formato "like" para seleção
@@ -110,19 +137,12 @@ public class Form extends AbstractComponentFactory {
      * 
      */
     public final void commit() {
-        for (Component component : getComponents()) {
+        for (Component component : getComponents())
             if (blocked.contains(component.getName()))
                 component.setEnabled(false);
             else
                 component.setEnabled(editable);
-            
-            component.commit();
-        }
     }
-    
-//    public final void concat(String id, String component1, String component2) {
-//    	concatenates.put(component1, new ComponentConcat(id, component2));
-//    }
     
     /**
      * Constrói formulário e inicializa o próximo
@@ -161,7 +181,7 @@ public class Form extends AbstractComponentFactory {
                 text.setSize(text.computeSize(
                         component.getLength() * charw, charh));
                 
-                component.setControl(text);
+                controls.put(component, text);
                 
                 switch(component.getExtension()) {
                 case SEARCH:
@@ -188,7 +208,7 @@ public class Form extends AbstractComponentFactory {
                 
                 combo = (Combo)comboassist.newInstance();
                 
-                component.setControl(combo);
+                controls.put(component, combo);
                 
                 break;
             }
@@ -253,6 +273,11 @@ public class Form extends AbstractComponentFactory {
         component.setExtension(Component.Extension.SEARCH);
     }
     
+    /**
+     * 
+     * @param document
+     * @param id
+     */
     public final void putFileSearch(AbstractDocument document, String id) {
         Component component;
         
@@ -261,21 +286,3 @@ public class Form extends AbstractComponentFactory {
         component.setExtension(Component.Extension.FILESEARCH);
     }
 }
-
-//class ComponentConcat {
-//	private String component;
-//	private String id;
-//	
-//	public ComponentConcat(String id, String component) {
-//		this.id = id;
-//		this.component = component;
-//	}
-//	
-//	public final String getComponent() {
-//		return component;
-//	}
-//	
-//	public final String getId() {
-//		return id;
-//	}
-//}

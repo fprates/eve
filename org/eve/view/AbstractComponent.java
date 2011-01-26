@@ -1,31 +1,15 @@
 package org.eve.view;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.eve.main.EVE;
 import org.eve.model.AbstractDocument;
-import org.springframework.context.MessageSource;
 
 public abstract class AbstractComponent implements Component {
     private boolean enabled;
     private int length;
     private int type;
     private AbstractDocument.datatype datatype;
-    private Control control;
-    private Date date;
-    private DateFormat dateformat;
     private Extension extension;
-    private Locale locale;
-    private MessageSource messages;
     private String name;
     private String title;
     private String[] options;
@@ -35,46 +19,6 @@ public abstract class AbstractComponent implements Component {
         extension = Extension.NONE;
         enabled = true;
         values = new ArrayList<String>();
-    }
-    
-    private final String getText(Control control) {
-        String value;
-        
-        switch (type) {
-        case EVE.ccombo:
-            value = ((CCombo)control).getText();
-            if (value == null)
-                return "";
-            
-            return value;
-            
-        case EVE.combo:
-            value = ((Combo)control).getText();
-            if (value == null)
-                return "";
-            
-            return value;
-            
-        case EVE.text:
-            value = ((Text)control).getText();
-            if (value == null)
-                return "";
-            
-            return value;
-            
-        default:
-            return "";
-        }
-        
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getControl()
-     */
-    @Override
-    public final Control getControl() {
-        return control;
     }
     
     /*
@@ -88,77 +32,11 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#getDate()
-     */
-    @Override
-    public final Date getDate() {
-        return date;
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.Component#getExtension()
      */
     @Override
     public final Extension getExtension() {
         return extension;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getFloat()
-     */
-    @Override
-    public final float getFloat() {
-        String test = getString();
-        
-        return test.equals("")? 0:Float.parseFloat(test);        
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getInt()
-     */
-    @Override
-    public final int getInt() {
-        String test;
-        int test_;
-        
-        switch (type) {
-        case EVE.text:
-            test = getString();
-            return test.equals("")? 0:Integer.parseInt(test);
-        
-        case EVE.combo:
-            test_ = ((Combo)control).getSelectionIndex();
-            return (test_ < 0)? 0:test_;
-            
-        default:
-            return 0;
-        }
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getLong()
-     */
-    @Override
-    public final long getLong() {
-        String test;
-        int test_;
-        
-        switch (type) {
-        case EVE.text:
-            test = getString();
-            return test.equals("")? 0:Long.parseLong(test);
-        
-        case EVE.combo:
-            test_ = ((Combo)control).getSelectionIndex();
-            return (test_ < 0)? 0:test_;
-            
-        default:
-            return 0;
-        }
     }
     
     /*
@@ -195,34 +73,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final String getOption(int index) {
         return options[index];
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getString()
-     */
-    @Override
-    public final String getString() {
-        return getText(control);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getStringValue(int)
-     */
-    @Override
-    public final String getString(int index) {
-        return values.get(index);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#getTime()
-     */
-    @Override
-    public final Time getTime() {
-        String value = getString();
-        return Time.valueOf(value.equals("")?"00:00:00":value);
     }
     
     /*
@@ -278,34 +128,11 @@ public abstract class AbstractComponent implements Component {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.Component#setControl(org.eclipse.swt.widgets.Control)
-     */
-    @Override
-    public final void setControl(Control control) {
-        this.control = control;
-    }
-    
-    /*
-     * (non-Javadoc)
      * @see org.eve.view.Component#setDataType(org.eve.model.AbstractDocument.datatype)
      */
     @Override
     public final void setDataType(AbstractDocument.datatype datatype) {
         this.datatype = datatype;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setDate(java.util.Date)
-     */
-    @Override
-    public final void setDate(Date date) {
-        if (date == null)
-            setString("");
-        else 
-            setString(dateformat.format(date));
-        
-        this.date = date;
     }
     
     /*
@@ -325,59 +152,6 @@ public abstract class AbstractComponent implements Component {
     public final void setExtension(Extension extension) {
         this.extension = extension;
     }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setFloat(float)
-     */
-    @Override
-    public final void setFloat(float value) {
-        setString(Float.toString(value));        
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setInt(int)
-     */
-    @Override
-    public final void setInt(int value) {        
-        switch (type) {
-        case EVE.text:
-            setString(Integer.toString(value));
-            break;
-        
-        case EVE.ccombo:
-        case EVE.combo:
-            if (options == null)
-                break;
-            
-            setString(messages.getMessage(
-                    options[value], null, options[value], locale));
-            break;
-        }
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setInt(int, int)
-     */
-    @Override
-    public final void setInt(int value, int index) {
-        switch (type) {
-        case EVE.text:
-            setString(Integer.toString(value), index);
-            break;
-        
-        case EVE.ccombo:
-        case EVE.combo:
-            if (options == null)
-                break;
-            
-            setString(options[value], index);
-            break;
-        }
-        
-    }
     
     /*
      * (non-Javadoc)
@@ -386,47 +160,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setLength(int length) {
         this.length = length;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setLocale(java.util.Locale)
-     */
-    @Override
-    public final void setLocale(Locale locale) {
-        this.locale = locale;
-        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setLong(long)
-     */
-    @Override
-    public final void setLong(long value) {
-        switch (type) {
-        case EVE.text:
-            setString(Long.toString(value));
-            break;
-        }
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setLong(long, int)
-     */
-    @Override
-    public final void setLong(long value, int index) {
-        switch (type) {
-        case EVE.text:
-            setString(Long.toString(value), index);
-            break;
-        }
-    }
-    
-    @Override
-    public final void setMessages(MessageSource messages) {
-        this.messages = messages;
     }
     
     /*
@@ -445,82 +178,6 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setOptions(String[] options) {
         this.options = options;
-    }
-    
-    /**
-     * 
-     * @param control
-     * @param text
-     */
-    private final void setText(Control control, String text) {
-        String text_ = text;
-        
-        if (text_ == null)
-            text_ = "";
-        
-        switch (type) {
-        case EVE.text:
-            ((Text)control).setText(text_);
-            break;
-        
-        case EVE.ccombo:
-            ((CCombo)control).setText(text_);
-            break;
-            
-        case EVE.combo:
-            ((Combo)control).setText(text_);
-            break;
-        }        
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setString(java.lang.String)
-     */
-    @Override
-    public final void setString(String text) {
-        setText(control, text);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setString(java.lang.String, int)
-     */
-    @Override
-    public final void setString(String text, int index) {
-        values.set(index, text);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setTime(java.sql.Time)
-     */
-    @Override
-    public final void setTime(Time time) {
-        String value;
-        
-        if (time == null) {
-            setString("");
-        } else {
-            value = time.toString();
-            setString(value.equals("00:00:00")?"":value);
-        }
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Component#setTime(java.sql.Time, int)
-     */
-    @Override
-    public final void setTime(Time time, int index) {
-        String value;
-        
-        if (time == null) {
-            setString("", index);
-        } else {
-            value = time.toString();
-            setString(value.equals("00:00:00")?"":value, index);
-        }
     }
     
     /*

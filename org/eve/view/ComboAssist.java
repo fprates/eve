@@ -13,7 +13,6 @@ public class ComboAssist {
     private int type;
     private int length;
     private int item;
-    private int controltype;
     private AbstractComponentFactory factory;
     private String id;
     private String reference;
@@ -38,14 +37,6 @@ public class ComboAssist {
      */
     public final void setController(Controller controller) {
         this.controller = controller;
-    }
-    
-    /**
-     * 
-     * @param controltype
-     */
-    public final void setControlType(int controltype) {
-        this.controltype = controltype;
     }
     
     /**
@@ -138,7 +129,6 @@ public class ComboAssist {
                 listener.setIndex(item);
                 listener.setTableReference(table);
                 listener.setReference(reference);
-                listener.setType(controltype);
                 
                 ccombo.addListener(SWT.MouseDown, listener);
             }
@@ -166,7 +156,6 @@ public class ComboAssist {
                 listener = new ComboListener(id, controller);
                 listener.setTableReference(table);
                 listener.setReference(reference);
-                listener.setType(controltype);
                 
                 combo.addListener(SWT.MouseDown, listener);
             }

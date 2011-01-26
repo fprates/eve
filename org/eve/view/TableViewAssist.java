@@ -23,12 +23,7 @@ public class TableViewAssist extends AbstractTableAssist {
     public TableViewAssist() {
         comboassist = new ComboAssist();
         comboassist.setType(EVE.ccombo);
-        comboassist.setControlType(EVE.multi);
     }
-//    
-//    protected final Control getControl(Component component, int index) {
-//        return getTable().getItem(index).get
-//    }
     
     /*
      * 
@@ -72,7 +67,6 @@ public class TableViewAssist extends AbstractTableAssist {
             tablecol.setText(component.getName());
             tablecol.pack();
             component.setColumn(tablecol);
-            component.setLocale(getLocale());
         }
         
         lines = getLines();

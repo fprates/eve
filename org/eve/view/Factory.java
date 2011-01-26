@@ -23,4 +23,26 @@ public class Factory extends AbstractComponentFactory {
         
         label.setText(getMessage(name));
     }
+
+    @Override
+    protected void setControlFocus(Component component) { }
+
+    @Override
+    protected void setControlValue(Component component, String value) { }
+
+    @Override
+    protected void setControlValue(Component component, int index, String value) { }
+
+    @Override
+    public void setControlSize(Component component) { }
+
+    @Override
+    protected String getControlValue(Component component) {
+        return null;
+    }
+
+    @Override
+    protected String getControlValue(Component component, int index) {
+        return null;
+    }
 }

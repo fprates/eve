@@ -31,7 +31,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         lines = LINES;
         comboassist = new ComboAssist();
         comboassist.setType(EVE.ccombo);
-        comboassist.setControlType(EVE.multi);
     }
     
     /*
@@ -240,8 +239,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         if (comptable == null)
             return;
         
-        for (Component component : getComponents())
-            component.clear();
+        comptable.clearAll();
         
         /*
          * restaura quantidade de linhas na tabela
@@ -325,5 +323,27 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         component.setLength(1);
         
         putComponent(id, component);
+    }
+
+    @Override
+    protected final void setControlFocus(Component component) { }
+
+    @Override
+    protected final void setControlValue(Component component, String value) { }
+
+    @Override
+    protected final void setControlValue(Component component, int index, String value) { }
+
+    @Override
+    public final void setControlSize(Component component) { }
+
+    @Override
+    protected String getControlValue(Component component) {
+        return null;
+    }
+
+    @Override
+    protected String getControlValue(Component component, int index) {
+        return null;
     }
 }

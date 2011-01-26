@@ -47,7 +47,6 @@ public class EditableTableAssist extends AbstractTableAssist {
         remove = true;
         comboassist = new ComboAssist();
         comboassist.setType(EVE.ccombo);
-        comboassist.setControlType(EVE.multi);
         editors = new HashMap<Component, List<ControlEditor>>();
     }
     
@@ -67,10 +66,8 @@ public class EditableTableAssist extends AbstractTableAssist {
         if (btarea != null)
             btarea.setVisible(editable);
         
-        for (Component component : getComponents()) {
+        for (Component component : getComponents())
             component.setEnabled(editable);
-            component.commit();
-        }
     }
     
     /**
@@ -289,7 +286,6 @@ public class EditableTableAssist extends AbstractTableAssist {
             tablecol.setText(component.getName());
             tablecol.pack();
             component.setColumn(tablecol);
-            component.setLocale(getLocale());
         }
         
         lines = getLines();

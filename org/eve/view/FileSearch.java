@@ -20,9 +20,12 @@ public class FileSearch extends AbstractSearch {
      */
     @Override
     protected void openDialog() {
-        Component component = getComponent();
-
-        component.setString(fd.open());
+        /*
+         * TODO
+         */
+//        ComponentFactory factory = getFactory();
+//
+//        factory.setString(getComponent(), fd.open());
     }
 
     /*

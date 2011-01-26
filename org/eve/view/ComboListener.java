@@ -12,13 +12,13 @@ import org.eve.main.EVE;
 
 public class ComboListener implements Listener {
     private int index;
-    private int type;
     private Controller controller;
     private Map<String, Component> table;
     private Map<Object, String> results;
     private Object object;
     private String id;
     private String reference;
+    private ComponentFactory factory;
     
     public ComboListener(String id, Controller controller) {
         object = null;
@@ -52,14 +52,6 @@ public class ComboListener implements Listener {
     
     /**
      * 
-     * @param type
-     */
-    public final void setType(int type) {
-        this.type = type;
-    }
-    
-    /**
-     * 
      * @param component
      * @param type
      * @return
@@ -76,6 +68,10 @@ public class ComboListener implements Listener {
             return null;
 //        }
         
+    }
+    
+    public final void setFactory(ComponentFactory factory) {
+        this.factory = factory;
     }
     
     /*
@@ -135,8 +131,8 @@ public class ComboListener implements Listener {
         if (results == null)
             return;
         
-        if (((reference == null) && (
-                component_.getValues(index).length == 0)) || reference != null)
-            component_.setValues(results, index);
+//        if (((reference == null) && (
+//                factory.getValues(component, index).length == 0)) || reference != null)
+//            container.setValues(results, index);
     }
 }

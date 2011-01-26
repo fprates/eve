@@ -1,16 +1,14 @@
 package org.eve.view;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
@@ -21,17 +19,31 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     private MessageSource messages;
     private EveAPI system;
     private Map<String, Component> fields;
-
+    private DateFormat dateformat;
+    
     public AbstractComponentFactory() {
         fields = new LinkedHashMap<String, Component>();
+        dateformat = DateFormat.getDateInstance(DateFormat.MEDIUM);
     }
+
+    protected abstract void setControlFocus(Component component);
+    
+    protected abstract void setControlValue(Component component, String value);
+    
+    protected abstract void setControlValue(Component component, int index, String value);
+    
+    public abstract void setControlSize(Component component);
+    
+    protected abstract String getControlValue(Component component);
+    
+    protected abstract String getControlValue(Component component, int index);
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setDate(java.lang.String, java.util.Date)
      */
     @Override
     public final void setDate(String field, Date date) {
-        fields.get(field).setDate(date);
+        setControlValue(fields.get(field), date.toString());
     }
     
     /* (non-Javadoc)
@@ -71,7 +83,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setFloat(String field, float value) {
-        fields.get(field).setFloat(value);
+        setControlValue(fields.get(field), Float.toString(value));
     }
     
     /* (non-Javadoc)
@@ -79,7 +91,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setFocus(String field) {
-        fields.get(field).getControl().setFocus();
+        setControlFocus(fields.get(field));
     }
     
     /* (non-Javadoc)
@@ -87,7 +99,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setInt(String field, int value) {
-        fields.get(field).setInt(value);
+        setControlValue(fields.get(field), Integer.toString(value));
     }
     
     /* (non-Javadoc)
@@ -95,7 +107,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setInt(String field, int index, int value) {
-        fields.get(field).setInt(value, index);
+        setControlValue(fields.get(field), index, Integer.toString(value));
     }
     
     /* (non-Javadoc)
@@ -111,7 +123,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setLong(String field, long value) {
-        fields.get(field).setLong(value);
+        setControlValue(fields.get(field), Long.toString(value));
     }
     
     /* (non-Javadoc)
@@ -135,7 +147,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setString(String field, String text) {
-        fields.get(field).setString(text);
+        setControlValue(fields.get(field), text);
     }
     
     /* (non-Javadoc)
@@ -143,7 +155,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setString(String field, int index, String text) {
-        fields.get(field).setString(text, index);
+        setControlValue(fields.get(field), index, text);
     }
     
     /* (non-Javadoc)
@@ -159,7 +171,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setTime(String field, Time time) {
-        fields.get(field).setTime(time);
+        setControlValue(fields.get(field), time.toString());
     }
     
     /* (non-Javadoc)
@@ -167,7 +179,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setTime(String field, int index, Time time) {
-        fields.get(field).setTime(time, index);
+        setControlValue(fields.get(field), index, time.toString());
     }
     
     /*
@@ -193,7 +205,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final Date getDate(String field) {
-        return fields.get(field).getDate();
+        try {
+            return dateformat.parse(getControlValue(fields.get(field)));
+        } catch (ParseException ex) {
+            system.setMessage(EVE.error, getMessage("invalid.date.format"));
+            setControlFocus(fields.get(field));
+            ex.printStackTrace();
+        }
+        
+        return null;
     }
     
     /* (non-Javadoc)
@@ -236,11 +256,14 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final float getFloat(String field) {
+        Component component = fields.get(field);
+        
         try {
-            return fields.get(field).getFloat();
+            return Float.parseFloat(getControlValue(component));
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.float.format"));
-            fields.get(field).getControl().setFocus();            
+            setControlFocus(component);
+            
             throw ex;
         }
     }
@@ -253,10 +276,11 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         try {
-            return component.getInt();
+            return Integer.parseInt(getControlValue(component));
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
-            component.getControl().setFocus();                
+            setControlFocus(component);
+            
             throw ex;
         }
     }
@@ -265,22 +289,16 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * @see org.eve.view.ComponentFactory#getInt(java.lang.String, int)
      */
     @Override
-    public final int getInt(String field, int row)
-        throws NumberFormatException {
-        String value;
-//        int value_;
+    public final int getInt(String field, int index) {
+        Component component = fields.get(field);
         
-        switch (fields.get(field).getType()) {
-        case EVE.text:
-            value = getString(field, row);            
-            return (value.equals(""))? 0 : Integer.parseInt(value);
+        try {
+            return Integer.parseInt(getControlValue(component));
+        } catch (NumberFormatException ex) {
+            system.setMessage(EVE.error, getMessage("invalid.int.format"));
+            setControlFocus(component);
             
-//        case EVE.ccombo:
-//            value_ = ((CCombo)fields.get(field).getItem(row).getControl()).getSelectionIndex();            
-//            return (value_ == -1)? 0 : value_;
-            
-        default:            
-            return 0;
+            throw ex;
         }
     }
     
@@ -300,10 +318,11 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         try {
-            return component.getLong();
+            return Long.parseLong(getControlValue(component));
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
-            component.getControl().setFocus();                
+            setControlFocus(component);
+            
             throw ex;
         }
     }
@@ -322,20 +341,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final String getString(String field) {
-        return fields.get(field).getString();
+        return getControlValue(fields.get(field));
     }
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getString(java.lang.String, int)
      */
     @Override
-    public final String getString(String field, int row) {
-        for (String id_ : fields.keySet())
-            if (id_.equals(field))
-                return fields.get(field).getString(row);
-        
-        return "";
-        
+    public final String getString(String field, int index) {
+        return getControlValue(fields.get(field), index);
     }
     
     /**
@@ -351,7 +365,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final Time getTime(String field) {
-        return fields.get(field).getTime();
+//        return fields.get(field).getTime();
+        return null;
     }
     
     /* (non-Javadoc)
@@ -421,8 +436,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public void clear() {
-        for (Component component : fields.values())
-            component.clear();
+//        for (Component component : fields.values())
+//            component.clear();
     }
     
     /* (non-Javadoc)
@@ -430,10 +445,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void putComponent(String name, Component component) {
-        component.setMessages(messages);
-        component.setLocale(locale);
-        
-        fields.put(name, component);
+//        component.setMessages(messages);
+//        component.setLocale(locale);
+//        
+//        fields.put(name, component);
     }
     
     /* (non-Javadoc)
@@ -441,13 +456,13 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void sel(int col, int row) {
-        Object[] objects = fields.values().toArray();
-        Control control = ((Component)objects[col]).getControl();
-        
-        if (control instanceof Text)
-            ((Text)control).selectAll();
-        
-        control.setFocus();        
+//        Object[] objects = fields.values().toArray();
+//        Control control = ((Component)objects[col]).getControl();
+//        
+//        if (control instanceof Text)
+//            ((Text)control).selectAll();
+//        
+//        control.setFocus();
     }
     
 }
