@@ -445,10 +445,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void putComponent(String name, Component component) {
-//        component.setMessages(messages);
-//        component.setLocale(locale);
-//        
-//        fields.put(name, component);
+        fields.put(name, component);
     }
     
     /* (non-Javadoc)
