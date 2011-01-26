@@ -70,5 +70,8 @@ public class ViewUtils {
             break;
         }
     }
-
+    
+    public static final void setEnabledControl(Control control, boolean enabled) {
+        control.setEnabled(enabled);
+    }
 }

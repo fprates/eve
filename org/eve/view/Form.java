@@ -137,11 +137,16 @@ public class Form extends AbstractComponentFactory {
      * 
      */
     public final void commit() {
-        for (Component component : getComponents())
+        Control control;
+        
+        for (Component component : getComponents()) {
+            control = controls.get(component);
+            
             if (blocked.contains(component.getName()))
-                component.setEnabled(false);
+                ViewUtils.setEnabledControl(control, false);
             else
-                component.setEnabled(editable);
+                ViewUtils.setEnabledControl(control, editable);
+        }
     }
     
     /**
