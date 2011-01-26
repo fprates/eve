@@ -299,9 +299,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final int getInt(String field) {
         Component component = fields.get(field);
+        String text = getControlValue(component);
         
         try {
-            return Integer.parseInt(getControlValue(component));
+            return Integer.parseInt((text.length() == 0)?"0":text);
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);
@@ -316,9 +317,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final int getInt(String field, int index) {
         Component component = fields.get(field);
+        String text = getControlValue(component, index);
         
         try {
-            return Integer.parseInt(getControlValue(component));
+            return Integer.parseInt((text.length() == 0)?"0":text);
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);
