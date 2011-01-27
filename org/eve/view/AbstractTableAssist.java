@@ -18,8 +18,9 @@ import org.eve.main.EVE;
  */
 abstract class AbstractTableAssist extends AbstractComponentFactory implements TableAssist {
     private static final int LINES = 5;
-    private int lines;
     private int currentline;
+    private int lines;
+    private int seltype;
     private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
@@ -29,6 +30,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         references = new HashMap<String, String>();
         currentline = 0;
         lines = LINES;
+        seltype = EVE.single;
         comboassist = new ComboAssist();
         comboassist.setType(EVE.ccombo);
     }
@@ -93,6 +95,11 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     @Override
     public final void setReference(String id, String idref) {
         references.put(id, idref);
+    }
+    
+    @Override
+    public final void setSelType(int seltype) {
+        this.seltype = seltype;
     }
     
     /**

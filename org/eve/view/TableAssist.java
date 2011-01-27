@@ -38,6 +38,12 @@ public interface TableAssist extends ComponentFactory {
     public abstract void setReference(String id, String idref);
 
     /**
+     * 
+     * @param seltype
+     */
+    public abstract void setSelType(int seltype);
+    
+    /**
      * Retorna número de itens
      * @return
      */
