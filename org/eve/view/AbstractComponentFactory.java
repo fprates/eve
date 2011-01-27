@@ -270,6 +270,9 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         case FLOAT:
             return getFloat(id_);
+        
+        case LONG:
+            return getLong(id_);
             
         default:
             return null;

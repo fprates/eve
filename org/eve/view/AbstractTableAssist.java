@@ -336,10 +336,22 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     protected final void setControlFocus(Component component) { }
 
     @Override
-    protected final void setControlValue(Component component, String value) { }
+    protected void setControlValue(Component component, String value) { }
 
     @Override
-    protected final void setControlValue(Component component, int index, String value) { }
+    protected void setControlValue(Component component, int index, String value) {
+        int k = 0;
+        
+        for (Component component_ : getComponents()) {
+            k++;
+            if (component_ != component)
+                continue;
+            
+            comptable.getItem(index).setText(k, value);
+            
+            break;
+        }
+    }
 
     @Override
     public final void setControlSize(Component component) { }
@@ -351,6 +363,16 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
 
     @Override
     protected String getControlValue(Component component, int index) {
+        int k = 0;
+        
+        for (Component component_ : getComponents()) {
+            k++;
+            if (component_ != component)
+                continue;
+            
+            return comptable.getItem(index).getText(k);
+        }
+        
         return null;
     }
 }

@@ -318,6 +318,46 @@ public class EditableTableAssist extends AbstractTableAssist {
             return;
         }
     }
+
+    @Override
+    protected final void setControlValue(Component component, int index, String value) {
+        int k = 0;
+        List<ControlEditor> editor = editors.get(component);
+        
+        for (Component component_ : getComponents()) {
+            k++;
+            if (component_ != component)
+                continue;
+            
+            switch (component.getType()) {
+            case EVE.text:
+                ((Text)editor.get(k).getEditor()).setText(value);
+            }
+            
+            break;
+        }
+    }
+
+    @Override
+    protected final String getControlValue(Component component, int index) {
+        int k = 0;
+        List<ControlEditor> editor = editors.get(component);
+        
+        for (Component component_ : getComponents()) {
+            k++;
+            if (component_ != component)
+                continue;
+            
+            switch (component.getType()) {
+            case EVE.text:
+                return ((Text)editor.get(k).getEditor()).getText();
+            }
+            
+            break;
+        }
+        
+        return null;
+    }
 }
 
 /**
