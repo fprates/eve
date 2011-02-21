@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eve.main.EVE;
 
 public class ComboListener implements Listener {
     private int index;
@@ -86,12 +85,12 @@ public class ComboListener implements Listener {
         Object object_ = null;
         
         switch (component_.getType()) {
-        case EVE.combo:
+        case COMBO:
             if (((Combo)control_).getListVisible())
                 return;
             break;
             
-        case EVE.ccombo:
+        case CCOMBO:
             if (((CCombo)control_).getListVisible())
                 return;
             break;
@@ -104,15 +103,15 @@ public class ComboListener implements Listener {
             component = table.get(reference);
             
             switch (component.getType()) {
-            case EVE.ccombo:
+            case CCOMBO:
                 object_ = ((CCombo)getControl(component, index)).getText();
                 break;
                 
-            case EVE.combo:
+            case COMBO:
                 object_ = ((Combo)getControl(component, index)).getText();
                 break;
                 
-            case EVE.text:
+            case TEXT:
                 object_ = ((Text)getControl(component, index)).getText();
                 break;
                 

@@ -1,6 +1,8 @@
 package org.eve.view;
 
-import org.eve.model.AbstractDocument;
+import java.util.Map;
+
+import org.eve.model.DataType;
 
 public interface Component {
     public enum Extension {NONE, SEARCH, FILESEARCH};
@@ -9,7 +11,7 @@ public interface Component {
      * 
      * @return
      */
-    public abstract AbstractDocument.datatype getDataType();
+    public abstract DataType getDataType();
     
     /**
      * 
@@ -39,7 +41,7 @@ public interface Component {
      * Retorna lista de valores fixos
      * @return
      */
-    public abstract String[] getOptions();
+    public abstract Map<String, ?> getOptions();
 
     /**
      * Retorna valor da lista de opções
@@ -52,7 +54,7 @@ public interface Component {
      * Retorna tipo de controle
      * @return
      */
-    public abstract int getType();
+    public abstract ComponentType getType();
     
     /**
      * Retorna flag de habilitação
@@ -64,7 +66,7 @@ public interface Component {
      * 
      * @param datatype
      */
-    public abstract void setDataType(AbstractDocument.datatype datatype);
+    public abstract void setDataType(DataType datatype);
     
     /**
      * Ajusta habilitação
@@ -100,13 +102,13 @@ public interface Component {
      * Define valores fixos
      * @param options
      */
-    public abstract void setOptions(String[] options);
+    public abstract void setOptions(Map<String, ?> options);
     
     /**
      * Define tipo de componente
      * @param type
      */
-    public abstract void setType(int type);
+    public abstract void setType(ComponentType type);
     
     /**
      * Adiciona editor

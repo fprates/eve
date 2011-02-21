@@ -1,6 +1,7 @@
 package org.eve.mm.material;
 
 import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 
 /**
  * Material
@@ -35,17 +36,17 @@ public class Material extends AbstractDocument implements Comparable<Material> {
     private String weightUnit;
 
     public Material() {
-        put(IDENT, "material.ident", true, datatype.CHAR, 12);        
-        put(REFER, "material.refer", false, datatype.CHAR, 60);
-        put(UNDPS, "material.undps", false, datatype.CHAR, 3);
-        put(PSLIQ, "material.psliq", false, datatype.FLOAT,13);
-        put(UNDQT, "material.undqt", false, datatype.CHAR,3);
-        put(QUANT, "material.quant", false, datatype.FLOAT,13);
-        put(MOEDA, "material.moeda", false, datatype.CHAR, 3);
-        put(VLCST, "material.vlcst", false, datatype.FLOAT, 12);
-        put(LNGTH, "material.lngth", false, datatype.FLOAT, 12);
-        put(WIDTH, "material.width", false, datatype.FLOAT, 12);
-        put(THICK, "material.thick", false, datatype.FLOAT, 12);
+        put(IDENT, "material.ident", true, DataType.CHAR, 12);        
+        put(REFER, "material.refer", false, DataType.CHAR, 60);
+        put(UNDPS, "material.undps", false, DataType.CHAR, 3);
+        put(PSLIQ, "material.psliq", false, DataType.FLOAT,13);
+        put(UNDQT, "material.undqt", false, DataType.CHAR,3);
+        put(QUANT, "material.quant", false, DataType.FLOAT,13);
+        put(MOEDA, "material.moeda", false, DataType.CHAR, 3);
+        put(VLCST, "material.vlcst", false, DataType.FLOAT, 12);
+        put(LNGTH, "material.lngth", false, DataType.FLOAT, 12);
+        put(WIDTH, "material.width", false, DataType.FLOAT, 12);
+        put(THICK, "material.thick", false, DataType.FLOAT, 12);
     }
 
     /**

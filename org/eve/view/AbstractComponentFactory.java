@@ -34,9 +34,9 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     public abstract void setControlSize(Component component);
     
-    protected abstract String getControlValue(Component component);
+    protected abstract Object getControlValue(Component component);
     
-    protected abstract String getControlValue(Component component, int index);
+    protected abstract Object getControlValue(Component component, int index);
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setDate(java.lang.String, java.util.Date)
@@ -231,7 +231,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final Date getDate(String field) {
         try {
-            return dateformat.parse(getControlValue(fields.get(field)));
+            return dateformat.parse(
+                    (String)getControlValue(fields.get(field)));
         } catch (ParseException ex) {
             system.setMessage(EVE.error, getMessage("invalid.date.format"));
             setControlFocus(fields.get(field));
@@ -287,7 +288,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         try {
-            return Float.parseFloat(getControlValue(component));
+            return Float.parseFloat((String)
+                    getControlValue(component));
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.float.format"));
             setControlFocus(component);
@@ -301,11 +303,20 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final int getInt(String field) {
+        String text;
         Component component = fields.get(field);
-        String text = getControlValue(component);
         
         try {
-            return Integer.parseInt((text.length() == 0)?"0":text);
+            switch (component.getType()) {
+            case CCOMBO:
+            case COMBO:
+                return (Integer)getControlValue(component);
+            
+            default:
+                text = (String)getControlValue(component);
+                return Integer.parseInt((text.length() == 0)?"0":text);
+            }
+            
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);
@@ -320,7 +331,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final int getInt(String field, int index) {
         Component component = fields.get(field);
-        String text = getControlValue(component, index);
+        String text = (String)getControlValue(component, index);
         
         try {
             return Integer.parseInt((text.length() == 0)?"0":text);
@@ -348,7 +359,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         try {
-            return Long.parseLong(getControlValue(component));
+            return Long.parseLong((String)getControlValue(component));
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);
@@ -371,7 +382,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final String getString(String field) {
-        return getControlValue(fields.get(field));
+        return (String)getControlValue(fields.get(field));
     }
     
     /* (non-Javadoc)
@@ -379,7 +390,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final String getString(String field, int index) {
-        return getControlValue(fields.get(field), index);
+        return (String)getControlValue(fields.get(field), index);
     }
     
     /**

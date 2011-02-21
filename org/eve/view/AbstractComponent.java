@@ -2,17 +2,19 @@ package org.eve.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.eve.model.AbstractDocument;
+import java.util.Map;
+
+import org.eve.model.DataType;
 
 public abstract class AbstractComponent implements Component {
     private boolean enabled;
     private int length;
-    private int type;
-    private AbstractDocument.datatype datatype;
+    private ComponentType type;
+    private DataType datatype;
     private Extension extension;
     private String name;
     private String title;
-    private String[] options;
+    private Map<String, ?> options;
     private List<String> values;
 
     public AbstractComponent() {
@@ -26,7 +28,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#getDataType()
      */
     @Override
-    public final AbstractDocument.datatype getDataType() {
+    public final DataType getDataType() {
         return datatype;
     }
     
@@ -62,7 +64,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#getOptions()
      */
     @Override
-    public final String[] getOptions() {
+    public final Map<String, ?> getOptions() {
         return options;
     }
     
@@ -72,7 +74,15 @@ public abstract class AbstractComponent implements Component {
      */
     @Override
     public final String getOption(int index) {
-        return options[index];
+        int k = 1;
+        for (String key : options.keySet()) {
+            if (k != index)
+                continue;
+            
+            return key;
+        }
+        
+        return null;
     }
     
     /*
@@ -89,7 +99,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#getType()
      */
     @Override
-    public final int getType() {
+    public final ComponentType getType() {
         return type;
     }
 //    
@@ -131,7 +141,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#setDataType(org.eve.model.AbstractDocument.datatype)
      */
     @Override
-    public final void setDataType(AbstractDocument.datatype datatype) {
+    public final void setDataType(DataType datatype) {
         this.datatype = datatype;
     }
     
@@ -176,7 +186,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#setOptions(java.lang.String[])
      */
     @Override
-    public final void setOptions(String[] options) {
+    public final void setOptions(Map<String, ?> options) {
         this.options = options;
     }
     
@@ -194,7 +204,7 @@ public abstract class AbstractComponent implements Component {
      * @see org.eve.view.Component#setType(int)
      */
     @Override
-    public final void setType(int type) {
+    public final void setType(ComponentType type) {
         this.type = type;
     }
     

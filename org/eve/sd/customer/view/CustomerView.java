@@ -15,6 +15,7 @@ import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
 import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
+import org.eve.view.ComponentType;
 import org.eve.view.Controller;
 import org.eve.view.Form;
 import org.eve.view.EditableTableAssist;
@@ -82,7 +83,7 @@ public class CustomerView extends AbstractView {
          */
         table = (EditableTableAssist)addTable("contacts");
         table.setLines(4);
-        table.putMark("contact.mark", EVE.multi);
+        table.putMark("contact.mark", ComponentType.MULTI);
         table.put("contact.type", 20);
         table.put("contact.rname", 40);
         table.put("contact.im", 60);
@@ -102,8 +103,8 @@ public class CustomerView extends AbstractView {
          */
         table = (EditableTableAssist)addTable("addresses");
         table.setLines(3);
-        table.putMark("address.mark", EVE.multi);
-        table.putCombo("address.type", 11, new String[] {
+        table.putMark("address.mark", ComponentType.MULTI);
+        table.putAutoCombo("address.type", 11, new String[] {
                 getMessage("address.billing"),
                 getMessage("address.delivery"),
                 getMessage("address.charging")});

@@ -5,7 +5,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.eve.main.EVE;
 
 /**
  * Utilitários para visão
@@ -42,12 +41,15 @@ public class ViewUtils {
         return charh;
     }
 
-    public static final String getControlText(Component component, Control control) {
+    public static final Object getControlValue(
+            Component component, Control control) {
         switch (component.getType()) {
-        case EVE.combo:
-            return ((Combo)control).getText();
-        case EVE.text:
+        case COMBO:
+            return component.getOptions().get(((Combo)control).getText());
+            
+        case TEXT:
             return ((Text)control).getText();
+            
         default:
             return null;
         }
@@ -62,10 +64,10 @@ public class ViewUtils {
     
     public static final void setControlText(Component component, Control control, String value) {
         switch (component.getType()) {
-        case EVE.combo:
+        case COMBO:
             ((Combo)control).setText(value);
             break;
-        case EVE.text:
+        case TEXT:
             ((Text)control).setText(value);
             break;
         }

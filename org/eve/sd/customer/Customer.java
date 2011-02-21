@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 
 /**
  * @author francisco.prates
@@ -60,51 +61,42 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
 	    addresses = new TreeSet<CustomerAddress>();
 	    schedule = new TreeSet<CustomerSchedule>();
 	    
-	    put(IDENT, "customer.ident", true, datatype.INT, 10);
-        put(REFER, "customer.refer", false, datatype.CHAR, 12);
-        put(NAME, "customer.name", false, datatype.CHAR, 40);
-        put(ANAME, "customer.aname", false, datatype.CHAR, 40);
-        put(CNPJ, "customer.cnpj", false, datatype.LONG, 18);
-        put(IE, "customer.ie", false, datatype.CHAR, 12);
-        put(HOMEP, "customer.homep", false, datatype.CHAR, 128);
+	    put(IDENT, "customer.ident", true, DataType.INT, 10);
+        put(REFER, "customer.refer", false, DataType.CHAR, 12);
+        put(NAME, "customer.name", false, DataType.CHAR, 40);
+        put(ANAME, "customer.aname", false, DataType.CHAR, 40);
+        put(CNPJ, "customer.cnpj", false, DataType.LONG, 18);
+        put(IE, "customer.ie", false, DataType.CHAR, 12);
+        put(HOMEP, "customer.homep", false, DataType.CHAR, 128);
         setLowerCase(HOMEP);
-        put(EMAIL, "customer.email", false, datatype.CHAR, 128);
+        put(EMAIL, "customer.email", false, DataType.CHAR, 128);
         setLowerCase(EMAIL);
-        put(VLIPR, "customer.vlipr", false, datatype.FLOAT, 13);
-        put(VLIBL, "customer.vlibl", false, datatype.FLOAT, 7);
-        put(DVCSP, "customer.dvcsp", false, datatype.FLOAT, 7);
-        put(DVCPT, "customer.dvcpt", false, datatype.FLOAT, 7);
+        put(VLIPR, "customer.vlipr", false, DataType.FLOAT, 13);
+        put(VLIBL, "customer.vlibl", false, DataType.FLOAT, 7);
+        put(DVCSP, "customer.dvcsp", false, DataType.FLOAT, 7);
+        put(DVCPT, "customer.dvcpt", false, DataType.FLOAT, 7);
 
-        put(TPINC, "customer.tpinc", false, datatype.INT, 1);
-        putValues(TPINC, new String[] {
-                "none",
-                "incentive.bill",
-                "incentive.product",
-                "incentive.free"});
+        put(TPINC, "customer.tpinc", false, DataType.INT, 1);
         
-        put(CDIVF, "customer.cdivf", false, datatype.INT, 1);
-        putValues(CDIVF, new String[] {"none", "A", "B", "C"});
+        putAutoValues(TPINC, new String[] {"none",
+                "incentive.bill", "incentive.product", "incentive.free"});
         
-        put(STATUS, "customer.status", false, datatype.INT, 1);
-        putValues(STATUS, new String[] {
-                "customer.inactive",
-                "customer.active"});
+        put(CDIVF, "customer.cdivf", false, DataType.INT, 1);
         
-        put(STDSP, "customer.stdsp", false, datatype.INT, 10);
-        put(TPEST, "customer.tpest", false, datatype.INT, 12);
-        putValues(TPEST, new String[] {
-                "none",
-                "tpest.super",
-                "tpest.indus",
-                "tpest.reven"});
+        putAutoValues(CDIVF, new String[] {"none", "A", "B", "C"});
         
-        put(TPCOM, "customer.tpcom", false, datatype.INT, 1);
-        putValues(TPCOM, new String[] {
-                "none",
-                "tpcom.blue",
-                "tpcom.green",
-                "tpcom.red",
-                "tpcom.yellow"});
+        put(STATUS, "customer.status", false, DataType.INT, 1);
+        putAutoValues(STATUS, new String[] {
+                "customer.inactive", "customer.active"});
+        
+        put(STDSP, "customer.stdsp", false, DataType.INT, 10);
+        put(TPEST, "customer.tpest", false, DataType.INT, 12);
+        putAutoValues(TPEST, new String[] {
+                "none", "tpest.super", "tpest.indus", "tpest.reven"});
+        
+        put(TPCOM, "customer.tpcom", false, DataType.INT, 1);
+        putAutoValues(TPCOM, new String[] {"none",
+                "tpcom.blue", "tpcom.green", "tpcom.red", "tpcom.yellow"});
 	}
 	
 	/*

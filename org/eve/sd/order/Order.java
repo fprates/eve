@@ -1,6 +1,7 @@
 package org.eve.sd.order;
 
 import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 
 public class Order extends AbstractDocument {
     public static final String IDENT = "id";
@@ -9,7 +10,7 @@ public class Order extends AbstractDocument {
     private int id;
 
     public Order() {
-        put(IDENT, "order.ident", true, datatype.INT, 10);
+        put(IDENT, "order.ident", true, DataType.INT, 10);
     }
 
     public int getId() {

@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eve.main.EVE;
 
 /**
  * Assistente de tabela
@@ -46,7 +45,7 @@ public class EditableTableAssist extends AbstractTableAssist {
         noeditbar = false;
         remove = true;
         comboassist = new ComboAssist();
-        comboassist.setType(EVE.ccombo);
+        comboassist.setType(ComponentType.CCOMBO);
         editors = new HashMap<Component, List<ControlEditor>>();
     }
     
@@ -134,7 +133,7 @@ public class EditableTableAssist extends AbstractTableAssist {
     
     @Override
     protected final void customizeControl(TableItem item, int k,
-            TableComponent component, Control control, int type) {
+            TableComponent component, Control control, ComponentType type) {
         TableEditor editor;
         Table table = getTable();
         List<ControlEditor> cols = editors.get(component);
@@ -150,8 +149,8 @@ public class EditableTableAssist extends AbstractTableAssist {
         cols.add(editor);
         
         switch(type) {
-        case EVE.single:
-        case EVE.multi:
+        case SINGLE:
+        case MULTI:
             editor.minimumWidth = control.getSize().x;
             editor.horizontalAlignment = SWT.LEFT;
             editor.setEditor(control, item, k);
@@ -161,8 +160,8 @@ public class EditableTableAssist extends AbstractTableAssist {
     }
     
     @Override
-    protected final void addCustomControl(
-            TableItem item, int k, TableComponent component, int type) {
+    protected final void addCustomControl(TableItem item, int k,
+            TableComponent component, ComponentType type) {
         
         int charh;
         int charw;
@@ -188,7 +187,7 @@ public class EditableTableAssist extends AbstractTableAssist {
         celllistener.setTableAssist(this);
         
         switch(type) {
-        case EVE.text:
+        case TEXT:
             text = new Text(table, SWT.NONE);
             text.setEditable(component.isEnabled());
             text.addListener (SWT.FocusOut, celllistener);
@@ -205,7 +204,7 @@ public class EditableTableAssist extends AbstractTableAssist {
             
             break;
             
-        case EVE.ccombo:
+        case CCOMBO:
             comboassist.setItem(table.getItemCount() - 1);
             comboassist.setOptions(component.getOptions());
             comboassist.setReference(getReference(component.getName()));
@@ -329,7 +328,7 @@ public class EditableTableAssist extends AbstractTableAssist {
                 continue;
             
             switch (component.getType()) {
-            case EVE.text:
+            case TEXT:
                 ((Text)editor.get(k).getEditor()).setText(value);
             }
             k++;
@@ -349,7 +348,7 @@ public class EditableTableAssist extends AbstractTableAssist {
                 continue;
             
             switch (component.getType()) {
-            case EVE.text:
+            case TEXT:
                 return ((Text)editor.get(k).getEditor()).getText();
             }
             

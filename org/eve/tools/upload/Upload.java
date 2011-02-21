@@ -1,6 +1,10 @@
 package org.eve.tools.upload;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 
 public class Upload extends AbstractDocument {
     public static final String DOCUMENT = "document";
@@ -10,15 +14,18 @@ public class Upload extends AbstractDocument {
     private String filename;
 
     public Upload() {
-        put(DOCUMENT, "upload.document", false, datatype.INT, 1);
-        putValues(DOCUMENT, new String[] {
-                "",
-                "customer.data",
-                "supplier.data",
-                "material.data"
-        });
+        Map<String, Integer> values;
         
-        put(FILENAME, "upload.filename", false, datatype.CHAR, 120);
+        put(DOCUMENT, "upload.document", false, DataType.INT, 1);
+        values = new LinkedHashMap<String, Integer>();
+        
+        values.put("customer.data", 1);
+        values.put("supplier.data", 2);
+        values.put("material.data", 3);
+        
+        putValues(DOCUMENT, values);
+        
+        put(FILENAME, "upload.filename", false, DataType.CHAR, 120);
         setLowerCase(FILENAME);
     }
 

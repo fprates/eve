@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eve.main.EVE;
 
 /**
  * Assistente de tabela
@@ -22,7 +21,7 @@ public class TableViewAssist extends AbstractTableAssist {
     
     public TableViewAssist() {
         comboassist = new ComboAssist();
-        comboassist.setType(EVE.ccombo);
+        comboassist.setType(ComponentType.CCOMBO);
     }
     
     /*

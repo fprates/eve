@@ -1,6 +1,7 @@
 package org.eve.view;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -20,7 +21,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     private static final int LINES = 5;
     private int currentline;
     private int lines;
-    private int seltype;
+    private ComponentType type;
     private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
@@ -30,9 +31,9 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         references = new HashMap<String, String>();
         currentline = 0;
         lines = LINES;
-        seltype = EVE.single;
+        type = ComponentType.SINGLE;
         comboassist = new ComboAssist();
-        comboassist.setType(EVE.ccombo);
+        comboassist.setType(ComponentType.CCOMBO);
     }
     
     @Override
@@ -103,8 +104,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     }
     
     @Override
-    public final void setSelType(int seltype) {
-        this.seltype = seltype;
+    public final void setSelType(ComponentType type) {
+        this.type = type;
     }
     
     /**
@@ -183,7 +184,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * @param type
      */
     protected void customizeControl(TableItem item, int k,
-            TableComponent component, Control control, int type) { };
+            TableComponent component, Control control, ComponentType type) { };
     
     /**
      * 
@@ -192,19 +193,17 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * @param component
      * @param type
      */
-    protected void addCustomControl(
-            TableItem item, int k, TableComponent component, int type) { };
+    protected void addCustomControl(TableItem item,
+            int k, TableComponent component, ComponentType type) { };
     
     /**
      * Adiciona item em tabela
      */
     protected final void addTableItem(TableItem item) {
-        int type;
+        ComponentType type;
         Button button;
         TableComponent component;
         int k = 0;
-        
-        comboassist.setFactory(this);
         
         for (Component component_ : getComponents()) {
             component = (TableComponent)component_;
@@ -212,7 +211,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             type = component.getType();
             
             switch(type) {
-            case EVE.single:
+            case SINGLE:
                 button = new Button(table, SWT.RADIO);
                 button.setBackground(item.getBackground());
                 button.pack();
@@ -222,7 +221,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
                 
                 break;
                 
-            case EVE.multi:
+            case MULTI:
                 button = new Button(table, SWT.CHECK);
                 button.setBackground(item.getBackground());
                 button.pack();
@@ -310,14 +309,25 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putComponent(id, component);
     }
     
+    @Override
+    public final void putAutoCombo(String id, int length, String[] keys) {
+        int k = 0;
+        Map<String, Integer> values = new LinkedHashMap<String, Integer>();
+        
+        for (String key : keys)
+            values.put(key, k++);
+        
+        putCombo(id, length, values);
+    }
+    
     /* (non-Javadoc)
      * @see org.eve.view.TableAssist#putCombo(java.lang.String, int, java.lang.String[])
      */
     @Override
-    public final void putCombo(String id, int length, String[] options) {
+    public final void putCombo(String id, int length, Map<String, ?> options) {
         TableComponent component = new TableComponent(getMessage(id));
         
-        component.setType(EVE.ccombo);
+        component.setType(ComponentType.CCOMBO);
         component.setOptions(options);
         component.setLength(length);
         
@@ -328,7 +338,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * @see org.eve.view.TableAssist#putMark(java.lang.String, int)
      */
     @Override
-    public final void putMark(String id, int type) {
+    public final void putMark(String id, ComponentType type) {
         TableComponent component = new TableComponent(getMessage(id));
         
         component.setType(type);

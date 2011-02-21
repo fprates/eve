@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eve.main.EVE;
 import org.eve.model.AbstractDocument;
 
 /**
@@ -32,7 +31,7 @@ public class Form extends AbstractComponentFactory {
         controls = new HashMap<Component, Control>();
         blocked = new HashSet<String>();
         comboassist = new ComboAssist();
-        comboassist.setType(EVE.combo);
+        comboassist.setType(ComponentType.COMBO);
         editable = true;
     }
     
@@ -107,8 +106,8 @@ public class Form extends AbstractComponentFactory {
      */
     
     @Override
-    protected final String getControlValue(Component component) {
-        return ViewUtils.getControlText(component, controls.get(component));
+    protected final Object getControlValue(Component component) {
+        return ViewUtils.getControlValue(component, controls.get(component));
     }
     
     protected final String getControlValue(Component component, int index) {
@@ -166,7 +165,6 @@ public class Form extends AbstractComponentFactory {
         
         composite.setLayout(new GridLayout(2, false));
         comboassist.setController(controller);
-        comboassist.setFactory(this);
         
         for(Component component : getComponents()) {
             label = new Label(composite, SWT.NONE);
@@ -177,7 +175,7 @@ public class Form extends AbstractComponentFactory {
             fieldComposite = new Composite(composite, SWT.NONE);
             
             switch (component.getType()) {
-            case EVE.text:
+            case TEXT:
                 text = new Text(fieldComposite, SWT.BORDER);
                 
                 charw = ViewUtils.getCharWidth(text);
@@ -205,7 +203,7 @@ public class Form extends AbstractComponentFactory {
                 
                 break;
                 
-            case EVE.combo:
+            case COMBO:
                 comboassist.setContainer(fieldComposite);
                 comboassist.setOptions(component.getOptions());
                 comboassist.setLength(component.getLength());
@@ -245,21 +243,13 @@ public class Form extends AbstractComponentFactory {
      * @param length
      */
     public final void putCombo(AbstractDocument document, String id, int length) {
-        String[] options;
         String name = document.getName(id);
         FormComponent component = new FormComponent(
                 name, length, !document.isKey(id));
         
         component.setTitle(getMessage(name));
-        component.setType(EVE.combo);
-        
-        options = document.getValues(id);
-        if (options == null) {
-            options = new String[1];
-            options[0] = "";
-        }
-        
-        component.setOptions(options);
+        component.setType(ComponentType.COMBO);
+        component.setOptions(document.getValues(id));
         component.setDataType(document.getType(id));
         
         putComponent(name, component);

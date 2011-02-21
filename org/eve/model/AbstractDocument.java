@@ -6,10 +6,10 @@ import java.lang.reflect.Method;
 import java.sql.Time;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class AbstractDocument implements Serializable {
-    public enum datatype {CHAR, INT, LONG, FLOAT, DATE, TIME};
     public static final String DTREG = "regDate";
     public static final String TMREG = "regTime";
     public static final String USREG = "regUser";
@@ -22,9 +22,9 @@ public abstract class AbstractDocument implements Serializable {
     
     public AbstractDocument() {
         fields = new HashMap<String, Field>();
-        put(DTREG, "document.dtreg", false, datatype.DATE, 10);
-        put(TMREG, "document.tmreg", false, datatype.TIME, 8);
-        put(USREG, "document.usreg", false, datatype.CHAR, 12);
+        put(DTREG, "document.dtreg", false, DataType.DATE, 10);
+        put(TMREG, "document.tmreg", false, DataType.TIME, 8);
+        put(USREG, "document.usreg", false, DataType.CHAR, 12);
     }
     
     /*
@@ -117,7 +117,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
-    public final datatype getType(String id) {
+    public final DataType getType(String id) {
         return fields.get(id).getType();
     }
     
@@ -126,7 +126,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @return
      */
-    public final String[] getValues(String id) {
+    public final Map<String, ?> getValues(String id) {
         return fields.get(id).getValues();
     }
     
@@ -261,7 +261,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @param name
      */
-    public final void put(String id, String name, boolean key, datatype type, int length) {
+    public final void put(String id, String name, boolean key, DataType type, int length) {
         Field field =  new Field(name);
         
         field.setKey(key);
@@ -276,8 +276,21 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @param values
      */
-    public final void putValues(String id, String[] values) {
+    public final void putValues(String id, Map<String, ?> values) {
         fields.get(id).setValues(values);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param keys
+     */
+    public final void putAutoValues(String id, String[] keys) {
+        int k = 0;
+        Map<String, Integer> values = new LinkedHashMap<String, Integer>();
+        
+        for (String key : keys)
+            values.put(key, k++);
     }
 }
 
@@ -285,9 +298,9 @@ class Field {
     private boolean key;
     private boolean upcase;
     private int length;
-    private AbstractDocument.datatype type;
+    private DataType type;
     private String name;
-    private String[] values;
+    private Map<String, ?> values;
     
     public Field(String name) {
         this.name = name;
@@ -312,11 +325,11 @@ class Field {
         return name;
     }
     
-    public final AbstractDocument.datatype getType() {
+    public final DataType getType() {
         return type;
     }
     
-    public final String[] getValues() {
+    public final Map<String, ?> getValues() {
         return values;
     }
     
@@ -346,7 +359,7 @@ class Field {
         this.length = length;
     }
     
-    public final void setType(AbstractDocument.datatype type) {
+    public final void setType(DataType type) {
         this.type = type;
     }
     
@@ -354,7 +367,7 @@ class Field {
         this.upcase = upcase;
     }
     
-    public final void setValues(String[] values) {
+    public final void setValues(Map<String, ?> values) {
         this.values = values;
     }
 }

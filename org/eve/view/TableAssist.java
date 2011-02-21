@@ -1,5 +1,7 @@
 package org.eve.view;
 
+import java.util.Map;
+
 import org.eclipse.swt.widgets.Composite;
 
 public interface TableAssist extends ComponentFactory {
@@ -43,7 +45,7 @@ public interface TableAssist extends ComponentFactory {
      * 
      * @param seltype
      */
-    public abstract void setSelType(int seltype);
+    public abstract void setSelType(ComponentType seltype);
     
     /**
      * Retorna número de itens
@@ -85,18 +87,28 @@ public interface TableAssist extends ComponentFactory {
     public abstract void put(String id);
 
     /**
+     * 
+     * @param id
+     * @param length
+     * @param keys
+     */
+    public abstract void putAutoCombo(
+            String id, int length, String[] keys);
+    
+    /**
      * Insere coluna combo box
      * @param id
      * @param length
      * @param options
      */
-    public abstract void putCombo(String id, int length, String[] options);
-
+    public abstract void putCombo(
+            String id, int length, Map<String, ?> options);
+    
     /**
      * Insere coluna de marcação de linha
      * @param id
      * @param type
      */
-    public abstract void putMark(String id, int type);
+    public abstract void putMark(String id, ComponentType type);
 
 }

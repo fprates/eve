@@ -7,16 +7,14 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
-import org.eve.main.EVE;
 
 public class ComboAssist {
-    private int type;
     private int length;
     private int item;
-    private AbstractComponentFactory factory;
+    private ComponentType type;
     private String id;
     private String reference;
-    private String[] options;
+    private Map<String, ?> options;
     private Composite container;
     private Controller controller;
     private Map<String, Component> table;
@@ -37,14 +35,6 @@ public class ComboAssist {
      */
     public final void setController(Controller controller) {
         this.controller = controller;
-    }
-    
-    /**
-     * 
-     * @param factory
-     */
-    public final void setFactory(AbstractComponentFactory factory) {
-        this.factory = factory;
     }
     
     /**
@@ -75,7 +65,7 @@ public class ComboAssist {
      * 
      * @param options
      */
-    public final void setOptions(String[] options) {
+    public final void setOptions(Map<String, ?> options) {
         this.options = options;
     }
     
@@ -91,10 +81,25 @@ public class ComboAssist {
      * 
      * @param type
      */
-    public final void setType(int type) {
+    public final void setType(ComponentType type) {
         this.type = type;
     }
     
+    private final String[] MapToArray(Map<String, ?> map) {
+        String[] values;
+        int k = map.size();
+        
+        if (k == 0)
+            return null;
+        
+        values = new String[k];
+        
+        k = 0;
+        for (String key : options.keySet())
+            values[k++] = key;
+        
+        return values;
+    }
     /**
      * 
      * @return
@@ -105,9 +110,10 @@ public class ComboAssist {
         CCombo ccombo;
         Combo combo;
         ComboListener listener;
+        String[] values;
         
         switch(type) {
-        case EVE.ccombo:
+        case CCOMBO:
             ccombo = new CCombo(container, SWT.NONE);
             
             charw = ViewUtils.getCharWidth(ccombo);
@@ -119,9 +125,11 @@ public class ComboAssist {
             /*
              * definições para carga dinâmica de valores
              */
-            if (options != null && options.length > 0) {
-                ccombo.setText(options[0]);
-                ccombo.setItems(options);
+            if (options != null) {
+                values = MapToArray(options);
+
+                ccombo.setText(values[0]);
+                ccombo.setItems(values);
             }
             
             if (options == null) {
@@ -135,7 +143,7 @@ public class ComboAssist {
             
             return ccombo;
             
-        case EVE.combo:
+        case COMBO:
             combo = new Combo(container, SWT.BORDER);
             
             charw = ViewUtils.getCharWidth(combo);
@@ -146,10 +154,11 @@ public class ComboAssist {
             /*
              * definições para carga dinâmica de valores
              */
-            if (options != null && options.length > 0) {
-                combo.setText(options[0]);
-                for (String option : options)
-                    combo.add(factory.getMessage(option));
+            if (options != null) {
+                values = MapToArray(options);
+
+                combo.setText(values[0]);
+                combo.setItems(values);
             }
             
             if (options == null) {

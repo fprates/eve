@@ -1,6 +1,7 @@
 package org.eve.sd.supplier;
 
 import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 import org.eve.sd.supplier.Supplier;
 
 public class Supplier extends AbstractDocument {
@@ -17,13 +18,13 @@ public class Supplier extends AbstractDocument {
     private String alternateName;
 
     public Supplier() {
-        put(IDENT, "supplier.ident", true, datatype.INT, 10);
-        put(REFER, "supplier.refer", false, datatype.CHAR, 12);
-        put(NAME, "supplier.name", false, datatype.CHAR, 40);
-        put(ANAME, "supplier.aname", false, datatype.CHAR, 40);
-//        put(CNPJ, "supplier.cnpj", false, datatype.CHAR, 18);
+        put(IDENT, "supplier.ident", true, DataType.INT, 10);
+        put(REFER, "supplier.refer", false, DataType.CHAR, 12);
+        put(NAME, "supplier.name", false, DataType.CHAR, 40);
+        put(ANAME, "supplier.aname", false, DataType.CHAR, 40);
+//        put(CNPJ, "supplier.cnpj", false, DataType.CHAR, 18);
 //        
-//        put(STATUS, "supplier.status", false, datatype.INT, 1);
+//        put(STATUS, "supplier.status", false, DataType.INT, 1);
 //        putValues(STATUS, new String[] {
 //                "supplier.inactive",
 //                "supplier.active"});

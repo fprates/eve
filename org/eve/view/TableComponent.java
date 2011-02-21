@@ -6,7 +6,6 @@ package org.eve.view;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.TableColumn;
-import org.eve.main.EVE;
 
 /**
  * Componente do assistente de tabela
@@ -18,7 +17,7 @@ public class TableComponent extends AbstractComponent {
     private TableColumn column;
     
     public TableComponent(String name) {
-        setType(EVE.text);
+        setType(ComponentType.TEXT);
         setName(name);
     }
 

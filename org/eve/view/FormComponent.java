@@ -3,8 +3,6 @@
  */
 package org.eve.view;
 
-import org.eve.main.EVE;
-
 /**
  * Componente do formulário de entrada
  * @author francisco.prates
@@ -13,7 +11,7 @@ import org.eve.main.EVE;
 public class FormComponent extends AbstractComponent {
     
     public FormComponent(String name, int length, boolean enabled) {
-        setType(EVE.text);
+        setType(ComponentType.TEXT);
         setName(name);
         setLength(length);
         setEnabled(enabled);

@@ -2,8 +2,8 @@ package org.eve.mm.material.view;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eve.main.EVE;
 import org.eve.view.AbstractView;
+import org.eve.view.ComponentType;
 import org.eve.view.Controller;
 import org.eve.view.TableAssist;
 
@@ -20,7 +20,7 @@ public class MaterialChooseView extends AbstractView {
         addAction("material.edit.choose", false);
         
         ctable.setLines(10);
-        ctable.putMark("material.mark", EVE.single);
+        ctable.putMark("material.mark", ComponentType.SINGLE);
         ctable.put("material.ident", 18);
         ctable.put("material.refer", 60);
         
