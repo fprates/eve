@@ -23,21 +23,23 @@ public class FileSearch extends AbstractSearch {
         /*
          * TODO
          */
-//        ComponentFactory factory = getFactory();
-//
-//        factory.setString(getComponent(), fd.open());
+        ComponentFactory factory = getFactory();
+
+        factory.setString(getComponent().getName(), fd.open());
     }
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractSearch#userWidgetSelected(org.eclipse.swt.events.SelectionEvent)
+     * @see org.eve.view.AbstractSearch#userWidgetSelected(
+     *     org.eclipse.swt.events.SelectionEvent)
      */
     @Override
     protected void userWidgetSelected(SelectionEvent ev) { }
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractSearch#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+     * @see org.eve.view.AbstractSearch#widgetDisposed(
+     *     org.eclipse.swt.events.DisposeEvent)
      */
     @Override
     public void widgetDisposed(DisposeEvent arg0) { }
