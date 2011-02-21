@@ -76,7 +76,7 @@ public class Form extends AbstractComponentFactory {
     }
     
     @Override
-    protected final void setControlValue(Component component, String value) {
+    protected final void setControlValue(Component component, Object value) {
         ViewUtils.setControlText(component, controls.get(component), value);
     }
     

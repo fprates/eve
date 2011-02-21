@@ -28,7 +28,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 
     protected abstract void setControlFocus(Component component);
     
-    protected abstract void setControlValue(Component component, String value);
+    protected abstract void setControlValue(Component component, Object value);
     
     protected abstract void setControlValue(Component component, int index, String value);
     
@@ -88,7 +88,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setFloat(String field, float value) {
-        setControlValue(fields.get(field), Float.toString(value));
+        Component component = fields.get(field);
+        
+        switch (component.getType()) {
+        case CCOMBO:
+        case COMBO:
+            setControlValue(component, value);
+        default:
+            setControlValue(fields.get(field), Float.toString(value));
+        }
     }
     
     /* (non-Javadoc)
@@ -104,7 +112,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setInt(String field, int value) {
-        setControlValue(fields.get(field), Integer.toString(value));
+        Component component = fields.get(field);
+        
+        switch (component.getType()) {
+        case CCOMBO:
+        case COMBO:
+            setControlValue(component, value);
+        default:
+            setControlValue(component, Integer.toString(value));
+        }
     }
     
     /* (non-Javadoc)

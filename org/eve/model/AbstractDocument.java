@@ -274,15 +274,6 @@ public abstract class AbstractDocument implements Serializable {
     /**
      * 
      * @param id
-     * @param values
-     */
-    public final void putValues(String id, Map<String, ?> values) {
-        fields.get(id).setValues(values);
-    }
-    
-    /**
-     * 
-     * @param id
      * @param keys
      */
     public final void putAutoValues(String id, String[] keys) {
@@ -291,6 +282,17 @@ public abstract class AbstractDocument implements Serializable {
         
         for (String key : keys)
             values.put(key, k++);
+        
+        putValues(id, values);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param values
+     */
+    public final void putValues(String id, Map<String, ?> values) {
+        fields.get(id).setValues(values);
     }
 }
 

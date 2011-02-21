@@ -28,7 +28,7 @@ public class Factory extends AbstractComponentFactory {
     protected void setControlFocus(Component component) { }
 
     @Override
-    protected void setControlValue(Component component, String value) { }
+    protected void setControlValue(Component component, Object value) { }
 
     @Override
     protected void setControlValue(Component component, int index, String value) { }
