@@ -30,11 +30,10 @@ public class SupplierSelectionController extends AbstractController {
             table = getTable("suppliers");
             ident = 0;
             
-            for (int k = 0; k < table.getItensSize(); k++)
-                if (table.getMarkValue(k)) {
-                    ident = table.getInt("supplier.ident", k);
-                    break;
-                }
+            for (int k : table.getSelectedItens()) {
+                ident = table.getInt("supplier.ident", k);
+                break;
+            }
             
             if (ident == 0) {
                 setMessage(EVE.error, "select.one");

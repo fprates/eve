@@ -325,7 +325,6 @@ public class EditableTableAssist extends AbstractTableAssist {
         List<ControlEditor> editor = editors.get(component);
         
         for (Component component_ : getComponents()) {
-            k++;
             if (component_ != component)
                 continue;
             
@@ -333,6 +332,7 @@ public class EditableTableAssist extends AbstractTableAssist {
             case EVE.text:
                 ((Text)editor.get(k).getEditor()).setText(value);
             }
+            k++;
             
             break;
         }

@@ -24,7 +24,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
-    private Table comptable;
+    private Table table;
     
     public AbstractTableAssist() {
         references = new HashMap<String, String>();
@@ -33,6 +33,11 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         seltype = EVE.single;
         comboassist = new ComboAssist();
         comboassist.setType(EVE.ccombo);
+    }
+    
+    @Override
+    public final int[] getSelectedItens() {
+        return table.getSelectionIndices();
     }
     
     /*
@@ -63,9 +68,9 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     @Override
     public final void setMarkValue(int index, boolean value) {
         if (value)
-            comptable.select(index);
+            table.select(index);
         else
-            comptable.deselect(index);
+            table.deselect(index);
 //        
 //        for (Component component : getComponents()) {
 //            switch (component.getType()) {
@@ -104,10 +109,10 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     
     /**
      * 
-     * @param comptable
+     * @param table
      */
-    protected final void setTable(Table comptable) {
-        this.comptable = comptable;
+    protected final void setTable(Table table) {
+        this.table = table;
     }
     
     /*
@@ -135,7 +140,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     @Override
     public final int getItensSize() {
-        return comptable.getItems().length;
+        return table.getItems().length;
     }
     
     /**
@@ -160,7 +165,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * @return
      */
     protected final Table getTable() {
-        return comptable;
+        return table;
     }
     
     /*
@@ -208,7 +213,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             
             switch(type) {
             case EVE.single:
-                button = new Button(comptable, SWT.RADIO);
+                button = new Button(table, SWT.RADIO);
                 button.setBackground(item.getBackground());
                 button.pack();
                 
@@ -218,7 +223,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
                 break;
                 
             case EVE.multi:
-                button = new Button(comptable, SWT.CHECK);
+                button = new Button(table, SWT.CHECK);
                 button.setBackground(item.getBackground());
                 button.pack();
                 
@@ -243,18 +248,18 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     public final void clear() {
         currentline = 0;
         
-        if (comptable == null)
+        if (table == null)
             return;
         
-        comptable.clearAll();
+        table.clearAll();
         
         /*
          * restaura quantidade de linhas na tabela
          */
-        comptable.removeAll();
+        table.removeAll();
         
         for (int k = 0; k < lines; k++)
-            addTableItem(new TableItem(comptable, SWT.NONE));
+            addTableItem(new TableItem(table, SWT.NONE));
     }
     
     /* (non-Javadoc)
@@ -268,7 +273,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     @Override
     public final void dispose() {        
-        comptable.dispose();
+        table.dispose();
     }
     
     /* (non-Javadoc)
@@ -278,7 +283,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     public final void insert() {
         currentline++;
         if (currentline > lines)
-            addTableItem(new TableItem(comptable, SWT.NONE));
+            addTableItem(new TableItem(table, SWT.NONE));
     }
     
     /* (non-Javadoc)
@@ -347,7 +352,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             if (component_ != component)
                 continue;
             
-            comptable.getItem(index).setText(k, value);
+            table.getItem(index).setText(k, value);
             
             break;
         }
@@ -370,7 +375,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             if (component_ != component)
                 continue;
             
-            return comptable.getItem(index).getText(k);
+            return table.getItem(index).getText(k);
         }
         
         return null;

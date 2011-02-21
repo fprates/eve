@@ -15,11 +15,10 @@ public class MaterialSelectionController extends AbstractController {
         TableAssist table = getTable("materials");
         String ident = null;
         
-        for (int k = 0; k < table.getItensSize(); k++)
-            if (table.getMarkValue(k)) {
-                ident = table.getString("material.ident", k);
-                break;
-            }
+        for (int k : table.getSelectedItens()) {
+            ident = table.getString("material.ident", k);
+            break;
+        }
         
         if (ident == null) {
             setMessage(EVE.error, "select.one");

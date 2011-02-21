@@ -37,12 +37,13 @@ public class TableViewAssist extends AbstractTableAssist {
      * @param listener
      * @return
      */
+    @Override
     public final Composite define(Composite container) {
         int lines;
         TableColumn tablecol;
         TableComponent component;
         Label title;
-        Table comptable;
+        Table table;
         
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
@@ -52,18 +53,18 @@ public class TableViewAssist extends AbstractTableAssist {
             title.setText(getMessage(name));
         }
         
-        comptable = new Table(area, SWT.BORDER);
-        setTable(comptable);
+        table = new Table(area, SWT.BORDER);
+        setTable(table);
         
-        comptable.setHeaderVisible(true);
-        comptable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        table.setHeaderVisible(true);
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
-        comboassist.setContainer(comptable);
+        comboassist.setContainer(table);
         comboassist.setController(getController());
         
         for (Component component_ : getComponents()) {
             component = (TableComponent)component_;
-            tablecol = new TableColumn(comptable, SWT.NONE);
+            tablecol = new TableColumn(table, SWT.NONE);
             tablecol.setText(component.getName());
             tablecol.pack();
             component.setColumn(tablecol);
@@ -71,14 +72,14 @@ public class TableViewAssist extends AbstractTableAssist {
         
         lines = getLines();
         for (int k = 0; k < lines; k++)
-            new TableItem(comptable, SWT.NONE);
+            new TableItem(table, SWT.NONE);
         
         /*
          * por motivos que não conheço, não se recomenda usar TableEditor
          * logo após TableItem. Ocorrem problemas graves de dimensionamento
          * do controle de tabela.
          */
-        for (TableItem item : comptable.getItems())
+        for (TableItem item : table.getItems())
             addTableItem(item);
         
         return area;

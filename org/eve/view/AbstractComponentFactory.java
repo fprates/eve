@@ -436,25 +436,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return Time.valueOf(value);
     }
     
-    /* (non-Javadoc)
-     * @see org.eve.view.ComponentFactory#getMarkValue(int)
-     */
-    @Override
-    public final boolean getMarkValue(int row) {
-//        Component component;
-//        
-//        for (String id : fields.keySet()) {
-//            component = fields.get(id);
-//            switch (component.getType()) {
-//            case EVE.single:
-//            case EVE.multi:
-//                return ((Button)component.getItem(row).getControl()).getSelection();
-//            }
-//        }
-        
-        return false;
-    }
-    
     /*
      * 
      * Others

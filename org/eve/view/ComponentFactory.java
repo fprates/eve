@@ -199,13 +199,6 @@ public interface ComponentFactory {
     public abstract Time getTime(String field, int row);
 
     /**
-     * Retorna valor do campo de marcação de linha
-     * @param row
-     * @return
-     */
-    public abstract boolean getMarkValue(int row);
-
-    /**
      * Limpa formulário
      */
     public abstract void clear();

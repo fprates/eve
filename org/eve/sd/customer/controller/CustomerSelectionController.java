@@ -34,12 +34,11 @@ public class CustomerSelectionController extends AbstractController {
             table = getTable("customers");
             ident = 0;
             
-            for (int k = 0; k < table.getItensSize(); k++)
-                if (table.getMarkValue(k)) {
-                    ident = table.getInt("customer.ident", k);
-                    break;
-                }
-            
+            for (int k : table.getSelectedItens()) {
+                ident = table.getInt("customer.ident", k);
+                break;
+            }
+                
             if (ident == 0) {
                 setMessage(EVE.error, "select.one");
                 return;

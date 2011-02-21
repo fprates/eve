@@ -4,6 +4,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public interface TableAssist extends ComponentFactory {
 
+    public abstract int[] getSelectedItens();
+    
     /**
      * 
      * @param controller
