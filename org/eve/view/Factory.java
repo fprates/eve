@@ -37,6 +37,9 @@ public class Factory extends AbstractComponentFactory {
     public void setControlSize(Component component) { }
 
     @Override
+    public void clear() { }
+    
+    @Override
     protected String getControlValue(Component component) {
         return null;
     }

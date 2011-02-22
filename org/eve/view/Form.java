@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -131,6 +132,25 @@ public class Form extends AbstractComponentFactory {
      * Others
      * 
      */
+    
+    @Override
+    public final void clear() {
+        for (Component component : controls.keySet()) {
+            switch (component.getType()) {
+            case CCOMBO:
+                ((CCombo)controls.get(component)).setText("");
+                break;
+                
+            case COMBO:
+                ((Combo)controls.get(component)).setText("");
+                break;
+                
+            case TEXT:
+                ((Text)controls.get(component)).setText("");
+                break;
+            }
+        }
+    }
     
     /**
      * 

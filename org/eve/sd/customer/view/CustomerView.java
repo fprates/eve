@@ -292,6 +292,8 @@ public class CustomerView extends AbstractView {
         EditableTableAssist dschedule =
             (EditableTableAssist)controller.getTable("dschedule");
         
+        form.clear();
+        
         /*
          * Display mode component's configuration
          */

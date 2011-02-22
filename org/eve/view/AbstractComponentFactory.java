@@ -475,11 +475,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#clear()
      */
-    @Override
-    public void clear() {
-//        for (Component component : fields.values())
-//            component.clear();
-    }
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#putComponent(java.lang.String, org.eve.view.Component)
