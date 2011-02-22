@@ -44,7 +44,7 @@ public class CustomerSelectionView extends AbstractView {
         selpor = new Group(container, SWT.SHADOW_IN);
         selporform.setLocale(getLocale());
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
-        selpor.setText(getMessage("customer.select.by"));
+        selpor.setText(getMessage("select.by"));
         
         selporform.put(customer, Customer.NAME);
         selporform.put(customer, Customer.ANAME);

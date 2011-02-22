@@ -30,7 +30,7 @@ public class MaterialSelectionView extends AbstractView {
         selpor = new Group(container, SWT.SHADOW_IN);
         selporform.setLocale(getLocale());
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
-        selpor.setText(getMessage("material.select.by"));
+        selpor.setText(getMessage("select.by"));
         
         selporform.put(material, Material.REFER);
         selporform.define(selpor);
