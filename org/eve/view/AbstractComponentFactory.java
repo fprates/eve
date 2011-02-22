@@ -23,7 +23,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     public AbstractComponentFactory() {
         fields = new LinkedHashMap<String, Component>();
-        dateformat = DateFormat.getDateInstance(DateFormat.MEDIUM);
     }
 
     protected abstract void setControlFocus(Component component);
@@ -48,7 +47,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         if (date == null)
             setControlValue(component, "");
         else
-            setControlValue(component, date.toString());
+            setControlValue(component, dateformat.format(date));
     }
     
     /* (non-Javadoc)
@@ -137,6 +136,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final void setLocale(Locale locale) {
         this.locale = locale;
+        dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
     
     /* (non-Javadoc)
