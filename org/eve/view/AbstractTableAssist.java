@@ -21,7 +21,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     private static final int LINES = 5;
     private int currentline;
     private int lines;
-    private ComponentType type;
+//    private ComponentType type;
     private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
@@ -31,7 +31,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         references = new HashMap<String, String>();
         currentline = 0;
         lines = LINES;
-        type = ComponentType.SINGLE;
+//        type = ComponentType.SINGLE;
         comboassist = new ComboAssist();
         comboassist.setType(ComponentType.CCOMBO);
     }
@@ -105,7 +105,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     
     @Override
     public final void setSelType(ComponentType type) {
-        this.type = type;
+//        this.type = type;
     }
     
     /**
@@ -358,13 +358,12 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         int k = 0;
         
         for (Component component_ : getComponents()) {
+            if (component_ == component) {
+                table.getItem(index).setText(k, value);
+                break;
+            }
+            
             k++;
-            if (component_ != component)
-                continue;
-            
-            table.getItem(index).setText(k, value);
-            
-            break;
         }
     }
 
@@ -381,11 +380,10 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         int k = 0;
         
         for (Component component_ : getComponents()) {
-            k++;
-            if (component_ != component)
-                continue;
+            if (component_ == component)
+                return table.getItem(index).getText(k);
             
-            return table.getItem(index).getText(k);
+            k++;
         }
         
         return null;

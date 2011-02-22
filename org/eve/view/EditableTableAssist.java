@@ -324,16 +324,17 @@ public class EditableTableAssist extends AbstractTableAssist {
         List<ControlEditor> editor = editors.get(component);
         
         for (Component component_ : getComponents()) {
-            if (component_ != component)
-                continue;
-            
-            switch (component.getType()) {
-            case TEXT:
-                ((Text)editor.get(k).getEditor()).setText(value);
+            if (component_ == component) {
+                switch (component.getType()) {
+                case TEXT:
+                    ((Text)editor.get(k).getEditor()).setText(value);
+                    break;
+                }
+                
+                break;
             }
-            k++;
             
-            break;
+            k++;
         }
     }
 
