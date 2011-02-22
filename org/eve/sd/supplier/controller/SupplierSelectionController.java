@@ -8,6 +8,7 @@ import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
 import org.eve.view.TableAssist;
+import org.hibernate.HibernateException;
 
 public class SupplierSelectionController extends AbstractController {
     
@@ -96,9 +97,10 @@ public class SupplierSelectionController extends AbstractController {
                 if (action.equals("supplier.edit.sel"))
                     call("supplier.edit.choose");
                 
-            } else {            
-                model.load(Supplier.class, ident, supplier);
-                if (supplier == null) {
+            } else {
+                try {
+                    model.load(Supplier.class, ident, supplier);
+                } catch (HibernateException ex) {
                     setMessage(EVE.error, "supplier.not.found");
                     return;
                 }

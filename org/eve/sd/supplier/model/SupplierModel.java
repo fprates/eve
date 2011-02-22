@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.eve.model.AbstractModel;
 //import org.eve.sd.common.Country;
 import org.eve.sd.supplier.Supplier;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,9 @@ public class SupplierModel extends AbstractModel {
             supplier = (Supplier)object;
             
             supplier_ = (Supplier)session.get(class_, object_);
+            if (supplier_ == null)
+                throw new HibernateException("supplier.not.found");
+            
             copySupplier(supplier_, supplier);
         }
         
