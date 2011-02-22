@@ -11,6 +11,10 @@ import org.eve.view.Form;
 
 public class MaterialSelectionView extends AbstractView {
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractView#defineView(org.eclipse.swt.widgets.Composite)
+     */
     @Override
     protected void defineView(Composite container) {
         Group selpor;
@@ -39,6 +43,10 @@ public class MaterialSelectionView extends AbstractView {
         addButton("material.sel");
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.View#reload(java.lang.String)
+     */
     @Override
     public void reload(String action) {
         Controller controller = getController();
