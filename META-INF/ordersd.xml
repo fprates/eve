@@ -16,10 +16,10 @@
     </bean>
     
     <bean id="ordersd" class="org.eve.sd.order.Order"/>
-    
-    <!-- 
-    <bean id="cust_model" class="org.eve.sd.customer.model.CustomerModel">
+     
+    <bean id="ordersd_model" class="org.eve.sd.order.model.OrderModel">
         <property name="sessionFactory" ref="session_factory"/>
+        <!-- 
         <property name="queries">
             <map>
                 <entry key="sel_cities" value="from City where ufkey = ?"/>
@@ -29,14 +29,15 @@
                 <entry key="sel_suppliers" value="from Supplier"/>
             </map>
         </property>
+         -->
     </bean>
-     -->
+    
     <bean id="ordersd_view" class="org.eve.sd.order.view.OrderView"/>
     
     <bean id="ordersd_control" class="org.eve.sd.order.controller.OrderController">
         <property name="messages" ref="ordersd_msg"/>
         <property name="object" ref="ordersd"/>
-        <!-- <property name="model" ref="cust_model"/> -->
+        <property name="model" ref="ordersd_model"/>
         <property name="views">
             <map>
                 <entry key="ordersd_view" value-ref="ordersd_view"/>
@@ -55,9 +56,7 @@
     <bean id="ordersd_sel_control" class="org.eve.sd.order.controller.OrderSelectionController">
         <property name="messages" ref="ordersd_msg"/>
         <property name="object" ref="ordersd"/>
-        <!-- 
         <property name="model" ref="ordersd_model"/>
-         -->
         <property name="views">
             <map>
                 <entry key="ordersd_sel_view" value-ref="ordersd_sel_view"/>

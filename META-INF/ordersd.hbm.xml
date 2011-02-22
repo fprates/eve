@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>    
-    <class name="org.eve.sd.order.Order" table="ORDERSD001">
+    <class name="org.eve.sd.order.Order" table="SDDOC001">
         <id name="id" column="IDENT"/>
     </class>
 </hibernate-mapping>

@@ -23,11 +23,12 @@
                 <value>META-INF/supplier.hbm.xml</value>
                 <value>META-INF/material.hbm.xml</value>
                 <value>META-INF/numericrange.hbm.xml</value>
+                <value>META-INF/ordersd.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.connection.provider_class">=org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
                 <prop key="hibernate.c3p0.min_size">5</prop>
                 <prop key="hibernate.c3p0.max_size">10</prop>
                 <prop key="hibernate.c3p0.timeout">1800</prop>
