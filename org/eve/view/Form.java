@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -78,7 +77,7 @@ public class Form extends AbstractComponentFactory {
     
     @Override
     protected final void setControlValue(Component component, Object value) {
-        ViewUtils.setControlText(component, controls.get(component), value);
+        ViewUtils.setControlText(component, controls.get(component), value, this);
     }
     
     @Override
@@ -135,21 +134,8 @@ public class Form extends AbstractComponentFactory {
     
     @Override
     public final void clear() {
-        for (Component component : controls.keySet()) {
-            switch (component.getType()) {
-            case CCOMBO:
-                ((CCombo)controls.get(component)).setText("");
-                break;
-                
-            case COMBO:
-                ((Combo)controls.get(component)).setText("");
-                break;
-                
-            case TEXT:
-                ((Text)controls.get(component)).setText("");
-                break;
-            }
-        }
+        for (Component component : controls.keySet())
+            setControlValue(component, "");
     }
     
     /**
@@ -228,6 +214,7 @@ public class Form extends AbstractComponentFactory {
                 comboassist.setOptions(component.getOptions());
                 comboassist.setLength(component.getLength());
                 comboassist.setId(component.getName());
+                comboassist.setFactory(this);
                 
                 combo = (Combo)comboassist.newInstance();
                 

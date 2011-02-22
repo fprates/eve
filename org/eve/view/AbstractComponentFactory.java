@@ -389,8 +389,9 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * @param message
      * @return
      */
-    protected final String getMessage(String message) {
-        return messages.getMessage(message, null, message, locale);        
+    @Override
+    public final String getMessage(String tag) {
+        return messages.getMessage(tag, null, tag, locale);        
     }
     
     /* (non-Javadoc)

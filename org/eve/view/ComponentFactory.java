@@ -169,6 +169,13 @@ public interface ComponentFactory {
     public abstract long getLong(String field);
 
     /**
+     * 
+     * @param tag
+     * @return
+     */
+    public abstract String getMessage(String tag);
+    
+    /**
      * Retorna valor do campo caractere do formulário
      * @param field
      * @return

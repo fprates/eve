@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Widget;
 public class ComboAssist {
     private int length;
     private int item;
+    private ComponentFactory factory;
     private ComponentType type;
     private String id;
     private String reference;
@@ -63,6 +64,14 @@ public class ComboAssist {
     
     /**
      * 
+     * @param factory
+     */
+    public final void setFactory(ComponentFactory factory) {
+        this.factory = factory;
+    }
+    
+    /**
+     * 
      * @param options
      */
     public final void setOptions(Map<String, ?> options) {
@@ -85,6 +94,11 @@ public class ComboAssist {
         this.type = type;
     }
     
+    /**
+     * 
+     * @param map
+     * @return
+     */
     private final String[] MapToArray(Map<String, ?> map) {
         String[] values;
         int k = map.size();
@@ -100,6 +114,7 @@ public class ComboAssist {
         
         return values;
     }
+    
     /**
      * 
      * @return
@@ -128,8 +143,9 @@ public class ComboAssist {
             if (options != null) {
                 values = MapToArray(options);
 
-                ccombo.setText(values[0]);
-                ccombo.setItems(values);
+                ccombo.setText(factory.getMessage(values[0]));
+                for (String value : values)
+                    ccombo.add(factory.getMessage(value));
             }
             
             if (options == null) {
@@ -157,8 +173,9 @@ public class ComboAssist {
             if (options != null) {
                 values = MapToArray(options);
 
-                combo.setText(values[0]);
-                combo.setItems(values);
+                combo.setText(factory.getMessage(values[0]));
+                for (String value : values)
+                    combo.add(factory.getMessage(value));
             }
             
             if (options == null) {

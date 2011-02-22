@@ -17,7 +17,7 @@ public class ComboListener implements Listener {
     private Object object;
     private String id;
     private String reference;
-    private ComponentFactory factory;
+//    private ComponentFactory factory;
     
     public ComboListener(String id, Controller controller) {
         object = null;
@@ -70,7 +70,7 @@ public class ComboListener implements Listener {
     }
     
     public final void setFactory(ComponentFactory factory) {
-        this.factory = factory;
+//        this.factory = factory;
     }
     
     /*

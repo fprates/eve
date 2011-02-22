@@ -2,6 +2,7 @@ package org.eve.view;
 
 import java.util.Map;
 
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.graphics.Drawable;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Combo;
@@ -64,21 +65,33 @@ public class ViewUtils {
         control.setSize(control.computeSize(component.getLength() * charw, charh));
     }
     
-    public static final void setControlText(
-            Component component, Control control, Object value) {
+    public static final void setControlText(Component component,
+            Control control, Object value, ComponentFactory factory) {
         Map<String, ?> options = component.getOptions();
         
         switch (component.getType()) {
+        case CCOMBO:
+            for (String key : options.keySet()) {
+                if (!options.get(key).equals(value))
+                    continue;
+                
+                ((CCombo)control).setText(factory.getMessage(key));
+                break;
+            }
+            
+            break;
+            
         case COMBO:
             for (String key : options.keySet()) {
                 if (!options.get(key).equals(value))
                     continue;
                 
-                ((Combo)control).setText(key);
+                ((Combo)control).setText(factory.getMessage(key));
                 break;
             }
             
             break;
+            
         case TEXT:
             ((Text)control).setText((String)value);
             break;

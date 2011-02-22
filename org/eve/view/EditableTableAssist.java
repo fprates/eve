@@ -210,6 +210,7 @@ public class EditableTableAssist extends AbstractTableAssist {
             comboassist.setReference(getReference(component.getName()));
             comboassist.setLength(component.getLength());
             comboassist.setId(component.getName());
+            comboassist.setFactory(this);
             
             combo = (CCombo)comboassist.newInstance();                
             combo.setEditable(component.isEnabled());
