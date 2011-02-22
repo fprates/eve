@@ -339,23 +339,14 @@ public class EditableTableAssist extends AbstractTableAssist {
 
     @Override
     protected final String getControlValue(Component component, int index) {
-        int k = 0;
         List<ControlEditor> editor = editors.get(component);
         
-        for (Component component_ : getComponents()) {
-            k++;
-            if (component_ != component)
-                continue;
-            
-            switch (component.getType()) {
-            case TEXT:
-                return ((Text)editor.get(k).getEditor()).getText();
-            }
-            
-            break;
+        switch (component.getType()) {
+        case TEXT:
+            return ((Text)editor.get(index).getEditor()).getText();
+        default:
+            return null;
         }
-        
-        return null;
     }
 }
 

@@ -432,33 +432,36 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final Time getTime(String field, int row) {
         String value = getString(field, row);
-//        int len;
-//            
-//        if (value.equals(""))
-//            return Time.valueOf("00:00:00");
-//        
-//        value = value.replace(":", "");
-//        len = value.length(); 
-//        if ((len % 2) != 0) {
-//            setMessage(EVE.error, getMessage("invalid.time.format"));
-//            fields.get(field).getItem(row).getControl().setFocus();
-//            throw new IllegalArgumentException();
-//        }
-//        
-//        if ((len != 4) && (len != 6)) {
-//            setMessage(EVE.error, getMessage("invalid.time.format"));
-//            fields.get(field).getItem(row).getControl().setFocus();
-//            throw new IllegalArgumentException();
-//        }
-//        
-//        if (len == 4)
-//            value = value.concat("00");
-//        
-//        value = new StringBuffer(value.substring(0, 2))
-//            .append(":").append(value.substring(2, 4))
-//            .append(":").append(value.substring(4, 6)).toString();
-//        
-//        setString(field, row, value);
+        int len;
+            
+        if (value.equals(""))
+            return Time.valueOf("00:00:00");
+        
+        value = value.replace(":", "");
+        len = value.length();
+        
+        if ((len % 2) != 0) {
+            setMessage(EVE.error, getMessage("invalid.time.format"));
+            setControlFocus(fields.get(field));
+            
+            throw new IllegalArgumentException();
+        }
+        
+        if ((len != 4) && (len != 6)) {
+            setMessage(EVE.error, getMessage("invalid.time.format"));
+            setControlFocus(fields.get(field));
+            
+            throw new IllegalArgumentException();
+        }
+        
+        if (len == 4)
+            value = value.concat("00");
+        
+        value = new StringBuffer(value.substring(0, 2))
+            .append(":").append(value.substring(2, 4))
+            .append(":").append(value.substring(4, 6)).toString();
+        
+        setString(field, row, value);
         
         return Time.valueOf(value);
     }
