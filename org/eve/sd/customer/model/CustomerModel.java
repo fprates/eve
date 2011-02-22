@@ -137,10 +137,13 @@ public class CustomerModel extends AbstractModel {
     @Override
     public void insert(Set<?> objects) {
         int k;
+        int max;
         Customer customer;
         Calendar calendar = Calendar.getInstance();
         Time time = new Time(calendar.getTimeInMillis());
         Session session = getSessionFactory().getCurrentSession();
+        
+        max = 0;
         
         session.beginTransaction();
         for (Object object: objects) {
@@ -160,7 +163,13 @@ public class CustomerModel extends AbstractModel {
                 contact.setItem(++k + (customer.getId() * 100));
                 session.save(contact);
             }
+            
+            if (customer.getId() > max)
+                max = customer.getId();
         }
+        
+        setNextIdent(session, "CUSTMR", max);
+        
         session.getTransaction().commit();
         
     }

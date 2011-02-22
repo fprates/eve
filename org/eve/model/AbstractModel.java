@@ -38,12 +38,25 @@ public abstract class AbstractModel implements Model {
     public final void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    @Transactional(propagation=Propagation.SUPPORTS)
+    protected final void setNextIdent(Session session, String rngname, int id) {
+        NumericRange range = getRange(session, rngname);
+        range.setCurrent(id);
+    }
     
     /*
      * 
      * Getters
      * 
      */
+
+    @Transactional(propagation=Propagation.SUPPORTS)
+    private final NumericRange getRange(Session session, String rngname) {
+        return (NumericRange)session.
+        createQuery("from NumericRange where range = ?").
+        setString(0, rngname).uniqueResult();
+    }
     
     /**
      * Retorna o próximo identificador numérico
@@ -53,9 +66,7 @@ public abstract class AbstractModel implements Model {
      */
     @Transactional(propagation=Propagation.SUPPORTS)
     protected final int getNextIdent(Session session, String rngname) {
-        NumericRange range = (NumericRange)session.
-            createQuery("from NumericRange where range = ?").
-            setString(0, rngname).uniqueResult();
+        NumericRange range = getRange(session, rngname);
         
         range.setCurrent(range.getCurrent() + 1);
         
