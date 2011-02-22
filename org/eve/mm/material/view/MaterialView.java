@@ -42,7 +42,7 @@ public class MaterialView extends AbstractView {
         
         form.define(container);
         
-        addButton("material.save");
+        addButton("save.command");
     }
     
     /**
@@ -77,7 +77,7 @@ public class MaterialView extends AbstractView {
          */
         if (action.equals("material.show")) {
             setTitlebar("material.show.title");
-            setButtonVisible("material.save", false);
+            setButtonVisible("save.command", false);
             form.setEditable(false);
             form.setBlocked("material.ident");
             form.setBlocked("material.dtreg");
@@ -94,7 +94,7 @@ public class MaterialView extends AbstractView {
          */
         if (action.equals("material.edit")) {
             setTitlebar("material.edit.title");
-            setButtonVisible("material.save", true);
+            setButtonVisible("save.command", true);
             form.setEditable(true);
             form.setBlocked("material.ident");
             form.setBlocked("material.dtreg");
@@ -111,7 +111,7 @@ public class MaterialView extends AbstractView {
          */
         if (action.equals("material.create")) {            
             setTitlebar("material.create.title");
-            setButtonVisible("material.save", true);
+            setButtonVisible("save.command", true);
             form.setEditable(true);
             form.setUnBlocked("material.ident");
             form.setBlocked("material.dtreg");

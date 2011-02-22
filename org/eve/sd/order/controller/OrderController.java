@@ -8,10 +8,12 @@ import org.eve.view.AbstractController;
 
 public class OrderController extends AbstractController {
 
-    /**
-     * 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractController#saveCommand()
      */
-    private final void saveOrder() {
+    @Override
+    public final void saveCommand() {
         Order order = (Order)getObject();
         Model model = getModel();
         
@@ -28,10 +30,6 @@ public class OrderController extends AbstractController {
      * @see org.eve.view.AbstractController#userInput(java.lang.String)
      */
     @Override
-    public void userInput(String input) {
-        if (input.equals("save.command")) {
-            saveOrder();
-        }
-    }
+    public void userInput(String input) { }
 
 }

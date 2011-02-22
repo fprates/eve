@@ -131,10 +131,10 @@ public class CustomerController extends AbstractController {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractController#userInput(java.lang.String)
+     * @see org.eve.view.AbstractController#saveCommand()
      */
     @Override
-    public final void userInput(String input) {
+    public final void saveCommand() {
         String ufkey;
         String name;
         CustomerContact contact;
@@ -147,6 +147,111 @@ public class CustomerController extends AbstractController {
         EditableTableAssist contacts = (EditableTableAssist)getTable("contacts");
         EditableTableAssist addresses = (EditableTableAssist)getTable("addresses");
         
+        try {
+            /*
+             * dados base
+             */
+            for (Object id : customer.getIds()) {
+                if (id.equals("regDate") || id.equals("regTime") ||
+                        id.equals("regUser"))
+                    continue;
+                
+                customer.setFieldValue((String)id, form.getFieldValue(
+                        customer, (String)id));
+            }
+            customer.setStandardSupplier(form.getInt("customer.stdsp"));
+            
+            /*
+             * inclui contatos
+             */
+            customer.getContacts().clear();
+            for (int k = 0; k < contacts.getItensSize(); k++) {
+                name = contacts.getString("contact.rname", k);
+                
+                if (name.equals(""))
+                    continue;
+                
+                contact = new CustomerContact();
+                
+                contact.setCustomer(customer);
+                contact.setItem(k);
+                contact.setName(name);
+                contact.setFunction(contacts.getString("contact.funct", k));
+                
+                customer.getContacts().add(contact);
+            }
+            
+            /*
+             * inclui endereços
+             */
+            customer.getAddresses().clear();
+            for (int k = 0; k < addresses.getItensSize(); k++) {
+                name = addresses.getString("address.logra", k);
+                
+                if (name.equals(""))
+                    continue;
+                
+                address = new CustomerAddress();
+                
+                address.setCustomer(customer);
+                address.setItem(k);
+                address.setType(addresses.getInt("address.type", k));
+                address.setAddress(name);
+                address.setNumber(addresses.getInt("address.numer", k));
+                address.setEstado(addresses.getString("address.coduf", k));
+
+                ufkey = "BRA"+address.getEstado();
+                results = cities.get(ufkey);
+                if (results == null) {
+                    results = model.select("sel_cities", new Object[] {ufkey});
+                    cities.put(ufkey, results);
+                }
+
+                name = addresses.getString("address.munic", k);
+                for (Object object : results) {
+                    city = (City)object;
+                    if (!city.getName().equals(name))
+                        continue;
+                    
+                    address.setMunicipio(city.getIdent());
+                    break;
+                }
+                
+                customer.getAddresses().add(address);
+            }
+            
+            /*
+             * inclui horários
+             */
+            customer.getSchedule().clear();
+            loadSchedule(getTable("vschedule"), customer, 0);
+            loadSchedule(getTable("dschedule"), customer, 1);
+            
+            model.save(customer);
+            form.setInt("customer.ident", customer.getId());
+            form.setDate("document.dtreg", customer.getRegDate());
+            form.setTime("document.tmreg", customer.getRegTime());
+            
+            setMessage(EVE.status, "customer.save.success");
+            
+            return;
+        } catch (HibernateException ex) {
+            setMessage(EVE.error, "customer.save.error");
+            ex.printStackTrace();                
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractController#userInput(java.lang.String)
+     */
+    @Override
+    public final void userInput(String input) {
+        EditableTableAssist contacts = (EditableTableAssist)getTable("contacts");
+        EditableTableAssist addresses = (EditableTableAssist)getTable("addresses");
+        
         if (contacts.hasEvent(input)) {
             contacts.userInput(input);
             return;
@@ -155,103 +260,6 @@ public class CustomerController extends AbstractController {
         if (addresses.hasEvent(input)) {
             addresses.userInput(input);
             return;
-        }
-        
-        if (input.equals("customer.save")) {
-            try {
-                /*
-                 * dados base
-                 */
-                for (Object id : customer.getIds()) {
-                    if (id.equals("regDate") || id.equals("regTime") ||
-                            id.equals("regUser"))
-                        continue;
-                    
-                    customer.setFieldValue((String)id, form.getFieldValue(
-                            customer, (String)id));
-                }
-                customer.setStandardSupplier(form.getInt("customer.stdsp"));
-                
-                /*
-                 * inclui contatos
-                 */
-                customer.getContacts().clear();
-                for (int k = 0; k < contacts.getItensSize(); k++) {
-                    name = contacts.getString("contact.rname", k);
-                    
-                    if (name.equals(""))
-                        continue;
-                    
-                    contact = new CustomerContact();
-                    
-                    contact.setCustomer(customer);
-                    contact.setItem(k);
-                    contact.setName(name);
-                    contact.setFunction(contacts.getString("contact.funct", k));
-                    
-                    customer.getContacts().add(contact);
-                }
-                
-                /*
-                 * inclui endereços
-                 */
-                customer.getAddresses().clear();
-                for (int k = 0; k < addresses.getItensSize(); k++) {
-                    name = addresses.getString("address.logra", k);
-                    
-                    if (name.equals(""))
-                        continue;
-                    
-                    address = new CustomerAddress();
-                    
-                    address.setCustomer(customer);
-                    address.setItem(k);
-                    address.setType(addresses.getInt("address.type", k));
-                    address.setAddress(name);
-                    address.setNumber(addresses.getInt("address.numer", k));
-                    address.setEstado(addresses.getString("address.coduf", k));
-
-                    ufkey = "BRA"+address.getEstado();
-                    results = cities.get(ufkey);
-                    if (results == null) {
-                        results = model.select("sel_cities", new Object[] {ufkey});
-                        cities.put(ufkey, results);
-                    }
-
-                    name = addresses.getString("address.munic", k);
-                    for (Object object : results) {
-                        city = (City)object;
-                        if (!city.getName().equals(name))
-                            continue;
-                        
-                        address.setMunicipio(city.getIdent());
-                        break;
-                    }
-                    
-                    customer.getAddresses().add(address);
-                }
-                
-                /*
-                 * inclui horários
-                 */
-                customer.getSchedule().clear();
-                loadSchedule(getTable("vschedule"), customer, 0);
-                loadSchedule(getTable("dschedule"), customer, 1);
-                
-                model.save(customer);
-                form.setInt("customer.ident", customer.getId());
-                form.setDate("document.dtreg", customer.getRegDate());
-                form.setTime("document.tmreg", customer.getRegTime());
-                
-                setMessage(EVE.status, "customer.save.success");
-                
-                return;
-            } catch (HibernateException ex) {
-                setMessage(EVE.error, "customer.save.error");
-                ex.printStackTrace();                
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
         }
         
         if (input.equals("contacts.new")) {

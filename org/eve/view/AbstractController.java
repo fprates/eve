@@ -201,6 +201,20 @@ public abstract class AbstractController implements Controller {
         system.call(action);
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#loadCommand()
+     */
+    @Override
+    public void loadCommand() { }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#saveCommand()
+     */
+    @Override
+    public void saveCommand() { }
+    
     /**
      * Processamento de eventos do usuário
      * @param input
@@ -229,8 +243,21 @@ public abstract class AbstractController implements Controller {
      */
     @Override
     public final void widgetSelected(SelectionEvent ev) {
+        String action = widgets.get(ev.getSource());
+        
         system.clearMessage();
-        userInput(widgets.get(ev.getSource()));
+        
+        if (action.equals("save.command")) {
+            saveCommand();
+            return;
+        }
+        
+        if (action.equals("load.command")) {
+            loadCommand();
+            return;
+        }
+        
+        userInput(action);
     }
     
     /*

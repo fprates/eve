@@ -10,41 +10,41 @@ import org.hibernate.HibernateException;
 public class SupplierController extends AbstractController {
 
     @Override
-    public void userInput(String input) {
+    public final void saveCommand() {
         String id_;
         Supplier supplier = (Supplier)getObject();
         Form form = getForm("main");
         Model model = getModel();
         
-        if (input.equals("supplier.save")) {
-            try {
-                /*
-                 * dados base
-                 */
-                for (Object id : supplier.getIds()) {
-                    id_ = (String)id;
-                    if (id_.equals(Supplier.USREG))
-                        continue;
-                    
-                    supplier.setFieldValue(id_, form.getFieldValue(supplier, id_));
-                }
+        try {
+            /*
+             * dados base
+             */
+            for (Object id : supplier.getIds()) {
+                id_ = (String)id;
+                if (id_.equals(Supplier.USREG))
+                    continue;
                 
-                model.save(supplier);
-                form.setInt("document.ident", supplier.getId());
-                form.setDate("document.dtreg", supplier.getRegDate());
-                form.setTime("document.tmreg", supplier.getRegTime());
-                
-                setMessage(EVE.status, "supplier.save.success");
-                
-                return;
-            } catch (HibernateException ex) {
-                setMessage(EVE.error, "supplier.save.error");
-                ex.printStackTrace();                
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                supplier.setFieldValue(id_, form.getFieldValue(supplier, id_));
             }
+            
+            model.save(supplier);
+            form.setInt("document.ident", supplier.getId());
+            form.setDate("document.dtreg", supplier.getRegDate());
+            form.setTime("document.tmreg", supplier.getRegTime());
+            
+            setMessage(EVE.status, "supplier.save.success");
+            
+            return;
+        } catch (HibernateException ex) {
+            setMessage(EVE.error, "supplier.save.error");
+            ex.printStackTrace();                
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
     }
+    
+    @Override
+    public void userInput(String input) { }
 
 }

@@ -10,7 +10,12 @@ import org.hibernate.HibernateException;
 
 public class MaterialController extends AbstractController {
 
-	private void save() {
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractController#saveCommand()
+     */
+    @Override
+	public void saveCommand() {
         boolean firstsave = false;
         Model model = getModel();
         Material material = (Material)getObject();
@@ -62,9 +67,6 @@ public class MaterialController extends AbstractController {
 	}
 	
     @Override
-    public void userInput(String input) {
-    	if (input.equals("material.save"))
-    		save();
-    }
+    public void userInput(String input) { }
 
 }

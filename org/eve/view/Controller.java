@@ -65,4 +65,9 @@ public interface Controller extends SelectionListener {
     public abstract void putForm(String id, Form form);
     
     public abstract void putTable(String id, TableAssist table);
+    
+    public abstract void loadCommand();
+    
+    public abstract void saveCommand();
+    
 }

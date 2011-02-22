@@ -43,7 +43,7 @@ public class SupplierView extends AbstractView {
         
         form.define(container);
         
-        addButton("supplier.save");
+        addButton("save.command");
     }
     
     /**
@@ -82,7 +82,7 @@ public class SupplierView extends AbstractView {
          */
         if (action.equals("supplier.show")) {
             setTitlebar("supplier.show.title");
-            setButtonVisible("supplier.save", false);
+            setButtonVisible("save.command", false);
             
             form.setEditable(false);
             form.setBlocked("supplier.ident");
@@ -100,7 +100,7 @@ public class SupplierView extends AbstractView {
          */
         if (action.equals("supplier.edit")) {
             setTitlebar("supplier.edit.title");
-            setButtonVisible("supplier.save", true);
+            setButtonVisible("save.command", true);
             
             form.setEditable(true);
             form.setBlocked("supplier.ident");
@@ -118,7 +118,7 @@ public class SupplierView extends AbstractView {
          */
         if (action.equals("supplier.create")) {
             setTitlebar("supplier.create.title");
-            setButtonVisible("supplier.save", true);
+            setButtonVisible("save.command", true);
             
             setControlLoad(supplier);
             form.setBlocked("supplier.ident");

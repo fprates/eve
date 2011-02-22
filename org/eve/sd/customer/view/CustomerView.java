@@ -164,7 +164,7 @@ public class CustomerView extends AbstractView {
         itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setExpanded(true);
         
-        addButton("customer.save");
+        addButton("save.command");
     }
     
     /**
@@ -299,7 +299,7 @@ public class CustomerView extends AbstractView {
          */
         if (action.equals("customer.show")) {
             setTitlebar("customer.show.title");
-            setButtonVisible("customer.save", false);
+            setButtonVisible("save.command", false);
             contacts.clear();
             contacts.setEditable(false);
             addresses.clear();
@@ -325,7 +325,7 @@ public class CustomerView extends AbstractView {
          */
         if (action.equals("customer.edit")) {
             setTitlebar("customer.edit.title");
-            setButtonVisible("customer.save", true);
+            setButtonVisible("save.command", true);
             contacts.clear();
             contacts.setEditable(true);
             addresses.clear();
@@ -351,7 +351,7 @@ public class CustomerView extends AbstractView {
          */
         if (action.equals("customer.create")) {            
             setTitlebar("customer.create.title");
-            setButtonVisible("customer.save", true);
+            setButtonVisible("save.command", true);
             contacts.clear();
             contacts.setEditable(true);
             addresses.clear();
