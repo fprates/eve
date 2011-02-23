@@ -124,7 +124,7 @@ public class Form extends AbstractComponentFactory {
      */
     @Override
     protected final Object getControlValue(Component component) {
-        return ViewUtils.getControlValue(component, controls.get(component));
+        return ViewUtils.getControlValue(component, controls.get(component), this);
     }
     
     /*

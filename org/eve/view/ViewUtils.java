@@ -44,11 +44,40 @@ public class ViewUtils {
         return charh;
     }
 
+    /**
+     * 
+     * @param component
+     * @param text
+     * @param factory
+     * @return
+     */
+    private static final Object getComboValue(
+            Component component, String text, ComponentFactory factory) {
+        for (String key : component.getOptions().keySet())
+            if (factory.getMessage(key).equals(text))
+                return component.getOptions().get(key);
+        
+        return null;
+    }
+    
+    /**
+     * 
+     * @param component
+     * @param control
+     * @return
+     */
     public static final Object getControlValue(
-            Component component, Control control) {
+            Component component, Control control, ComponentFactory factory) {
+        String text;
+        
         switch (component.getType()) {
+        case CCOMBO:
+            text = ((CCombo)control).getText();
+            return getComboValue(component, text, factory);
+            
         case COMBO:
-            return component.getOptions().get(((Combo)control).getText());
+            text = ((Combo)control).getText();
+            return getComboValue(component, text, factory);
             
         case TEXT:
             return ((Text)control).getText();
@@ -58,6 +87,11 @@ public class ViewUtils {
         }
     }
     
+    /**
+     * 
+     * @param component
+     * @param control
+     */
     public static final void setControlSize(Component component, Control control) {
         int charw = getCharWidth(control);
         int charh = getCharHeight(control);
@@ -65,6 +99,13 @@ public class ViewUtils {
         control.setSize(control.computeSize(component.getLength() * charw, charh));
     }
     
+    /**
+     * 
+     * @param component
+     * @param control
+     * @param value
+     * @param factory
+     */
     public static final void setControlText(Component component,
             Control control, Object value, ComponentFactory factory) {
         Map<String, ?> options = component.getOptions();
@@ -98,6 +139,11 @@ public class ViewUtils {
         }
     }
     
+    /**
+     * 
+     * @param control
+     * @param enabled
+     */
     public static final void setEnabledControl(Control control, boolean enabled) {
         control.setEnabled(enabled);
     }

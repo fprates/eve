@@ -319,36 +319,29 @@ public class EditableTableAssist extends AbstractTableAssist {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractTableAssist#setControlValue(org.eve.view.Component, int, java.lang.String)
+     */
     @Override
-    protected final void setControlValue(Component component, int index, String value) {
-        int k = 0;
+    protected final void setControlValue(
+            Component component, int index, String value) {
         List<ControlEditor> editor = editors.get(component);
         
-        for (Component component_ : getComponents()) {
-            if (component_ == component) {
-                switch (component.getType()) {
-                case TEXT:
-                    ((Text)editor.get(k).getEditor()).setText(value);
-                    break;
-                }
-                
-                break;
-            }
-            
-            k++;
-        }
+        ViewUtils.setControlText(
+                component, editor.get(index).getEditor(), value, this);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractTableAssist#getControlValue(org.eve.view.Component, int)
+     */
     @Override
     protected final String getControlValue(Component component, int index) {
         List<ControlEditor> editor = editors.get(component);
         
-        switch (component.getType()) {
-        case TEXT:
-            return ((Text)editor.get(index).getEditor()).getText();
-        default:
-            return null;
-        }
+        return (String)ViewUtils.getControlValue(
+                component, editor.get(index).getEditor(), this);
     }
 }
 

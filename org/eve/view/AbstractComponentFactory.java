@@ -302,10 +302,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final float getFloat(String field) {
         Component component = fields.get(field);
+        String text = (String)getControlValue(component);
         
         try {
-            return Float.parseFloat((String)
-                    getControlValue(component));
+            return Float.parseFloat((text.length() == 0)? "0":text);
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.float.format"));
             setControlFocus(component);
@@ -330,7 +330,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             
             default:
                 text = (String)getControlValue(component);
-                return Integer.parseInt((text.length() == 0)?"0":text);
+                return Integer.parseInt((text.length() == 0)? "0":text);
             }
             
         } catch (NumberFormatException ex) {
@@ -350,7 +350,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         String text = (String)getControlValue(component, index);
         
         try {
-            return Integer.parseInt((text.length() == 0)?"0":text);
+            return Integer.parseInt((text.length() == 0)? "0":text);
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);
@@ -373,9 +373,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final long getLong(String field) {
         Component component = fields.get(field);
+        String text = (String)getControlValue(component);
         
         try {
-            return Long.parseLong((String)getControlValue(component));
+            return Long.parseLong((text.length() == 0)? "0":text);
         } catch (NumberFormatException ex) {
             system.setMessage(EVE.error, getMessage("invalid.int.format"));
             setControlFocus(component);

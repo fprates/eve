@@ -126,17 +126,12 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * 
      * @return
      */
-//    protected abstract Control getControl(Component component, int index);
-    
-    /**
-     * 
-     * @return
-     */
     protected final Controller getController() {
         return controller;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#getItensSize()
      */
     @Override
@@ -240,7 +235,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#clear()
      */
     @Override
@@ -261,13 +257,15 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             addTableItem(new TableItem(table, SWT.NONE));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#define(org.eclipse.swt.widgets.Composite)
      */
     @Override
     public abstract Composite define(Composite container);
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#dispose()
      */
     @Override
@@ -275,7 +273,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         table.dispose();
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#insert()
      */
     @Override
@@ -285,7 +284,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             addTableItem(new TableItem(table, SWT.NONE));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#put(java.lang.String, int)
      */
     @Override
@@ -297,7 +297,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putComponent(id, component);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#put(java.lang.String)
      */
     @Override
@@ -320,7 +321,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putCombo(id, length, values);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#putCombo(java.lang.String, int, java.lang.String[])
      */
     @Override
@@ -334,7 +336,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putComponent(id, component);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#putMark(java.lang.String, int)
      */
     @Override
@@ -347,12 +350,24 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putComponent(id, component);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
+     */
     @Override
     protected final void setControlFocus(Component component) { }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, java.lang.Object)
+     */
     @Override
     protected void setControlValue(Component component, Object value) { }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, int, java.lang.String)
+     */
     @Override
     protected void setControlValue(Component component, int index, String value) {
         int k = 0;
@@ -367,14 +382,26 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlSize(org.eve.view.Component)
+     */
     @Override
     public final void setControlSize(Component component) { }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component)
+     */
     @Override
     protected String getControlValue(Component component) {
         return null;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component, int)
+     */
     @Override
     protected String getControlValue(Component component, int index) {
         int k = 0;
