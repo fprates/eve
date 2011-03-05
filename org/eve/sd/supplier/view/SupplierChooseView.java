@@ -3,7 +3,6 @@ package org.eve.sd.supplier.view;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eve.view.AbstractView;
-import org.eve.view.ComponentType;
 import org.eve.view.Controller;
 import org.eve.view.TableAssist;
 
@@ -20,7 +19,6 @@ public class SupplierChooseView extends AbstractView {
         addAction("supplier.edit.choose", false);
         
         stable.setLines(10);
-        stable.putMark("supplier.mark", ComponentType.SINGLE);
         stable.put("supplier.ident", 12);
         stable.put("supplier.refer", 12);
         stable.put("supplier.name", 40);

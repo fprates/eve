@@ -132,13 +132,6 @@ public interface TableAssist extends ComponentFactory {
             String id, int length, Map<String, ?> options);
     
     /**
-     * Insere coluna de marcação de linha
-     * @param id
-     * @param type
-     */
-    public abstract void putMark(String id, ComponentType type);
-    
-    /**
      * 
      * @param input
      */

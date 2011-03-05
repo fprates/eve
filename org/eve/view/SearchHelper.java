@@ -66,7 +66,6 @@ public class SearchHelper extends AbstractSearch {
         else
             table.setLines(k);
         
-        table.putMark("sel", ComponentType.SINGLE);
         table.put("search.resp", component.getLength());
         table.put("search.text", 60);
         table.define(dialog);

@@ -455,20 +455,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         putComponent(id, component);
     }
     
-    /* 
-     * (non-Javadoc)
-     * @see org.eve.view.TableAssist#putMark(java.lang.String, int)
-     */
-    @Override
-    public final void putMark(String id, ComponentType type) {
-        TableComponent component = new TableComponent(getMessage(id));
-        
-        component.setType(type);
-        component.setLength(1);
-        
-        putComponent(id, component);
-    }
-    
     @Override
     public void userInput(String input) { }
 }
