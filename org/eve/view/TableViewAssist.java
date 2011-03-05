@@ -3,6 +3,8 @@ package org.eve.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -17,9 +19,10 @@ import org.eclipse.swt.widgets.TableItem;
 public class TableViewAssist extends AbstractTableAssist {
     private ComboAssist comboassist;
     private Composite area;
-    private String name;
+    private Composite btarea;
     
-    public TableViewAssist() {
+    public TableViewAssist(String name) {
+        super(name);
         comboassist = new ComboAssist();
         comboassist.setType(ComponentType.CCOMBO);
     }
@@ -29,6 +32,24 @@ public class TableViewAssist extends AbstractTableAssist {
      * Others
      * 
      */
+    
+    /**
+     * 
+     * @param controller
+     * @param visible
+     * @param tag
+     * @param action
+     */
+    private void defButton(Controller controller, String tag, String action) {
+        insertActionState(action);
+        setActionState(action, true);
+        
+        Button bt = new Button(btarea, SWT.NONE);
+        bt.setText(getMessage(tag));
+        bt.addSelectionListener(controller);
+        bt.setVisible(getEditable());
+        controller.putWidget(bt, action);
+    }
     
     /**
      * Constrói tabela
@@ -43,11 +64,25 @@ public class TableViewAssist extends AbstractTableAssist {
         TableComponent component;
         Label title;
         Table table;
+        Controller controller = getController();
+        String name = getName();
+        
         
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
         
         if (name != null) {
+            btarea = new Composite(area, SWT.NONE);
+            btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
+            btarea.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+            btarea.setVisible(getEditable());
+            
+            defButton(controller, "tableline.insert", name+".insert");
+            defButton(controller, "tableline.remove", name+".remove");
+            defButton(controller, "tableline.update", name+".update");
+            
+            btarea.pack();
+            
             title = new Label(area, SWT.NONE);
             title.setText(getMessage(name));
         }

@@ -11,7 +11,7 @@ public class MaterialChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
-        TableAssist ctable = addTableView("materials");
+        TableAssist ctable = addTable("materials");
 
         setHeight(350);
         container.setLayout(new FillLayout());

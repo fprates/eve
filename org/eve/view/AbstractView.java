@@ -263,31 +263,13 @@ public abstract class AbstractView implements View {
      */
     protected final TableAssist addTable(String id) {
         Controller controller = getController();
-        TableAssist table = new EditableTableAssist();
+        TableAssist table = new TableViewAssist(id);
         
         table.setController(controller);
         table.setLocale(locale);
         table.setMessages(messages);
         table.setSystem(system);
-        
-        controller.putTable(id, table);
-        
-        return table;
-    }
-    
-    /**
-     * Cria nova instância do assistente de tabela
-     * @param id
-     * @return
-     */
-    protected final TableAssist addTableView(String id) {
-        Controller controller = getController();
-        TableAssist table = new TableViewAssist();
-        
-        table.setController(controller);
-        table.setLocale(locale);
-        table.setMessages(messages);
-        table.setSystem(system);
+        table.setEditable(true);
         
         controller.putTable(id, table);
         

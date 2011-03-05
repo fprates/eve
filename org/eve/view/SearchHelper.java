@@ -24,7 +24,7 @@ public class SearchHelper extends AbstractSearch {
     private Button btsel;
     private Map<Object, String> results;
     private Shell dialog;
-    private EditableTableAssist table;
+    private TableAssist table;
     
     public SearchHelper() {
         setText("=");
@@ -57,10 +57,9 @@ public class SearchHelper extends AbstractSearch {
         
         k = results.size();
         
-        table = new EditableTableAssist();    
+        table = new TableViewAssist(null);    
         table.setEditable(false);
         table.setSystem(system);
-        table.setNoEditBar(true);
         
         if (k > 10)
             table.setLines(10);

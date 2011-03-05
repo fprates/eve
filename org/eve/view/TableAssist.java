@@ -6,7 +6,32 @@ import org.eclipse.swt.widgets.Composite;
 
 public interface TableAssist extends ComponentFactory {
 
+    /**
+     * 
+     * @return
+     */
     public abstract int[] getSelectedItens();
+    
+    /**
+     * 
+     * @param event
+     * @return
+     */
+    public abstract boolean hasEvent(String event);
+    
+    /**
+     * 
+     * @param action
+     * @param state
+     */
+    public abstract void setActionState(String action, boolean state);
+    
+    /**
+     * Define propriedades da coluna
+     * @param id
+     * @param property
+     */
+    public abstract void setColumnProperties(String id, int property);
     
     /**
      * 
@@ -14,6 +39,12 @@ public interface TableAssist extends ComponentFactory {
      */
     public abstract void setController(Controller controller);
 
+    /**
+     * 
+     * @param editable
+     */
+    public abstract void setEditable(boolean editable);
+    
     /**
      * Define quantidade de linhas visíveis
      * @param lines
@@ -26,13 +57,6 @@ public interface TableAssist extends ComponentFactory {
      * @param value
      */
     public abstract void setMarkValue(int row, boolean value);
-
-    /**
-     * Define propriedades da coluna
-     * @param id
-     * @param property
-     */
-    public abstract void setColumnProperties(String id, int property);
 
     /**
      * Define campo de referência
@@ -66,6 +90,9 @@ public interface TableAssist extends ComponentFactory {
      */
     public abstract Composite define(Composite container);
 
+    /**
+     * 
+     */
     public abstract void dispose();
 
     /**
@@ -110,5 +137,11 @@ public interface TableAssist extends ComponentFactory {
      * @param type
      */
     public abstract void putMark(String id, ComponentType type);
+    
+    /**
+     * 
+     * @param input
+     */
+    public abstract void userInput(String input);
 
 }

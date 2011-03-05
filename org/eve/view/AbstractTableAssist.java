@@ -19,101 +19,27 @@ import org.eve.main.EVE;
  */
 abstract class AbstractTableAssist extends AbstractComponentFactory implements TableAssist {
     private static final int LINES = 5;
+    private boolean editable;
     private int currentline;
     private int lines;
+    private String name;
 //    private ComponentType type;
+    private Map<String, TableActionState> actionstates;
     private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
     private Table table;
     
-    public AbstractTableAssist() {
+    public AbstractTableAssist(String name) {
         references = new HashMap<String, String>();
+        actionstates = new HashMap<String, TableActionState>();
         currentline = 0;
         lines = LINES;
 //        type = ComponentType.SINGLE;
         comboassist = new ComboAssist();
         comboassist.setType(ComponentType.CCOMBO);
-    }
-    
-    @Override
-    public final int[] getSelectedItens() {
-        return table.getSelectionIndices();
-    }
-    
-    /*
-     * 
-     * Setters
-     * 
-     */
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setController(org.eve.view.Controller)
-     */
-    @Override
-    public final void setController(Controller controller) {
-        this.controller = controller;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setLines(int)
-     */
-    @Override
-    public final void setLines(int lines) {
-        this.lines = lines;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setMarkValue(int, boolean)
-     */
-    @Override
-    public final void setMarkValue(int index, boolean value) {
-        if (value)
-            table.select(index);
-        else
-            table.deselect(index);
-//        
-//        for (Component component : getComponents()) {
-//            switch (component.getType()) {
-//            case EVE.single:
-//            case EVE.multi:
-//                ((Button)getControl(component, index)).setSelection(value);
-//                
-//                return;
-//            }
-//        }
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setColumnProperties(java.lang.String, int)
-     */
-    @Override
-    public final void setColumnProperties(String id, int property) {
-        Component component = getComponent(id);
-        
-        if ((EVE.readonly & property) == EVE.readonly)
-            component.setEnabled(false);
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setReference(java.lang.String, java.lang.String)
-     */
-    @Override
-    public final void setReference(String id, String idref) {
-        references.put(id, idref);
-    }
-    
-    @Override
-    public final void setSelType(ComponentType type) {
-//        this.type = type;
-    }
-    
-    /**
-     * 
-     * @param table
-     */
-    protected final void setTable(Table table) {
-        this.table = table;
+        editable = false;
+        this.name = name;
     }
     
     /*
@@ -163,6 +89,191 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     protected final Table getTable() {
         return table;
     }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component)
+     */
+    @Override
+    protected String getControlValue(Component component) {
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component, int)
+     */
+    @Override
+    protected String getControlValue(Component component, int index) {
+        int k = 0;
+        
+        for (Component component_ : getComponents()) {
+            if (component_ == component)
+                return table.getItem(index).getText(k);
+            
+            k++;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    protected final boolean getEditable() {
+        return editable;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    protected final String getName() {
+        return name;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#getSelectedItens()
+     */
+    @Override
+    public final int[] getSelectedItens() {
+        return table.getSelectionIndices();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#hasEvent(java.lang.String)
+     */
+    @Override
+    public final boolean hasEvent(String event) {
+        return actionstates.containsKey(event);
+    }
+    
+    /*
+     * 
+     * Setters
+     * 
+     */
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#setActionState(java.lang.String, boolean)
+     */
+    @Override
+    public final void setActionState(String action, boolean state) {
+        TableActionState actionstate = actionstates.get(action);
+        
+        actionstate.setVisible(state);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setColumnProperties(java.lang.String, int)
+     */
+    @Override
+    public final void setColumnProperties(String id, int property) {
+        Component component = getComponent(id);
+        
+        if ((EVE.readonly & property) == EVE.readonly)
+            component.setEnabled(false);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setController(org.eve.view.Controller)
+     */
+    @Override
+    public final void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#setEditable(boolean)
+     */
+    @Override
+    public final void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setLines(int)
+     */
+    @Override
+    public final void setLines(int lines) {
+        this.lines = lines;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setMarkValue(int, boolean)
+     */
+    @Override
+    public final void setMarkValue(int index, boolean value) {
+        if (value)
+            table.select(index);
+        else
+            table.deselect(index);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setReference(java.lang.String, java.lang.String)
+     */
+    @Override
+    public final void setReference(String id, String idref) {
+        references.put(id, idref);
+    }
+    
+    @Override
+    public final void setSelType(ComponentType type) {
+//        this.type = type;
+    }
+    
+    /**
+     * 
+     * @param table
+     */
+    protected final void setTable(Table table) {
+        this.table = table;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
+     */
+    @Override
+    protected final void setControlFocus(Component component) { }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, java.lang.Object)
+     */
+    @Override
+    protected void setControlValue(Component component, Object value) { }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, int, java.lang.String)
+     */
+    @Override
+    protected void setControlValue(Component component, int index, String value) {
+        int k = 0;
+        
+        for (Component component_ : getComponents()) {
+            if (component_ == component) {
+                table.getItem(index).setText(k, value);
+                break;
+            }
+            
+            k++;
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlSize(org.eve.view.Component)
+     */
+    @Override
+    public final void setControlSize(Component component) { }
     
     /*
      * 
@@ -284,6 +395,14 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             addTableItem(new TableItem(table, SWT.NONE));
     }
     
+    /**
+     * 
+     * @param action
+     */
+    protected final void insertActionState(String action) {
+        actionstates.put(action, new TableActionState());
+    }
+    
     /* 
      * (non-Javadoc)
      * @see org.eve.view.TableAssist#put(java.lang.String, int)
@@ -349,70 +468,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         
         putComponent(id, component);
     }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
-     */
+    
     @Override
-    protected final void setControlFocus(Component component) { }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, java.lang.Object)
-     */
-    @Override
-    protected void setControlValue(Component component, Object value) { }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, int, java.lang.String)
-     */
-    @Override
-    protected void setControlValue(Component component, int index, String value) {
-        int k = 0;
-        
-        for (Component component_ : getComponents()) {
-            if (component_ == component) {
-                table.getItem(index).setText(k, value);
-                break;
-            }
-            
-            k++;
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlSize(org.eve.view.Component)
-     */
-    @Override
-    public final void setControlSize(Component component) { }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component)
-     */
-    @Override
-    protected String getControlValue(Component component) {
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component, int)
-     */
-    @Override
-    protected String getControlValue(Component component, int index) {
-        int k = 0;
-        
-        for (Component component_ : getComponents()) {
-            if (component_ == component)
-                return table.getItem(index).getText(k);
-            
-            k++;
-        }
-        
-        return null;
-    }
+    public void userInput(String input) { }
 }

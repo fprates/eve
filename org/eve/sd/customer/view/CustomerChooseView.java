@@ -11,7 +11,7 @@ public class CustomerChooseView extends AbstractView {
 
     @Override
     protected void defineView(Composite container) {
-        TableAssist ctable = addTableView("customers");
+        TableAssist ctable = addTable("customers");
 
         setHeight(350);
         container.setLayout(new FillLayout());

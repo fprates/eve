@@ -18,7 +18,6 @@ import org.eve.view.AbstractView;
 import org.eve.view.ComponentType;
 import org.eve.view.Controller;
 import org.eve.view.Form;
-import org.eve.view.EditableTableAssist;
 import org.eve.view.TableAssist;
 
 public class CustomerView extends AbstractView {
@@ -34,7 +33,7 @@ public class CustomerView extends AbstractView {
         Composite localcontainer;
         ExpandBar bar;
         Composite schedule;
-        EditableTableAssist table;
+        TableAssist table;
         Customer customer = (Customer)getController().getObject();
         Form form = addForm("main");
         
@@ -81,7 +80,7 @@ public class CustomerView extends AbstractView {
         /*
          * Contatos
          */
-        table = (EditableTableAssist)addTable("contacts");
+        table = (TableAssist)addTable("contacts");
         table.setLines(4);
         table.putMark("contact.mark", ComponentType.MULTI);
         table.put("contact.type", 20);
@@ -101,7 +100,7 @@ public class CustomerView extends AbstractView {
         /*
          * Endereços
          */
-        table = (EditableTableAssist)addTable("addresses");
+        table = (TableAssist)addTable("addresses");
         table.setLines(3);
         table.putMark("address.mark", ComponentType.MULTI);
         table.putAutoCombo("address.type", 11, new String[] {
@@ -130,10 +129,8 @@ public class CustomerView extends AbstractView {
         schedule = new Composite(bar, SWT.NONE);
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
 
-        table = (EditableTableAssist)addTable("vschedule");
+        table = addTable("schedule.visit");
         table.setLines(2);
-        table.setInsert(false);
-        table.setRemove(false);
         table.put("schedule.per");
         table.put("schedule.mon");
         table.put("schedule.tue");
@@ -141,13 +138,13 @@ public class CustomerView extends AbstractView {
         table.put("schedule.thu");
         table.put("schedule.fri");
         table.setColumnProperties("schedule.per", EVE.readonly);
-        table.setName("schedule.visit");
         table.define(schedule);
+        table.setActionState("schedule.visit.insert", false);
+        table.setActionState("schedule.visit.remove", false);
+        table.setActionState("schedule.visit.update", true);
 
-        table = (EditableTableAssist)addTable("dschedule");
+        table = addTable("schedule.delivery");
         table.setLines(2);
-        table.setInsert(false);
-        table.setRemove(false);
         table.put("schedule.per");
         table.put("schedule.mon");
         table.put("schedule.tue");
@@ -155,8 +152,10 @@ public class CustomerView extends AbstractView {
         table.put("schedule.thu");
         table.put("schedule.fri");
         table.setColumnProperties("schedule.per", EVE.readonly);
-        table.setName("schedule.delivery");
         table.define(schedule);
+        table.setActionState("schedule.delivery.insert", false);
+        table.setActionState("schedule.delivery.remove", false);
+        table.setActionState("schedule.delivery.update", true);
         
         itembar = new ExpandItem(bar, SWT.NONE, 2);
         itembar.setText(getMessage("customer.schedule"));
@@ -202,8 +201,8 @@ public class CustomerView extends AbstractView {
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
-        TableAssist vstable = controller.getTable("vschedule");
-        TableAssist dstable = controller.getTable("dschedule");
+        TableAssist vstable = controller.getTable("schedule.visit");
+        TableAssist dstable = controller.getTable("schedule.delivery");
         
         for (Object id : customer.getIds()) {
             if (id.equals(Customer.USREG))
@@ -283,14 +282,10 @@ public class CustomerView extends AbstractView {
         Controller controller = getController();
         Customer customer = (Customer)controller.getObject();
         Form form = controller.getForm("main");
-        EditableTableAssist contacts =
-            (EditableTableAssist)controller.getTable("contacts");
-        EditableTableAssist addresses =
-            (EditableTableAssist)controller.getTable("addresses");
-        EditableTableAssist vschedule =
-            (EditableTableAssist)controller.getTable("vschedule");
-        EditableTableAssist dschedule =
-            (EditableTableAssist)controller.getTable("dschedule");
+        TableAssist contacts = controller.getTable("contacts");
+        TableAssist addresses = controller.getTable("addresses");
+        TableAssist vschedule = controller.getTable("schedule.visit");
+        TableAssist dschedule = controller.getTable("schedule.delivery");
         
         form.clear();
         

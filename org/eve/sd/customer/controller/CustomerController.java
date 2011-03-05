@@ -17,7 +17,6 @@ import org.eve.sd.customer.CustomerSchedule;
 import org.eve.sd.supplier.Supplier;
 import org.eve.view.AbstractController;
 import org.eve.view.Form;
-import org.eve.view.EditableTableAssist;
 import org.eve.view.TableAssist;
 import org.hibernate.HibernateException;
 
@@ -144,8 +143,8 @@ public class CustomerController extends AbstractController {
         Customer customer = (Customer)getObject();
         Model model = getModel();
         Form form = getForm("main");
-        EditableTableAssist contacts = (EditableTableAssist)getTable("contacts");
-        EditableTableAssist addresses = (EditableTableAssist)getTable("addresses");
+        TableAssist contacts = getTable("contacts");
+        TableAssist addresses = getTable("addresses");
         
         try {
             /*
@@ -224,8 +223,8 @@ public class CustomerController extends AbstractController {
              * inclui horários
              */
             customer.getSchedule().clear();
-            loadSchedule(getTable("vschedule"), customer, 0);
-            loadSchedule(getTable("dschedule"), customer, 1);
+            loadSchedule(getTable("schedule.visit"), customer, 0);
+            loadSchedule(getTable("schedule.delivery"), customer, 1);
             
             model.save(customer);
             form.setInt("customer.ident", customer.getId());
@@ -249,8 +248,8 @@ public class CustomerController extends AbstractController {
      */
     @Override
     public final void userInput(String input) {
-        EditableTableAssist contacts = (EditableTableAssist)getTable("contacts");
-        EditableTableAssist addresses = (EditableTableAssist)getTable("addresses");
+        TableAssist contacts = getTable("contacts");
+        TableAssist addresses = getTable("addresses");
         
         if (contacts.hasEvent(input)) {
             contacts.userInput(input);
