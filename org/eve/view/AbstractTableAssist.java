@@ -166,6 +166,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         TableActionState actionstate = actionstates.get(action);
         
         actionstate.setVisible(state);
+        setComponentState(action, state);
     }
     
     /* (non-Javadoc)
@@ -178,6 +179,13 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         if ((EVE.readonly & property) == EVE.readonly)
             component.setEnabled(false);
     }
+    
+    /**
+     * 
+     * @param action
+     * @param state
+     */
+    protected abstract void setComponentState(String action, boolean state);
     
     /* (non-Javadoc)
      * @see org.eve.view.TableAssist#setController(org.eve.view.Controller)

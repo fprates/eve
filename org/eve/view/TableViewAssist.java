@@ -1,5 +1,8 @@
 package org.eve.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -20,11 +23,18 @@ public class TableViewAssist extends AbstractTableAssist {
     private ComboAssist comboassist;
     private Composite area;
     private Composite btarea;
+    private Map<String, Button> buttons;
     
     public TableViewAssist(String name) {
         super(name);
         comboassist = new ComboAssist();
         comboassist.setType(ComponentType.CCOMBO);
+        buttons = new HashMap<String, Button>();
+    }
+    
+    @Override
+    protected final void setComponentState(String name, boolean state) {
+        buttons.get(name).setEnabled(state);
     }
     
     /*
@@ -41,13 +51,14 @@ public class TableViewAssist extends AbstractTableAssist {
      * @param action
      */
     private void defButton(Controller controller, String tag, String action) {
-        insertActionState(action);
-        setActionState(action, true);
-        
         Button bt = new Button(btarea, SWT.NONE);
+        
+        buttons.put(action, bt);
+        insertActionState(action);
+        setActionState(action, getEditable());
+        
         bt.setText(getMessage(tag));
         bt.addSelectionListener(controller);
-        bt.setVisible(getEditable());
         controller.putWidget(bt, action);
     }
     

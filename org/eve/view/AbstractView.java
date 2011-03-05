@@ -269,7 +269,6 @@ public abstract class AbstractView implements View {
         table.setLocale(locale);
         table.setMessages(messages);
         table.setSystem(system);
-        table.setEditable(true);
         
         controller.putTable(id, table);
         

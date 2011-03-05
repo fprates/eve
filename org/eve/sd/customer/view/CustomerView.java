@@ -80,6 +80,7 @@ public class CustomerView extends AbstractView {
          * Contatos
          */
         table = (TableAssist)addTable("contacts");
+        table.setEditable(true);
         table.setLines(4);
         table.put("contact.type", 20);
         table.put("contact.rname", 40);
@@ -99,6 +100,7 @@ public class CustomerView extends AbstractView {
          * Endereços
          */
         table = (TableAssist)addTable("addresses");
+        table.setEditable(true);
         table.setLines(3);
         table.putAutoCombo("address.type", 11, new String[] {
                 getMessage("address.billing"),
@@ -127,6 +129,7 @@ public class CustomerView extends AbstractView {
         schedule.setLayout(new RowLayout(SWT.VERTICAL));
 
         table = addTable("schedule.visit");
+        table.setEditable(true);
         table.setLines(2);
         table.put("schedule.per");
         table.put("schedule.mon");
@@ -141,6 +144,7 @@ public class CustomerView extends AbstractView {
         table.setActionState("schedule.visit.update", true);
 
         table = addTable("schedule.delivery");
+        table.setEditable(true);
         table.setLines(2);
         table.put("schedule.per");
         table.put("schedule.mon");
