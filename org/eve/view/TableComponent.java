@@ -16,9 +16,11 @@ public class TableComponent extends AbstractComponent {
     private ComboListener combolistener;
     private TableColumn column;
     
-    public TableComponent(String name) {
+    public TableComponent(String name, int length, boolean enabled) {
         setType(ComponentType.TEXT);
         setName(name);
+        setLength(length);
+        setEnabled(enabled);
     }
 
     /*

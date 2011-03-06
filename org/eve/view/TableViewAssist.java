@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.TableItem;
  *
  */
 public class TableViewAssist extends AbstractTableAssist {
-    private ComboAssist comboassist;
     private Composite area;
     private Composite btarea;
     private Map<String, Button> buttons;
@@ -28,8 +27,6 @@ public class TableViewAssist extends AbstractTableAssist {
     
     public TableViewAssist(String name) {
         super(name);
-        comboassist = new ComboAssist();
-        comboassist.setType(ComponentType.CCOMBO);
         buttons = new HashMap<String, Button>();
     }
     
@@ -76,6 +73,7 @@ public class TableViewAssist extends AbstractTableAssist {
         TableComponent component;
         Label title;
         Table table;
+        ComboAssist comboassist = getComboAssist();
         Controller controller = getController();
         String name = getName();
         

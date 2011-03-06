@@ -204,11 +204,24 @@ public interface ComponentFactory {
      * @return
      */
     public abstract Time getTime(String field, int row);
+    
+    /**
+     * 
+     * @return
+     */
+    public abstract boolean isComboAssistCustomized();
 
     /**
      * Limpa formulário
      */
     public abstract void clear();
+    
+    /**
+     * 
+     * @param document
+     * @param id
+     */
+    public abstract void put(AbstractDocument document, String id);
 
     /**
      * 

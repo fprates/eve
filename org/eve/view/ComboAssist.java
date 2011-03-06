@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Widget;
 public class ComboAssist {
     private int length;
     private int item;
+    private boolean customized;
     private ComponentFactory factory;
-    private ComponentType type;
     private String id;
     private String reference;
     private Map<String, ?> options;
@@ -20,7 +20,13 @@ public class ComboAssist {
     private Controller controller;
     private Map<String, Component> table;
     
-    public ComboAssist() { }
+    public ComboAssist() {
+        customized = false;
+    }
+    
+    public final boolean isCustomized() {
+        return customized;
+    }
     
     /**
      * 
@@ -36,6 +42,14 @@ public class ComboAssist {
      */
     public final void setController(Controller controller) {
         this.controller = controller;
+    }
+    
+    /**
+     * 
+     * @param customized
+     */
+    public final void setCustomized(boolean customized) {
+        this.customized = customized;
     }
     
     /**
@@ -88,14 +102,6 @@ public class ComboAssist {
     
     /**
      * 
-     * @param type
-     */
-    public final void setType(ComponentType type) {
-        this.type = type;
-    }
-    
-    /**
-     * 
      * @param map
      * @return
      */
@@ -127,8 +133,7 @@ public class ComboAssist {
         ComboListener listener;
         String[] values;
         
-        switch(type) {
-        case CCOMBO:
+        if (customized) {
             ccombo = new CCombo(container, SWT.NONE);
             
             charw = ViewUtils.getCharWidth(ccombo);
@@ -159,7 +164,7 @@ public class ComboAssist {
             
             return ccombo;
             
-        case COMBO:
+        } else {
             combo = new Combo(container, SWT.BORDER);
             
             charw = ViewUtils.getCharWidth(combo);
@@ -187,9 +192,6 @@ public class ComboAssist {
             }
             
             return combo;
-            
-        default:
-            return null;
         }
     }
 }

@@ -71,12 +71,13 @@ public class ViewUtils {
         String text;
         
         switch (component.getType()) {
-        case CCOMBO:
-            text = ((CCombo)control).getText();
-            return getComboValue(component, text, factory);
-            
         case COMBO:
-            text = ((Combo)control).getText();
+            if (!factory.isComboAssistCustomized()) {
+                text = ((Combo)control).getText();
+            } else {
+                text = ((CCombo)control).getText();
+            }
+            
             return getComboValue(component, text, factory);
             
         case TEXT:
@@ -111,23 +112,16 @@ public class ViewUtils {
         Map<String, ?> options = component.getOptions();
         
         switch (component.getType()) {
-        case CCOMBO:
-            for (String key : options.keySet()) {
-                if (!options.get(key).equals(value))
-                    continue;
-                
-                ((CCombo)control).setText(factory.getMessage(key));
-                break;
-            }
-            
-            break;
-            
         case COMBO:
             for (String key : options.keySet()) {
                 if (!options.get(key).equals(value))
                     continue;
                 
-                ((Combo)control).setText(factory.getMessage(key));
+                if (factory.isComboAssistCustomized())
+                    ((CCombo)control).setText(factory.getMessage(key));
+                else
+                    ((Combo)control).setText(factory.getMessage(key));
+                
                 break;
             }
             

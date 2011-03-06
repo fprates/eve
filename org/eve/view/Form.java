@@ -22,7 +22,6 @@ import org.eve.model.AbstractDocument;
  */
 public class Form extends AbstractComponentFactory {
     private boolean editable;
-    private ComboAssist comboassist;
     private Controller controller;
     private Set<String> blocked;
     private Map<Component, Control> controls;
@@ -30,8 +29,6 @@ public class Form extends AbstractComponentFactory {
     public Form(String id) {
         controls = new HashMap<Component, Control>();
         blocked = new HashSet<String>();
-        comboassist = new ComboAssist();
-        comboassist.setType(ComponentType.COMBO);
         editable = true;
     }
     
@@ -136,6 +133,15 @@ public class Form extends AbstractComponentFactory {
         return null;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getNewComponent(java.lang.String, int, boolean)
+     */
+    @Override
+    protected final Component getNewComponent(String name, int length, boolean key) {
+        return new FormComponent(name, length, key);
+    }
+    
     /**
      * Retorna valor do campo caractere do formulário,
      * em formato "like" para seleção
@@ -193,6 +199,7 @@ public class Form extends AbstractComponentFactory {
         Label label;
         Text text;
         Search search;
+        ComboAssist comboassist = getComboAssist();
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
@@ -251,41 +258,6 @@ public class Form extends AbstractComponentFactory {
         }
         
         return composite;
-    }
-    
-    /**
-     * 
-     * @param document
-     * @param id
-     */
-    public final void put(AbstractDocument document, String id) {
-        String name = document.getName(id);
-        FormComponent component = new FormComponent(
-                name, document.getLength(id), !document.isKey(id));
-        
-        component.setTitle(getMessage(name));
-        component.setDataType(document.getType(id));
-        
-        putComponent(name, component);
-    }
-    
-    /**
-     * 
-     * @param document
-     * @param id
-     * @param length
-     */
-    public final void putCombo(AbstractDocument document, String id, int length) {
-        String name = document.getName(id);
-        FormComponent component = new FormComponent(
-                name, length, !document.isKey(id));
-        
-        component.setTitle(getMessage(name));
-        component.setType(ComponentType.COMBO);
-        component.setOptions(document.getValues(id));
-        component.setDataType(document.getType(id));
-        
-        putComponent(name, component);
     }
     
     /**

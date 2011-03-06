@@ -15,6 +15,7 @@ import org.eve.model.AbstractDocument;
 import org.springframework.context.MessageSource;
 
 public abstract class AbstractComponentFactory implements ComponentFactory {
+    private ComboAssist comboassist;
     private Locale locale;
     private MessageSource messages;
     private EveAPI system;
@@ -23,6 +24,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     public AbstractComponentFactory() {
         fields = new LinkedHashMap<String, Component>();
+        comboassist = new ComboAssist();
     }
 
     protected abstract void setControlFocus(Component component);
@@ -31,6 +33,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     protected abstract void setControlValue(Component component, int index, String value);
     
+    @Override
     public abstract void setControlSize(Component component);
     
     protected abstract Object getControlValue(Component component);
@@ -90,7 +93,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         switch (component.getType()) {
-        case CCOMBO:
         case COMBO:
             setControlValue(component, value);
         default:
@@ -114,7 +116,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         Component component = fields.get(field);
         
         switch (component.getType()) {
-        case CCOMBO:
         case COMBO:
             setControlValue(component, value);
         default:
@@ -228,7 +229,20 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * Getters
      * 
      */
+
+    /**
+     * 
+     * @return
+     */
+    protected final ComboAssist getComboAssist() {
+        return comboassist;
+    }
     
+    /**
+     * 
+     * @param field
+     * @return
+     */
     protected final Component getComponent(String field) {
         return fields.get(field);
     }
@@ -324,7 +338,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         try {
             switch (component.getType()) {
-            case CCOMBO:
             case COMBO:
                 return (Integer)getControlValue(component);
             
@@ -394,6 +407,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     public final String getMessage(String tag) {
         return messages.getMessage(tag, null, tag, locale);        
     }
+    
+    /**
+     * 
+     * @param name
+     * @param length
+     * @param key
+     * @return
+     */
+    protected abstract Component getNewComponent(String name, int length, boolean key);
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getString(java.lang.String)
@@ -469,10 +491,53 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     }
     
     /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#isComboAssistCustomized()
+     */
+    @Override
+    public final boolean isComboAssistCustomized() {
+        return comboassist.isCustomized();
+    }
+    
+    /*
      * 
      * Others
      * 
      */
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#put(org.eve.model.AbstractDocument, java.lang.String)
+     */
+    @Override
+    public final void put(AbstractDocument document, String id) {
+        String name = document.getName(id);
+        Component component = getNewComponent(
+                name, document.getLength(id), !document.isKey(id));
+        
+        component.setTitle(getMessage(name));
+        component.setDataType(document.getType(id));
+        
+        putComponent(name, component);
+    }
+    
+    /**
+     * 
+     * @param document
+     * @param id
+     * @param length
+     */
+    public final void putCombo(AbstractDocument document, String id, int length) {
+        String name = document.getName(id);
+        Component component = getNewComponent(name, length, !document.isKey(id));
+        
+        component.setTitle(getMessage(name));
+        component.setType(ComponentType.COMBO);
+        component.setOptions(document.getValues(id));
+        component.setDataType(document.getType(id));
+        
+        putComponent(name, component);
+    }
     
     /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#putComponent(java.lang.String, org.eve.view.Component)

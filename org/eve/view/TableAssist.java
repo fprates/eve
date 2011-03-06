@@ -1,7 +1,5 @@
 package org.eve.view;
 
-import java.util.Map;
-
 import org.eclipse.swt.widgets.Composite;
 
 public interface TableAssist extends ComponentFactory {
@@ -99,37 +97,6 @@ public interface TableAssist extends ComponentFactory {
      * Adiciona item em tabela
      */
     public abstract void insert();
-
-    /**
-     * Insere coluna campo texto
-     * @param id
-     * @param length
-     */
-    public abstract void put(String id, int length);
-
-    /**
-     * Insere coluna campo texto, tamanho 10 caracteres
-     * @param id
-     */
-    public abstract void put(String id);
-
-    /**
-     * 
-     * @param id
-     * @param length
-     * @param keys
-     */
-    public abstract void putAutoCombo(
-            String id, int length, String[] keys);
-    
-    /**
-     * Insere coluna combo box
-     * @param id
-     * @param length
-     * @param options
-     */
-    public abstract void putCombo(
-            String id, int length, Map<String, ?> options);
     
     /**
      * 

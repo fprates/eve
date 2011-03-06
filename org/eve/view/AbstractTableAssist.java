@@ -1,7 +1,6 @@
 package org.eve.view;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -25,7 +24,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     private String name;
 //    private ComponentType type;
     private Map<String, TableActionState> actionstates;
-    private ComboAssist comboassist;
     private Controller controller;
     private Map<String, String> references;
     private Table table;
@@ -36,8 +34,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         currentline = 0;
         lines = LINES;
 //        type = ComponentType.SINGLE;
-        comboassist = new ComboAssist();
-        comboassist.setType(ComponentType.CCOMBO);
+        getComboAssist().setCustomized(true);
         editable = false;
         this.name = name;
     }
@@ -89,7 +86,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     protected final Table getTable() {
         return table;
     }
-
+    
     /*
      * (non-Javadoc)
      * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component)
@@ -131,6 +128,15 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     protected final String getName() {
         return name;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#getNewComponent(java.lang.String, int, boolean)
+     */
+    @Override
+    protected final Component getNewComponent(String name, int length, boolean key) {
+        return new TableComponent(name, length, key);
     }
     
     /*
@@ -409,58 +415,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     protected final void insertActionState(String action) {
         actionstates.put(action, new TableActionState());
-    }
-    
-    /* 
-     * (non-Javadoc)
-     * @see org.eve.view.TableAssist#put(java.lang.String, int)
-     */
-    @Override
-    public final void put(String id, int length) {
-        Component component = new TableComponent(getMessage(id));
-        
-        component.setLength(length);
-        
-        putComponent(id, component);
-    }
-    
-    /* 
-     * (non-Javadoc)
-     * @see org.eve.view.TableAssist#put(java.lang.String)
-     */
-    @Override
-    public final void put(String id) {
-        TableComponent component = new TableComponent(getMessage(id));
-        
-        component.setLength(10);
-        
-        putComponent(id, component);
-    }
-    
-    @Override
-    public final void putAutoCombo(String id, int length, String[] keys) {
-        int k = 0;
-        Map<String, Integer> values = new LinkedHashMap<String, Integer>();
-        
-        for (String key : keys)
-            values.put(key, k++);
-        
-        putCombo(id, length, values);
-    }
-    
-    /* 
-     * (non-Javadoc)
-     * @see org.eve.view.TableAssist#putCombo(java.lang.String, int, java.lang.String[])
-     */
-    @Override
-    public final void putCombo(String id, int length, Map<String, ?> options) {
-        TableComponent component = new TableComponent(getMessage(id));
-        
-        component.setType(ComponentType.CCOMBO);
-        component.setOptions(options);
-        component.setLength(length);
-        
-        putComponent(id, component);
     }
     
     @Override

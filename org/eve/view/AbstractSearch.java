@@ -6,6 +6,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.model.AbstractDocument;
 
 public abstract class AbstractSearch implements Search {
     private AbstractComponentFactory factory;
@@ -14,6 +15,7 @@ public abstract class AbstractSearch implements Search {
     private Composite container;
     private Controller controller;
     private String text;
+    private AbstractDocument document;
     
     /**
      * 
@@ -43,19 +45,48 @@ public abstract class AbstractSearch implements Search {
      * 
      * @return
      */
+    protected final AbstractDocument getDocument() {
+        return document;
+    }
+    
+    /**
+     * 
+     * @return
+     */
     protected final AbstractComponentFactory getFactory() {
         return factory;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Search#setDocument(org.eve.model.AbstractDocument)
+     */
+    @Override
+    public final void setDocument(AbstractDocument document) {
+        this.document = document;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Search#setFactory(org.eve.view.AbstractComponentFactory)
+     */
     @Override
     public final void setFactory(AbstractComponentFactory factory) {
         this.factory = factory;
     }
 
+    /**
+     * 
+     * @param text
+     */
     protected final void setText(String text) {
         this.text = text;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Search#setController(org.eve.view.Controller)
+     */
     @Override
     public void setController(Controller controller) {
         this.controller = controller;
