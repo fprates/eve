@@ -24,6 +24,7 @@ public class TableViewAssist extends AbstractTableAssist {
     private Composite area;
     private Composite btarea;
     private Map<String, Button> buttons;
+    private TableItemForm itemform;
     
     public TableViewAssist(String name) {
         super(name);
@@ -78,7 +79,6 @@ public class TableViewAssist extends AbstractTableAssist {
         Controller controller = getController();
         String name = getName();
         
-        
         area = new Composite(container, SWT.NONE);
         area.setLayout(new GridLayout(1, false));
         
@@ -127,6 +127,23 @@ public class TableViewAssist extends AbstractTableAssist {
         for (TableItem item : table.getItems())
             addTableItem(item);
         
+        itemform = new TableItemForm(area, this);
+        
         return area;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractTableAssist#userInput(java.lang.String)
+     */
+    @Override
+    public final void userInput(String input) {
+        String name = getName();
+        
+        if (input.equals(name+".insert")) {
+            itemform.openDialog();
+            
+            return;
+        }
     }
 }

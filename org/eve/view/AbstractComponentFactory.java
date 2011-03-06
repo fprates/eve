@@ -475,10 +475,6 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     
     /* (non-Javadoc)
-     * @see org.eve.view.ComponentFactory#clear()
-     */
-    
-    /* (non-Javadoc)
      * @see org.eve.view.ComponentFactory#putComponent(java.lang.String, org.eve.view.Component)
      */
     @Override
