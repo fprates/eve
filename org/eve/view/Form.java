@@ -203,7 +203,6 @@ public class Form extends AbstractComponentFactory {
         Composite composite = new Composite(container, SWT.NONE);
         
         composite.setLayout(new GridLayout(2, false));
-        comboassist.setController(controller);
         
         for(Component component : getComponents()) {
             label = new Label(composite, SWT.NONE);
@@ -246,7 +245,6 @@ public class Form extends AbstractComponentFactory {
                 comboassist.setContainer(fieldComposite);
                 comboassist.setOptions(component.getOptions());
                 comboassist.setLength(component.getLength());
-                comboassist.setId(component.getName());
                 comboassist.setFactory(this);
                 
                 combo = (Combo)comboassist.newInstance();

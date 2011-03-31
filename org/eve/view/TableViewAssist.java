@@ -103,7 +103,6 @@ public class TableViewAssist extends AbstractTableAssist {
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         comboassist.setContainer(table);
-        comboassist.setController(getController());
         
         for (Component component_ : getComponents()) {
             component = (TableComponent)component_;

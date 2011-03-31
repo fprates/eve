@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
+import org.eve.model.AbstractDocument;
 
 /**
  * Ajuda de pesquisa
@@ -41,6 +42,7 @@ public class SearchHelper extends AbstractSearch {
         Component component = getComponent();
         Composite container = getContainer();
         Controller controller = getController();
+        AbstractDocument document = getDocument();
         AbstractComponentFactory factory = getFactory();
         EveAPI system = factory.getSystem();
         
@@ -66,8 +68,8 @@ public class SearchHelper extends AbstractSearch {
         else
             table.setLines(k);
         
-        table.put("search.resp", component.getLength());
-        table.put("search.text", 60);
+//        table.put(document, document.SEARCH_RESP);
+//        table.put(document, document.SEARCH_TEXT);
         table.define(dialog);
         
         k = 0;

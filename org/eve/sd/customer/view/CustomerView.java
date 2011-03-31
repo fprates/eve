@@ -31,9 +31,13 @@ public class CustomerView extends AbstractView {
         ExpandItem itembar;
         Composite localcontainer;
         ExpandBar bar;
-        Composite schedule;
+        Composite schedarea;
         TableAssist table;
-        Customer customer = (Customer)getController().getObject();
+        Controller controller = getController();
+        Customer customer = (Customer)controller.getObject();
+//        CustomerAddress address = (CustomerAddress)controller.getObject();
+//        CustomerContact contact = (CustomerContact)controller.getObject();
+//        CustomerSchedule schedule = (CustomerSchedule)controller.getObject();
         Form form = addForm("main");
         
         setWidth(1260);
@@ -82,12 +86,12 @@ public class CustomerView extends AbstractView {
         table = (TableAssist)addTable("contacts");
         table.setEditable(true);
         table.setLines(4);
-        table.put("contact.type", 20);
-        table.put("contact.rname", 40);
-        table.put("contact.im", 60);
-        table.put("contact.funct", 20);
-        table.put("contact.teln1", 12);
-        table.put("contact.teln2", 12);
+//        table.put(contact, CustomerContact.TYPE"contact.type", 20);
+//        table.put(contact, CustomerContact.RNAME"contact.rname", 40);
+//        table.put(contact, CustomerContact.IM"contact.im", 60);
+//        table.put(contact, CustomerContact.FUNCT "contact.funct", 20);
+//        table.put(contact, CustomerContact.TELN1"contact.teln1", 12);
+//        table.put(contact, CustomerContact.TELN2"contact.teln2", 12);
         
         localcontainer = table.define(bar);
         itembar = new ExpandItem(bar, SWT.NONE, 0);
@@ -102,17 +106,17 @@ public class CustomerView extends AbstractView {
         table = (TableAssist)addTable("addresses");
         table.setEditable(true);
         table.setLines(3);
-        table.putAutoCombo("address.type", 11, new String[] {
-                getMessage("address.billing"),
-                getMessage("address.delivery"),
-                getMessage("address.charging")});
+//        table.putAutoCombo("address.type", 11, new String[] {
+//                getMessage("address.billing"),
+//                getMessage("address.delivery"),
+//                getMessage("address.charging")});
         
-        table.put("address.logra", 60);
-        table.put("address.numer", 5);
-        table.put("address.compl", 8);
-        table.put("address.cdend", 8);
-        table.putCombo("address.coduf", 2, null);
-        table.putCombo("address.munic", 40, null);
+//        table.put(address, Address.LOGRA"address.logra", 60);
+//        table.put(address, Address."address.numer", 5);
+//        table.put(address, Address."address.compl", 8);
+//        table.put(address, Address."address.cdend", 8);
+//        table.putCombo(address, Address."address.coduf", 2, null);
+//        table.putCombo(address, Address."address.munic", 40, null);
         table.setReference("address.munic", "address.coduf");
         
         localcontainer = table.define(bar);
@@ -125,20 +129,20 @@ public class CustomerView extends AbstractView {
         /*
          * Horários
          */        
-        schedule = new Composite(bar, SWT.NONE);
-        schedule.setLayout(new RowLayout(SWT.VERTICAL));
+        schedarea = new Composite(bar, SWT.NONE);
+        schedarea.setLayout(new RowLayout(SWT.VERTICAL));
 
         table = addTable("schedule.visit");
         table.setEditable(true);
         table.setLines(2);
-        table.put("schedule.per");
-        table.put("schedule.mon");
-        table.put("schedule.tue");
-        table.put("schedule.wed");
-        table.put("schedule.thu");
-        table.put("schedule.fri");
-        table.setColumnProperties("schedule.per", EVE.readonly);
-        table.define(schedule);
+//        table.put(schedule, CustomerSchedule.PER);
+//        table.put(schedule, CustomerSchedule.MON);
+//        table.put(schedule, CustomerSchedule.TUE);
+//        table.put(schedule, CustomerSchedule.WED);
+//        table.put(schedule, CustomerSchedule.THU);
+//        table.put(schedule, CustomerSchedule.FRI);
+//        table.setColumnProperties("schedule.per", EVE.readonly);
+        table.define(schedarea);
         table.setActionState("schedule.visit.insert", false);
         table.setActionState("schedule.visit.remove", false);
         table.setActionState("schedule.visit.update", true);
@@ -146,22 +150,22 @@ public class CustomerView extends AbstractView {
         table = addTable("schedule.delivery");
         table.setEditable(true);
         table.setLines(2);
-        table.put("schedule.per");
-        table.put("schedule.mon");
-        table.put("schedule.tue");
-        table.put("schedule.wed");
-        table.put("schedule.thu");
-        table.put("schedule.fri");
-        table.setColumnProperties("schedule.per", EVE.readonly);
-        table.define(schedule);
+//        table.put("schedule.per");
+//        table.put("schedule.mon");
+//        table.put("schedule.tue");
+//        table.put("schedule.wed");
+//        table.put("schedule.thu");
+//        table.put("schedule.fri");
+//        table.setColumnProperties("schedule.per", EVE.readonly);
+        table.define(schedarea);
         table.setActionState("schedule.delivery.insert", false);
         table.setActionState("schedule.delivery.remove", false);
         table.setActionState("schedule.delivery.update", true);
         
         itembar = new ExpandItem(bar, SWT.NONE, 2);
         itembar.setText(getMessage("customer.schedule"));
-        itembar.setControl(schedule);
-        itembar.setHeight(schedule.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        itembar.setControl(schedarea);
+        itembar.setHeight(schedarea.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         itembar.setExpanded(true);
         
         addButton("save.command");

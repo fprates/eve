@@ -10,15 +10,10 @@ import org.eclipse.swt.widgets.Widget;
 
 public class ComboAssist {
     private int length;
-    private int item;
     private boolean customized;
     private ComponentFactory factory;
-    private String id;
-    private String reference;
     private Map<String, ?> options;
     private Composite container;
-    private Controller controller;
-    private Map<String, Component> table;
     
     public ComboAssist() {
         customized = false;
@@ -38,34 +33,10 @@ public class ComboAssist {
     
     /**
      * 
-     * @param controller
-     */
-    public final void setController(Controller controller) {
-        this.controller = controller;
-    }
-    
-    /**
-     * 
      * @param customized
      */
     public final void setCustomized(boolean customized) {
         this.customized = customized;
-    }
-    
-    /**
-     * 
-     * @param id
-     */
-    public final void setId(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * 
-     * @param item
-     */
-    public final void setItem(int item) {
-        this.item = item;
     }
     
     /**
@@ -90,14 +61,6 @@ public class ComboAssist {
      */
     public final void setOptions(Map<String, ?> options) {
         this.options = options;
-    }
-    
-    /**
-     * 
-     * @param reference
-     */
-    public final void setReference(String reference) {
-        this.reference = reference;
     }
     
     /**
@@ -130,7 +93,6 @@ public class ComboAssist {
         int charw;
         CCombo ccombo;
         Combo combo;
-        ComboListener listener;
         String[] values;
         
         if (customized) {
@@ -153,15 +115,6 @@ public class ComboAssist {
                     ccombo.add(factory.getMessage(value));
             }
             
-            if (options == null) {
-                listener = new ComboListener(id, controller);
-                listener.setIndex(item);
-                listener.setTableReference(table);
-                listener.setReference(reference);
-                
-                ccombo.addListener(SWT.MouseDown, listener);
-            }
-            
             return ccombo;
             
         } else {
@@ -181,14 +134,6 @@ public class ComboAssist {
                 combo.setText(factory.getMessage(values[0]));
                 for (String value : values)
                     combo.add(factory.getMessage(value));
-            }
-            
-            if (options == null) {
-                listener = new ComboListener(id, controller);
-                listener.setTableReference(table);
-                listener.setReference(reference);
-                
-                combo.addListener(SWT.MouseDown, listener);
             }
             
             return combo;

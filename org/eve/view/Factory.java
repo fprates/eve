@@ -48,4 +48,10 @@ public class Factory extends AbstractComponentFactory {
     protected String getControlValue(Component component, int index) {
         return null;
     }
+
+    @Override
+    protected Component getNewComponent(String name, int length, boolean key) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -4,6 +4,12 @@ import java.sql.Time;
 
 public class CustomerSchedule extends AbstractCustomerItem {
     private static final long serialVersionUID = 6132463280640059272L;
+    public static final String PER = "schedule.per";
+    public static final String MON = "monday";
+    public static final String TUE = "tuesday";
+    public static final String WED = "wednesday";
+    public static final String THU = "thursday";
+    public static final String FRI = "friday";
     private int type;
     private Time monday;
     private Time tuesday;
@@ -15,6 +21,14 @@ public class CustomerSchedule extends AbstractCustomerItem {
 
     public CustomerSchedule() {
         hash = 29;
+        
+//        put(PER, "customer.ident", true, DataType.INT, 10);
+//        put(PER, "schedule.per", true, DataType.INT, 10);
+//        put(MON, "schedule.mon", true, DataType.INT, 10);
+//        put(TUE, "schedule.tue", true, DataType.INT, 10);
+//        put(WED, "schedule.wed", true, DataType.INT, 10);
+//        put(THU, "schedule.thu", true, DataType.INT, 10);
+//        put(FRI, "schedule.fri", true, DataType.INT, 10);
     }
 
     /*

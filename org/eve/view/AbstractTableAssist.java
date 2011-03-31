@@ -175,7 +175,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
         setComponentState(action, state);
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.TableAssist#setColumnProperties(java.lang.String, int)
      */
     @Override

@@ -3,8 +3,6 @@
  */
 package org.eve.view;
 
-import java.util.Map;
-
 import org.eclipse.swt.widgets.TableColumn;
 
 /**
@@ -13,7 +11,6 @@ import org.eclipse.swt.widgets.TableColumn;
  *
  */
 public class TableComponent extends AbstractComponent {
-    private ComboListener combolistener;
     private TableColumn column;
     
     public TableComponent(String name, int length, boolean enabled) {
@@ -35,22 +32,6 @@ public class TableComponent extends AbstractComponent {
      */
     public final void setColumn(TableColumn column) {
         this.column = column;
-    }
-    
-    /**
-     * Define campos de referência 
-     * @param table
-     */
-    public final void setTableReference(Map<String, Component> table) {
-        combolistener.setTableReference(table);
-    }
-    
-    /**
-     * Define campo de referência
-     * @param id
-     */
-    public final void setListenerReference(String id) {
-        combolistener.setReference(id);
     }
     
     /*
