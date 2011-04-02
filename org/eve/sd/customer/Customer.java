@@ -33,20 +33,20 @@ public class Customer extends AbstractDocument
         put("customer.ie", false, DataType.CHAR, 12);
         put("customer.homep", false, DataType.CHAR, 128);
         setLowerCase("customer.homep");
+        
         put("customer.email", false, DataType.CHAR, 128);
         setLowerCase("customer.email");
+        
         put("customer.vlipr", false, DataType.FLOAT, 13);
         put("customer.vlibl", false, DataType.FLOAT, 7);
         put("customer.dvcsp", false, DataType.FLOAT, 7);
         put("customer.dvcpt", false, DataType.FLOAT, 7);
 
         put("customer.tpinc", false, DataType.INT, 1);
-        
         putAutoValues("customer.tpinc", new String[] {"none",
                 "incentive.bill", "incentive.product", "incentive.free"});
         
         put("customer.cdivf", false, DataType.INT, 1);
-        
         putAutoValues("customer.cdivf", new String[] {"none", "A", "B", "C"});
         
         put("customer.status", false, DataType.INT, 1);
@@ -54,6 +54,8 @@ public class Customer extends AbstractDocument
                 "customer.inactive", "customer.active"});
         
         put("customer.stdsp", false, DataType.INT, 10);
+        put("customer.vlisp", false, DataType.FLOAT, 7);
+        put("customer.vlipa", false, DataType.FLOAT, 7);
         put("customer.tpest", false, DataType.INT, 12);
         putAutoValues("customer.tpest", new String[] {
                 "none", "tpest.super", "tpest.indus", "tpest.reven"});
