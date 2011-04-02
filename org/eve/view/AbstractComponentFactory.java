@@ -57,7 +57,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * @see org.eve.view.ComponentFactory#setFieldValue(java.lang.String, java.lang.Object)
      */
     @Override
-    public final void setFieldValue(String id, Object value) {        
+    public final void setFieldValue(String id, Object value) {
+        if (value == null)
+            System.out.println(id);
+        
         switch (fields.get(id).getDataType()) {
         case CHAR:
             setString(id, (String)value);
@@ -164,7 +167,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         this.messages = messages;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setString(java.lang.String, java.lang.String)
      */
     @Override
@@ -177,7 +181,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setControlValue(component, text);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setString(java.lang.String, int, java.lang.String)
      */
     @Override
@@ -277,8 +282,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final Object getFieldValue(AbstractDocument document, String id) {
-        String id_ = document.getName(id);
-        Component component = fields.get(id_);
+        Component component = fields.get(id);
         
         /*
          * significa que o campo do objeto não existe no formulário
@@ -288,22 +292,22 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         switch (component.getDataType()) {
         case CHAR:
-            return getString(id_);
+            return getString(id);
             
         case DATE:
-            return getDate(id_);
+            return getDate(id);
             
         case TIME:
-            return getTime(id_);
+            return getTime(id);
         
         case INT:
-            return getInt(id_);
+            return getInt(id);
         
         case FLOAT:
-            return getFloat(id_);
+            return getFloat(id);
         
         case LONG:
-            return getLong(id_);
+            return getLong(id);
             
         default:
             return null;
@@ -511,14 +515,13 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void put(AbstractDocument document, String id) {
-        String name = document.getName(id);
         Component component = getNewComponent(
-                name, document.getLength(id), !document.isKey(id));
+                id, document.getLength(id), !document.isKey(id));
         
-        component.setTitle(getMessage(name));
+        component.setTitle(getMessage(id));
         component.setDataType(document.getType(id));
         
-        putComponent(name, component);
+        putComponent(id, component);
     }
     
     /**
@@ -528,15 +531,14 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * @param length
      */
     public final void putCombo(AbstractDocument document, String id, int length) {
-        String name = document.getName(id);
-        Component component = getNewComponent(name, length, !document.isKey(id));
+        Component component = getNewComponent(id, length, !document.isKey(id));
         
-        component.setTitle(getMessage(name));
+        component.setTitle(getMessage(id));
         component.setType(ComponentType.COMBO);
         component.setOptions(document.getValues(id));
         component.setDataType(document.getType(id));
         
-        putComponent(name, component);
+        putComponent(id, component);
     }
     
     /* (non-Javadoc)

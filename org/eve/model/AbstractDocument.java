@@ -1,8 +1,6 @@
 package org.eve.model;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Time;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,21 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class AbstractDocument implements Serializable {
-    public static final String DTREG = "regDate";
-    public static final String TMREG = "regTime";
-    public static final String USREG = "regUser";
-    
     private static final long serialVersionUID = 6622123475315846780L;
-    private Date regDate;
-    private String regUser;
-    private Time regTime;
     private Map<String, Field> fields;
+    private Map<String, Value> values;
     
     public AbstractDocument() {
         fields = new HashMap<String, Field>();
-        put(DTREG, "document.dtreg", false, DataType.DATE, 10);
-        put(TMREG, "document.tmreg", false, DataType.TIME, 8);
-        put(USREG, "document.usreg", false, DataType.CHAR, 12);
+        values = new HashMap<String, Value>();
+        
+        put("document.dtreg", false, DataType.DATE, 10);
+        put("document.tmreg", false, DataType.TIME, 8);
+        put("document.usreg", false, DataType.CHAR, 12);
     }
     
     /*
@@ -33,34 +27,13 @@ public abstract class AbstractDocument implements Serializable {
      * 
      */
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public final Object getFieldValue(String id) {
-        Method method;
-        String name = new StringBuffer("get").append(
-                id.substring(0, 1).toUpperCase()).append(
-                        id.substring(1)).toString();
-
-        try {
-            method = getClass().getMethod(name, new Class<?>[0]);
-            
-            return method.invoke(this, new Object[0]);
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        return null;
+        return values.get(id).get();
     }
     
     /**
@@ -81,19 +54,10 @@ public abstract class AbstractDocument implements Serializable {
     }
     
     /**
-     * 
-     * @param id
-     * @return
-     */
-    public final String getName(String id) {
-        return fields.get(id).getName();
-    }
-    
-    /**
      * @return the creation
      */
     public Date getRegDate() {
-        return regDate;
+        return values.get("document.dtreg").getDate();
     }
     
     /**
@@ -101,7 +65,7 @@ public abstract class AbstractDocument implements Serializable {
      * @return
      */
     public Time getRegTime() {
-        return regTime;
+        return values.get("document.tmreg").getTime();
     }
     
     /**
@@ -109,7 +73,7 @@ public abstract class AbstractDocument implements Serializable {
      * @return
      */
     public String getRegUser() {
-        return regUser;
+        return values.get("document.usreg").getString();
     }
     
     /**
@@ -119,6 +83,10 @@ public abstract class AbstractDocument implements Serializable {
      */
     public final DataType getType(String id) {
         return fields.get(id).getType();
+    }
+    
+    protected final Object getValue(String id) {
+        return values.get(id);
     }
     
     /**
@@ -160,69 +128,13 @@ public abstract class AbstractDocument implements Serializable {
      * @param object
      */
     public final void setFieldValue(String id, Object object) {
-        Method method;
-        Class<?>[] class_;
-        Field field = fields.get(id);
-        String name = new StringBuffer("set").append(
-                id.substring(0, 1).toUpperCase()).append(
-                        id.substring(1)).toString();
-        
-        switch (field.getType()) {
-        case CHAR:
-            class_ = new Class[] {String.class};
-            if ((object != null) && (field.isUpcase()))
-                object = ((String)object).toUpperCase();
-            
-            break;
-            
-        case INT:
-            class_ = new Class[] {Integer.TYPE};
-            break;
-        
-        case LONG:
-            class_ = new Class[] {Long.TYPE};
-            break;
-            
-        case FLOAT:
-            class_ = new Class[] {Float.TYPE};
-            break;
-            
-        case DATE:
-            class_ = new Class[] {Date.class};
-            break;
-        
-        case TIME:
-            class_ = new Class[] {Time.class};
-            break;
-            
-        default:
-            return;
-        }
-        
-        try {
-            method = getClass().getMethod(name, class_);
-            
-            method.invoke(this, new Object[] {object});
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            System.out.println(id);
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
+        values.get(id).set(object);
     }
     
+    /**
+     * 
+     * @param id
+     */
     public final void setLowerCase(String id) {
         fields.get(id).setUpcase(false);
     }
@@ -231,7 +143,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param creation the creation to set
      */
     public void setRegDate(Date regDate) {
-        this.regDate = regDate;
+        values.get("document.dtreg").set(regDate);
     }
     
     /**
@@ -239,7 +151,7 @@ public abstract class AbstractDocument implements Serializable {
      * @param regTime
      */
     public void setRegTime(Time regTime) {
-        this.regTime = regTime;
+        values.get("document.tmreg").set(regTime);
     }
     
     /**
@@ -247,7 +159,11 @@ public abstract class AbstractDocument implements Serializable {
      * @param regUser
      */
     public void setRegUser(String regUser) {
-        this.regUser = regUser;
+        values.get("document.usreg").set(regUser);
+    }
+    
+    protected final void setValue(String id, Object object) {
+        values.get(id).set(object);
     }
     
     /*
@@ -261,14 +177,38 @@ public abstract class AbstractDocument implements Serializable {
      * @param id
      * @param name
      */
-    public final void put(String id, String name, boolean key, DataType type, int length) {
-        Field field =  new Field(name);
+    public final void put(String name, boolean key, DataType type, int length) {
+        Field field =  new Field();
+        Value value = new Value();
         
         field.setKey(key);
         field.setLength(length);
         field.setType(type);
         
-        fields.put(id, field);
+        fields.put(name, field);
+        values.put(name, value);
+        
+        switch (type) {
+        case CHAR:
+            value.set("");
+            break;
+            
+        case DATE:
+            value.set(new Date());
+            break;
+            
+        case INT:
+            value.set(0);
+            break;
+            
+        case LONG:
+            value.set(0L);
+            break;
+            
+        case TIME:
+            value.set(Time.valueOf("00:00:00"));
+            break;
+        }
     }
     
     /**
@@ -296,16 +236,38 @@ public abstract class AbstractDocument implements Serializable {
     }
 }
 
+class Value {
+    private Object data;
+    
+    public final void set(Object data) {
+        this.data = data;
+    }
+    
+    public final Object get() {
+        return data;
+    }
+    
+    public final Date getDate() {
+        return (Date)data;
+    }
+    
+    public final String getString() {
+        return (String)data;
+    }
+    
+    public final Time getTime() {
+        return (Time)data;
+    }
+}
+
 class Field {
     private boolean key;
     private boolean upcase;
     private int length;
     private DataType type;
-    private String name;
     private Map<String, ?> values;
     
-    public Field(String name) {
-        this.name = name;
+    public Field() {
         upcase = true;
     }
     
@@ -321,10 +283,6 @@ class Field {
      */
     public final int getLength() {
         return length;
-    }
-    
-    public final String getName() {
-        return name;
     }
     
     public final DataType getType() {

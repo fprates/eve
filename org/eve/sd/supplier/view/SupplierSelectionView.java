@@ -39,7 +39,7 @@ public class SupplierSelectionView extends AbstractView {
         addAction("supplier.edit.sel");
         
         form.setLocale(getLocale());
-        form.put(supplier, Supplier.IDENT);
+        form.put(supplier, "supplier.ident");
         form.define(container);
         
         selpor = new Group(container, SWT.SHADOW_IN);
@@ -47,9 +47,9 @@ public class SupplierSelectionView extends AbstractView {
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
         selpor.setText(getMessage("select.by"));
         
-        selporform.put(supplier, Supplier.NAME);
-        selporform.put(supplier, Supplier.ANAME);
-        selporform.put(supplier, Supplier.REFER);
+        selporform.put(supplier, "supplier.name");
+        selporform.put(supplier, "supplier.aname");
+        selporform.put(supplier, "supplier.refer");
         selporform.define(selpor);
         selpor.pack();
         

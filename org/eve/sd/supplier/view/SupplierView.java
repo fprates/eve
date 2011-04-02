@@ -30,13 +30,13 @@ public class SupplierView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put(supplier, Supplier.IDENT);
-        form.put(supplier, Supplier.DTREG);
-        form.put(supplier, Supplier.TMREG);
+        form.put(supplier, "supplier.ident");
+        form.put(supplier, "document.dtreg");
+        form.put(supplier, "document.tmreg");
 
-        form.put(supplier, Supplier.REFER);
-        form.put(supplier, Supplier.NAME);
-        form.put(supplier, Supplier.ANAME);
+        form.put(supplier, "supplier.refer");
+        form.put(supplier, "supplier.name");
+        form.put(supplier, "supplier.aname");
 //        form.put(supplier, Supplier.CNPJ);
 //        
 //        form.putCombo(supplier, Supplier.STATUS, 7);
@@ -52,18 +52,16 @@ public class SupplierView extends AbstractView {
      */
     private final void setControlLoad(Supplier supplier) {
         String id_;
-        String name;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
         for (Object id : supplier.getIds()) {
-            if (id.equals(Supplier.USREG))
+            if (id.equals("supplier.usreg"))
                 continue;
             
             id_ = (String)id;
-            name = supplier.getName(id_);
             
-            form.setFieldValue(name, supplier.getFieldValue(id_));
+            form.setFieldValue(id_, supplier.getFieldValue(id_));
         }
     }
     

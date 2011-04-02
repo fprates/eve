@@ -13,89 +13,53 @@ import org.eve.model.DataType;
  * @author francisco.prates
  *
  */
-public class Customer extends AbstractDocument implements Comparable<Customer> {
-    public static final String IDENT = "id";
-    public static final String TPINC = "incentive";
-    public static final String CDIVF = "IVF";
-    public static final String STATUS = "status";
-    public static final String STDSP = "standardSupplier";
-    public static final String TPEST = "tipoEstabelecimento";
-    public static final String TPCOM = "tipoComunicacao";
-    public static final String REFER = "reference";
-    public static final String NAME = "name";
-    public static final String ANAME = "alternateName";
-    public static final String CNPJ = "codCadFiscal";
-    public static final String IE = "inscricaoEstadual";
-    public static final String EMAIL = "email";
-    public static final String HOMEP = "homePage";
-    public static final String VLIPR = "productIncentiveValue";
-    public static final String VLIBL = "billingIncentiveValue";
-    public static final String DVCSP = "supplierIncentiveValue";
-    public static final String DVCPT = "partnerIncentiveValue";
-    
+public class Customer extends AbstractDocument
+    implements Comparable<Customer> {
 	private static final long serialVersionUID = 3061311103322489445L;
-    private float prdctinc;
-    private float billinc;
-    private float splrinc;
-    private float prtninc;
-	private int id;
-    private int incentive;
-    private int ivf;
-    private int status;
-    private int standardsupplier;
-    private int tipoestab;
-    private int tipocomunicacao;
-    private long codCadFiscal;
     private Set<CustomerContact> contacts;
     private Set<CustomerAddress> addresses;
     private Set<CustomerSchedule> schedule;
-    private String homepage;
-    private String inscricaoestadual;
-    private String email;
-    private String reference;
-    private String name;
-    private String alternateName;
 	
 	public Customer() {
 	    contacts = new TreeSet<CustomerContact>();
 	    addresses = new TreeSet<CustomerAddress>();
 	    schedule = new TreeSet<CustomerSchedule>();
 	    
-	    put(IDENT, "customer.ident", true, DataType.INT, 10);
-        put(REFER, "customer.refer", false, DataType.CHAR, 12);
-        put(NAME, "customer.name", false, DataType.CHAR, 40);
-        put(ANAME, "customer.aname", false, DataType.CHAR, 40);
-        put(CNPJ, "customer.cnpj", false, DataType.LONG, 18);
-        put(IE, "customer.ie", false, DataType.CHAR, 12);
-        put(HOMEP, "customer.homep", false, DataType.CHAR, 128);
-        setLowerCase(HOMEP);
-        put(EMAIL, "customer.email", false, DataType.CHAR, 128);
-        setLowerCase(EMAIL);
-        put(VLIPR, "customer.vlipr", false, DataType.FLOAT, 13);
-        put(VLIBL, "customer.vlibl", false, DataType.FLOAT, 7);
-        put(DVCSP, "customer.dvcsp", false, DataType.FLOAT, 7);
-        put(DVCPT, "customer.dvcpt", false, DataType.FLOAT, 7);
+	    put("customer.ident", true, DataType.INT, 10);
+        put("customer.refer", false, DataType.CHAR, 12);
+        put("customer.name", false, DataType.CHAR, 40);
+        put("customer.aname", false, DataType.CHAR, 40);
+        put("customer.cnpj", false, DataType.LONG, 18);
+        put("customer.ie", false, DataType.CHAR, 12);
+        put("customer.homep", false, DataType.CHAR, 128);
+        setLowerCase("customer.homep");
+        put("customer.email", false, DataType.CHAR, 128);
+        setLowerCase("customer.email");
+        put("customer.vlipr", false, DataType.FLOAT, 13);
+        put("customer.vlibl", false, DataType.FLOAT, 7);
+        put("customer.dvcsp", false, DataType.FLOAT, 7);
+        put("customer.dvcpt", false, DataType.FLOAT, 7);
 
-        put(TPINC, "customer.tpinc", false, DataType.INT, 1);
+        put("customer.tpinc", false, DataType.INT, 1);
         
-        putAutoValues(TPINC, new String[] {"none",
+        putAutoValues("customer.tpinc", new String[] {"none",
                 "incentive.bill", "incentive.product", "incentive.free"});
         
-        put(CDIVF, "customer.cdivf", false, DataType.INT, 1);
+        put("customer.cdivf", false, DataType.INT, 1);
         
-        putAutoValues(CDIVF, new String[] {"none", "A", "B", "C"});
+        putAutoValues("customer.cdivf", new String[] {"none", "A", "B", "C"});
         
-        put(STATUS, "customer.status", false, DataType.INT, 1);
-        putAutoValues(STATUS, new String[] {
+        put("customer.status", false, DataType.INT, 1);
+        putAutoValues("customer.status", new String[] {
                 "customer.inactive", "customer.active"});
         
-        put(STDSP, "customer.stdsp", false, DataType.INT, 10);
-        put(TPEST, "customer.tpest", false, DataType.INT, 12);
-        putAutoValues(TPEST, new String[] {
+        put("customer.stdsp", false, DataType.INT, 10);
+        put("customer.tpest", false, DataType.INT, 12);
+        putAutoValues("customer.tpest", new String[] {
                 "none", "tpest.super", "tpest.indus", "tpest.reven"});
         
-        put(TPCOM, "customer.tpcom", false, DataType.INT, 1);
-        putAutoValues(TPCOM, new String[] {"none",
+        put("customer.tpcom", false, DataType.INT, 1);
+        putAutoValues("customer.tpcom", new String[] {"none",
                 "tpcom.blue", "tpcom.green", "tpcom.red", "tpcom.yellow"});
 	}
 	
@@ -115,7 +79,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return the alternateName
      */
     public String getAlternateName() {
-        return alternateName;
+        return (String)getValue("customer.aname");
     }
     
     /**
@@ -123,14 +87,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public float getBillingIncentiveValue() {
-        return billinc;
+        return (Float)getValue("customer.vlibl");
     }
     
     /**
      * @return the codCadFiscal
      */
     public long getCodCadFiscal() {
-        return codCadFiscal;
+        return (Long)getValue("customer.cnpj");
     }
     
     /**
@@ -146,14 +110,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public String getEmail() {
-        return email;
+        return (String)getValue("customer.email");
     }
     
     /**
      * @return the id
      */
     public int getId() {
-        return id;
+        return (Integer)getValue("customer.ident");
     }
     
     /**
@@ -161,7 +125,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public int getIncentive() {
-        return incentive;
+        return (Integer)getValue("customer.tpinc");
     }
     
     /**
@@ -169,7 +133,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public String getInscricaoEstadual() {
-        return inscricaoestadual;
+        return (String)getValue("customer.ie");
     }
     
     /**
@@ -177,7 +141,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public int getIVF() {
-        return ivf;
+        return (Integer)getValue("customer.cdivf");
     }
     
     /**
@@ -185,14 +149,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public String getHomePage() {
-        return homepage;
+        return (String)getValue("customer.homep");
     }
     
     /**
      * @return the name
      */
     public String getName() {
-        return name;
+        return (String)getValue("customer.name");
     }
     
     /**
@@ -200,7 +164,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public float getPartnerIncentiveValue() {
-        return prtninc;
+        return (Float)getValue("customer.vlipa");
     }
     
     /**
@@ -208,7 +172,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public float getProductIncentiveValue() {
-        return prdctinc;
+        return (Float)getValue("customer.vlipr");
     }
     
     /**
@@ -216,7 +180,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public String getReference() {
-        return reference;
+        return (String)getValue("customer.refer");
     }
     
     /**
@@ -232,14 +196,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public int getStandardSupplier() {
-        return standardsupplier;
+        return (Integer)getValue("customer.stdsp");
     }
     
     /**
      * @return the status
      */
     public int getStatus() {
-        return status;
+        return (Integer)getValue("customer.status");
     }
     
     /**
@@ -247,7 +211,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public float getSupplierIncentiveValue() {
-        return splrinc;
+        return (Float)getValue("customer.vlisp");
     }
     
     /**
@@ -255,7 +219,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public int getTipoComunicacao() {
-        return tipocomunicacao;
+        return (Integer)getValue("customer.tpcom");
     }
     
     /**
@@ -263,7 +227,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @return
      */
     public int getTipoEstabelecimento() {
-        return tipoestab;
+        return (Integer)getValue("customer.tpest");
     }
     
     /*
@@ -282,7 +246,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param alternateName the alternateName to set
      */
     public void setAlternateName(String alternateName) {
-        this.alternateName = alternateName;
+        setValue("customer.aname", alternateName);
     }
     
     /**
@@ -290,14 +254,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param billinc
      */
     public void setBillingIncentiveValue(float billinc) {
-        this.billinc = billinc;
+        setValue("customer.vlibl", billinc);
     }
 
     /**
      * @param codCadNac the codCadFiscal to set
      */
     public void setCodCadFiscal(long codCadFiscal) {
-        this.codCadFiscal = codCadFiscal;
+        setValue("customer.cnpj", codCadFiscal);
     }
     
     /**
@@ -313,7 +277,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param email
      */
     public void setEmail(String email) {
-        this.email = email;
+        setValue("customer.email", email);
     }
     
     /**
@@ -321,14 +285,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param homepage
      */
     public void setHomePage(String homepage) {
-        this.homepage = homepage;
+        setValue("customer.homep", homepage);
     }
     
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
-		this.id = id;
+	    setValue("customer.ident", id);
 	}
     
     /**
@@ -336,7 +300,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param incentive
      */
     public void setIncentive(int incentive) {
-        this.incentive = incentive;
+        setValue("customer.tpinc", incentive);
     }
     
     /**
@@ -344,7 +308,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param inscricaoestadual
      */
     public void setInscricaoEstadual(String inscricaoestadual) {
-        this.inscricaoestadual = inscricaoestadual;
+        setValue("customer.ie", inscricaoestadual);
     }
     
     /**
@@ -352,14 +316,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param ivf
      */
     public void setIVF(int ivf) {
-        this.ivf = ivf;
+        setValue("customer.cdivf", ivf);
     }
 	
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+	    setValue("customer.name", name);
 	}
     
 	/**
@@ -367,7 +331,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
 	 * @param prtninc
 	 */
     public void setPartnerIncentiveValue(float prtninc) {
-        this.prtninc = prtninc;
+        setValue("customer.vlipa", prtninc);
     }
     
     /**
@@ -375,7 +339,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param prdctinc
      */
     public void setProductIncentiveValue(float prdctinc) {
-        this.prdctinc = prdctinc;
+        setValue("customer.vlipr", prdctinc);
     }
     
     /**
@@ -383,7 +347,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param reference
      */
     public void setReference(String reference) {
-        this.reference = reference;
+        setValue("customer.refer", reference);
     }
     
     /**
@@ -399,14 +363,14 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param standardsupplier
      */
     public void setStandardSupplier(int standardsupplier) {
-        this.standardsupplier = standardsupplier;
+        setValue("customer.stdsp", standardsupplier);
     }
     
     /**
      * @param status the status to set
      */
     public void setStatus(int status) {
-        this.status = status;
+        setValue("customer.status", status);
     }
     
     /**
@@ -414,7 +378,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param splrinc
      */
     public void setSupplierIncentiveValue(float splrinc) {
-        this.splrinc = splrinc;
+        setValue("customer.vlisp", splrinc);
     }
     
     /**
@@ -422,7 +386,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param tipocomunicacao
      */
     public void setTipoComunicacao(int tipocomunicacao) {
-        this.tipocomunicacao = tipocomunicacao;
+        setValue("customer.tpcom", tipocomunicacao);
     }
     
     /**
@@ -430,7 +394,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
      * @param tipoestab
      */
     public void setTipoEstabelecimento(int tipoestab) {
-        this.tipoestab = tipoestab;
+        setValue("customer.tpest", tipoestab);
     }
     
     @Override
@@ -444,7 +408,7 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
             return false;
         
         customer = (Customer)object;
-        if (id != customer.getId())
+        if (getId() != customer.getId())
             return false;
         
         return true;
@@ -452,12 +416,12 @@ public class Customer extends AbstractDocument implements Comparable<Customer> {
 	
     @Override
     public int hashCode() {
-        return Integer.toString(id).hashCode();
+        return Integer.toString(getId()).hashCode();
     }
 
     @Override
     public int compareTo(Customer customer) {
-        int r = id - customer.getId();
+        int r = getId() - customer.getId();
         
         if (r > 0)
             return 1;

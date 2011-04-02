@@ -19,9 +19,8 @@ public class Factory extends AbstractComponentFactory {
         Label label = new Label(container, SWT.NONE);
         
         new Text(container, SWT.BORDER);
-        String name = document.getName(field);
         
-        label.setText(getMessage(name));
+        label.setText(getMessage(field));
     }
 
     @Override

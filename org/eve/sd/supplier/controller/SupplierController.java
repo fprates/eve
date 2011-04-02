@@ -22,7 +22,7 @@ public class SupplierController extends AbstractController {
              */
             for (Object id : supplier.getIds()) {
                 id_ = (String)id;
-                if (id_.equals(Supplier.USREG))
+                if (id_.equals("supplier.usreg"))
                     continue;
                 
                 supplier.setFieldValue(id_, form.getFieldValue(supplier, id_));

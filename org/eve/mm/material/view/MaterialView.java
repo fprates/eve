@@ -24,19 +24,19 @@ public class MaterialView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put(material, Material.IDENT);
-        form.put(material, Material.DTREG);
-        form.put(material, Material.TMREG);
-        form.put(material, Material.REFER);
-        form.put(material, Material.UNDPS);
-        form.put(material, Material.PSLIQ);
-        form.put(material, Material.UNDQT);
-        form.put(material, Material.QUANT);
-        form.put(material, Material.MOEDA);
-        form.put(material, Material.VLCST);
-        form.put(material, Material.LNGTH);
-        form.put(material, Material.WIDTH);
-        form.put(material, Material.THICK);
+        form.put(material, "material.ident");
+        form.put(material, "document.dtreg");
+        form.put(material, "document.tmreg");
+        form.put(material, "material.refer");
+        form.put(material, "material.undps");
+        form.put(material, "material.psliq");
+        form.put(material, "material.undqt");
+        form.put(material, "material.quant");
+        form.put(material, "material.moeda");
+        form.put(material, "material.vlliq");
+        form.put(material, "material.lngth");
+        form.put(material, "material.width");
+        form.put(material, "material.thick");
 //        form.concat("material.psliq", "material.undps", "material.psliq");
 //        form.concat("material.quant", "material.undqt", "material.quant");
         
@@ -51,18 +51,15 @@ public class MaterialView extends AbstractView {
      */
     private final void setControlLoad(Material material) {
         String id_;
-        String name;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
         for (Object id : material.getIds()) {
-            if (id.equals(Material.USREG))
+            if (id.equals("material.usreg"))
                 continue;
             
             id_ = (String)id;
-            name = material.getName(id_);
-            
-            form.setFieldValue(name, material.getFieldValue(id_));
+            form.setFieldValue(id_, material.getFieldValue(id_));
         }
     }
 

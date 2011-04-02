@@ -27,7 +27,7 @@ public class MaterialController extends AbstractController {
              */
             
             for (Object id : material.getIds()) {
-                if (id.equals(Material.USREG))
+                if (id.equals("document.usreg"))
                     continue;
                 
                 material.setFieldValue((String)id,

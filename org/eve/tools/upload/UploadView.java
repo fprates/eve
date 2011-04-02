@@ -22,8 +22,8 @@ public class UploadView extends AbstractView {
         
         container.setLayout(new GridLayout(1, false));
         
-        form.putCombo(upload, Upload.DOCUMENT, 10);
-        form.putFileSearch(upload, Upload.FILENAME);
+        form.putCombo(upload, "upload.document", 10);
+        form.putFileSearch(upload, "upload.filename");
         
         form.define(container);
         

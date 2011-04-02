@@ -93,7 +93,7 @@ public class OrderView extends AbstractView {
         addAction("order.show", false);
         
         factory.setContainer(header);
-        factory.putTextEntry(order, Order.IDENT);
+        factory.putTextEntry(order, "order.ident");
         
         header.pack();
         

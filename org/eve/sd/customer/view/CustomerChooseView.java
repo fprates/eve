@@ -24,10 +24,10 @@ public class CustomerChooseView extends AbstractView {
         
         ctable.setLines(10);
         ctable.setSelType(ComponentType.SINGLE);
-        ctable.put(customer, Customer.IDENT);
-        ctable.put(customer, Customer.REFER);
-        ctable.put(customer, Customer.NAME);
-        ctable.put(customer, Customer.ANAME);
+        ctable.put(customer, "customer.ident");
+        ctable.put(customer, "customer.refer");
+        ctable.put(customer, "customer.name");
+        ctable.put(customer, "customer.aname");
         
         ctable.define(container);
         

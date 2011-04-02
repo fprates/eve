@@ -38,7 +38,7 @@ public class CustomerSelectionView extends AbstractView {
         addAction("customer.edit.sel");
         
         form.setLocale(getLocale());
-        form.put(customer, Customer.IDENT);
+        form.put(customer, "customer.ident");
         form.define(container);
         
         selpor = new Group(container, SWT.SHADOW_IN);
@@ -46,9 +46,9 @@ public class CustomerSelectionView extends AbstractView {
         selpor.setLayout(new RowLayout(SWT.VERTICAL));
         selpor.setText(getMessage("select.by"));
         
-        selporform.put(customer, Customer.NAME);
-        selporform.put(customer, Customer.ANAME);
-        selporform.put(customer, Customer.REFER);
+        selporform.put(customer, "customer.name");
+        selporform.put(customer, "customer.aname");
+        selporform.put(customer, "customer.refer");
         selporform.define(selpor);
         selpor.pack();
         

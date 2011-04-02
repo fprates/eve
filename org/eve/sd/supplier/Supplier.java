@@ -1,33 +1,29 @@
 package org.eve.sd.supplier;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eve.model.AbstractDocument;
 import org.eve.model.DataType;
 import org.eve.sd.supplier.Supplier;
 
 public class Supplier extends AbstractDocument {
-    public static final String IDENT = "id";
-    public static final String REFER = "reference";
-    public static final String NAME = "name";
-    public static final String ANAME = "alternateName";
-//    public static final String CNPJ = "codCadFiscal";
-//    public static final String STATUS = "status";
     private static final long serialVersionUID = -4022380613384815458L;
-    private int id;
-    private String reference;
-    private String name;
-    private String alternateName;
 
     public Supplier() {
-        put(IDENT, "supplier.ident", true, DataType.INT, 10);
-        put(REFER, "supplier.refer", false, DataType.CHAR, 12);
-        put(NAME, "supplier.name", false, DataType.CHAR, 40);
-        put(ANAME, "supplier.aname", false, DataType.CHAR, 40);
-//        put(CNPJ, "supplier.cnpj", false, DataType.CHAR, 18);
-//        
-//        put(STATUS, "supplier.status", false, DataType.INT, 1);
-//        putValues(STATUS, new String[] {
-//                "supplier.inactive",
-//                "supplier.active"});
+        Map<String, Integer> spstatus = new LinkedHashMap<String, Integer>();
+        
+        spstatus.put("supplier.status", 0);
+        spstatus.put("supplier.active", 1);
+        
+        put("supplier.ident", true, DataType.INT, 10);
+        put("supplier.refer", false, DataType.CHAR, 12);
+        put("supplier.name", false, DataType.CHAR, 40);
+        put("supplier.aname", false, DataType.CHAR, 40);
+        put("supplier.cnpj", false, DataType.CHAR, 18);
+        
+        put("supplier.status", false, DataType.INT, 1);
+        putValues("supplier.status", spstatus);
     }
     
     /*
@@ -38,7 +34,7 @@ public class Supplier extends AbstractDocument {
      * @return the id
      */
     public int getId() {
-        return id;
+        return (Integer)getValue("supplier.ident");
     }
     
     /**
@@ -46,7 +42,7 @@ public class Supplier extends AbstractDocument {
      * @return
      */
     public String getReference() {
-        return reference;
+        return (String)getValue("supplier.refer");
     }
     
     /**
@@ -54,7 +50,7 @@ public class Supplier extends AbstractDocument {
      * @return the name
      */
     public String getName() {
-        return name;
+        return (String)getValue("supplier.name");
     }
     
     /**
@@ -62,18 +58,19 @@ public class Supplier extends AbstractDocument {
      * @return the alternateName
      */
     public String getAlternateName() {
-        return alternateName;
+        return (String)getValue("supplier.aname");
     }
     
     /*
      * Setters
      */
+    
     /**
      * Define identificador
      * @param id the id to set
      */
     public void setId(int id) {
-        this.id = id;
+        setValue("supplier.ident", id);
     }
     
     /**
@@ -81,7 +78,7 @@ public class Supplier extends AbstractDocument {
      * @param reference
      */
     public void setReference(String reference) {
-        this.reference = reference;
+        setValue("supplier.refer", reference);
     }
     
     /**
@@ -89,7 +86,7 @@ public class Supplier extends AbstractDocument {
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        setValue("supplier.name", name);
     }
     
     /**
@@ -97,7 +94,7 @@ public class Supplier extends AbstractDocument {
      * @param alternateName the alternateName to set
      */
     public void setAlternateName(String alternateName) {
-        this.alternateName = alternateName;
+        setValue("supplier.aname", alternateName);
     }
     
     @Override
@@ -111,7 +108,7 @@ public class Supplier extends AbstractDocument {
             return false;
         
         supplier = (Supplier)object;
-        if (id != supplier.getId())
+        if (getId() != supplier.getId())
             return false;
         
         return true;
@@ -119,6 +116,6 @@ public class Supplier extends AbstractDocument {
     
     @Override
     public int hashCode() {
-        return Integer.toString(id).hashCode();
+        return Integer.toString(getId()).hashCode();
     }
 }

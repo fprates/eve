@@ -9,7 +9,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
-import org.eve.main.EVE;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerAddress;
 import org.eve.sd.customer.CustomerContact;
@@ -50,30 +49,30 @@ public class CustomerView extends AbstractView {
         /*
          * Dados básicos
          */
-        form.put(customer, Customer.IDENT);
-        form.put(customer, Customer.DTREG);
-        form.put(customer, Customer.TMREG);
+        form.put(customer, "customer.ident");
+        form.put(customer, "document.dtreg");
+        form.put(customer, "document.tmreg");
         
-        form.put(customer, Customer.REFER);
-        form.put(customer, Customer.NAME);
-        form.put(customer, Customer.ANAME);
-        form.put(customer, Customer.CNPJ);
-        form.put(customer, Customer.IE);
-        form.putCombo(customer, Customer.TPEST, 12);
-        form.putCombo(customer, Customer.STATUS, 7);
-        form.putCombo(customer, Customer.TPINC, 7);
+        form.put(customer, "customer.refer");
+        form.put(customer, "customer.name");
+        form.put(customer, "customer.aname");
+        form.put(customer, "customer.cnpj");
+        form.put(customer, "customer.ie");
+        form.putCombo(customer, "customer.tpest", 12);
+        form.putCombo(customer, "customer.status", 7);
+        form.putCombo(customer, "customer.tpinc", 7);
         
-        form.put(customer, Customer.HOMEP);
-        form.put(customer, Customer.EMAIL);
-        form.putCombo(customer, Customer.CDIVF, 1);
+        form.put(customer, "customer.homep");
+        form.put(customer, "customer.email");
+        form.putCombo(customer, "customer.cdivf", 1);
         
-        form.put(customer, Customer.VLIPR);
-        form.put(customer, Customer.VLIBL);
-        form.put(customer, Customer.DVCSP);
-        form.put(customer, Customer.DVCPT);
-        form.putSearch(customer, Customer.STDSP);
+        form.put(customer, "customer.vlipr");
+        form.put(customer, "customer.vlibl");
+        form.put(customer, "customer.dvcsp");
+        form.put(customer, "customer.dvcpt");
+        form.putSearch(customer, "customer.stdsp");
         
-        form.putCombo(customer, Customer.TPCOM, 8);
+        form.putCombo(customer, "customer.tpcom", 8);
         
         form.define(container);
         
@@ -202,7 +201,6 @@ public class CustomerView extends AbstractView {
         Controller controller = getController();
         Map<Object, String> results;
         String id_;
-        String name;
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
@@ -210,13 +208,12 @@ public class CustomerView extends AbstractView {
         TableAssist dstable = controller.getTable("schedule.delivery");
         
         for (Object id : customer.getIds()) {
-            if (id.equals(Customer.USREG))
+            if (id.equals("customer.usreg"))
                 continue;
             
             id_ = (String)id;
-            name = customer.getName(id_);
             
-            form.setFieldValue(name, customer.getFieldValue(id_));
+            form.setFieldValue(id_, customer.getFieldValue(id_));
         }
         
         i = 0;
@@ -310,9 +307,9 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(false);
             
             form.setEditable(false);
-            form.setBlocked(customer, Customer.IDENT);
-            form.setBlocked(customer, Customer.DTREG);
-            form.setBlocked(customer, Customer.TMREG);
+            form.setBlocked(customer, "customer.ident");
+            form.setBlocked(customer, "customer.dtreg");
+            form.setBlocked(customer, "customer.tmreg");
             form.commit();
             
             setControlLoad(customer);
@@ -336,9 +333,9 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
             
             form.setEditable(true);
-            form.setBlocked(customer, Customer.IDENT);
-            form.setBlocked(customer, Customer.DTREG);
-            form.setBlocked(customer, Customer.TMREG);
+            form.setBlocked(customer, "customer.ident");
+            form.setBlocked(customer, "customer.dtreg");
+            form.setBlocked(customer, "customer.tmreg");
             form.commit();
             
             setControlLoad(customer);
@@ -362,9 +359,9 @@ public class CustomerView extends AbstractView {
             dschedule.setEditable(true);
             
             form.setEditable(true);
-            form.setBlocked(customer, Customer.IDENT);
-            form.setBlocked(customer, Customer.DTREG);
-            form.setBlocked(customer, Customer.TMREG);
+            form.setBlocked(customer, "customer.ident");
+            form.setBlocked(customer, "customer.dtreg");
+            form.setBlocked(customer, "customer.tmreg");
             form.commit();
             
             setControlLoad(customer);

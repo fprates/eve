@@ -44,7 +44,7 @@ public class Form extends AbstractComponentFactory {
      * @param id
      */
     public final void setBlocked(AbstractDocument document, String id) {
-        blocked.add(document.getName(id));
+        blocked.add(id);
     }
     
     /**
@@ -267,7 +267,7 @@ public class Form extends AbstractComponentFactory {
         Component component;
         
         put(document, id);
-        component = getComponent(document.getName(id));
+        component = getComponent(id);
         component.setExtension(Component.Extension.SEARCH);
     }
     
@@ -280,7 +280,7 @@ public class Form extends AbstractComponentFactory {
         Component component;
         
         put(document, id);
-        component = getComponent(document.getName(id));
+        component = getComponent(id);
         component.setExtension(Component.Extension.FILESEARCH);
     }
 }
