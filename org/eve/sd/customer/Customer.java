@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eve.model.AbstractDocument;
+import org.eve.model.AbstractDocumentItem;
 import org.eve.model.DataType;
 
 /**
@@ -16,14 +17,14 @@ import org.eve.model.DataType;
 public class Customer extends AbstractDocument
     implements Comparable<Customer> {
 	private static final long serialVersionUID = 3061311103322489445L;
-    private Set<CustomerContact> contacts;
-    private Set<CustomerAddress> addresses;
-    private Set<CustomerSchedule> schedule;
+    private Set<AbstractDocumentItem> contacts;
+    private Set<AbstractDocumentItem> addresses;
+    private Set<AbstractDocumentItem> schedule;
 	
 	public Customer() {
-	    contacts = new TreeSet<CustomerContact>();
-	    addresses = new TreeSet<CustomerAddress>();
-	    schedule = new TreeSet<CustomerSchedule>();
+	    contacts = new TreeSet<AbstractDocumentItem>();
+	    addresses = new TreeSet<AbstractDocumentItem>();
+	    schedule = new TreeSet<AbstractDocumentItem>();
 	    
 	    put("customer.ident", true, DataType.INT, 10);
         put("customer.refer", false, DataType.CHAR, 12);
@@ -73,7 +74,7 @@ public class Customer extends AbstractDocument
      * 
      * @return
      */
-    public Set<CustomerAddress> getAddresses() {
+    public Set<AbstractDocumentItem> getAddresses() {
         return addresses;
     }
     
@@ -103,7 +104,7 @@ public class Customer extends AbstractDocument
      * 
      * @return
      */
-    public Set<CustomerContact> getContacts() {
+    public Set<AbstractDocumentItem> getContacts() {
         return contacts;
     }
     
@@ -189,7 +190,7 @@ public class Customer extends AbstractDocument
      * 
      * @return
      */
-    public Set<CustomerSchedule> getSchedule() {
+    public Set<AbstractDocumentItem> getSchedule() {
         return schedule;
     }
     
@@ -240,7 +241,7 @@ public class Customer extends AbstractDocument
      * 
      * @param addresses
      */
-    public void setAddresses(Set<CustomerAddress> addresses) {
+    public void setAddresses(Set<AbstractDocumentItem> addresses) {
         this.addresses = addresses;
     }
     
@@ -270,7 +271,7 @@ public class Customer extends AbstractDocument
      * 
      * @param contacts
      */
-    public void setContacts(Set<CustomerContact> contacts) {
+    public void setContacts(Set<AbstractDocumentItem> contacts) {
         this.contacts = contacts;
     }
     
@@ -356,7 +357,7 @@ public class Customer extends AbstractDocument
      * 
      * @param schedule
      */
-    public void setSchedule(Set<CustomerSchedule> schedule) {
+    public void setSchedule(Set<AbstractDocumentItem> schedule) {
         this.schedule = schedule;
     }
     

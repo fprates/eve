@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
+import org.eve.model.AbstractDocumentItem;
 import org.springframework.context.MessageSource;
 
 public abstract class AbstractComponentFactory implements ComponentFactory {
@@ -54,38 +56,82 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setControlValue(component, dateformat.format(date));
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setDate(java.lang.String, int, java.util.Date)
+     */
+    @Override
+    public final void setDate(String field, int index, Date date) {
+        Component component = fields.get(field);
+        
+        if (date == null)
+            setControlValue(component, index, "");
+        else
+            setControlValue(component, index, dateformat.format(date));
+    }
+    
     /* 
      * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setFieldValue(java.lang.String, java.lang.Object)
      */
     @Override
     public final void setFieldValue(String id, Object value) {
-        if (value == null)
-            System.out.println(id);
-        
+        setFieldValue(id, 0, value);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setFieldValue(java.lang.String, int, java.lang.Object)
+     */
+    @Override
+    public final void setFieldValue(String id, int index, Object value) {
         switch (fields.get(id).getDataType()) {
         case CHAR:
-            setString(id, (String)value);
+            if (index == 0)
+                setString(id, (String)value);
+            else
+                setString(id, index, (String)value);
+            
             break;
             
         case DATE:
-            setDate(id, (Date)value);
+            if (index == 0)
+                setDate(id, (Date)value);
+            else
+                setDate(id, index, (Date)value);
+            
             break;
             
         case TIME:
-            setTime(id, (Time)value);
+            if (index == 0)
+                setTime(id, (Time)value);
+            else
+                setTime(id, index, (Time)value);
+            
             break;
         
         case INT:
-            setInt(id, (Integer)value);
+            if (index == 0)
+                setInt(id, (Integer)value);
+            else
+                setInt(id, index, (Integer)value);
+            
             break;
         
         case LONG:
-            setLong(id, (Long)value);
+            if (index == 0)
+                setLong(id, (Long)value);
+            else
+                setLong(id, index, (Long)value);
+            
             break;
             
         case FLOAT:
-            setFloat(id, (Float)value);
+            if (index == 0)
+                setFloat(id, (Float)value);
+            else
+                setFloat(id, index, (Float)value);
+            
             break;
         }
     }
@@ -100,9 +146,29 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         switch (component.getType()) {
         case COMBO:
-            setControlValue(component, value);
+            setControlValue(component, Float.toString(value));
+            break;
+            
         default:
             setControlValue(fields.get(field), Float.toString(value));
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setFloat(java.lang.String, int, float)
+     */
+    @Override
+    public final void setFloat(String field, int index, float value) {
+        Component component = fields.get(field);
+        
+        switch (component.getType()) {
+        case COMBO:
+            setControlValue(component, index, Float.toString(value));
+            break;
+            
+        default:
+            setControlValue(fields.get(field), index, Float.toString(value));
         }
     }
     
@@ -157,6 +223,15 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     @Override
     public final void setLong(String field, long value) {
         setControlValue(fields.get(field), Long.toString(value));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#setLong(java.lang.String, int, long)
+     */
+    @Override
+    public final void setLong(String field, int index, long value) {
+        setControlValue(fields.get(field), index, Long.toString(value));
     }
     
     /* 
@@ -540,6 +615,17 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     public final void copyFrom(AbstractDocument document) {
         for (String id: fields.keySet())
             setFieldValue(id, document.getFieldValue(id));
+    }
+    
+    @Override
+    public final void copyFrom(Set<AbstractDocumentItem> itens) {
+        int i = 0;
+        
+        for (AbstractDocumentItem item : itens) {
+            i++;
+            for (String id : fields.keySet())
+                setFieldValue(id, i, item.getFieldValue(id));
+        }
     }
     
     /*

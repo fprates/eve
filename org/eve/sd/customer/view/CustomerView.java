@@ -1,7 +1,5 @@
 package org.eve.sd.customer.view;
 
-import java.util.Map;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -9,9 +7,8 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eve.model.AbstractDocumentItem;
 import org.eve.sd.customer.Customer;
-import org.eve.sd.customer.CustomerAddress;
-import org.eve.sd.customer.CustomerContact;
 import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
 import org.eve.view.Controller;
@@ -196,10 +193,8 @@ public class CustomerView extends AbstractView {
      */
     private final void setControlLoad(Customer customer) {
         int i;
-        int munic;
-        int munic_;
+        CustomerSchedule schedule;
         Controller controller = getController();
-        Map<Object, String> results;
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
@@ -207,43 +202,16 @@ public class CustomerView extends AbstractView {
         TableAssist dstable = controller.getTable("schedule.delivery");
         
         form.copyFrom(customer);
-        
-        i = 0;
-        for (CustomerContact contact : customer.getContacts()) {
-            ctable.setString("contact.rname", i, contact.getName());
-            ctable.setString("contact.type", i, contact.getType());
-            ctable.setString("contact.im", i, contact.getInstantMessenger());
-            ctable.setString("contact.funct", i++, contact.getFunction());
-        }
-        
-        i = 0;
-        for (CustomerAddress address : customer.getAddresses()) {
-            atable.setString("address.logra", i, address.getAddress());
-            atable.setInt("address.numer", i, address.getNumber());
-            atable.setString("address.compl", i, address.getComplemento());
-            atable.setInt("address.cdend", i, address.getCEP());
-            atable.setString("address.coduf", i, address.getEstado());
-            
-            munic = address.getMunicipio();
-            results = controller.getResults("address.munic", address.getEstado());
-            if (results != null) {
-                for (Object object : results.keySet()) {
-                    munic_ = (Integer)object;
-                    if (!(munic_ == munic))
-                        continue;
-                    
-                    atable.setString("address.munic", i, results.get(object));
-                    break;
-                }
-                i++;
-            }
-        }
+        ctable.copyFrom(customer.getContacts());
+        atable.copyFrom(customer.getAddresses());
         
         fillPeriodColumn(vstable);
         fillPeriodColumn(dstable);
         
         i = 0;
-        for (CustomerSchedule schedule : customer.getSchedule()) {
+        for (AbstractDocumentItem item: customer.getSchedule()) {
+            schedule = (CustomerSchedule)item;
+            
             switch (i) {
             case 0:
             case 1:                

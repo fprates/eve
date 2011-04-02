@@ -1,9 +1,11 @@
 package org.eve.sd.customer;
 
-public abstract class AbstractCustomerItem implements CustomerItem {
+import org.eve.model.AbstractDocumentItem;
+
+public abstract class AbstractCustomerItem extends AbstractDocumentItem
+    implements CustomerItem {
+    
     private static final long serialVersionUID = -4059519796299991979L;
-    private Customer customer;
-    private int item;
     protected int hash;
 
     public AbstractCustomerItem() {
@@ -20,14 +22,14 @@ public abstract class AbstractCustomerItem implements CustomerItem {
      * @return the customer
      */
     public Customer getCustomer() {
-        return customer;
+        return (Customer)getDocument();
     }
 
     /**
      * @return the item
      */
     public int getItem() {
-        return item;
+        return (Integer)getDocumentItem();
     }
     
     /*
@@ -40,14 +42,14 @@ public abstract class AbstractCustomerItem implements CustomerItem {
      * @param customer the customer to set
      */
     public void setCustomer(Customer customer) {
-        this.customer = customer;
+        setDocument(customer);
     }
 
     /**
      * @param item the item to set
      */
     public void setItem(int item) {
-        this.item = item;
+        setDocumentItem(item);
     }
     
     /*
@@ -65,10 +67,10 @@ public abstract class AbstractCustomerItem implements CustomerItem {
             return false;
         
         address = (CustomerAddress)object;
-        if (!customer.equals(address.getCustomer()))
+        if (!getCustomer().equals(address.getCustomer()))
             return false;
         
-        if (item != address.getItem())
+        if (getItem() != address.getItem())
             return false;
         
         return true;
@@ -80,9 +82,9 @@ public abstract class AbstractCustomerItem implements CustomerItem {
      */
     @Override
     public int hashCode() {
-        int result = customer.hashCode();
+        int result = getCustomer().hashCode();
         
-        result = (hash * result) + item;
+        result = (hash * result) + getItem();
         
         return result;
     }
@@ -97,11 +99,11 @@ public abstract class AbstractCustomerItem implements CustomerItem {
         int result;
         
         if (customeritem!= this) {
-            result = customer.getId() - customeritem.getCustomer().getId(); 
+            result = getCustomer().getId() - customeritem.getCustomer().getId(); 
             if (result != 0)
                 return result;
             
-            result = item - customeritem.getItem();
+            result = getItem() - customeritem.getItem();
             
             return result;
         }

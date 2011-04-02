@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.Set;
 
+import org.eve.model.AbstractDocumentItem;
 import org.eve.model.AbstractModel;
 import org.eve.sd.common.Country;
 import org.eve.sd.customer.Customer;
@@ -80,6 +81,9 @@ public class CustomerModel extends AbstractModel {
     @Transactional(propagation=Propagation.SUPPORTS)
     public final void save(Object object) {
         Calendar calendar;
+        CustomerAddress address;
+        CustomerContact contact;
+        CustomerSchedule schedule;
         int k = 0;
         Customer customer = (Customer)object;
         Session session = getSessionFactory().getCurrentSession();
@@ -93,38 +97,50 @@ public class CustomerModel extends AbstractModel {
             customer.setRegDate(calendar.getTime());
             customer.setRegTime(new Time(calendar.getTimeInMillis()));
             
-            for (CustomerContact contact : customer.getContacts()) {
+            for (AbstractDocumentItem item : customer.getContacts()) {
+                contact = (CustomerContact)item;
+                
                 contact.setItem(++k + (customer.getId() * 100));
                 session.save(contact);
             }
             
             k = 0;
-            for (CustomerAddress address : customer.getAddresses()) {
+            for (AbstractDocumentItem item : customer.getAddresses()) {
+                address = (CustomerAddress)item;
+                
                 address.setItem(++k + (customer.getId() * 100));
                 session.save(address);
             }
             
             k = 0;
-            for (CustomerSchedule schedule : customer.getSchedule()) {
+            for (AbstractDocumentItem item : customer.getSchedule()) {
+                schedule = (CustomerSchedule)item;
+                
                 schedule.setItem(++k + (customer.getId() * 100));
                 session.save(schedule);
             }
         } else {
             session.update(customer);
-            
-            for (CustomerContact contact : customer.getContacts()) {
+
+            for (AbstractDocumentItem item : customer.getContacts()) {
+                contact = (CustomerContact)item;
+                
                 contact.setItem(++k + (customer.getId() * 100));
                 session.saveOrUpdate(contact);
             }
             
             k = 0;
-            for (CustomerAddress address : customer.getAddresses()) {
+            for (AbstractDocumentItem item : customer.getAddresses()) {
+                address = (CustomerAddress)item;
+                
                 address.setItem(++k + (customer.getId() * 100));
                 session.saveOrUpdate(address);
             }
             
             k = 0;
-            for (CustomerSchedule schedule : customer.getSchedule()) {
+            for (AbstractDocumentItem item : customer.getSchedule()) {
+                schedule = (CustomerSchedule)item;
+                
                 schedule.setItem(++k + (customer.getId() * 100));
                 session.saveOrUpdate(schedule);
             }
@@ -139,6 +155,8 @@ public class CustomerModel extends AbstractModel {
         int k;
         int max;
         Customer customer;
+        CustomerAddress address;
+        CustomerContact contact;
         Calendar calendar = Calendar.getInstance();
         Time time = new Time(calendar.getTimeInMillis());
         Session session = getSessionFactory().getCurrentSession();
@@ -153,13 +171,17 @@ public class CustomerModel extends AbstractModel {
             session.save(customer);
             
             k = 0;
-            for (CustomerAddress address : customer.getAddresses()) {
+            for (AbstractDocumentItem item : customer.getAddresses()) {
+                address = (CustomerAddress)item;
+                
                 address.setItem(++k + (customer.getId() * 100));
                 session.save(address);
             }
             
             k = 0;
-            for (CustomerContact contact : customer.getContacts()) {
+            for (AbstractDocumentItem item : customer.getContacts()) {
+                contact = (CustomerContact)item;
+                
                 contact.setItem(++k + (customer.getId() * 100));
                 session.save(contact);
             }

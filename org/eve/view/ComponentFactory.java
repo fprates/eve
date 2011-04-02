@@ -4,9 +4,11 @@ import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
+import org.eve.model.AbstractDocumentItem;
 import org.springframework.context.MessageSource;
 
 public interface ComponentFactory {
@@ -20,6 +22,14 @@ public interface ComponentFactory {
      * @param date
      */
     public abstract void setDate(String field, Date date);
+    
+    /**
+     * 
+     * @param field
+     * @param index
+     * @param date
+     */
+    public abstract void setDate(String field, int index, Date date);
 
     /**
      * 
@@ -27,6 +37,14 @@ public interface ComponentFactory {
      * @param value
      */
     public abstract void setFieldValue(String id, Object value);
+    
+    /**
+     * 
+     * @param id
+     * @param index
+     * @param value
+     */
+    public abstract void setFieldValue(String id, int index, Object value);
 
     /**
      * Ajusta valor de ponto flutuante para campo
@@ -34,6 +52,14 @@ public interface ComponentFactory {
      * @param value
      */
     public abstract void setFloat(String field, float value);
+
+    /**
+     * 
+     * @param field
+     * @param index
+     * @param value
+     */
+    public abstract void setFloat(String field, int index, float value);
 
     /**
      * 
@@ -68,6 +94,14 @@ public interface ComponentFactory {
      * @param value
      */
     public abstract void setLong(String field, long value);
+
+    /**
+     * 
+     * @param field
+     * @param index
+     * @param value
+     */
+    public abstract void setLong(String field, int index, long value);
 
     /**
      * 
@@ -221,6 +255,12 @@ public interface ComponentFactory {
      * @param document
      */
     public abstract void copyFrom(AbstractDocument document);
+
+    /**
+     * 
+     * @param itens
+     */
+    public abstract void copyFrom(Set<AbstractDocumentItem> itens);
     
     /**
      * 
