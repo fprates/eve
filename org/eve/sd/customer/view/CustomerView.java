@@ -7,7 +7,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
-import org.eve.model.AbstractDocumentItem;
+import org.eve.model.AbstractDocument;
 import org.eve.sd.customer.Customer;
 import org.eve.sd.customer.CustomerSchedule;
 import org.eve.view.AbstractView;
@@ -209,7 +209,7 @@ public class CustomerView extends AbstractView {
         fillPeriodColumn(dstable);
         
         i = 0;
-        for (AbstractDocumentItem item: customer.getSchedule()) {
+        for (AbstractDocument item: customer.getSchedule()) {
             schedule = (CustomerSchedule)item;
             
             switch (i) {

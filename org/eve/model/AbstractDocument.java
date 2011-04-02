@@ -11,14 +11,16 @@ public abstract class AbstractDocument implements Serializable {
     private static final long serialVersionUID = 6622123475315846780L;
     private Map<String, Field> fields;
     private Map<String, Value> values;
+    protected static final boolean IS_KEY = true;
+    protected static final boolean NOT_KEY = false;
     
     public AbstractDocument() {
         fields = new HashMap<String, Field>();
         values = new HashMap<String, Value>();
         
-        put("document.dtreg", false, DataType.DATE, 10);
-        put("document.tmreg", false, DataType.TIME, 8);
-        put("document.usreg", false, DataType.CHAR, 12);
+        put("document.dtreg", NOT_KEY, DataType.DATE, 10);
+        put("document.tmreg", NOT_KEY, DataType.TIME, 8);
+        put("document.usreg", NOT_KEY, DataType.CHAR, 12);
     }
     
     /*

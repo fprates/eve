@@ -1,15 +1,17 @@
 package org.eve.sd.customer;
 
-import org.eve.model.AbstractDocumentItem;
+import org.eve.model.AbstractDocument;
+import org.eve.model.DataType;
 
-public abstract class AbstractCustomerItem extends AbstractDocumentItem
+public abstract class AbstractCustomerItem extends AbstractDocument
     implements CustomerItem {
     
     private static final long serialVersionUID = -4059519796299991979L;
+    private Customer customer;
     protected int hash;
 
     public AbstractCustomerItem() {
-        // TODO Auto-generated constructor stub
+        put("customer.item", IS_KEY, DataType.INT, 5);
     }
     
     /*
@@ -22,14 +24,14 @@ public abstract class AbstractCustomerItem extends AbstractDocumentItem
      * @return the customer
      */
     public Customer getCustomer() {
-        return (Customer)getDocument();
+        return customer;
     }
 
     /**
      * @return the item
      */
     public int getItem() {
-        return (Integer)getDocumentItem();
+        return (Integer)getValue("customer.item");
     }
     
     /*
@@ -42,14 +44,14 @@ public abstract class AbstractCustomerItem extends AbstractDocumentItem
      * @param customer the customer to set
      */
     public void setCustomer(Customer customer) {
-        setDocument(customer);
+        this.customer = customer;
     }
 
     /**
      * @param item the item to set
      */
     public void setItem(int item) {
-        setDocumentItem(item);
+        setValue("customer.item", item);
     }
     
     /*

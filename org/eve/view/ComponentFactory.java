@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
-import org.eve.model.AbstractDocumentItem;
 import org.springframework.context.MessageSource;
 
 public interface ComponentFactory {
@@ -260,7 +259,7 @@ public interface ComponentFactory {
      * 
      * @param itens
      */
-    public abstract void copyFrom(Set<AbstractDocumentItem> itens);
+    public abstract void copyFrom(Set<AbstractDocument> itens);
     
     /**
      * 

@@ -13,7 +13,6 @@ import java.util.Set;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
 import org.eve.model.AbstractDocument;
-import org.eve.model.AbstractDocumentItem;
 import org.springframework.context.MessageSource;
 
 public abstract class AbstractComponentFactory implements ComponentFactory {
@@ -618,10 +617,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     }
     
     @Override
-    public final void copyFrom(Set<AbstractDocumentItem> itens) {
+    public final void copyFrom(Set<AbstractDocument> itens) {
         int i = 0;
         
-        for (AbstractDocumentItem item : itens) {
+        for (AbstractDocument item : itens) {
             i++;
             for (String id : fields.keySet())
                 setFieldValue(id, i, item.getFieldValue(id));

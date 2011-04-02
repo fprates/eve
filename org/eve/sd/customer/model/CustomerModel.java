@@ -5,7 +5,7 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.Set;
 
-import org.eve.model.AbstractDocumentItem;
+import org.eve.model.AbstractDocument;
 import org.eve.model.AbstractModel;
 import org.eve.sd.common.Country;
 import org.eve.sd.customer.Customer;
@@ -97,7 +97,7 @@ public class CustomerModel extends AbstractModel {
             customer.setRegDate(calendar.getTime());
             customer.setRegTime(new Time(calendar.getTimeInMillis()));
             
-            for (AbstractDocumentItem item : customer.getContacts()) {
+            for (AbstractDocument item : customer.getContacts()) {
                 contact = (CustomerContact)item;
                 
                 contact.setItem(++k + (customer.getId() * 100));
@@ -105,7 +105,7 @@ public class CustomerModel extends AbstractModel {
             }
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getAddresses()) {
+            for (AbstractDocument item : customer.getAddresses()) {
                 address = (CustomerAddress)item;
                 
                 address.setItem(++k + (customer.getId() * 100));
@@ -113,7 +113,7 @@ public class CustomerModel extends AbstractModel {
             }
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getSchedule()) {
+            for (AbstractDocument item : customer.getSchedule()) {
                 schedule = (CustomerSchedule)item;
                 
                 schedule.setItem(++k + (customer.getId() * 100));
@@ -122,7 +122,7 @@ public class CustomerModel extends AbstractModel {
         } else {
             session.update(customer);
 
-            for (AbstractDocumentItem item : customer.getContacts()) {
+            for (AbstractDocument item : customer.getContacts()) {
                 contact = (CustomerContact)item;
                 
                 contact.setItem(++k + (customer.getId() * 100));
@@ -130,7 +130,7 @@ public class CustomerModel extends AbstractModel {
             }
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getAddresses()) {
+            for (AbstractDocument item : customer.getAddresses()) {
                 address = (CustomerAddress)item;
                 
                 address.setItem(++k + (customer.getId() * 100));
@@ -138,7 +138,7 @@ public class CustomerModel extends AbstractModel {
             }
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getSchedule()) {
+            for (AbstractDocument item : customer.getSchedule()) {
                 schedule = (CustomerSchedule)item;
                 
                 schedule.setItem(++k + (customer.getId() * 100));
@@ -171,7 +171,7 @@ public class CustomerModel extends AbstractModel {
             session.save(customer);
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getAddresses()) {
+            for (AbstractDocument item : customer.getAddresses()) {
                 address = (CustomerAddress)item;
                 
                 address.setItem(++k + (customer.getId() * 100));
@@ -179,7 +179,7 @@ public class CustomerModel extends AbstractModel {
             }
             
             k = 0;
-            for (AbstractDocumentItem item : customer.getContacts()) {
+            for (AbstractDocument item : customer.getContacts()) {
                 contact = (CustomerContact)item;
                 
                 contact.setItem(++k + (customer.getId() * 100));
