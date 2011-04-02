@@ -85,8 +85,13 @@ public abstract class AbstractDocument implements Serializable {
         return fields.get(id).getType();
     }
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
     protected final Object getValue(String id) {
-        return values.get(id);
+        return values.get(id).get();
     }
     
     /**
