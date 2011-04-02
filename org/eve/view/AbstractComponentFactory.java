@@ -40,7 +40,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     protected abstract Object getControlValue(Component component, int index);
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setDate(java.lang.String, java.util.Date)
      */
     @Override
@@ -53,7 +54,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setControlValue(component, dateformat.format(date));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setFieldValue(java.lang.String, java.lang.Object)
      */
     @Override
@@ -88,7 +90,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setFloat(java.lang.String, float)
      */
     @Override
@@ -103,7 +106,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setFocus(java.lang.String)
      */
     @Override
@@ -111,7 +115,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         setControlFocus(fields.get(field));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setInt(java.lang.String, int)
      */
     @Override
@@ -126,7 +131,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setInt(java.lang.String, int, int)
      */
     @Override
@@ -134,7 +140,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         setControlValue(fields.get(field), index, Integer.toString(value));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setLocale(java.util.Locale)
      */
     @Override
@@ -143,7 +150,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         dateformat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setLong(java.lang.String, long)
      */
     @Override
@@ -151,7 +159,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         setControlValue(fields.get(field), Long.toString(value));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setMessage(int, java.lang.String)
      */
     @Override
@@ -159,7 +168,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         system.setMessage(status, getMessage(id));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setMessages(org.springframework.context.MessageSource)
      */
     @Override
@@ -195,7 +205,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setControlValue(component, index, text);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setSystem(org.eve.main.EveAPI)
      */
     @Override
@@ -203,7 +214,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         this.system = system;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setTime(java.lang.String, java.sql.Time)
      */
     @Override
@@ -216,7 +228,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setControlValue(component, time.toString());
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#setTime(java.lang.String, int, java.sql.Time)
      */
     @Override
@@ -252,7 +265,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return fields.get(field);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getComponents()
      */
     @Override
@@ -260,7 +274,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return fields.values();
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getDate(java.lang.String)
      */
     @Override
@@ -277,7 +292,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return null;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getFieldValue(org.eve.model.AbstractDocument, java.lang.String)
      */
     @Override
@@ -314,7 +330,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getFloat(java.lang.String)
      */
     @Override
@@ -332,7 +349,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getInt(java.lang.String)
      */
     @Override
@@ -358,7 +376,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getInt(java.lang.String, int)
      */
     @Override
@@ -384,7 +403,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return locale;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getLong(java.lang.String)
      */
     @Override
@@ -429,7 +449,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return (String)getControlValue(fields.get(field));
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getString(java.lang.String, int)
      */
     @Override
@@ -445,7 +466,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return system;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getTime(java.lang.String)
      */
     @Override
@@ -454,7 +476,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         return null;
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getTime(java.lang.String, int)
      */
     @Override
@@ -511,6 +534,16 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     /*
      * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#copyFrom(org.eve.model.AbstractDocument)
+     */
+    @Override
+    public final void copyFrom(AbstractDocument document) {
+        for (String id: fields.keySet())
+            setFieldValue(id, document.getFieldValue(id));
+    }
+    
+    /*
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#put(org.eve.model.AbstractDocument, java.lang.String)
      */
     @Override
@@ -541,7 +574,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         putComponent(id, component);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#putComponent(java.lang.String, org.eve.view.Component)
      */
     @Override
@@ -549,7 +583,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         fields.put(name, component);
     }
     
-    /* (non-Javadoc)
+    /* 
+     * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#sel(int, int)
      */
     @Override

@@ -200,21 +200,13 @@ public class CustomerView extends AbstractView {
         int munic_;
         Controller controller = getController();
         Map<Object, String> results;
-        String id_;
         Form form = controller.getForm("main");
         TableAssist ctable = controller.getTable("contacts");
         TableAssist atable = controller.getTable("addresses");
         TableAssist vstable = controller.getTable("schedule.visit");
         TableAssist dstable = controller.getTable("schedule.delivery");
         
-        for (Object id : customer.getIds()) {
-            if (id.equals("customer.usreg"))
-                continue;
-            
-            id_ = (String)id;
-            
-            form.setFieldValue(id_, customer.getFieldValue(id_));
-        }
+        form.copyFrom(customer);
         
         i = 0;
         for (CustomerContact contact : customer.getContacts()) {

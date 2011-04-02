@@ -219,6 +219,12 @@ public interface ComponentFactory {
     /**
      * 
      * @param document
+     */
+    public abstract void copyFrom(AbstractDocument document);
+    
+    /**
+     * 
+     * @param document
      * @param id
      */
     public abstract void put(AbstractDocument document, String id);
