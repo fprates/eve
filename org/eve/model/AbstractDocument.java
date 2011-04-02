@@ -197,6 +197,10 @@ public abstract class AbstractDocument implements Serializable {
             value.set(new Date());
             break;
             
+        case FLOAT:
+            value.set(0f);
+            break;
+            
         case INT:
             value.set(0);
             break;
