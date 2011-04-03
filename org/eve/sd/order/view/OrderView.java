@@ -16,18 +16,7 @@ public class OrderView extends AbstractView {
      * @param order
      */
     private final void setControlLoad(Order order) {
-//        String id_;
-//        String name;
-//        
-//        for (Object id : order.getIds()) {
-//            if (id.equals(Order.USREG))
-//                continue;
-//            
-//            id_ = (String)id;
-//            name = order.getName(id_);
-//            
-//            form.setFieldValue(name, order.getFieldValue(id_));
-//        }
+        
     }
 
     @Override

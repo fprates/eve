@@ -51,18 +51,10 @@ public class SupplierView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Supplier supplier) {
-        String id_;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
-        for (Object id : supplier.getIds()) {
-            if (id.equals("supplier.usreg"))
-                continue;
-            
-            id_ = (String)id;
-            
-            form.setFieldValue(id_, supplier.getFieldValue(id_));
-        }
+        form.copyFrom(supplier);
     }
     
     /*

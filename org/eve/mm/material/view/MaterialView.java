@@ -50,17 +50,10 @@ public class MaterialView extends AbstractView {
      * @param customer
      */
     private final void setControlLoad(Material material) {
-        String id_;
         Controller controller = getController();
         Form form = controller.getForm("main");
         
-        for (Object id : material.getIds()) {
-            if (id.equals("material.usreg"))
-                continue;
-            
-            id_ = (String)id;
-            form.setFieldValue(id_, material.getFieldValue(id_));
-        }
+        form.copyFrom(material);
     }
 
     @Override
