@@ -75,7 +75,31 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      */
     @Override
     public final void setFieldValue(String id, Object value) {
-        setFieldValue(id, 0, value);
+        switch (fields.get(id).getDataType()) {
+        case CHAR:
+            setString(id, (String)value);
+            break;
+            
+        case DATE:
+            setDate(id, (Date)value);
+            break;
+            
+        case TIME:
+            setTime(id, (Time)value);
+            break;
+        
+        case INT:
+            setInt(id, (Integer)value);
+            break;
+        
+        case LONG:
+            setLong(id, (Long)value);
+            break;
+            
+        case FLOAT:
+            setFloat(id, (Float)value);
+            break;
+        }
     }
     
     /*
@@ -86,51 +110,27 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     public final void setFieldValue(String id, int index, Object value) {
         switch (fields.get(id).getDataType()) {
         case CHAR:
-            if (index == 0)
-                setString(id, (String)value);
-            else
-                setString(id, index, (String)value);
-            
+            setString(id, index, (String)value);
             break;
             
         case DATE:
-            if (index == 0)
-                setDate(id, (Date)value);
-            else
-                setDate(id, index, (Date)value);
-            
+            setDate(id, index, (Date)value);
             break;
             
         case TIME:
-            if (index == 0)
-                setTime(id, (Time)value);
-            else
-                setTime(id, index, (Time)value);
-            
+            setTime(id, index, (Time)value);
             break;
         
         case INT:
-            if (index == 0)
-                setInt(id, (Integer)value);
-            else
-                setInt(id, index, (Integer)value);
-            
+            setInt(id, index, (Integer)value);
             break;
         
         case LONG:
-            if (index == 0)
-                setLong(id, (Long)value);
-            else
-                setLong(id, index, (Long)value);
-            
+            setLong(id, index, (Long)value);
             break;
             
         case FLOAT:
-            if (index == 0)
-                setFloat(id, (Float)value);
-            else
-                setFloat(id, index, (Float)value);
-            
+            setFloat(id, index, (Float)value);
             break;
         }
     }
@@ -371,7 +371,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
      * @see org.eve.view.ComponentFactory#getFieldValue(org.eve.model.AbstractDocument, java.lang.String)
      */
     @Override
-    public final Object getFieldValue(AbstractDocument document, String id) {
+    public final Object getFieldValue(String id) {
         Component component = fields.get(id);
         
         /*
@@ -616,15 +616,29 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
             setFieldValue(id, document.getFieldValue(id));
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#copyFrom(java.util.Set)
+     */
     @Override
     public final void copyFrom(Set<AbstractDocument> itens) {
         int i = 0;
-        
-        for (AbstractDocument item : itens) {
-            i++;
-            for (String id : fields.keySet())
-                setFieldValue(id, i, item.getFieldValue(id));
+
+        for (String id : fields.keySet()) {
+            for (AbstractDocument item : itens)
+                setFieldValue(id, ++i, item.getFieldValue(id));
+            i = 0;
         }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#copyFrom(int, org.eve.view.ComponentFactory)
+     */
+    @Override
+    public final void copyFrom(int index, ComponentFactory factory) {
+        for (String id : fields.keySet())
+            setFieldValue(id, index, factory.getFieldValue(id));
     }
     
     /*

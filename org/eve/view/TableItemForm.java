@@ -101,6 +101,8 @@ public class TableItemForm extends AbstractSearch {
 
     @Override
     protected void userWidgetSelected(SelectionEvent ev) {
+        int k;
+        
         if (ev.getSource() == next) {
             item++;
             return;
@@ -112,6 +114,10 @@ public class TableItemForm extends AbstractSearch {
         }
         
         if (ev.getSource() == done) {
+            k = table.getItensSize();
+            table.insert();
+            table.copyFrom(k, itemform);
+            
             widgetDisposed(null);
             return;
         }

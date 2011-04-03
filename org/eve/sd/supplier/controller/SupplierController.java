@@ -25,7 +25,7 @@ public class SupplierController extends AbstractController {
                 if (id_.equals("supplier.usreg"))
                     continue;
                 
-                supplier.setFieldValue(id_, form.getFieldValue(supplier, id_));
+                supplier.setFieldValue(id_, form.getFieldValue(id_));
             }
             
             model.save(supplier);

@@ -169,7 +169,7 @@ public interface ComponentFactory {
      * @param id
      * @return
      */
-    public abstract Object getFieldValue(AbstractDocument document, String id);
+    public abstract Object getFieldValue(String id);
 
     /**
      * Retorna valor de ponto flutuante de um campo
@@ -260,6 +260,12 @@ public interface ComponentFactory {
      * @param itens
      */
     public abstract void copyFrom(Set<AbstractDocument> itens);
+    
+    /**
+     * 
+     * @param factory
+     */
+    public abstract void copyFrom(int index, ComponentFactory factory);
     
     /**
      * 

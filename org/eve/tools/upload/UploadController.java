@@ -33,6 +33,7 @@ public class UploadController extends AbstractController {
     
     @Override
     public void userInput(String input) {
+        String id_;
         BufferedReader reader;
         Set<Customer> customers;
         Set<Material> materials;
@@ -41,8 +42,11 @@ public class UploadController extends AbstractController {
         Upload upload = (Upload)getObject();
         
         if (input.equals("upload.start")) {
-            for (Object id : upload.getIds())
-                upload.setFieldValue((String)id, form.getFieldValue(upload, (String)id));
+            for (Object id : upload.getIds()) {
+                id_ = (String)id;
+                
+                upload.setFieldValue(id_, form.getFieldValue(id_));
+            }
             
             if (upload.getDocument() == 0) {
                 form.setFocus("upload.document");

@@ -136,6 +136,7 @@ public class CustomerController extends AbstractController {
     public final void saveCommand() {
         String ufkey;
         String name;
+        String id_;
         CustomerContact contact;
         CustomerAddress address;
         City city;
@@ -155,8 +156,8 @@ public class CustomerController extends AbstractController {
                         id.equals("regUser"))
                     continue;
                 
-                customer.setFieldValue((String)id, form.getFieldValue(
-                        customer, (String)id));
+                id_ = (String)id;
+                customer.setFieldValue(id_, form.getFieldValue(id_));
             }
             customer.setStandardSupplier(form.getInt("customer.stdsp"));
             

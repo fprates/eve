@@ -16,6 +16,7 @@ public class MaterialController extends AbstractController {
      */
     @Override
 	public void saveCommand() {
+        String id_;
         boolean firstsave = false;
         Model model = getModel();
         Material material = (Material)getObject();
@@ -30,8 +31,8 @@ public class MaterialController extends AbstractController {
                 if (id.equals("document.usreg"))
                     continue;
                 
-                material.setFieldValue((String)id,
-                        form.getFieldValue(material, (String)id));
+                id_ = (String)id;
+                material.setFieldValue(id_, form.getFieldValue(id_));
             }
             
             if (material.getId().equals("") ||
