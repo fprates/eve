@@ -12,8 +12,8 @@ public class CustomerContact extends AbstractCustomerItem {
         put("contact.rname", NOT_KEY, DataType.CHAR, 40);
         put("contact.im", NOT_KEY, DataType.CHAR, 60);
         put("contact.funct", NOT_KEY, DataType.CHAR, 20);
-        put("contact.teln1", NOT_KEY, DataType.CHAR, 12);
-        put("contact.teln2", NOT_KEY, DataType.CHAR, 12);
+        put("contact.telf1", NOT_KEY, DataType.INT, 12);
+        put("contact.telf2", NOT_KEY, DataType.INT, 12);
     }
     
     /*
@@ -27,7 +27,7 @@ public class CustomerContact extends AbstractCustomerItem {
      * @return
      */
     public String getFunction() {
-        return (String)getValue("contact.fnctn");
+        return (String)getValue("contact.funct");
     }
     
     public String getInstantMessenger() {
@@ -60,7 +60,7 @@ public class CustomerContact extends AbstractCustomerItem {
      * @param function the function to set
      */
     public void setFunction(String function) {
-        setValue("contact.fnctn", function);
+        setValue("contact.funct", function);
     }
     
     /**

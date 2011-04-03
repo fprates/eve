@@ -87,8 +87,8 @@ public class CustomerView extends AbstractView {
         table.put(contact, "contact.rname");
         table.put(contact, "contact.im");
         table.put(contact, "contact.funct");
-        table.put(contact, "contact.teln1");
-        table.put(contact, "contact.teln2");
+        table.put(contact, "contact.telf1");
+        table.put(contact, "contact.telf2");
         
         localcontainer = table.define(bar);
         itembar = new ExpandItem(bar, SWT.NONE, 0);
