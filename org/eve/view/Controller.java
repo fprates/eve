@@ -6,6 +6,7 @@ import java.util.Map;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
+import org.eve.model.AbstractDocument;
 import org.eve.model.Model;
 import org.springframework.context.MessageSource;
 
@@ -21,6 +22,8 @@ public interface Controller extends SelectionListener {
      * Setters
      * 
      */
+    
+    public abstract void setDocuments(Map<String, AbstractDocument> documents);
     
     public abstract void setObject(Object object);
     
@@ -43,6 +46,8 @@ public interface Controller extends SelectionListener {
      */
     
     public abstract Object getObject();
+    
+    public abstract AbstractDocument getDocument(String name);
     
     public abstract Form getForm(String formname);
     

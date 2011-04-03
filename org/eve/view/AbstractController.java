@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Widget;
 import org.eve.main.EveAPI;
+import org.eve.model.AbstractDocument;
 import org.eve.model.Model;
 import org.springframework.context.MessageSource;
 
@@ -26,6 +27,7 @@ public abstract class AbstractController implements Controller {
     private Map<String, Form> forms;
     private Map<String, TableAssist> tables;
     private Map<String, View> views;
+    private Map<String, AbstractDocument> documents;
     
     public AbstractController() {
         widgets = new HashMap<Widget, String>();
@@ -46,6 +48,15 @@ public abstract class AbstractController implements Controller {
      */
     protected final void setMessage(int status, String id) {
         system.setMessage(status, messages.getMessage(id, null, id, locale));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#setDocuments(java.util.Map)
+     */
+    @Override
+    public final void setDocuments(Map<String, AbstractDocument> documents) {
+        this.documents = documents;
     }
     
     /*
@@ -131,6 +142,15 @@ public abstract class AbstractController implements Controller {
      */
     protected final String getAction() {
         return action;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Controller#getDocument(java.lang.String)
+     */
+    @Override
+    public final AbstractDocument getDocument(String name) {
+        return documents.get(name);
     }
     
     /*

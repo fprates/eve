@@ -1,16 +1,19 @@
 package org.eve.sd.customer;
 
+import org.eve.model.DataType;
+
 public class CustomerContact extends AbstractCustomerItem {
     private static final long serialVersionUID = -6501815384505430816L;
-    private String type;
-    private String name;
-    private String function;
-    private String instantmessenger;
-    private int telf1;
-    private int telf2;
     
     public CustomerContact() {
         hash = 11;
+        
+        put("contact.type", NOT_KEY, DataType.CHAR, 20);
+        put("contact.rname", NOT_KEY, DataType.CHAR, 40);
+        put("contact.im", NOT_KEY, DataType.CHAR, 60);
+        put("contact.funct", NOT_KEY, DataType.CHAR, 20);
+        put("contact.teln1", NOT_KEY, DataType.CHAR, 12);
+        put("contact.teln2", NOT_KEY, DataType.CHAR, 12);
     }
     
     /*
@@ -19,28 +22,32 @@ public class CustomerContact extends AbstractCustomerItem {
      * 
      */
     
+    /**
+     * 
+     * @return
+     */
     public String getFunction() {
-        return function;
+        return (String)getValue("contact.fnctn");
     }
     
     public String getInstantMessenger() {
-        return instantmessenger;
+        return (String)getValue("contact.im");
     }
     
     public String getName() {
-        return name;
+        return (String)getValue("contact.rname");
     }
     
     public int getTelephone1() {
-        return telf1;
+        return (Integer)getValue("contact.telf1");
     }
     
     public int getTelephone2() {
-        return telf2;
+        return (Integer)getValue("contact.telf2");
     }
     
     public String getType() {
-        return type;
+        return (String)getValue("contact.type");
     }
     
     /*
@@ -53,7 +60,7 @@ public class CustomerContact extends AbstractCustomerItem {
      * @param function the function to set
      */
     public void setFunction(String function) {
-        this.function = function;
+        setValue("contact.fnctn", function);
     }
     
     /**
@@ -61,28 +68,28 @@ public class CustomerContact extends AbstractCustomerItem {
      * @param instantmessenger
      */
     public void setInstantMessenger(String instantmessenger) {
-        this.instantmessenger = instantmessenger;
+        setValue("contact.im", instantmessenger);
     }
 
     /**
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        setValue("contact.rname", name);
     }
 
     /**
      * @param telf1 the telf1 to set
      */
     public void setTelephone1(int telf1) {
-        this.telf1 = telf1;
+        setValue("contact.telf1", telf1);
     }
 
     /**
      * @param telf2 the telf2 to set
      */
     public void setTelephone2(int telf2) {
-        this.telf2 = telf2;
+        setValue("contact.telf2", telf2);
     }
     
     /**
@@ -90,7 +97,7 @@ public class CustomerContact extends AbstractCustomerItem {
      * @param type
      */
     public void setType(String type) {
-        this.type = type;
+        setValue("contact.type", type);
     }
     
 }

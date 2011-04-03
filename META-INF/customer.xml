@@ -42,6 +42,13 @@
                 <entry key="cust_view" value-ref="cust_view"/>
             </map>
         </property>
+        <property name="documents">
+            <map>
+                <entry key="address" value-ref="cust_address"/>
+                <entry key="contact" value-ref="cust_contact"/>
+                <entry key="schedule" value-ref="cust_schedule"/>
+            </map>
+        </property>
     </bean>
     
     <!-- Seleção de clientes -->
@@ -49,6 +56,10 @@
     
     <!-- Escolha de múltiplos clientes -->
     <bean id="cust_choose_view" class="org.eve.sd.customer.view.CustomerChooseView"/>
+    
+    <bean id="cust_address" class="org.eve.sd.customer.CustomerAddress"/>
+    <bean id="cust_contact" class="org.eve.sd.customer.CustomerContact"/>
+    <bean id="cust_schedule" class="org.eve.sd.customer.CustomerSchedule"/>
     
     <bean id="cust_sel_control" class="org.eve.sd.customer.controller.CustomerSelectionController">
         <property name="messages" ref="cust_msg"/>
