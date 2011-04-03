@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.eve.model.AbstractDocument;
 import org.eve.model.DataType;
 
 public abstract class AbstractComponent implements Component {
@@ -11,6 +12,7 @@ public abstract class AbstractComponent implements Component {
     private int length;
     private ComponentType type;
     private DataType datatype;
+    private AbstractDocument document;
     private Extension extension;
     private String name;
     private String title;
@@ -30,6 +32,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final DataType getDataType() {
         return datatype;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#getDocument()
+     */
+    @Override
+    public final AbstractDocument getDocument() {
+        return document;
     }
     
     /*
@@ -143,6 +154,15 @@ public abstract class AbstractComponent implements Component {
     @Override
     public final void setDataType(DataType datatype) {
         this.datatype = datatype;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Component#setDocument(org.eve.model.AbstractDocument)
+     */
+    @Override
+    public final void setDocument(AbstractDocument document) {
+        this.document = document;
     }
     
     /*

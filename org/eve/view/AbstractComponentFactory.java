@@ -638,6 +638,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         component.setTitle(getMessage(id));
         component.setDataType(document.getType(id));
+        component.setDocument(document);
         
         putComponent(id, component);
     }

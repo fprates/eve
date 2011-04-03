@@ -1,5 +1,7 @@
 package org.eve.view;
 
+import java.util.Locale;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.SelectionEvent;
@@ -14,6 +16,7 @@ public abstract class AbstractSearch implements Search {
     private Component component;
     private Composite container;
     private Controller controller;
+    private Locale locale;
     private String text;
     private AbstractDocument document;
     
@@ -56,6 +59,38 @@ public abstract class AbstractSearch implements Search {
     protected final AbstractComponentFactory getFactory() {
         return factory;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    protected final Locale getLocale() {
+        return locale;
+    }
+    
+    /**
+     * 
+     * @param message
+     * @return
+     */
+    protected final String getMessage(String message) {
+        return getController().getMessages().getMessage(message, null, message, locale);
+    }
+    
+    /*
+     * 
+     * Setters
+     * 
+     */
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Search#setController(org.eve.view.Controller)
+     */
+    @Override
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
 
     /*
      * (non-Javadoc)
@@ -74,22 +109,22 @@ public abstract class AbstractSearch implements Search {
     public final void setFactory(AbstractComponentFactory factory) {
         this.factory = factory;
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.Search#setLocale(java.util.Locale)
+     */
+    @Override
+    public final void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
     /**
      * 
      * @param text
      */
     protected final void setText(String text) {
         this.text = text;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.Search#setController(org.eve.view.Controller)
-     */
-    @Override
-    public void setController(Controller controller) {
-        this.controller = controller;
     }
     
     /*
@@ -113,6 +148,7 @@ public abstract class AbstractSearch implements Search {
         btsearch = new Button(container, SWT.BORDER);
         btsearch.setText(factory.getMessage(text));
         btsearch.addSelectionListener(this);
+        
         container.pack();
     }
     

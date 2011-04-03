@@ -125,6 +125,8 @@ public class TableViewAssist extends AbstractTableAssist {
             addTableItem(item);
         
         itemform = new TableItemForm(area, this);
+        itemform.setController(getController());
+        itemform.setLocale(getLocale());
         
         return area;
     }

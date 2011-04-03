@@ -4,16 +4,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eve.model.AbstractDocument;
 
 public class TableItemForm extends AbstractSearch {
     private int item;
     private TableAssist table;
+    private Composite btarea;
     private Composite container;
     private Shell dialog;
+    private Form itemform;
     private Button next;
     private Button prev;
     private Button done;
@@ -36,32 +40,62 @@ public class TableItemForm extends AbstractSearch {
     @Override
     public final void openDialog() {
         Display display;
-        Form itemform = new Form("");
-        
-//        for (Component component : table.getComponents()) {
-//            switch (component.getType()) {
-//            case CCOMBO:
-//                itemform.put(document, id)
-//                break;
-//                
-//            case TEXT:
-//                break;
-//            }
-//        }
-        
-        itemform.define(container);
+        AbstractDocument document;
+        String name;
         
         dialog = new Shell(container.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+        dialog.setText(getMessage("itemform.new"));
         dialog.setLayout(new GridLayout(1, false));
-        display = dialog.getDisplay();
+        
+        itemform = new Form("");
+        itemform.setMessages(getController().getMessages());
+        itemform.setLocale(getLocale());
+        
+        for (Component component : table.getComponents()) {
+            document = component.getDocument();
+            name = component.getName();
+            
+            switch (component.getType()) {
+            case COMBO:
+//                itemform.putCombo(document, name);
+                break;
+                
+            case TEXT:
+                itemform.put(document, name);
+                break;
+            }
+        }
+        
+        itemform.define(dialog);
+        
+        btarea = new Composite(dialog, SWT.NONE);
+        btarea.setLayout(new RowLayout());
+
+        prev = new Button(btarea, SWT.NONE);
+        prev.setText(getMessage("itemform.prev"));
+        prev.addSelectionListener(this);
+        
+        next = new Button(btarea, SWT.NONE);
+        next.setText(getMessage("itemform.next"));
+        next.addSelectionListener(this);
+        
+        done = new Button(btarea, SWT.NONE);
+        done.setText(getMessage("itemform.done"));
+        done.addSelectionListener(this);
+        
+        cancel = new Button(btarea, SWT.NONE);
+        cancel.setText(getMessage("itemform.cancel"));
+        cancel.addSelectionListener(this);
         
         dialog.addDisposeListener(this);
         dialog.pack();
         dialog.open();
         
+        display = dialog.getDisplay();
+        
         while (!dialog.isDisposed())
             if (!display.readAndDispatch())
-                display.sleep ();
+                display.sleep();
         
     }
 
@@ -94,6 +128,7 @@ public class TableItemForm extends AbstractSearch {
         prev.dispose();
         done.dispose();
         cancel.dispose();
+        btarea.dispose();
         dialog.close();
         dialog.dispose();
     }
