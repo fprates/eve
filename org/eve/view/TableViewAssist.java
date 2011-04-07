@@ -106,7 +106,7 @@ public class TableViewAssist extends AbstractTableAssist {
         for (Component component_ : getComponents()) {
             component = (TableComponent)component_;
             tablecol = new TableColumn(table, SWT.NONE);
-            tablecol.setText(component.getName());
+            tablecol.setText(getMessage(component.getName()));
             tablecol.pack();
             component.setColumn(tablecol);
         }
