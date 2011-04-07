@@ -53,7 +53,7 @@ public class TableViewAssist extends AbstractTableAssist {
         
         buttons.put(action, bt);
         insertActionState(action);
-        setActionState(action, getEditable());
+        setActionState(action, isEditable());
         
         bt.setText(getMessage(tag));
         bt.addSelectionListener(controller);
@@ -68,7 +68,6 @@ public class TableViewAssist extends AbstractTableAssist {
      */
     @Override
     public final Composite define(Composite container) {
-        int lines;
         TableColumn tablecol;
         TableComponent component;
         Label title;
@@ -84,7 +83,7 @@ public class TableViewAssist extends AbstractTableAssist {
             btarea = new Composite(area, SWT.NONE);
             btarea.setLayout(new RowLayout(SWT.HORIZONTAL));
             btarea.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-            btarea.setVisible(getEditable());
+            btarea.setVisible(isEditable());
             
             defButton(controller, "tableline.insert", name+".insert");
             defButton(controller, "tableline.remove", name+".remove");
@@ -112,10 +111,6 @@ public class TableViewAssist extends AbstractTableAssist {
             component.setColumn(tablecol);
         }
         
-        lines = getLines();
-        for (int k = 0; k < lines; k++)
-            new TableItem(table, SWT.NONE);
-        
         /*
          * por motivos que não conheço, não se recomenda usar TableEditor
          * logo após TableItem. Ocorrem problemas graves de dimensionamento
@@ -127,6 +122,8 @@ public class TableViewAssist extends AbstractTableAssist {
         itemform = new TableItemForm(area, this);
         itemform.setController(getController());
         itemform.setLocale(getLocale());
+        
+        table.pack();
         
         return area;
     }

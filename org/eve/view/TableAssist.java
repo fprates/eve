@@ -5,7 +5,13 @@ import org.eclipse.swt.widgets.Composite;
 public interface TableAssist extends ComponentFactory {
 
     /**
-     * 
+     * Retorna altura do componente de tabela
+     * @return
+     */
+    public abstract int getHeight();
+    
+    /**
+     * Retorna índice de itens selecionados
      * @return
      */
     public abstract int[] getSelectedItens();
@@ -32,22 +38,16 @@ public interface TableAssist extends ComponentFactory {
     public abstract void setColumnProperties(String id, int property);
     
     /**
-     * 
+     * Define um controlador
      * @param controller
      */
     public abstract void setController(Controller controller);
 
     /**
-     * 
+     * Define propriedade de edição
      * @param editable
      */
     public abstract void setEditable(boolean editable);
-    
-    /**
-     * Define quantidade de linhas visíveis
-     * @param lines
-     */
-    public abstract void setLines(int lines);
 
     /**
      * Define campo de seleção de itens
@@ -64,10 +64,16 @@ public interface TableAssist extends ComponentFactory {
     public abstract void setReference(String id, String idref);
 
     /**
-     * 
+     * Define tipo de seleção
      * @param seltype
      */
     public abstract void setSelType(ComponentType seltype);
+    
+    /**
+     * Define quantidade de linhas visíveis
+     * @param lines
+     */
+    public abstract void setVisibleLines(int lines);
     
     /**
      * Retorna número de itens
@@ -89,7 +95,7 @@ public interface TableAssist extends ComponentFactory {
     public abstract Composite define(Composite container);
 
     /**
-     * 
+     * Libera componente de tabela
      */
     public abstract void dispose();
 

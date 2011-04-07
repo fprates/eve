@@ -16,10 +16,9 @@ import org.eve.main.EVE;
  * @author francisco.prates
  *
  */
-abstract class AbstractTableAssist extends AbstractComponentFactory implements TableAssist {
-    private static final int LINES = 5;
+abstract class AbstractTableAssist extends AbstractComponentFactory
+    implements TableAssist {
     private boolean editable;
-    private int currentline;
     private int lines;
     private String name;
 //    private ComponentType type;
@@ -31,8 +30,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     public AbstractTableAssist(String name) {
         references = new HashMap<String, String>();
         actionstates = new HashMap<String, TableActionState>();
-        currentline = 0;
-        lines = LINES;
 //        type = ComponentType.SINGLE;
         getComboAssist().setCustomized(true);
         editable = false;
@@ -46,11 +43,21 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     
     /**
-     * 
+     * Retorna controlador
      * @return
      */
     protected final Controller getController() {
         return controller;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#getHeight()
+     */
+    @Override
+    public final int getHeight() {
+        System.out.println();
+        return table.getSize().y * lines;
     }
     
     /* 
@@ -63,15 +70,15 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     }
     
     /**
-     * 
+     * Retorna número de linhas visíveis
      * @return
      */
-    protected final int getLines() {
+    protected final int getVisibleLines() {
         return lines;
     }
     
     /**
-     * 
+     * Retorna referência de uma coluna
      * @param reference
      * @return
      */
@@ -80,7 +87,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     }
     
     /**
-     * 
+     * Retorna componente de uma tabela
      * @return
      */
     protected final Table getTable() {
@@ -118,14 +125,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * 
      * @return
      */
-    protected final boolean getEditable() {
-        return editable;
-    }
-    
-    /**
-     * 
-     * @return
-     */
     protected final String getName() {
         return name;
     }
@@ -155,6 +154,14 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     @Override
     public final boolean hasEvent(String event) {
         return actionstates.containsKey(event);
+    }
+    
+    /**
+     * Retorna modo de edição da tabela
+     * @return
+     */
+    protected final boolean isEditable() {
+        return editable;
     }
     
     /*
@@ -193,6 +200,13 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      * @param state
      */
     protected abstract void setComponentState(String action, boolean state);
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
+     */
+    @Override
+    protected final void setControlFocus(Component component) { }
     
     /* (non-Javadoc)
      * @see org.eve.view.TableAssist#setController(org.eve.view.Controller)
@@ -201,62 +215,6 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
     public final void setController(Controller controller) {
         this.controller = controller;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.TableAssist#setEditable(boolean)
-     */
-    @Override
-    public final void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setLines(int)
-     */
-    @Override
-    public final void setLines(int lines) {
-        this.lines = lines;
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setMarkValue(int, boolean)
-     */
-    @Override
-    public final void setMarkValue(int index, boolean value) {
-        if (value)
-            table.select(index);
-        else
-            table.deselect(index);
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setReference(java.lang.String, java.lang.String)
-     */
-    @Override
-    public final void setReference(String id, String idref) {
-        references.put(id, idref);
-    }
-    
-    @Override
-    public final void setSelType(ComponentType type) {
-//        this.type = type;
-    }
-    
-    /**
-     * 
-     * @param table
-     */
-    protected final void setTable(Table table) {
-        this.table = table;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
-     */
-    @Override
-    protected final void setControlFocus(Component component) { }
 
     /*
      * (non-Javadoc)
@@ -281,6 +239,60 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
             
             k++;
         }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#setEditable(boolean)
+     */
+    @Override
+    public final void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setMarkValue(int, boolean)
+     */
+    @Override
+    public final void setMarkValue(int index, boolean value) {
+        if (value)
+            table.select(index);
+        else
+            table.deselect(index);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eve.view.TableAssist#setReference(java.lang.String, java.lang.String)
+     */
+    @Override
+    public final void setReference(String id, String idref) {
+        references.put(id, idref);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#setSelType(org.eve.view.ComponentType)
+     */
+    @Override
+    public final void setSelType(ComponentType type) {
+//        this.type = type;
+    }
+    
+    /**
+     * 
+     * @param table
+     */
+    protected final void setTable(Table table) {
+        this.table = table;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.TableAssist#setVisibleLines(int)
+     */
+    @Override
+    public final void setVisibleLines(int lines) {
+        this.lines = lines;
     }
 
     /*
@@ -367,20 +379,11 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     @Override
     public final void clear() {
-        currentline = 0;
-        
         if (table == null)
             return;
         
         table.clearAll();
-        
-        /*
-         * restaura quantidade de linhas na tabela
-         */
         table.removeAll();
-        
-        for (int k = 0; k < lines; k++)
-            addTableItem(new TableItem(table, SWT.NONE));
     }
     
     /* 
@@ -405,9 +408,7 @@ abstract class AbstractTableAssist extends AbstractComponentFactory implements T
      */
     @Override
     public final void insert() {
-        currentline++;
-        if (currentline > lines)
-            addTableItem(new TableItem(table, SWT.NONE));
+        addTableItem(new TableItem(table, SWT.NONE));
     }
     
     /**

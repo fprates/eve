@@ -20,7 +20,7 @@ public class MaterialChooseView extends AbstractView {
         addAction("material.show.choose", false);
         addAction("material.edit.choose", false);
         
-        ctable.setLines(10);
+        ctable.setVisibleLines(10);
         ctable.put(material, "material.ident");
         ctable.put(material, "material.refer");
         

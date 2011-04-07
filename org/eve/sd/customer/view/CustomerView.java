@@ -82,7 +82,7 @@ public class CustomerView extends AbstractView {
          */
         table = (TableAssist)addTable("contacts");
         table.setEditable(true);
-        table.setLines(4);
+        table.setVisibleLines(4);
         table.put(contact, "contact.type");
         table.put(contact, "contact.rname");
         table.put(contact, "contact.im");
@@ -94,7 +94,7 @@ public class CustomerView extends AbstractView {
         itembar = new ExpandItem(bar, SWT.NONE, 0);
         itembar.setText(getMessage("customer.contacts"));
         itembar.setControl(localcontainer);
-        itembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        itembar.setHeight(table.getHeight());
         itembar.setExpanded(true);
         
         /*
@@ -102,7 +102,7 @@ public class CustomerView extends AbstractView {
          */
         table = (TableAssist)addTable("addresses");
         table.setEditable(true);
-        table.setLines(3);
+        table.setVisibleLines(4);
 //        table.putAutoCombo("address.type", 11, new String[] {
 //                getMessage("address.billing"),
 //                getMessage("address.delivery"),
@@ -120,7 +120,7 @@ public class CustomerView extends AbstractView {
         itembar = new ExpandItem(bar, SWT.NONE, 1);
         itembar.setText(getMessage("customer.addresses"));
         itembar.setControl(localcontainer);
-        itembar.setHeight(localcontainer.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        itembar.setHeight(table.getHeight());
         itembar.setExpanded(true);
 
         /*
@@ -131,7 +131,7 @@ public class CustomerView extends AbstractView {
 
         table = addTable("schedule.visit");
         table.setEditable(true);
-        table.setLines(2);
+        table.setVisibleLines(2);
         table.put(schedule, "schedule.per");
         table.put(schedule, "schedule.mon");
         table.put(schedule, "schedule.tue");
@@ -146,7 +146,7 @@ public class CustomerView extends AbstractView {
 
         table = addTable("schedule.delivery");
         table.setEditable(true);
-        table.setLines(2);
+        table.setVisibleLines(2);
         table.put(schedule, "schedule.per");
         table.put(schedule, "schedule.mon");
         table.put(schedule, "schedule.tue");
@@ -176,6 +176,7 @@ public class CustomerView extends AbstractView {
         int i = 0;
         
         for (i = 0; i < 2; i++) {
+            tschedule.insert();
             switch (i) {
             case 0:
                 tschedule.setString("schedule.per", i, getMessage("schedule.am"));

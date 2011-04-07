@@ -63,11 +63,6 @@ public class SearchHelper extends AbstractSearch {
         table.setEditable(false);
         table.setSystem(system);
         
-        if (k > 10)
-            table.setLines(10);
-        else
-            table.setLines(k);
-        
 //        table.put(document, document.SEARCH_RESP);
 //        table.put(document, document.SEARCH_TEXT);
         table.define(dialog);

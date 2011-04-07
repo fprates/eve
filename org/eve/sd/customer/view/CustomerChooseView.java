@@ -22,7 +22,7 @@ public class CustomerChooseView extends AbstractView {
         addAction("customer.show.choose", false);
         addAction("customer.edit.choose", false);
         
-        ctable.setLines(10);
+        ctable.setVisibleLines(10);
         ctable.setSelType(ComponentType.SINGLE);
         ctable.put(customer, "customer.ident");
         ctable.put(customer, "customer.refer");

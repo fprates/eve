@@ -18,7 +18,7 @@ public class SupplierChooseView extends AbstractView {
         addAction("supplier.show.choose", false);
         addAction("supplier.edit.choose", false);
         
-        stable.setLines(10);
+        stable.setVisibleLines(10);
 //        stable.put("supplier.ident", 12);
 //        stable.put("supplier.refer", 12);
 //        stable.put("supplier.name", 40);
