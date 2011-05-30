@@ -273,6 +273,14 @@ public interface ComponentFactory {
      * @param id
      */
     public abstract void put(AbstractDocument document, String id);
+    
+    /**
+     * 
+     * @param id
+     * @param component
+     * @param key
+     */
+    public abstract void put(String id, Component component, boolean key);
 
     /**
      * 

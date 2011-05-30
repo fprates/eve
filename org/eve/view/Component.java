@@ -2,7 +2,6 @@ package org.eve.view;
 
 import java.util.Map;
 
-import org.eve.model.AbstractDocument;
 import org.eve.model.DataType;
 
 public interface Component {
@@ -13,12 +12,6 @@ public interface Component {
      * @return
      */
     public abstract DataType getDataType();
-    
-    /**
-     * 
-     * @return
-     */
-    public abstract AbstractDocument getDocument();
     
     /**
      * 
@@ -74,12 +67,6 @@ public interface Component {
      * @param datatype
      */
     public abstract void setDataType(DataType datatype);
-    
-    /**
-     * 
-     * @param document
-     */
-    public abstract void setDocument(AbstractDocument document);
     
     /**
      * Ajusta habilitação

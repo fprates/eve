@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eve.model.AbstractDocument;
 
 public class TableItemForm extends AbstractSearch {
     private int item;
@@ -40,10 +39,9 @@ public class TableItemForm extends AbstractSearch {
     @Override
     public final void openDialog() {
         Display display;
-        AbstractDocument document;
-        String name;
         
-        dialog = new Shell(container.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+        dialog = new Shell(
+                container.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         dialog.setText(getMessage("itemform.new"));
         dialog.setLayout(new GridLayout(1, false));
         
@@ -51,20 +49,9 @@ public class TableItemForm extends AbstractSearch {
         itemform.setMessages(getController().getMessages());
         itemform.setLocale(getLocale());
         
-        for (Component component : table.getComponents()) {
-            document = component.getDocument();
-            name = component.getName();
-            
-            switch (component.getType()) {
-            case COMBO:
-//                itemform.putCombo(document, name);
-                break;
-                
-            case TEXT:
-                itemform.put(document, name);
-                break;
-            }
-        }
+        for (Component component : table.getComponents())
+            itemform.put(
+                    component.getName(), component, component.isEnabled());
         
         itemform.define(dialog);
         

@@ -643,7 +643,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.ComponentFactory#put(org.eve.model.AbstractDocument, java.lang.String)
+     * @see org.eve.view.ComponentFactory#put(
+     *     org.eve.model.AbstractDocument, java.lang.String)
      */
     @Override
     public final void put(AbstractDocument document, String id) {
@@ -652,9 +653,23 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         
         component.setTitle(getMessage(id));
         component.setDataType(document.getType(id));
-        component.setDocument(document);
         
         putComponent(id, component);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#put(
+     *     java.lang.String, org.eve.view.Component, boolean)
+     */
+    @Override
+    public final void put(String id, Component component, boolean key) {
+        Component component_ = getNewComponent(id, component.getLength(), key);
+        
+        component_.setTitle(getMessage(id));
+        component_.setDataType(component.getDataType());
+        
+        putComponent(id, component_);
     }
     
     /**
