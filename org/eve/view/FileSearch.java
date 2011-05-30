@@ -19,7 +19,7 @@ public class FileSearch extends AbstractSearch {
      * @see org.eve.view.AbstractSearch#openDialog()
      */
     @Override
-    protected void openDialog() {
+    protected void openDialog(int mode) {
         /*
          * TODO
          */

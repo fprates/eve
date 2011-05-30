@@ -1,8 +1,11 @@
 package org.eve.view;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eve.model.AbstractDocument;
 
 public interface TableAssist extends ComponentFactory {
+    
+    public abstract AbstractDocument getDocument(int index);
 
     /**
      * Retorna altura do componente de tabela

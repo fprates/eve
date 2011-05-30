@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eve.main.EVE;
 import org.eve.main.EveAPI;
-import org.eve.model.AbstractDocument;
 
 /**
  * Ajuda de pesquisa
@@ -35,14 +34,13 @@ public class SearchHelper extends AbstractSearch {
      * Define componentes da tela da ajuda de pesquisa
      */
     @Override
-    protected void openDialog() {
+    protected void openDialog(int mode) {
         int k;
         Composite btarea;
         Display display;
         Component component = getComponent();
         Composite container = getContainer();
         Controller controller = getController();
-        AbstractDocument document = getDocument();
         AbstractComponentFactory factory = getFactory();
         EveAPI system = factory.getSystem();
         

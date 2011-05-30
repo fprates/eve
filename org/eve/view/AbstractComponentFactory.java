@@ -404,6 +404,47 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
         }
     }
     
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.ComponentFactory#getFieldValue(java.lang.String, int)
+     */
+    @Override
+    public final Object getFieldValue(String id, int index) {
+        Component component = fields.get(id);
+        
+        /*
+         * significa que o campo do objeto não existe no formulário
+         */
+        if (component == null)
+            return null;
+        
+        switch (component.getDataType()) {
+        case CHAR:
+            return getString(id, index);
+//            
+//        case DATE:
+//            return getDate(id, index);
+//        
+//        case DOUBLE:
+//            return getDouble(id, index);
+//        
+//        case FLOAT:
+//            return getFloat(id, index);
+        
+        case INT:
+            return getInt(id, index);
+//        
+//        case LONG:
+//            return getLong(id, index);
+            
+        case TIME:
+            return getTime(id, index);
+            
+        default:
+            return null;
+        }
+    }
+    
     /* 
      * (non-Javadoc)
      * @see org.eve.view.ComponentFactory#getFloat(java.lang.String)

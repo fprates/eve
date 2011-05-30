@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eve.main.EVE;
 
 /**
  * Assistente de tabela
@@ -137,8 +138,16 @@ public class TableViewAssist extends AbstractTableAssist {
         String name = getName();
         
         if (input.equals(name+".insert")) {
-            itemform.openDialog();
-            
+            itemform.openDialog(EVE.insert);
+            return;
+        }
+        
+        if (input.equals(name+".update")) {
+            for (int sel : getSelectedItens()) {
+                itemform.setItem(sel);
+                itemform.openDialog(EVE.update);
+                break;
+            }
             return;
         }
     }

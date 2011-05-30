@@ -8,9 +8,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eve.main.EVE;
 import org.eve.model.AbstractDocument;
 
 public abstract class AbstractSearch implements Search {
+    private int mode;
     private AbstractComponentFactory factory;
     private Button btsearch;
     private Component component;
@@ -19,6 +21,10 @@ public abstract class AbstractSearch implements Search {
     private Locale locale;
     private String text;
     private AbstractDocument document;
+    
+    public AbstractSearch() {
+        mode = EVE.insert;
+    }
     
     /**
      * 
@@ -155,7 +161,7 @@ public abstract class AbstractSearch implements Search {
     /**
      * 
      */
-    protected abstract void openDialog();
+    protected abstract void openDialog(int mode);
     
     /*
      * (non-Javadoc)
@@ -171,7 +177,7 @@ public abstract class AbstractSearch implements Search {
     @Override
     public final void widgetSelected(SelectionEvent ev) {
         if (ev.getSource() == btsearch) {
-            openDialog();
+            openDialog(mode);
             return;
         }
         

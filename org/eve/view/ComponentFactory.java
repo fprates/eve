@@ -170,6 +170,14 @@ public interface ComponentFactory {
      * @return
      */
     public abstract Object getFieldValue(String id);
+    
+    /**
+     * 
+     * @param id
+     * @param index
+     * @return
+     */
+    public abstract Object getFieldValue(String id, int index);
 
     /**
      * Retorna valor de ponto flutuante de um campo

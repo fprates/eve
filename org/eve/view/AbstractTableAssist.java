@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eve.main.EVE;
+import org.eve.model.AbstractDocument;
+import org.eve.model.DummyDocument;
 
 /**
  * Assistente de tabela
@@ -48,6 +50,19 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
      */
     protected final Controller getController() {
         return controller;
+    }
+    
+    public final AbstractDocument getDocument(int index) {
+        String name;
+        DummyDocument dummy = new DummyDocument();
+        
+        for (Component component: getComponents()) {
+            name = component.getName();
+            dummy.put(component);
+            dummy.setFieldValue(name, getFieldValue(name, index));
+        }
+        
+        return dummy;
     }
     
     /*

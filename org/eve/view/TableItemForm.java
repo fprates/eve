@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eve.main.EVE;
+import org.eve.model.AbstractDocument;
 
 public class TableItemForm extends AbstractSearch {
     private int item;
@@ -21,15 +23,17 @@ public class TableItemForm extends AbstractSearch {
     private Button prev;
     private Button done;
     private Button cancel;
+    private AbstractDocument document;
     
     public TableItemForm(Composite container, TableAssist table) {
         this.container = container;
         this.table = table;
-        item = 1;
+        document = null;
     }
     
     public final void setItem(int item) {
         this.item = item;
+        document = table.getDocument(item);
     }
     
     /*
@@ -37,7 +41,7 @@ public class TableItemForm extends AbstractSearch {
      * @see org.eve.view.AbstractSearch#openDialog()
      */
     @Override
-    public final void openDialog() {
+    public final void openDialog(int mode) {
         Display display;
         
         dialog = new Shell(
@@ -54,6 +58,20 @@ public class TableItemForm extends AbstractSearch {
                     component.getName(), component, component.isEnabled());
         
         itemform.define(dialog);
+        
+        switch (mode) {
+        case EVE.insert:
+            dialog.setText(getMessage("itemform.new"));
+            document = null;
+            
+            break;
+            
+        case EVE.update:
+            dialog.setText(getMessage("itemform.edit"));
+            itemform.copyFrom(document);
+            
+            break;
+        }
         
         btarea = new Composite(dialog, SWT.NONE);
         btarea.setLayout(new RowLayout());
