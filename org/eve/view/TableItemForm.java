@@ -113,6 +113,7 @@ public class TableItemForm extends AbstractSearch {
     @Override
     protected void userWidgetSelected(SelectionEvent ev) {
         if (ev.getSource() == next && item < (table.getSize() - 1)) {
+            table.copyFrom(item, itemform);
             item++;
             document = table.getDocument(item);
             itemform.copyFrom(document);
@@ -128,6 +129,7 @@ public class TableItemForm extends AbstractSearch {
         }
 
         if (ev.getSource() == prev && item > 0) {
+            table.copyFrom(item, itemform);
             item--;
             document = table.getDocument(item);
             itemform.copyFrom(document);
