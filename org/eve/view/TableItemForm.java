@@ -81,10 +81,14 @@ public class TableItemForm extends AbstractSearch {
         prev = new Button(btarea, SWT.NONE);
         prev.setText(getMessage("itemform.prev"));
         prev.addSelectionListener(this);
+        if (item == 0)
+            prev.setEnabled(false);
         
         next = new Button(btarea, SWT.NONE);
         next.setText(getMessage("itemform.next"));
         next.addSelectionListener(this);
+        if ((item == (table.getSize() - 1)) || (table.getSize() == 0))
+            next.setEnabled(false);
         
         done = new Button(btarea, SWT.NONE);
         done.setText(getMessage("itemform.done"));
@@ -108,13 +112,33 @@ public class TableItemForm extends AbstractSearch {
 
     @Override
     protected void userWidgetSelected(SelectionEvent ev) {
-        if (ev.getSource() == next) {
+        if (ev.getSource() == next && item < (table.getSize() - 1)) {
             item++;
+            document = table.getDocument(item);
+            itemform.copyFrom(document);
+            
+            prev.setEnabled(true);
+            
+            if (item == (table.getSize() - 1))
+                next.setEnabled(false);
+            else
+                next.setEnabled(true);
+            
             return;
         }
-        
-        if (ev.getSource() == prev && item > 1) {
+
+        if (ev.getSource() == prev && item > 0) {
             item--;
+            document = table.getDocument(item);
+            itemform.copyFrom(document);
+            
+            next.setEnabled(true);
+            
+            if (item == 0)
+                prev.setEnabled(false);
+            else
+                prev.setEnabled(true);
+        
             return;
         }
         
