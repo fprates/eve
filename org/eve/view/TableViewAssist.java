@@ -135,10 +135,13 @@ public class TableViewAssist extends AbstractTableAssist {
      */
     @Override
     public final void userInput(String input) {
+        Table table;
+        int selitens[];
         String name = getName();
         
         if (input.equals(name+".insert")) {
             itemform.openDialog(EVE.insert);
+            
             return;
         }
         
@@ -148,7 +151,16 @@ public class TableViewAssist extends AbstractTableAssist {
                 itemform.openDialog(EVE.update);
                 break;
             }
+            
             return;
+        }
+        
+        if (input.equals(name+".remove")) {
+            table = getTable();
+            selitens = getSelectedItens();
+            
+            if (selitens.length > 0)
+                table.remove(selitens);
         }
     }
 }
