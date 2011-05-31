@@ -23,6 +23,7 @@ public class TableItemForm extends AbstractSearch {
     private Button prev;
     private Button done;
     private Button cancel;
+    private Button append;
     private AbstractDocument document;
     
     public TableItemForm(Composite container, TableAssist table) {
@@ -90,6 +91,10 @@ public class TableItemForm extends AbstractSearch {
         if ((item == (table.getSize() - 1)) || (table.getSize() == 0))
             next.setEnabled(false);
         
+        append = new Button(btarea, SWT.NONE);
+        append.setText(getMessage("itemform.append"));
+        append.addSelectionListener(this);
+        
         done = new Button(btarea, SWT.NONE);
         done.setText(getMessage("itemform.done"));
         done.addSelectionListener(this);
@@ -113,7 +118,14 @@ public class TableItemForm extends AbstractSearch {
     @Override
     protected void userWidgetSelected(SelectionEvent ev) {
         if (ev.getSource() == next && item < (table.getSize() - 1)) {
+            if (getMode() == EVE.insert) {
+                table.insert();
+                item = table.getSize() - 1;
+            }
+            
             table.copyFrom(item, itemform);
+            
+            setMode(EVE.update);
             item++;
             document = table.getDocument(item);
             itemform.copyFrom(document);
@@ -125,11 +137,23 @@ public class TableItemForm extends AbstractSearch {
             else
                 next.setEnabled(true);
             
+            for (Component component : itemform.getComponents()) {
+                itemform.setFocus(component.getName());
+                break;
+            }
+            
             return;
         }
 
         if (ev.getSource() == prev && item > 0) {
+            if (getMode() == EVE.insert) {
+                table.insert();
+                item = table.getSize() - 1;
+            }
+
             table.copyFrom(item, itemform);
+            
+            setMode(EVE.update);
             item--;
             document = table.getDocument(item);
             itemform.copyFrom(document);
@@ -140,7 +164,34 @@ public class TableItemForm extends AbstractSearch {
                 prev.setEnabled(false);
             else
                 prev.setEnabled(true);
+            
+            for (Component component : itemform.getComponents()) {
+                itemform.setFocus(component.getName());
+                break;
+            }
         
+            return;
+        }
+        
+        if (ev.getSource() == append) {
+            if (getMode() == EVE.insert) {
+                table.insert();
+                item = table.getSize() - 1;
+            } else {
+                setMode(EVE.insert);
+            }
+            
+            table.copyFrom(item, itemform);
+            itemform.clear();
+            
+            prev.setEnabled(true);
+            next.setEnabled(false);
+            
+            for (Component component : itemform.getComponents()) {
+                itemform.setFocus(component.getName());
+                break;
+            }
+            
             return;
         }
         
@@ -171,6 +222,7 @@ public class TableItemForm extends AbstractSearch {
     public void widgetDisposed(DisposeEvent arg0) {
         next.dispose();
         prev.dispose();
+        append.dispose();
         done.dispose();
         cancel.dispose();
         btarea.dispose();
