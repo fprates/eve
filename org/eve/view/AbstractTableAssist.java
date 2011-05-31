@@ -218,10 +218,19 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(
+     *     org.eve.view.Component)
      */
     @Override
     protected final void setControlFocus(Component component) { }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(
+     *     org.eve.view.Component, int)
+     */
+    @Override
+    protected final void setControlFocus(Component component, int index) { }
     
     /* (non-Javadoc)
      * @see org.eve.view.TableAssist#setController(org.eve.view.Controller)
@@ -233,17 +242,20 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, java.lang.Object)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(
+     *     org.eve.view.Component, java.lang.Object)
      */
     @Override
     protected void setControlValue(Component component, Object value) { }
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, int, java.lang.String)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(
+     *     org.eve.view.Component, int, java.lang.String)
      */
     @Override
-    protected void setControlValue(Component component, int index, String value) {
+    protected void setControlValue(
+            Component component, int index, String value) {
         int k = 0;
         
         for (Component component_ : getComponents()) {
@@ -277,7 +289,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
     }
     
     /* (non-Javadoc)
-     * @see org.eve.view.TableAssist#setReference(java.lang.String, java.lang.String)
+     * @see org.eve.view.TableAssist#setReference(
+     *     java.lang.String, java.lang.String)
      */
     @Override
     public final void setReference(String id, String idref) {
@@ -312,7 +325,8 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
 
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlSize(org.eve.view.Component)
+     * @see org.eve.view.AbstractComponentFactory#setControlSize(
+     *     org.eve.view.Component)
      */
     @Override
     public final void setControlSize(Component component) { }

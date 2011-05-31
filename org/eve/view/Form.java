@@ -57,12 +57,21 @@ public class Form extends AbstractComponentFactory {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlFocus(org.eve.view.Component)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(
+     *     org.eve.view.Component)
      */
     @Override
     protected final void setControlFocus(Component component) {
         controls.get(component).setFocus();
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.eve.view.AbstractComponentFactory#setControlFocus(
+     *     org.eve.view.Component, int)
+     */
+    @Override
+    protected final void setControlFocus(Component component, int index) { }
     
     /**
      * 
@@ -79,19 +88,23 @@ public class Form extends AbstractComponentFactory {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, java.lang.Object)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(
+     *     org.eve.view.Component, java.lang.Object)
      */
     @Override
     protected final void setControlValue(Component component, Object value) {
-        ViewUtils.setControlText(component, controls.get(component), value, this);
+        ViewUtils.setControlText(
+                component, controls.get(component), value, this);
     }
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#setControlValue(org.eve.view.Component, int, java.lang.String)
+     * @see org.eve.view.AbstractComponentFactory#setControlValue(
+     *     org.eve.view.Component, int, java.lang.String)
      */
     @Override
-    protected final void setControlValue(Component component, int index, String value) { }
+    protected final void setControlValue(
+            Component component, int index, String value) { }
     
     /**
      * 
@@ -117,16 +130,19 @@ public class Form extends AbstractComponentFactory {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(
+     *     org.eve.view.Component)
      */
     @Override
     protected final Object getControlValue(Component component) {
-        return ViewUtils.getControlValue(component, controls.get(component), this);
+        return ViewUtils.getControlValue(
+                component, controls.get(component), this);
     }
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#getControlValue(org.eve.view.Component, int)
+     * @see org.eve.view.AbstractComponentFactory#getControlValue(
+     *     org.eve.view.Component, int)
      */
     @Override
     protected final String getControlValue(Component component, int index) {
@@ -135,10 +151,12 @@ public class Form extends AbstractComponentFactory {
     
     /*
      * (non-Javadoc)
-     * @see org.eve.view.AbstractComponentFactory#getNewComponent(java.lang.String, int, boolean)
+     * @see org.eve.view.AbstractComponentFactory#getNewComponent(
+     *     java.lang.String, int, boolean)
      */
     @Override
-    protected final Component getNewComponent(String name, int length, boolean key) {
+    protected final Component getNewComponent(
+            String name, int length, boolean key) {
         return new FormComponent(name, length, key);
     }
     

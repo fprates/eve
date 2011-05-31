@@ -12,7 +12,144 @@ import org.springframework.context.MessageSource;
 
 public interface ComponentFactory {
 
+    /**
+     * Retorna components do formulário
+     * @return
+     */
+    public abstract Collection<Component> getComponents();
 
+    /**
+     * 
+     * @param field
+     * @return
+     */
+    public abstract Date getDate(String field);
+
+    /**
+     * 
+     * @param field
+     * @param index
+     * @return
+     */
+    public abstract Date getDate(String field, int index);
+
+     /**
+     * 
+     * @param field
+     * @return
+     */
+    public abstract double getDouble(String field);
+    
+    /**
+     * 
+     * @param field
+     * @param index
+     * @return
+     */
+    public abstract double getDouble(String field, int index);
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    public abstract Object getFieldValue(String id);
+    
+    /**
+     * 
+     * @param id
+     * @param index
+     * @return
+     */
+    public abstract Object getFieldValue(String id, int index);
+
+    /**
+     * Retorna valor de ponto flutuante de um campo
+     * @param field
+     * @return
+     */
+    public abstract float getFloat(String field);
+    
+    /**
+     * 
+     * @param field
+     * @param index
+     * @return
+     */
+    public abstract float getFloat(String field, int index);
+
+    /**
+     * Retorna valor do campo inteiro do formulário
+     * @param field
+     * @return
+     */
+    public abstract int getInt(String field);
+
+    /**
+     * Retorna valor do campo inteiro
+     * @param id coluna
+     * @param row linha
+     * @return conteúdo inteiro
+     */
+    public abstract int getInt(String field, int row)
+            throws NumberFormatException;
+
+    /**
+     * Retorna valor do campo inteiro do formulário
+     * @param field
+     * @return
+     */
+    public abstract long getLong(String field);
+    
+    /**
+     * 
+     * @param field
+     * @param index
+     * @return
+     */
+    public abstract long getLong(String field, int index);
+
+    /**
+     * 
+     * @param tag
+     * @return
+     */
+    public abstract String getMessage(String tag);
+    
+    /**
+     * Retorna valor do campo caractere do formulário
+     * @param field
+     * @return
+     */
+    public abstract String getString(String field);
+
+    /**
+     * Define valor do campo string
+     * @param id
+     * @param row
+     * @return
+     */
+    public abstract String getString(String field, int row);
+
+    /**
+     * 
+     * @param field
+     * @return
+     */
+    public abstract Time getTime(String field);
+
+    /**
+     * Retorna valor do campo hora
+     * @param id
+     * @param row
+     * @return
+     */
+    public abstract Time getTime(String field, int row);
+
+    /**
+     * 
+     * @param component
+     */
     public abstract void setControlSize(Component component);
     
     /**
@@ -150,101 +287,6 @@ public interface ComponentFactory {
      * @param value
      */
     public abstract void setTime(String field, int index, Time time);
-
-    /**
-     * Retorna components do formulário
-     * @return
-     */
-    public abstract Collection<Component> getComponents();
-
-    /**
-     * 
-     * @param field
-     * @return
-     */
-    public abstract Date getDate(String field);
-
-    /**
-     * 
-     * @param id
-     * @return
-     */
-    public abstract Object getFieldValue(String id);
-    
-    /**
-     * 
-     * @param id
-     * @param index
-     * @return
-     */
-    public abstract Object getFieldValue(String id, int index);
-
-    /**
-     * Retorna valor de ponto flutuante de um campo
-     * @param field
-     * @return
-     */
-    public abstract float getFloat(String field);
-
-    /**
-     * Retorna valor do campo inteiro do formulário
-     * @param field
-     * @return
-     */
-    public abstract int getInt(String field);
-
-    /**
-     * Retorna valor do campo inteiro
-     * @param id coluna
-     * @param row linha
-     * @return conteúdo inteiro
-     */
-    public abstract int getInt(String field, int row)
-            throws NumberFormatException;
-
-    /**
-     * Retorna valor do campo inteiro do formulário
-     * @param field
-     * @return
-     */
-    public abstract long getLong(String field);
-
-    /**
-     * 
-     * @param tag
-     * @return
-     */
-    public abstract String getMessage(String tag);
-    
-    /**
-     * Retorna valor do campo caractere do formulário
-     * @param field
-     * @return
-     */
-    public abstract String getString(String field);
-
-    /**
-     * Define valor do campo string
-     * @param id
-     * @param row
-     * @return
-     */
-    public abstract String getString(String field, int row);
-
-    /**
-     * 
-     * @param field
-     * @return
-     */
-    public abstract Time getTime(String field);
-
-    /**
-     * Retorna valor do campo hora
-     * @param id
-     * @param row
-     * @return
-     */
-    public abstract Time getTime(String field, int row);
     
     /**
      * 
