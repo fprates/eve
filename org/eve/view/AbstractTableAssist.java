@@ -77,10 +77,10 @@ abstract class AbstractTableAssist extends AbstractComponentFactory
     
     /* 
      * (non-Javadoc)
-     * @see org.eve.view.TableAssist#getItensSize()
+     * @see org.eve.view.TableAssist#getSize()
      */
     @Override
-    public final int getItensSize() {
+    public final int getSize() {
         return table.getItems().length;
     }
     

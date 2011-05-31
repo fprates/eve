@@ -44,6 +44,8 @@ public class TableItemForm extends AbstractSearch {
     public final void openDialog(int mode) {
         Display display;
         
+        setMode(mode);
+        
         dialog = new Shell(
                 container.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         dialog.setText(getMessage("itemform.new"));
@@ -106,8 +108,6 @@ public class TableItemForm extends AbstractSearch {
 
     @Override
     protected void userWidgetSelected(SelectionEvent ev) {
-        int k;
-        
         if (ev.getSource() == next) {
             item++;
             return;
@@ -119,9 +119,17 @@ public class TableItemForm extends AbstractSearch {
         }
         
         if (ev.getSource() == done) {
-            k = table.getItensSize();
-            table.insert();
-            table.copyFrom(k, itemform);
+            switch (getMode()) {
+            case EVE.insert:
+                table.insert();
+                table.copyFrom(table.getSize() - 1, itemform);
+                
+                break;
+            case EVE.update:
+                table.copyFrom(item, itemform);
+                
+                break;
+            }
             
             widgetDisposed(null);
             return;

@@ -82,7 +82,7 @@ public interface TableAssist extends ComponentFactory {
      * Retorna número de itens
      * @return
      */
-    public abstract int getItensSize();
+    public abstract int getSize();
 
     /**
      * Limpa conteúdo da tabela
