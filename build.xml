@@ -2,6 +2,8 @@
     <property name="sourcedir" value="${basedir}/src"/>
     <property name="targetdir" value="${basedir}/bin"/>
 	<property name="libdir" value="${basedir}/lib"/>
+	<property name="builddir" value="${basedir}/build"/>
+	<property name="debug.status" value="on"/>
 	
 	<!--
 	   Limpa diretório de construção
@@ -13,14 +15,30 @@
         <delete file="${basedir}/eve2-x86.zip"/>
         <delete file="${basedir}/eve2-x86_64.zip"/>
         <delete file="${basedir}/eve2-win32.zip"/>
+    	<delete dir="${builddir}"/>
+    	<mkdir dir="${builddir}"/>
     </target>
     
     <!--
         Gera pacote .war para implementação
     -->
     <target name="compile" depends="clean">
+        <!-- dependências -->
+        <path id="dependencies">
+            <fileset dir="${basedir}/lib"/>
+        </path>
+    	
+    	<javac srcdir="${basedir}/src" destdir="${builddir}"
+    		debug="${debug.status}">
+            <classpath refid="dependencies"/>
+    	</javac>
+        
+        <copy todir="${builddir}">
+            <fileset dir="${basedir}/src" excludes="**/*.java build.xml"/>
+        </copy>
+    		
         <jar destfile="${basedir}/eve2-x86_64.jar">
-            <fileset dir="${targetdir}" excludes="build.xml"/>
+            <fileset dir="${builddir}"/>
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
             	<attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
@@ -52,7 +70,7 @@
             </manifest>
         </jar>
         <jar destfile="${basedir}/eve2-x86.jar">
-            <fileset dir="${targetdir}" excludes="build.xml"/>
+            <fileset dir="${builddir}"/>
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
                 <attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
@@ -84,7 +102,7 @@
             </manifest>
         </jar>
         <jar destfile="${basedir}/eve2-win32.jar">
-            <fileset dir="${targetdir}" excludes="build.xml"/>
+            <fileset dir="${builddir}"/>
             <manifest>
                 <attribute name="Main-Class" value="org.eve.main.Main"/>
                 <attribute name="Class-Path" value="lib/org.eclipse.jface_3.5.2.201004121546.jar
@@ -127,6 +145,8 @@
             <zipfileset dir="${basedir}" includes="eve2-win32.jar" prefix="eve2"/>
             <zipfileset dir="${basedir}" includes="lib/*" prefix="eve2"/>
         </zip>
+    	
+    	<delete dir="${builddir}"/>
     </target>
 </project>
     
